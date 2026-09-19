@@ -1,0 +1,4 @@
+# Numerical plotting plus the supported main-figure PDF composition stage.
+-r cpu.txt
+pypdf>=4
+Pillow>=10

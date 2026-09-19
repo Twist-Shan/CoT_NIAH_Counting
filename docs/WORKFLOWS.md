@@ -203,34 +203,68 @@ which uses the preceding `synthetic_training_dynamics_three-panel` exports.
 
 ## Additional tasks: Appendix H
 
-The final path starts with the task-specific inputs and natural generations,
-then task-local selection followed by two explicitly distinct Broad-scope
-amendments.
+The fresh route below starts from V4.4 count-10 stimuli for seeds 1234-1263.
+Commands here invoke scripts directly, so relative paths are relative to the
+repository root. The two `for` loops use Bash syntax; in PowerShell, run their
+inner commands once per listed model/stage or use equivalent `foreach` loops.
 
 ```bash
-python run.py additional-kth --freeze-source /absolute/path/to/stimuli.jsonl --frozen runs/paper/additional/kth/frozen
-python run.py additional-category --freeze-source /absolute/path/to/stimuli.jsonl --frozen runs/paper/additional/category/frozen
+python realistic/additional_experiments/kth_retrieval.py --freeze-source /absolute/path/to/stimuli.jsonl --frozen runs/paper/additional/kth/frozen
+python realistic/additional_experiments/category_full.py --freeze-source /absolute/path/to/stimuli.jsonl --frozen runs/paper/additional/category/frozen
+for model in Qwen3-8B Gemma4-E4B; do
+  python realistic/additional_experiments/kth_retrieval.py --frozen runs/paper/additional/kth/frozen --output runs/paper/additional/kth/generations --model "$model" --cache-dir /absolute/path/to/hf_cache --natural-only
+  python realistic/additional_experiments/category_full.py --frozen runs/paper/additional/category/frozen --output runs/paper/additional/category/generations --model "$model" --cache-dir /absolute/path/to/hf_cache
+done
+python realistic/additional_experiments/deployment/prepare_fresh_task_local.py --kth-frozen runs/paper/additional/kth/frozen --kth-generations runs/paper/additional/kth/generations --category-frozen runs/paper/additional/category/frozen --category-generations runs/paper/additional/category/generations --cache-dir /absolute/path/to/hf_cache --output runs/paper/additional/package
+for stage in discover canary full; do
+  for model in Qwen3-8B Gemma4-E4B; do
+    python runs/paper/additional/package/run_task_local.py --model "$model" --stage "$stage" --cache-dir /absolute/path/to/hf_cache
+  done
+done
+python runs/paper/additional/package/analyze_task_local.py --root runs/paper/additional/package
+python figures/additional_tasks_aurora/build_figures.py --task-local-root runs/paper/additional/package --output-dir runs/paper/additional/figures
 ```
 
-Use the registered V4.4 stimuli containing count-10 cases for seeds 1234-1263.
-Each builder creates 300 task-specific cases. The seed split is 20 discovery
-and 10 evaluation seeds, as specified in Appendix H. Use each entry's `--help`
-for its model/output arguments, then follow the task-local selection stages.
-
-| Order | Preparation → model stages → analysis |
+| Producer | Required output / next consumer |
 |---|---|
-| Natural task inputs/outputs | `protocol.py`, `kth_retrieval.py`, `category_full.py`, `category_trial.py`; preserve the task-specific prompt, gold, tokens and endpoint registry |
-| Task-local disjoint-first selection | `deployment/prepare_task_local.py` → staged `run_task_local.py --model <model> --stage discover`, then `canary`, `full` → `analyze_task_local.py --root <package>` |
-| Native full generated-record spans | `deployment/prepare_native_broad_full_span.py` → `run_native_broad_full_span.py --root <package> --model <model> --stage geometry`, `discovery`, `canary`, `full` → corresponding analyzer |
-| Non-thinking target-category Broad | `deployment/prepare_category_target_broad.py` → `run_category_target_broad.py --root <package> --model <model> --stage discovery`, `canary`, `full` → corresponding analyzer |
-| Final figures | `figures/additional_tasks_aurora/build_figures.py`; use the per-asset map for later one-based label staging |
+| Task freezers | 300 cases and 600 frozen user prompts per task, plus file hashes |
+| Natural generation | 600 captures per task/model under `<generations>/<model>/captures/<mode>/<case>/`; each saves the exact prompt and original generated token IDs |
+| `prepare_fresh_task_local.py` (CPU; cached registered tokenizers) | 2,400 audited trajectories, four 600-row plan files, original-token registry, natural accuracy CSVs, `input_audit.json`, hashed `protocol.json`, portable input copies and stage scripts |
+| `discover` (GPU) | Fresh Broad attention and Targeted attention on discovery seeds only; frozen global Top-K banks and three layer-matched minimum-overlap random controls |
+| `canary`, then `full` (GPU) | Both model canaries must pass before full intervention; unavailable sites are recorded, with the same eligible panel at every K |
+| `analyze_task_local.py` | Rechecks hashes, banks, controls and scores; exports accuracy/coverage/diagnostic/statistical CSVs and `analysis/audit.json` |
+| `additional_tasks_aurora/build_figures.py` (CPU) | Figures 42-44 as PDF/SVG/PNG, numerical plot tables, layout audits and input hashes; head/layer labels are already one-based |
 
-These constructors consume the preceding audited plans, generations and
-rankings and create isolated code/config packages. Their historical directory
-names are input contracts. Read the restored technical protocol documents for
-the 20/10 discovery/confirmation seeds, model-specific K grids, minimum-overlap
-random controls and exploratory peak-K qualification. Do not manufacture
-missing audits or replace frozen token sequences with retokenized text.
+The preparation route verifies the full task/seed grid, natural-run completion,
+frozen prompt identity, registered model revisions, chat templates, original
+token decoding and input hashes. It chooses the retained middle eligible
+transition independently of correctness, using seeds 1234-1253 for discovery
+and 1254-1263 for confirmation. It does not read any historical Top-K package,
+attention files, head banks or intervention results. Missing sites remain
+explicit; inadequate discovery support stops selection rather than inventing
+a bank. Expected result counts follow the new plans instead of requiring the
+historical 6,739 points. Reduced seed support is reported as descriptive in the
+statistical output. Match the discovery Python version during analysis, or use
+the retained `--discovery-sum python310-sequential` option for a Python 3.10 bank.
 
-The earlier PCA transfer pilot is excluded from this release; see
-[COMPLETENESS.md](COMPLETENESS.md) for the manuscript-based scope review.
+The fresh Broad score uses the epsilon convention stated in Appendix H and
+implemented in `kth_retrieval.broad`: epsilon and the zero-mass threshold are
+1e-12. This is recorded in the protocol. The earlier aligned-transfer runner
+uses exact normalization for nonzero mass; its historical source and saved
+bank checks remain separate. Fresh runs do not claim historical byte identity.
+
+The package copies natural prompts/generations so its plans are relocatable.
+It can be large and belongs in the ignored run directory. Its `launch.sh` uses
+`python` from the active environment, overridable with `--python` at preparation
+or `PYTHON` at launch. After moving it to a GPU machine, the direct stage CLI's
+`--cache-dir` overrides the recorded model cache. Preparation requires a new
+output directory; stage restarts verify already completed file hashes.
+
+`prepare_task_local.py` remains the separate historical-package constructor,
+with explicit previous-package, alignment-audit, output and Python options.
+`prepare_native_broad_full_span.py` and `prepare_category_target_broad.py` retain
+historical supplementary scope variants. They are not prerequisites for the
+three Appendix H figures: those show Non-thinking Broad over all ten source
+records and Thinking Targeted next-entity ablation. The optional category-scope
+figure requires `--category-amendment-root`; it is not generated by default.
+The earlier PCA transfer pilot remains excluded; see [COMPLETENESS.md](COMPLETENESS.md).

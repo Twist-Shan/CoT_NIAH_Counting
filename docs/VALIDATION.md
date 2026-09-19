@@ -8,11 +8,16 @@ confirmation of the paper's measurements.
 |---|---|
 | Clean CPU installation | Passed in a newly created Windows AMD64 / Python 3.12.7 virtual environment without system packages; CPU PyTorch followed by `requirements/cpu.txt`; `pip check` reported no broken requirements |
 | CPU smoke | Passed: parser/corpus hashes, saved/main-preset agreement, trace serialization, SDPA/explicit-attention agreement, causal mask, forward/backward and optimizer step in both synthetic modes |
-| Selected realistic tests | **176 passed, 2 skipped** |
+| Selected realistic tests | **196 passed, 2 skipped** |
 | Selected synthetic tests | **39 passed** |
 | Retained V4.4 report tests | **5 passed** after removing assertions for the excluded integrated report |
-| Registered interfaces | All 20 entries checked: 19 help commands plus the included-corpus verification |
+| Registered interfaces | Original 20 entries checked; the two new Appendix H preparation/figure interfaces also pass help checks |
 | Final Figure 2 | Rebuilt PDF/SVG/PNG and seven CSVs from explicit external input paths; all seven numerical exports match the original exports with relative/absolute tolerance 1e-12; built-in layout checks passed and PNG inspected |
+| Fresh-result Figure 2 | A changed-outcome fixture with negative Thinking gains renders using DejaVu Serif; explicit reference verification rejects it; inconsistent accuracy/count fields are still rejected |
+| Appendix H figures | Three paper figures rendered from archived inputs with explicit paths; all three plot CSVs match the original exports at 1e-12; built-in layout checks pass |
+| Appendix H fresh preparation | CPU character-tokenizer fixture: 2,400 trajectories produce four 600-row plans, natural tables and a portable hashed package; all 2,400 anchor plans match the original preparation algorithm on that fixture; no model inference |
+| Figure dependencies | Static inventory: 46 mapped assets, 104 figure Python files, 12 explicit helper/artwork/config files and available imported packages; not a complete dynamic dependency graph |
+| Recovered helpers / PDF tools | Three consuming synthetic builders really import and their PCA helpers render a fixture; pypdf composes two PDF pages; restored overview XML parses |
 | Earlier empirical report figures | Both length-comparison and fitted-law figure builders executed successfully using relocated CSV/JSON inputs |
 | Synthetic integrated report | Rebuilt successfully using an external `--run-root`, output and asset directory |
 | Local Enumeration Bash orchestration | Eight scripts passed `bash -n`; no GPU execution |
@@ -24,13 +29,22 @@ The restored Qwen layer-diagnostic tests are included, together with provenance
 guards for fresh V3.1 preparation and the retained additional-task checks.
 The latter mock the expensive grid auditor to test routing/rejection behavior;
 they do not constitute a newly generated full realistic dataset validation.
-The current total is 220 passing checks and two skips, including the five
+The current total is 240 passing tests and two skips, including the five
 retained report tests. Six pilot-only tests from the previous selection were
 removed with their corresponding workflow.
+
+The 20 added selected tests exercise task-local discovery/control rules,
+original-token alignment and the fresh input bridge. The new complete-package
+fixture uses synthetic text and a character tokenizer. It tests construction
+and provenance, not registered model-tokenizer compatibility or GPU attention.
+The fresh runner's Broad score follows Appendix H's declared epsilon convention;
+the historical aligned-transfer normalization variant remains explicit in
+[WORKFLOWS.md](WORKFLOWS.md).
 
 ```bash
 python tools/smoke_test.py
 python tools/check_tests.py
+python tools/check_figure_dependencies.py
 python -m pytest -q -p no:cacheprovider realistic/tests/test_realistic_niah_v4_4_report.py
 python tools/validate_repo.py --check-manifest
 ```
@@ -66,12 +80,13 @@ and mechanistic requirement files remain separate.
 
 Recovered sources include two Enumeration launchers, the Qwen YaRN-off
 experiment, three technical protocols required by package construction,
-100 figure/analysis/capture helper files, and an editable diagram template.
+104 figure/analysis/capture/helper modules, editable overview artwork/settings,
+and the Non-thinking diagram template.
 Paths and provenance labels were sanitized; paper measurements, selection
 rules and registered model/experiment settings were not replaced with new
 results. Portable CLI options were added for the affected input contracts.
 
-Figure 2 and report checks consumed local archived inputs solely for validation;
+Figure 2, Appendix H figures and report checks consumed local archived inputs solely for validation;
 those inputs and generated exports are not distributed. Other restored figure
 families were not all executed. Model downloads, real GPU inference, training,
 all interventions and full end-to-end paper reproduction remain unverified

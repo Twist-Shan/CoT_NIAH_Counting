@@ -23,6 +23,9 @@ SUITES = {
         "additional_experiments/test_category_trace_parser.py",
         "additional_experiments/test_kth_retrieval.py",
         "additional_experiments/test_task_scoring.py",
+        "additional_experiments/test_local_selection.py",
+        "additional_experiments/test_transfer_registry.py",
+        "additional_experiments/test_fresh_task_local.py",
         "additional_experiments/test_protocol.py",
     ],
     "synthetic": [

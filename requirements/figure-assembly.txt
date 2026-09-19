@@ -1,0 +1,4 @@
+# Optional historical multi-page PDF assembly and raster previews.
+-r figures.txt
+reportlab>=4
+pypdfium2>=4

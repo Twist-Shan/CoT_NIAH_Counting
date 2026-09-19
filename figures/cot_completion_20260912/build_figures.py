@@ -1,5 +1,9 @@
 """Plot complete supplementary grids at the manuscript's appendix font sizes."""
 from pathlib import Path
+import sys as _font_sys
+_font_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import paper_font
+FONT_FAMILY = paper_font()
 import argparse
 import csv
 import hashlib
@@ -16,7 +20,7 @@ from matplotlib.ticker import PercentFormatter, FixedLocator, FixedFormatter
 
 OUT=Path(__file__).resolve().parent
 ROOT=OUT.parents[1]
-LR=Path('\\\\?\\'+str(ROOT)) if os.name=='nt' else ROOT
+LR=ROOT if os.name=='nt' else ROOT
 DATA=LR/'realistic/work/cot_completion_20260912'
 MODELS=['Qwen3-8B','Gemma4-E4B']
 COLORS=['#168DCA','#E87824']
@@ -55,9 +59,7 @@ def load(model,task):
 
 
 def setup():
-    for font in ['times.ttf','timesbd.ttf','timesi.ttf','timesbi.ttf']:
-        font_manager.fontManager.addfont(str(Path('C:/Windows/Fonts')/font))
-    plt.rcParams.update({'font.family':'Times New Roman','font.size':9,'mathtext.fontset':'stix',
+    plt.rcParams.update({'font.family':FONT_FAMILY,'font.size':9,'mathtext.fontset':'stix',
         'pdf.fonttype':42,'ps.fonttype':42,'svg.fonttype':'none','axes.titlesize':11,
         'axes.titleweight':'normal','axes.labelsize':10,'xtick.labelsize':9,'ytick.labelsize':9,
         'legend.fontsize':9,'axes.linewidth':.6,'axes.edgecolor':'#788495','legend.frameon':False})

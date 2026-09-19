@@ -5,6 +5,10 @@ No model execution, new sample selection, or causal-bank changes are made.
 Run from the workspace: python -s figures/cot-reasoning/attention/build_figure.py
 """
 from pathlib import Path
+import sys as _font_sys
+_font_sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from figure_style import paper_font
+FONT_FAMILY = paper_font()
 from itertools import combinations
 import csv
 import argparse
@@ -202,9 +206,7 @@ write_csv('attention_examples.csv', examples)
 write_csv('attention_events.csv', events)
 write_csv('head_scores.csv', scores)
 
-for filename in ['times.ttf', 'timesbd.ttf', 'timesi.ttf', 'timesbi.ttf']:
-    font_manager.fontManager.addfont(str(Path('C:/Windows/Fonts') / filename))
-plt.rcParams.update({'font.family': 'serif', 'font.serif': ['Times New Roman'], 'mathtext.fontset': 'stix',
+plt.rcParams.update({'font.family': 'serif', 'font.serif': [FONT_FAMILY], 'mathtext.fontset': 'stix',
     'font.size': 8.5, 'axes.labelsize': 8.5, 'axes.titlesize': 10.5, 'xtick.labelsize': 8,
     'ytick.labelsize': 8, 'legend.fontsize': 8, 'axes.spines.top': False, 'axes.spines.right': False,
     'axes.edgecolor': '#8D99A5', 'axes.linewidth': .65, 'text.color': '#202020',

@@ -1,6 +1,8 @@
 """Freeze a new task-local selection campaign from audited source inputs."""
 from pathlib import Path
+import argparse
 import hashlib
+import shlex
 import json
 import shutil
 import sys
@@ -26,41 +28,46 @@ def local(remote):
     return B / "runs" / run / "downloaded" / rel
 
 
+def copy_snapshot(destination):
+    for p in (REPO / "src").rglob("*.py"):
+        dest = destination / "src" / p.relative_to(REPO / "src")
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(p, dest)
+    for name in ["run.py", "protocol.py", "diagnostics.py", "local_selection.py", "task_scoring.py"]:
+        shutil.copy2(B / name, destination / name)
+    for name in ["run_task_local.py", "analyze_task_local.py"]:
+        shutil.copy2(B / "deployment" / name, destination / name)
+    shutil.copy2(B / "TASK_LOCAL_DISJOINT_FIRST_20260908.md", destination / "PROTOCOL.md")
+    # The released modeling source already snapshots all nested configs before
+    # mutation and restores them in finally. Copy it unchanged; do not reapply
+    # the obsolete text patch for the earlier working-tree implementation.
+    shutil.copy2(B / "deployment/task_local_inputs.py", destination / "task_local_inputs.py")
+    shutil.copy2(B / "deployment/compile_transfer_registry.py", destination / "compile_transfer_registry.py")
+
+
+def launcher(python='python'):
+    # PYTHON can point to the environment on the machine executing the package.
+    return ['#!/bin/bash', 'set -euo pipefail', 'cd "$(dirname "$0")"',
+            'PYTHON=${PYTHON:-' + shlex.quote(python) + '}',
+            'export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1']
+
+
 def main():
+    global OLD, R
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--previous-package', type=Path, default=OLD)
+    ap.add_argument('--alignment-audit', type=Path, default=B / 'runs/report_refresh_20260908_v1/alignment_audit.json')
+    ap.add_argument('--output', type=Path, default=R)
+    ap.add_argument('--python', default='python', help='Interpreter used by launch.sh; PYTHON overrides it at execution')
+    args = ap.parse_args()
+    OLD, R = args.previous_package.resolve(), args.output.resolve()
     started = time.perf_counter()
-    assert read(B / "runs/report_refresh_20260908_v1/alignment_audit.json")["status"] == "PASS"
+    assert read(args.alignment_audit)["status"] == "PASS"
     if R.exists():
         raise FileExistsError("Frozen package already exists; use an explicitly versioned new directory")
     R.mkdir(parents=True)
     old = read(OLD / "protocol.json")
-    for p in (REPO / "src").rglob("*.py"):
-        dest = R / "src" / p.relative_to(REPO / "src")
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(p, dest)
-    for name in ["run.py", "protocol.py", "diagnostics.py", "local_selection.py", "task_scoring.py"]:
-        shutil.copy2(B / name, R / name)
-    for name in ["run_task_local.py", "analyze_task_local.py"]:
-        shutil.copy2(B / "deployment" / name, R / name)
-    shutil.copy2(B / "TASK_LOCAL_DISJOINT_FIRST_20260908.md", R / "PROTOCOL.md")
-    # The working tree's legacy helper predates the already-diagnosed nested
-    # Gemma backend restoration fix. Patch only this isolated snapshot.
-    p = R / "src/realistic_niah_v4/modeling.py"
-    s = p.read_text(encoding="utf-8")
-    before = '''    saved: list[tuple[Any, Any]] = []
-    for config in configs:
-        if hasattr(config, "_attn_implementation"):
-            saved.append((config, getattr(config, "_attn_implementation")))
-            setattr(config, "_attn_implementation", backend)
-    try:
-        yield'''
-    after = '''    saved = [(config, getattr(config, "_attn_implementation"))
-             for config in configs if hasattr(config, "_attn_implementation")]
-    try:
-        for config, value in saved:
-            setattr(config, "_attn_implementation", backend)
-        yield'''
-    assert s.count(before) == 1
-    p.write_text(s.replace(before, after), encoding="utf-8")
+    copy_snapshot(R)
     widths = {}
     differences = []
     for model in old["sources"]:
@@ -109,10 +116,8 @@ def main():
                expected_full_points=6739, broad_membership_changes=differences)
     cfg["files"] = {str(p.relative_to(R)).replace("\\", "/"): sha(p) for p in R.rglob("*") if p.is_file()}
     write(R / "protocol.json", cfg)
-    py = "outputs/external/lambda_nfs_CoT-Native-thinking-v5_venv_v6_20260828_bin_python"
-    launch = ['#!/bin/bash', 'set -euo pipefail', 'cd "$(dirname "$0")"',
-              'exec 9>worker.lock', 'flock -n 9 || exit 1',
-              'export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1']
+    py = '"$PYTHON"'
+    launch = launcher(args.python)
     for stage in ["discover", "canary", "full"]:
         for model in cfg["models"]:
             launch.append(f'{py} run_task_local.py --model {model} --stage {stage}')

@@ -3,6 +3,10 @@ import hashlib
 import json
 import time
 from pathlib import Path
+import sys as _font_sys
+_font_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import paper_font
+FONT_FAMILY = paper_font()
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -28,9 +32,7 @@ def main_font(role):
     """Match the reference's printed size despite the different canvas widths."""
     return FONT_PROFILE['paper_pt'][role]*11.7/FONT_PROFILE['paper_width_inches']
 
-for f in ['times.ttf','timesbd.ttf','timesi.ttf','timesbi.ttf']:
-    font_manager.fontManager.addfont(str(Path('C:/Windows/Fonts')/f))
-plt.rcParams.update({'font.family':'Times New Roman','font.size':13.5,'mathtext.fontset':'stix',
+plt.rcParams.update({'font.family':FONT_FAMILY,'font.size':13.5,'mathtext.fontset':'stix',
     'pdf.fonttype':42,'ps.fonttype':42,'svg.fonttype':'none','axes.labelcolor':INK,'text.color':INK,
     'axes.edgecolor':AXIS,'xtick.color':INK,'ytick.color':INK,'axes.linewidth':.8,
     'lines.linewidth':1.8,'legend.frameon':False})

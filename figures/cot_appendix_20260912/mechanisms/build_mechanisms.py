@@ -5,6 +5,10 @@ All outputs stay in this directory. Existing figure and manuscript assets are un
 """
 from __future__ import annotations
 from pathlib import Path
+import sys as _font_sys
+_font_sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from figure_style import paper_font
+FONT_FAMILY = paper_font()
 from collections import Counter
 import csv, hashlib, json, time
 import matplotlib
@@ -18,7 +22,7 @@ import numpy as np
 START=time.perf_counter()
 OUT=Path(__file__).resolve().parent
 ROOT=OUT.parents[2]
-LR=Path('\\\\?\\'+str(ROOT))
+LR=ROOT
 REPO=LR/'realistic'
 DATA=LR/'figures/cot-reasoning/data'
 SOURCES={}; QA={}; OUTPUTS={}; METHODS={}
@@ -26,9 +30,7 @@ MODELS=['Qwen3-8B','Gemma4-E4B']; SHORT=['Qwen','Gemma']
 COLORS=['#168DCA','#E87824']; GRAY='#737373'; GRID='#E5E8EC'
 (OUT/'data').mkdir(parents=True,exist_ok=True)
 (OUT/'qa').mkdir(exist_ok=True)
-for name in ['times.ttf','timesbd.ttf','timesi.ttf','timesbi.ttf']:
-    font_manager.fontManager.addfont(str(Path('C:/Windows/Fonts')/name))
-plt.rcParams.update({'font.family':'Times New Roman','font.size':9,'mathtext.fontset':'stix',
+plt.rcParams.update({'font.family':FONT_FAMILY,'font.size':9,'mathtext.fontset':'stix',
  'pdf.fonttype':42,'ps.fonttype':42,'svg.fonttype':'none','axes.titlesize':11,'axes.titleweight':'normal',
  'axes.labelsize':10,'xtick.labelsize':9,'ytick.labelsize':9,'legend.fontsize':9,
  'axes.edgecolor':'#788495','axes.labelcolor':'#252525','text.color':'#252525',

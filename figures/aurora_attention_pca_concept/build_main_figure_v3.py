@@ -13,6 +13,9 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import stix_font_path
 import re
 from urllib.parse import quote
 import xml.etree.ElementTree as ET
@@ -49,7 +52,7 @@ PURPLE = PALETTE['Polar Violet']
 DISPLAY_ROWS = (2,3,4)
 FONT = 'Times New Roman'
 MATH_FONT = 'STIXGeneral'
-MATH_FONT_PATH = HERE/'assets/fonts/STIXGeneral.ttf'
+MATH_FONT_PATH = stix_font_path()
 MATH_FONT_DATA = 'data:font/ttf;base64,'+base64.b64encode(MATH_FONT_PATH.read_bytes()).decode('ascii')
 MATH_FONT_SOURCE = quote(MATH_FONT_DATA, safe='')
 MAP_X, CELL = 884, 31
@@ -616,7 +619,7 @@ def main():
         'typography':{'text_font':FONT,'math_font':MATH_FONT,
                       'math_scope':['needle variables and their subscripts','horizontal and vertical mathematical ellipses'],
                       'needle_typography':'STIX mathematical italic N with upright typeset subscript digits',
-                      'math_font_file':'assets/fonts/STIXGeneral.ttf',
+                      'math_font_file':'Matplotlib mpl-data/fonts/ttf/STIXGeneral.ttf',
                       'math_font_sha256':sha(MATH_FONT_PATH),
                       'font_embedding':'data-URI fontSource on mathematical cells, plus model extFonts; SVG export includes the font',
                       'license_file':'assets/fonts/LICENSE_STIX'},

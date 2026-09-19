@@ -1,5 +1,8 @@
 """Vector-preserving figure review at the manuscript's 5.5-inch width."""
 from pathlib import Path
+import sys as _font_sys
+_font_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import preview_font
 from io import BytesIO
 import hashlib
 import html
@@ -80,7 +83,7 @@ for i,page in enumerate(doc):
     text_bounds.append(dict(page=i+1,characters=textpage.count_chars(),outside_page_characters=0))
 sheet=Image.new('RGB',(1400,500*((len(doc)+1)//2)),'white')
 draw=ImageDraw.Draw(sheet)
-font=ImageFont.truetype('C:/Windows/Fonts/arial.ttf',18)
+font=preview_font(18)
 for i in range(len(doc)):
     im=Image.open(qa/f'page_{i+1:02d}.png').convert('RGB')
     im.thumbnail((670,465))

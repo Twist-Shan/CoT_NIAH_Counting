@@ -43,6 +43,8 @@ def main():
     from run import summarize_generation
     from realistic_niah_v5.causal import _first_generated_city_record
     checks=Counter(); detail=[]; coverage=[]; diagnostics=[]; file_hashes={}; control_rows=[]
+    expected_fresh_points = 0
+    fresh = cfg.get('input_mode') == 'fresh_natural_generations'
     assert cfg['control_policy']=='disjoint_first_minimum_overlap'
     for name,h in cfg["files"].items(): assert sha(root/name)==h; checks["frozen_files"]+=1
     assert cfg["layer_cap"] is False and cfg["old_results_reused"] is False
@@ -53,9 +55,12 @@ def main():
         for task in cfg["tasks"]:
             plans=read(root/"plans"/f"{task}_{model}.json")
             assert len(plans)==600 and len({(p['case_id'],p['mode']) for p in plans})==600
+            if fresh:
+                from task_local_inputs import expected_points
+                expected_fresh_points += expected_points(plans, model, cfg['broad_sizes'], cfg['target_sizes'])
             for mode,assay in [("nonthinking","broad"),("native_thinking","broad"),("native_thinking","targeted")]:
                 bankpath=root/"banks"/f"{task}_{model}_{mode}_{assay}.json";bank=read(bankpath)
-                if assay=="targeted":
+                if assay=="targeted" or fresh:
                     observations=[]
                     for rel,h in bank["source_hashes"].items():
                         assert sha(root/rel)==h
@@ -63,7 +68,7 @@ def main():
                         if row['heads']:observations.append(row)
                     assert rank_discovery(observations)==bank['ranking']
                     assert [r[:2] for r in runtime_rank_discovery(observations)] == [r[:2] for r in bank['ranking']]
-                    checks['targeted_rankings_reproduced']+=1
+                    checks[assay+'_rankings_reproduced']+=1
                 for k in bank['sizes']:
                     selected=select_heads(bank['ranking'],k);conditions=bank['conditions'][str(k)]
                     assert selected==conditions['selected']
@@ -119,7 +124,11 @@ def main():
                         detail.append(dict(model=model,task=task,mode=mode,assay=assay,k=k,case_id=p['case_id'],seed=p['seed'],clean=values[0],selected=values[1],random=rand,delta=rand-values[1],clean_drop=values[0]-values[1]))
                         file_hashes[str(path.relative_to(root))]=sha(path);checks['points']+=1
                 assert len([p for p in plans if p['mode']==mode and p['split']=='confirmation'])==100
-    assert checks['points']==cfg['expected_full_points']==6739
+    assert checks['points']==cfg['expected_full_points']
+    if fresh:
+        assert checks['points'] == expected_fresh_points
+    else:
+        assert checks['points'] == 6739
     groups=defaultdict(list)
     for row in detail:groups[row['model'],row['task'],row['mode'],row['assay'],row['k']].append(row)
     summary=[];secondary=[];tests=[]
@@ -127,7 +136,10 @@ def main():
         for metric in ['clean','selected','random','delta','clean_drop']:
             seeds=defaultdict(list)
             for r in rows:seeds[r['seed']].append(r[metric])
-            assert sorted(seeds)==cfg['confirmation_seeds']
+            if not fresh:
+                assert sorted(seeds)==cfg['confirmation_seeds']
+            else:
+                assert set(seeds).issubset(cfg['confirmation_seeds'])
             v=np.array([np.mean(seeds[s]) for s in sorted(seeds)])
             idx=np.random.default_rng(cfg['stats']['seed']).integers(0,len(v),(cfg['stats']['bootstrap'],len(v)))
             lo,hi=np.quantile(v[idx].mean(axis=1),[.025,.975])
@@ -161,7 +173,10 @@ def main():
     out=args.analysis_output.resolve() if args.analysis_output else root/'analysis';out.mkdir(parents=True,exist_ok=True)
     for name,rows in [('summary.csv',summary),('clean_correct_summary.csv',secondary),('hypothesis_tests.csv',tests),('per_case.csv',detail),('coverage.csv',coverage),('diagnostics.csv',diagnostics),('random_control_geometry.csv',control_rows)]:
         with (out/name).open('w',encoding='utf-8',newline='') as f:
-            w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+            # A fresh run may have no clean-correct support. Keep its empty
+            # secondary table explicit without requiring a positive outcome.
+            fields = list(rows[0]) if rows else list(summary[0])
+            w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(rows)
     audit=dict(status='PASS',checks=dict(checks),elapsed_seconds=time.perf_counter()-started,protocol_sha256=sha(root/'protocol.json'),file_hashes=file_hashes,
         runtime=dict(python=sys.version,numpy=np.__version__,discovery_sum=args.discovery_sum),analyzer_sha256=sha(Path(__file__)))
     (out/'audit.json').write_text(json.dumps(audit,indent=2),encoding='utf-8')

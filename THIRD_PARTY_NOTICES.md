@@ -15,6 +15,11 @@
 - **Models and libraries** (including Qwen, Gemma, other benchmark checkpoints,
   PyTorch, Transformers, and vLLM) are external dependencies. Model identifiers
   and registered checkpoint revisions are preserved in the experiment code.
+- **STIX fonts** are embedded in the editable overview artwork. Their license
+  is retained in `figures/aurora_attention_pca_concept/assets/fonts/LICENSE_STIX`.
+  Rebuilding math labels uses the STIX font supplied by Matplotlib. Times New
+  Roman is not distributed; figure scripts can use an installed copy or the
+  bundled DejaVu fallback.
 - **Trace parser provenance** is recorded by file checksums in
   `realistic/provenance/NIAH_PARSER_V5.json`. The project-associated repository
   locator and source commit identifier have been anonymized; the three frozen

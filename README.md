@@ -27,7 +27,7 @@ CoT_NIAH_Counting/
 ├── README.md                        Paper and code overview
 ├── run.py                           Unified experiment launcher
 ├── experiments.json                 Paper entry-point registry
-├── requirements/                    CPU, synthetic, and GPU environments
+├── requirements/                    CPU, figure, synthetic, and GPU environments
 ├── docs/                            Reproduction, data, paper map, validation
 ├── tools/                           Smoke tests, source audit, ZIP packaging
 ├── figures/                         Final figure sources and paper-asset map
@@ -73,6 +73,8 @@ python tools/smoke_test.py
 python tools/check_tests.py
 python tools/validate_repo.py
 ```
+
+For figure production, also install `requirements/figures.txt`; the [figure guide](figures/README.md) covers optional PDF assembly, fonts and vector-artwork export.
 
 Then inspect the experiment entry points without downloading model weights:
 

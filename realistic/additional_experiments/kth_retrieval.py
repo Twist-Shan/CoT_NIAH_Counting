@@ -138,7 +138,7 @@ def execute(args):
     frozen_prompts = {(r['case_id'],r['mode']):r['user_text'] for r in read_jsonl(frozen/'user_prompts.jsonl')}
     if args.canary:
         cases = [c for c in cases if c['seed'] in (1234, 1254) and c['level'] in (1, 10)]
-    contract = {'config': cfg, 'canary': args.canary, 'model': args.model,
+    contract = {'config': cfg, 'canary': args.canary, 'model': args.model, 'natural_only': args.natural_only,
                 'frozen_manifest_sha256': sha256(frozen / 'manifest.json'),
                 'code_hashes': {p.name: sha256(p) for p in ROOT.glob('*.py')},
                 'src_hashes': {str(p.relative_to(ROOT.parent / 'src')): sha256(p) for p in (ROOT.parent / 'src').rglob('*.py')}}
@@ -161,7 +161,7 @@ def execute(args):
         'transformers': __import__('transformers').__version__, 'head_counts': widths,
         'dtype': 'bfloat16', 'attention_backend': 'sdpa', 'seed': 20260906})
     targeted = json.loads((frozen / 'targeted_banks.json').read_text(encoding='utf-8'))['banks'][args.model]
-    targeted_controls = [random_bank(targeted, widths, 6000+r, global_control=args.model == 'Qwen3-8B') for r in range(3)]
+    targeted_controls = [random_bank(targeted, widths, 6000+r, global_control=args.model == 'Qwen3-8B') for r in range(3)] if not args.natural_only else []
 
     def attention(enc, spans, trace_positions, k):
         rows, starts = query_attention_rows(model, adapter, enc)
@@ -193,6 +193,13 @@ def execute(args):
                 raise ValueError('Rendered user prompt differs from frozen text')
             generation = generate_answer_completion(model, tok, enc, max_new_tokens=cfg['max_native_tokens'] if mode == 'native_thinking' else 64)
             generation.update(summarize_generation(generation, case, mode=mode, prefixed=mode == 'nonthinking'))
+            if args.natural_only:
+                write_json(dest / 'prompt.json', prompt)
+                write_json(dest / 'generation.json', generation)
+                write_json(dest / 'complete.json', {'status': 'PASS',
+                    'files': {n: sha256(dest/n) for n in ('prompt.json', 'generation.json')}})
+                print('capture', args.model, mode, case['case_id'], flush=True)
+                continue
             raw = generation['completion_text_raw']
             full = prompt['rendered_prompt'] + raw
             encoded = tok(full, add_special_tokens=False, return_offsets_mapping=True)
@@ -235,6 +242,12 @@ def execute(args):
             write_json(dest / 'complete.json', {'status': 'PASS', 'elapsed_seconds': time.perf_counter()-t,
                 'files': {n:sha256(dest/n) for n in ('prompt.json','generation.json','retrieval.json')}})
             print('capture', args.model, mode, case['case_id'], generation['correct'], flush=True)
+
+    if args.natural_only:
+        write_json(out / 'complete.json', {'status': 'PASS', 'captures': len(cases)*2,
+            'scope': 'natural_generations_only', 'canary': args.canary,
+            'elapsed_seconds': time.perf_counter()-started})
+        return
 
     # Seed-equal discovery ranking, frozen before any confirmation intervention.
     selections = {}
@@ -300,6 +313,7 @@ if __name__=='__main__':
     p.add_argument('--cache-dir',type=Path)
     p.add_argument('--model')
     p.add_argument('--canary',action='store_true')
+    p.add_argument('--natural-only', action='store_true', help='Save natural outputs for fresh task-local selection; skip legacy attention/ablation')
     args=p.parse_args()
     if args.freeze_source:
         freeze(args.freeze_source,args.frozen)

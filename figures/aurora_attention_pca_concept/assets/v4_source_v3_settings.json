@@ -1,0 +1,879 @@
+{
+  "schema_version": "mechanism_attention_main_figure_v3",
+  "canvas": [
+    1280,
+    988
+  ],
+  "font_family": "Times New Roman",
+  "typography": {
+    "text_font": "Times New Roman",
+    "math_font": "STIXGeneral",
+    "math_scope": [
+      "needle variables and their subscripts",
+      "horizontal and vertical mathematical ellipses"
+    ],
+    "needle_typography": "STIX mathematical italic N with upright typeset subscript digits",
+    "math_font_file": "assets/fonts/STIXGeneral.ttf",
+    "math_font_sha256": "167378031e2dddc6216d67819c9260e9a06ffc4c478e4e23cb98a6fd44b183c2",
+    "font_embedding": "data-URI fontSource on mathematical cells, plus model extFonts; SVG export includes the font",
+    "license_file": "assets/fonts/LICENSE_STIX"
+  },
+  "layout": {
+    "panel_A": [
+      0,
+      232
+    ],
+    "panel_B": [
+      240,
+      250
+    ],
+    "panel_C": [
+      498,
+      490
+    ],
+    "B_mechanism_rows": 2,
+    "panel_separation": "two single horizontal rules; no outer frames",
+    "AB_card_scale": 0.9,
+    "AB_font_scale": 1.0,
+    "AB_font_minimum": 20.5,
+    "AB_font_rule": "20.5-unit minimum for small labels; 23-24 units for mechanism text",
+    "AB_spacing": "compact cards; taller multiline boxes and wider B answer-state box; connectors retargeted; bar heights and heatmap geometry unchanged",
+    "previous_canvas": [
+      1280,
+      1264
+    ],
+    "area_reduction_at_fixed_width": 0.2183544303797469,
+    "C_header": "one row for both mode names and NCC accuracies"
+  },
+  "display_names": [
+    "Non-thinking",
+    "CoT-Reasoning"
+  ],
+  "terminology": {
+    "mode_names": [
+      "Non-thinking",
+      "CoT-Reasoning"
+    ],
+    "generated_sequence": "Thinking trace",
+    "shared_answer_stage": "Answer consolidation",
+    "consolidation_definition": "functional formation of an executable final answer-query count state; applies to the terminal stage of CoT-Reasoning",
+    "consolidation_scope": "supported by ordered partial trace-to-answer mediation and answer-state execution; does not establish identical operations or a shared unique circuit across modes",
+    "readout_stage": "Answer readout",
+    "readout_layout": "integrated into the thinking-trace row; no separate row label",
+    "outcome_labels": {
+      "A": "wrong",
+      "B": "correct"
+    },
+    "shared_attention_title": "Attention to needle span",
+    "B_retrieval_label": "Targeted Retrieval"
+  },
+  "palette": {
+    "name": "Warm-neutral mechanisms with vivid Aurora data colors",
+    "anchors": {
+      "Ink": "#30312E",
+      "Muted": "#64665F",
+      "Rule": "#DDDCD5",
+      "Prompt border": "#B1B0A7",
+      "Prompt fill": "#FAFAF7",
+      "Mechanism border": "#969182",
+      "Retrieval fill": "#F2F0E8",
+      "Answer fill": "#E7E3D7",
+      "Attention": "#F16913",
+      "Attention arrow": "#B87652",
+      "Wrong": "#AD6155",
+      "Correct": "#4F7A66"
+    },
+    "original_aurora_reference": {
+      "Midnight Indigo": "#23165C",
+      "Polar Violet": "#6750E8",
+      "Ice Cyan": "#00C2FF",
+      "Aurora Yellow": "#F6E36A",
+      "Aurora Teal": "#00D4B4",
+      "Aurora Green": "#39E58C",
+      "Polar Magenta": "#C04DFF",
+      "Sunset Pink": "#FF5FA2",
+      "Night Black": "#161923",
+      "Snow White": "#F8FBFF",
+      "Frost Gray": "#8190A5",
+      "Warm Brown": "#765347"
+    },
+    "paper": "#FFFFFF",
+    "tints": "mechanisms: warm gray and parchment; attention charts: sequential Oranges",
+    "shared_attention": {
+      "colormap": "sequential Oranges",
+      "stops": [
+        "#FFF5EB",
+        "#FEE6CE",
+        "#FDD0A2",
+        "#FDAE6B",
+        "#FD8D3C",
+        "#F16913",
+        "#D94801",
+        "#A63603",
+        "#7F2704"
+      ],
+      "bar_color": "#F16913",
+      "heatmap_endpoint": "#F16913",
+      "mechanism_arrow_color": "#B87652",
+      "heatmap_palette_interval": [
+        0.0,
+        0.625
+      ],
+      "mapping": "normalized share 0..1 maps linearly to Oranges palette positions 0..0.625; fixed bar color #F16913"
+    },
+    "A_attention": "fixed vivid orange bar fill; magnitude encoded by height only",
+    "B_attention": "light-to-vivid orange heatmap; magnitude encoded by within-record share",
+    "shared_mechanism_roles": {
+      "prompt": {
+        "border": "#B1B0A7",
+        "fill": "#FAFAF7"
+      },
+      "retrieval_query": {
+        "border": "#969182",
+        "fill": "#F2F0E8"
+      },
+      "answer_state": {
+        "border": "#969182",
+        "fill": "#E7E3D7"
+      },
+      "output": {
+        "border": "#B1B0A7",
+        "fill": "#FFFFFF"
+      },
+      "attention_arrow": "#B87652"
+    },
+    "outcome_labels": {
+      "wrong": "#AD6155",
+      "correct": "#4F7A66"
+    },
+    "thinking_trace": {
+      "base": "#827D6D",
+      "border": "#969182",
+      "fill": "#F2F0E8"
+    },
+    "answer_state": {
+      "base": "#827D6D",
+      "border": "#969182",
+      "fill": "#E7E3D7"
+    },
+    "count_gradient_source": "restored continuous Aurora-derived count gradient; same colors in both modes",
+    "count_stops": [
+      "#6750E8",
+      "#00A9D8",
+      "#00A88F",
+      "#2DBE77",
+      "#A7C957",
+      "#D6B52C",
+      "#F29E4C",
+      "#E76F51",
+      "#D94B86",
+      "#8E5DB7"
+    ],
+    "count_colors": {
+      "1": "#5F4AD5",
+      "2": "#009BC7",
+      "3": "#009B84",
+      "4": "#29AF6D",
+      "5": "#9AB950",
+      "6": "#C5A728",
+      "7": "#DF9146",
+      "8": "#D5664B",
+      "9": "#C8457B",
+      "10": "#8356A8"
+    },
+    "count_color_adjustment": "source count colors with 8% black; centroid fills darkened further only for white-label contrast",
+    "centroid_colors": {
+      "1": "#5F4AD5",
+      "2": "#007FA3",
+      "3": "#008572",
+      "4": "#208754",
+      "5": "#697E36",
+      "6": "#8A751C",
+      "7": "#A16832",
+      "8": "#BB5A42",
+      "9": "#C8457B",
+      "10": "#8356A8"
+    }
+  },
+  "model": "Qwen3-8B",
+  "seed": 1255,
+  "gold_count": 10,
+  "attention": {
+    "aggregation": "sum over each full registered prompt-record span",
+    "normalization": "each query row divided by its sum across the ten record spans",
+    "display": "shared sequential Oranges palette; A: fixed-color bars on explicit 0-20% axis; B: light-to-vivid orange palette on a linear 0-100% share scale",
+    "A": {
+      "layer": 28,
+      "head": 19,
+      "query": "final answer-prefix token",
+      "raw_record_masses": [
+        0.0034385323524475098,
+        0.09823894500732422,
+        0.08572125434875488,
+        0.1544647216796875,
+        0.09382015466690063,
+        0.17754238843917847,
+        0.08896458148956299,
+        0.07923275232315063,
+        0.04452860355377197,
+        0.09969192743301392
+      ],
+      "within_record_shares": [
+        0.0037147465631559395,
+        0.10613039108800817,
+        0.09260716559924073,
+        0.16687273382204337,
+        0.10135664329450221,
+        0.191804208792595,
+        0.09611102629170494,
+        0.0855974480427119,
+        0.04810554622112803,
+        0.1077000902849097
+      ],
+      "needle_total_mass": 0.9256438612937927
+    },
+    "B": {
+      "layer": 24,
+      "head": 29,
+      "main_display_rows_completed_items": [
+        2,
+        3,
+        4
+      ],
+      "main_colorbar": {
+        "orientation": "vertical on the right",
+        "bottom_share": 0.0,
+        "top_share": 1.0
+      },
+      "main_display_row_selection": "user-requested item-end queries after items 2, 3, 4; earlier and later queries retained on page 2",
+      "rows_completed_items": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "columns_prompt_records": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "within_record_share_matrix": [
+        [
+          0.5536659777944519,
+          0.1385787206026332,
+          0.09790822223987257,
+          0.07381008923000641,
+          0.02274555237322809,
+          0.023271663034112548,
+          0.007537011053784957,
+          0.0659940010053203,
+          0.0147229068870865,
+          0.0017658557795034965
+        ],
+        [
+          0.29006060944498047,
+          0.480975983382471,
+          0.0555564862585155,
+          0.048711062576675276,
+          0.05231901877710457,
+          0.017022350314525894,
+          0.0084263777764679,
+          0.03715959108358988,
+          0.007544622898119394,
+          0.0022238974875501243
+        ],
+        [
+          0.0037530502619039486,
+          0.016638362236062014,
+          0.9234002404930893,
+          0.004528690273559894,
+          0.0258124363234864,
+          0.013785860345902715,
+          0.0011358439962264467,
+          0.0033494276524847215,
+          0.007489138128135148,
+          0.00010695028914943493
+        ],
+        [
+          0.00014383843427947282,
+          0.0012093222747329253,
+          0.07367766952879178,
+          0.8888382346399495,
+          0.02959863612708972,
+          0.0027468522608573086,
+          0.002097621851121974,
+          0.0011526167784022727,
+          0.0003827987370991332,
+          0.00015240936767597622
+        ],
+        [
+          0.00010536252550994922,
+          0.0007987904652704915,
+          0.033653516437604,
+          0.015204679688300903,
+          0.8990108847985688,
+          0.0031224774468531025,
+          0.02193452538408709,
+          0.020874977825410437,
+          0.002736139399849396,
+          0.002558646028545837
+        ],
+        [
+          0.0017364686501240738,
+          0.0029224260604076616,
+          0.010059792303096195,
+          0.05221159957173261,
+          0.02887638775162234,
+          0.8857242218264745,
+          0.009853722751472751,
+          0.004718740387293844,
+          0.0027839994608896655,
+          0.001112641236886417
+        ],
+        [
+          0.00011439340192595419,
+          0.000546518177708724,
+          0.0010456246916520772,
+          0.0059329555447788646,
+          0.20242587754392338,
+          0.014897390387046412,
+          0.6760916866906688,
+          0.08880620261724657,
+          0.0016746001788679017,
+          0.008464750766181304
+        ],
+        [
+          7.028331554167535e-05,
+          0.00027348952201644886,
+          0.0012214908837801211,
+          0.0009755395230437482,
+          0.010050333984174235,
+          0.012516999464738887,
+          0.04864825265518275,
+          0.919334885808514,
+          0.004532882275243333,
+          0.00237584256776481
+        ],
+        [
+          0.0001879605419801367,
+          0.0004887200625024161,
+          0.009809919443880093,
+          0.002069093930512898,
+          0.004855950323097427,
+          0.007747829930442763,
+          0.017709680889337154,
+          0.021864034183820664,
+          0.8955495730312817,
+          0.039717237663144785
+        ],
+        [
+          0.00014429014087231855,
+          0.00014574110318276643,
+          0.00029266379170695246,
+          0.005415411733922001,
+          0.0010655981489067724,
+          0.0016388200945913146,
+          0.010623607275153595,
+          0.05153200192269852,
+          0.07805189514656577,
+          0.8510899706424
+        ]
+      ],
+      "orientation": "rows are trace queries; columns are prompt records (transpose of v2 D)",
+      "complete_evidence_location": "draw.io page 2: Attention - all 10 lookups"
+    }
+  },
+  "mechanism": {
+    "arrow_semantics": "attention ONLY: source query to attended record keys; widths schematic",
+    "other_mechanism_notation": "A: unnumbered retrieval/consolidation/output group shifted left by 56 units; an ellipsis after N10 denotes remaining prompt context. B: two mechanism rows; Prompt span on the left, centered on the needle row; trace queries continue horizontally through an ellipsis for later steps into answer consolidation and output; all continuation links are unheaded",
+    "confirmed_stages_only": true,
+    "scope": "connected functional chain; complete unique mediation is unproven",
+    "progress_state": "distributed, content-bound event/progress state; no isolated scalar register claimed",
+    "sources": [
+      "NiaH_Non-thinking_report.html",
+      "NiaH_Native-Thinking_report.html"
+    ]
+  },
+  "representation": {
+    "source": "main_figure_v2.drawio",
+    "source_cell_ids": [
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444,
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      456,
+      457,
+      458,
+      459,
+      460,
+      461,
+      462,
+      463,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469,
+      470,
+      471,
+      472,
+      473,
+      474,
+      475,
+      476,
+      477,
+      478,
+      479,
+      480,
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489,
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496,
+      497,
+      498,
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533,
+      534,
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549
+    ],
+    "transforms": {
+      "initial_left_translation": [
+        83,
+        90
+      ],
+      "initial_right_translation": [
+        266,
+        90
+      ],
+      "uniform_display_zoom": 1.25,
+      "previous_origins": [
+        [
+          314.0,
+          1007.0
+        ],
+        [
+          959.0,
+          1007.0
+        ]
+      ],
+      "new_origins": [
+        [
+          320.0,
+          772.0
+        ],
+        [
+          960.0,
+          772.0
+        ]
+      ],
+      "grid_clip_viewports": [
+        [
+          32.0,
+          544.0,
+          624.0,
+          976.0
+        ],
+        [
+          656.0,
+          544.0,
+          1264.0,
+          976.0
+        ]
+      ]
+    },
+    "omitted_outer_grid_cell_ids": [],
+    "changes": "same 3D projection and PCA data with retained 1.25x display zoom; point centers, axes and paths unchanged; scatter diameters increased by 20%; 24.5-unit centroid circles and 20.5-unit centered white digits; all data points retained",
+    "scatter_opacity": 0.88,
+    "scatter_size_scale": 1.2,
+    "scatter_diameter": 8.4,
+    "centroid_diameter": 24.5,
+    "centroid_labels": {
+      "color": "#FFFFFF",
+      "font_size": 20.5,
+      "two_digit_font_size": 20.5,
+      "alignment": "center/middle; label bounds centered on paired centroid; native SVG text with Times New Roman Bold ink-bounds offsets",
+      "glyph_offsets": {
+        "1": [
+          0.10999999999999999,
+          -2.32
+        ],
+        "2": [
+          0.25,
+          -2.32
+        ],
+        "3": [
+          0.42500000000000004,
+          -2.47
+        ],
+        "4": [
+          0.16,
+          -2.32
+        ],
+        "5": [
+          0.04,
+          -2.605
+        ],
+        "6": [
+          -0.07,
+          -2.465
+        ],
+        "7": [
+          -0.1,
+          -2.605
+        ],
+        "8": [
+          0.0,
+          -2.49
+        ],
+        "9": [
+          0.05,
+          -2.465
+        ],
+        "10": [
+          -0.3,
+          -2.465
+        ]
+      },
+      "minimum_white_fill_contrast": 4.5
+    },
+    "pca_basis": "separate discovery-fitted basis per mode; common camera only",
+    "cohort": "confirmation only: 10 seeds × 10 count states per mode",
+    "layer_selection": {
+      "rule": "each mode independently maximizes discovery-set grouped-OOF nearest-centroid balanced accuracy; ties are resolved by higher discovery logistic balanced accuracy and then the earlier layer",
+      "non_thinking": {
+        "layer": 12,
+        "discovery_ncc_balanced_accuracy": 0.53
+      },
+      "native_thinking": {
+        "layer": 30,
+        "discovery_ncc_balanced_accuracy": 0.99
+      }
+    },
+    "ncc": {
+      "definition": "held-out confirmation nearest-centroid balanced accuracy; computed independently of the display camera",
+      "non_thinking_confirmation_balanced_accuracy": 0.4600000000000001,
+      "native_thinking_confirmation_balanced_accuracy": 0.9800000000000001
+    },
+    "camera": {
+      "yaw_deg": -41.25296124941927,
+      "pitch_deg": -25.783100780887047,
+      "camera_source": "shared adjusted manifold view: yaw=-0.72 rad, pitch=-0.45 rad",
+      "non_fisher_ratio": 8.530132582014335,
+      "native_fisher_ratio": 56.67695114361773,
+      "non_2d_silhouette": 0.020022727256712187,
+      "native_2d_silhouette": 0.1559312507361036
+    }
+  },
+  "input_sha256": {
+    "main_figure_v2_settings.json": "405feefb137e0ad027ff0e3bbc04f57331c44bbb60285d5e43f6e3ad00f05920",
+    "seed1255_native_transitions.json": "ee0702552beb0b3cc3588be86de1436be5c48bc555069dc20bed8ed5f91fa47b",
+    "main_figure_v2.drawio": "5af1c4177970f1b30d1f21d49723cef3ab6f06d4a471b13cadcae49761aff813"
+  },
+  "style_reference": {
+    "sources": [
+      "https://transformer-circuits.pub/2025/attribution-graphs/biology.html#dives-tracing",
+      "https://transformer-circuits.pub/2025/linebreaks/index.html"
+    ],
+    "scope": "visual adaptation for mechanism nodes only; charts retain vivid orange and Aurora-derived count colors; no adoption of source arrow semantics or mechanism claims"
+  },
+  "print_readability": {
+    "reference_width_mm": 165.1,
+    "reference_width_pt": 468,
+    "mechanism_font_units": [
+      23,
+      24
+    ],
+    "small_label_font_units": 20.5,
+    "count_label_font_units": 20.5,
+    "layout": "vertical A-B-C, 1280x988; original point centers and camera retained"
+  }
+}

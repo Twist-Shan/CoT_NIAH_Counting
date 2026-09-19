@@ -27,6 +27,24 @@ Excluded files include account/cluster launch wrappers and the non-paper
 workflows below. This comparison did not identify additional remote-only
 paper code; it is a source-coverage check, not a GPU reproduction claim.
 
+## Dependency review corrections
+
+The preceding source-presence check was too narrow to establish complete
+execution paths. The subsequent review identified five real packaging gaps;
+this revision addresses them as follows.
+
+| Finding | Change and evidence |
+|---|---|
+| Missing imported PCA helper | Restored all three `camera_study.py` files; imported the consuming builders and rendered their PCA helper with CPU fixture data. |
+| Figure 2 required original scientific outcomes | Default rendering now allows different gains; optional `--verify-reference-results` checks the archive. A changed-outcome fixture renders, while inconsistent scores are rejected. |
+| Appendix H depended on a historical predecessor package | Added a direct, audited fresh-generation constructor and fresh Broad discovery; retained Targeted selection, controls and ablation stages. A 2,400-trajectory CPU fixture constructs a complete portable package. GPU execution remains unverified. Removed an obsolete constructor text patch because the released model code already contains the backend restoration fix. |
+| Missing overview artwork and asset-map entry | Restored sanitized editable v2/v3/v4 sources/settings and the STIX license. The map now has 46 assets. Final overview export is an explicit diagrams.net step. |
+| Undeclared PDF dependencies and Windows fonts | Added required/optional figure environments and configurable fonts with a bundled fallback. Also restored the main CoT figure's missing `font_profile.json`. |
+
+Source availability, lightweight execution and complete GPU reproduction are
+different evidence levels. The asset map and validation record retain these
+distinctions. The supplied raw data and historical results remain excluded.
+
 ## Auxiliary workflows excluded after manuscript review
 
 The supplied 72-page manuscript and the final figure input paths were checked

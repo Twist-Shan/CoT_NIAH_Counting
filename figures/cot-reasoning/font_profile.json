@@ -1,0 +1,20 @@
+{
+  "reference": "runs/paper_figures/figures/nonthinking_form_retrieve_consolidate.pdf",
+  "reference_sha256": "88041362b305f64fb32e35ab5a7bae3a36375ac012c29a08d45857961d972df0",
+  "paper_width_inches": 6.5,
+  "measurement": "Embedded PDF text font sizes with text and graphics transforms, scaled to manuscript width.",
+  "paper_pt": {
+    "a_title": 10.563897942152957,
+    "a_letter": 10.196410319035484,
+    "title": 10.554602859296724,
+    "letter": 10.198465953001435,
+    "axis": 8.417781421524994,
+    "legend": 8.417781421524994,
+    "tick": 7.77025977371538,
+    "annotation": 7.4464989498105725
+  },
+  "previous_cot_a_title_pt": 10.555555555555555,
+  "reference_other_measurements": {
+    "mechanism_label": 8.391881542831788
+  }
+}

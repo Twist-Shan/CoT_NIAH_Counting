@@ -3,7 +3,7 @@ import argparse, json, re, sys, hashlib, time
 from pathlib import Path
 from collections import Counter
 HERE=Path(__file__).resolve().parent
-sys.path.insert(0,str(HERE/'src'))
+sys.path[:0] = [str(HERE/'src'), str(HERE.parents[1]/'src')]
 from realistic_niah_v5.parsing import parse_hybrid_trace
 
 def read(p): return json.loads(p.read_text(encoding='utf-8'))

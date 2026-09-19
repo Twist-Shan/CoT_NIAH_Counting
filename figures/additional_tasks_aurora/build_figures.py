@@ -3,12 +3,14 @@
 No model inference. Uses the Synthetic appendix typography and Aurora blue/orange.
 Run with the existing Anaconda NumPy/Matplotlib environment; see manifest.json.
 """
+import argparse
 import csv
 import hashlib
 import json
 from collections import defaultdict
 from pathlib import Path
 import time
+import sys
 
 import matplotlib
 matplotlib.use('Agg')
@@ -21,6 +23,9 @@ import numpy as np
 START = time.perf_counter()
 OUT = Path(__file__).resolve().parent
 WORK = OUT.parents[1]
+sys.path.insert(0, str(OUT.parent))
+from figure_style import paper_font
+FONT_FAMILY = paper_font()
 PAPER = WORK / 'runs/paper_figures/figures/additional_tasks'
 RUNS = WORK / 'realistic/additional_experiments/runs'
 V3 = RUNS / 'task_local_disjoint_first_20260908_v3/downloaded'
@@ -40,7 +45,7 @@ CMAPS = {
 }
 SOURCES, FIGURES, CHECKS = {}, [], []
 plt.rcParams.update({
-    'font.family': 'Times New Roman', 'font.size': 10, 'mathtext.fontset': 'stix',
+    'font.family': FONT_FAMILY, 'font.size': 10, 'mathtext.fontset': 'stix',
     'axes.titlesize': 10.5, 'axes.labelsize': 10, 'xtick.labelsize': 9.5,
     'ytick.labelsize': 9.5, 'axes.linewidth': .7, 'lines.linewidth': 1.5,
     'pdf.fonttype': 42, 'svg.fonttype': 'none', 'text.color': INK,
@@ -48,7 +53,11 @@ plt.rcParams.update({
 })
 
 def source(p):
-    SOURCES[str(p.relative_to(WORK))] = hashlib.sha256(p.read_bytes()).hexdigest()
+    try:
+        name = str(p.resolve().relative_to(WORK.resolve()))
+    except ValueError:
+        name = str(p.resolve())
+    SOURCES[name] = hashlib.sha256(p.read_bytes()).hexdigest()
     return p
 
 def rows(p):
@@ -206,9 +215,8 @@ def score_figures():
     export('02_head_scores.csv', all_scores)
     return scales
 
-SUMMARY = rows(V3 / 'analysis/summary.csv')
-
 def ablation_figure():
+    summary = rows(V3 / 'analysis/summary.csv')
     fig, axes = plt.subplots(4, 2, figsize=(6.5, 5.6))
     fig.subplots_adjust(left=.10, right=.985, bottom=.15, top=.915, wspace=.30, hspace=.65)
     for j, model in enumerate(MODELS):
@@ -224,8 +232,11 @@ def ablation_figure():
         mode = 'native_thinking' if assay == 'targeted' else 'nonthinking'
         for j, model in enumerate(MODELS):
             ax = axes[i,j]
-            subset = [r for r in SUMMARY if (r['task'],r['model'],r['mode'],r['assay']) ==
+            subset = [r for r in summary if (r['task'],r['model'],r['mode'],r['assay']) ==
                       (task,model,mode,assay)]
+            if not subset:
+                raise ValueError(f'No analyzed observations for {task}/{model}/{mode}/{assay}')
+            ymax = 40 if assay == 'broad' and max(float(r['upper']) for r in subset if r['metric'] in ['selected','random']) <= .4 else 100
             for metric, color, ls, marker in [('selected',COLORS[model],'-','o'),
                                              ('random',LIGHT[model],'--','s')]:
                 rs = sorted([r for r in subset if r['metric']==metric], key=lambda r:int(r['k']))
@@ -233,7 +244,6 @@ def ablation_figure():
                 assert len(ks) == len(set(ks))
                 y,lo,hi = [100*np.array([float(r[key]) for r in rs]) for key in ['mean','lower','upper']]
                 assert np.all(0 <= lo) and np.all(lo <= y) and np.all(y <= hi) and np.all(hi <= 100)
-                if assay == 'broad': assert np.max(hi) <= 40
                 ax.fill_between(ks,lo,hi,color=color,alpha=.14 if metric=='selected' else .11,lw=0)
                 ax.plot(ks,y,color=color,ls=ls,marker=marker,ms=3.7,
                         markerfacecolor=color if metric=='selected' else 'white',markeredgewidth=1)
@@ -244,8 +254,7 @@ def ablation_figure():
             ax.set_title(ax.get_title(loc='left'),loc='left',fontsize=10)
             if assay=='broad' and model==MODELS[0]: ax.set_xscale('log',base=2)
             ax.set_xticks(ks, [str(k) for k in ks])
-            ax.set(ylim=(-3,103) if assay=='targeted' else (-1.2,41.2),
-                   yticks=[0,50,100] if assay=='targeted' else [0,20,40])
+            ax.set(ylim=(-.03*ymax, 1.03*ymax), yticks=[0,ymax/2,ymax])
     footer(fig,[('Selected ablation',dict(color=INK,ls='-',marker='o',ms=3.7)),
                 ('Random control',dict(color=GRAY,ls='--',marker='s',ms=3.7,markerfacecolor='white'))],2,show_ci=True)
     export('03_ablation.csv',table); save(fig,'03_ablation')
@@ -275,13 +284,14 @@ def category_figure():
                 ('Random control',dict(color=GRAY,ls='--',marker='s',ms=3.7,markerfacecolor='white'))],2,show_ci=True)
     export('04_category_scope.csv',data);save(fig,'04_category_scope')
 
-def main():
-    (OUT/'plot_data').mkdir(exist_ok=True);PAPER.mkdir(exist_ok=True)
+def main(*, include_category_scope=False):
+    (OUT/'plot_data').mkdir(parents=True, exist_ok=True);PAPER.mkdir(parents=True, exist_ok=True)
     natural_figure();scales=score_figures()
     ablation_figure()
-    category_figure()
+    if include_category_scope:
+        category_figure()
     manifest=dict(source_hashes=SOURCES,figures=FIGURES,checks=CHECKS,score_scales=scales,
-        style=dict(reference='figures/synthetic_appendix_paper_checked_20260908',font='Times New Roman',
+        style=dict(reference='figures/synthetic_appendix_paper_checked_20260908',font=FONT_FAMILY,
             qwen=COLORS[MODELS[0]],gemma=COLORS[MODELS[1]],control_shading='pointwise 95% CI',
             interval_method='percentile bootstrap clustered by data-generation seed'),
         versions=dict(numpy=np.__version__,matplotlib=matplotlib.__version__),
@@ -289,4 +299,15 @@ def main():
     (OUT/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
     print(json.dumps(dict(figures=len(FIGURES),scales=scales,checks=CHECKS,elapsed_seconds=manifest['elapsed_seconds']),indent=2))
 
-if __name__=='__main__': main()
+if __name__=='__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--task-local-root', type=Path, required=True)
+    parser.add_argument('--natural-dir', type=Path, help='Defaults to <task-local-root>/natural')
+    parser.add_argument('--output-dir', type=Path, required=True)
+    parser.add_argument('--category-amendment-root', type=Path, help='Optional extra figure; not required by Figures 42-44')
+    args = parser.parse_args()
+    V3, OUT = args.task_local_root.resolve(), args.output_dir.resolve()
+    NAT, PAPER = args.natural_dir or V3/'natural', OUT/'paper'
+    if args.category_amendment_root:
+        CAT = args.category_amendment_root
+    main(include_category_scope=args.category_amendment_root is not None)

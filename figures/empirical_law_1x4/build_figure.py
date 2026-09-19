@@ -14,6 +14,7 @@ import argparse
 import hashlib
 import json
 import time
+import sys
 
 import matplotlib
 matplotlib.use('Agg')
@@ -25,6 +26,10 @@ import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'figures'))
+from figure_style import paper_font
+FONT_FAMILY = paper_font()
+TITLE_PT = 10.5 if FONT_FAMILY == 'Times New Roman' else 9.5
 OUT = Path(__file__).resolve().parent
 RESEARCH = ROOT / 'realistic'
 SHORT = RESEARCH / 'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
@@ -198,14 +203,15 @@ def full_range_figure(observations, *, publish):
     """Keep both modes and every observed length visible in separate count panels."""
     width, height = 6.5, 4.35
     fig = plt.figure(figsize=(width, height), facecolor='white')
-    xs = [.51, 2.00, 3.63, 5.12]
+    fallback_margin = .08 if FONT_FAMILY != 'Times New Roman' else 0.
+    xs = [.51+fallback_margin, 2.00, 3.63, 5.12]
     for row, model in enumerate(MODELS):
         y = 2.70 if row == 0 else .85
         model_title = 'Qwen3-32B' if model == 'Qwen3-32B' else 'Gemma-4-31B'
         fig.text(.51/width, (y+1.43)/height, model_title, fontsize=10.5,
                  fontweight='bold', ha='left', va='center')
         for col, n in enumerate(APPENDIX_COUNTS):
-            ax = fig.add_axes([xs[col]/width, y/height, 1.22/width, 1.1/height])
+            ax = fig.add_axes([xs[col]/width, y/height, (1.22-(fallback_margin if col == 0 else 0))/width, 1.1/height])
             for mode in MODES:
                 o = observations.loc[observations.model.eq(model)
                     & observations['mode'].eq(mode) & observations.N.eq(n)].sort_values('L')
@@ -246,7 +252,24 @@ def full_range_figure(observations, *, publish):
     return audit
 
 
-def main(*, publish=False):
+def reference_result_check(group_accuracy, *, verify=False):
+    """Report historical outcome agreement separately from protocol validity."""
+    gains = group_accuracy.thinking_gain
+    checks = {
+        'all_thinking_gains_positive': bool(gains.gt(0).all()),
+        'minimum_gain_matches_27_9_pp': round(100*float(gains.min()), 1) == 27.9,
+        'maximum_gain_matches_63_1_pp': round(100*float(gains.max()), 1) == 63.1,
+    }
+    result = {'verification_requested': verify, 'checks': checks,
+              'minimum_gain_pp': 100*float(gains.min()),
+              'maximum_gain_pp': 100*float(gains.max()),
+              'matches_archived_outcome_summary': all(checks.values())}
+    if verify and not all(checks.values()):
+        raise ValueError('Archived-result verification failed: ' + json.dumps(result))
+    return result
+
+
+def main(*, publish=False, verify_reference_results=False):
     start = time.perf_counter()
     OUT.mkdir(parents=True, exist_ok=True)
     cells = read(SHORT / 'cell_outcomes.csv.gz')
@@ -286,9 +309,7 @@ def main(*, publish=False):
     assert len(short_modes) == 2688 and short_modes.n_total.eq(30).all()
     group_accuracy = short_modes.groupby(['comparison_slot', 'prompt_mode'])['parsed_exact_accuracy'].mean().unstack()
     group_accuracy['thinking_gain'] = group_accuracy.native_thinking - group_accuracy.direct
-    assert group_accuracy.thinking_gain.gt(0).all()
-    assert round(100*group_accuracy.thinking_gain.min(), 1) == 27.9
-    assert round(100*group_accuracy.thinking_gain.max(), 1) == 63.1
+    reference_check = reference_result_check(group_accuracy, verify=verify_reference_results)
     assert len(observations) == 952 and observations.n_requests.eq(30).all()
     assert not observations.duplicated(['model', 'mode', 'N', 'L']).any()
     assert observations.observed.between(0, 1).all()
@@ -321,7 +342,7 @@ def main(*, publish=False):
         intervals.observed, intervals.n_requests)
     assert intervals.wilson_lo.ge(-1e-12).all() and intervals.wilson_hi.le(1+1e-12).all()
     plt.rcParams.update({
-        'font.family': 'serif', 'font.serif': ['Times New Roman'], 'mathtext.fontset': 'stix',
+        'font.family': 'serif', 'font.serif': [FONT_FAMILY], 'mathtext.fontset': 'stix',
         'font.size': 8.5, 'axes.labelsize': 8.5, 'axes.titlesize': 10.5,
         'xtick.labelsize': 8, 'ytick.labelsize': 8, 'legend.fontsize': 8,
         'axes.linewidth': .65, 'text.color': '#202020', 'axes.labelcolor': '#202020',
@@ -331,8 +352,9 @@ def main(*, publish=False):
     width, height = 6.5, 1.95
     fig = plt.figure(figsize=(width, height), facecolor='white')
     # Give the twelve long-context curves more room, keeping one horizontal row.
-    positions = [.51, 1.94, 3.56, 5.04]
-    panel_widths = [1.20, 1.20, 1.31, 1.31]
+    fallback_margin = .08 if FONT_FAMILY != 'Times New Roman' else 0.
+    positions = [.51+fallback_margin, 1.94, 3.56, 5.04]
+    panel_widths = [1.20-fallback_margin, 1.20, 1.31, 1.31]
     axes = [fig.add_axes([x/width, .76/height, w/width, 1.0/height])
             for x, w in zip(positions, panel_widths)]
     # Restore the original yellow-orange-purple passage-length gradient.
@@ -368,7 +390,7 @@ def main(*, publish=False):
         style(ax)
         title = 'Non-thinking' if mode == 'direct' else 'Thinking'
         ax.set_title(f'{chr(65+index)}  {title}', loc='left',
-                     fontsize=10.5, fontweight='bold', pad=4)
+                 fontsize=TITLE_PT, fontweight='bold', pad=4)
     axes[0].set_ylabel('Exact accuracy', labelpad=4)
     axes[1].tick_params(labelleft=False)
     legend = [Line2D([], [], color=color, lw=1.2, label=f'{length//1000}k')
@@ -396,7 +418,7 @@ def main(*, publish=False):
         style(ax)
         title = 'Qwen3-32B' if model == 'Qwen3-32B' else 'Gemma-4-31B'
         ax.set_title(f'{chr(67+index)}  {title}', loc='left',
-                     fontsize=10.5, fontweight='bold', pad=4)
+                     fontsize=TITLE_PT, fontweight='bold', pad=4)
     axes[3].tick_params(labelleft=False)
     # Shared labels reduce repeated text while preserving both horizontal axes.
     for first, last, label in [(0, 1, 'Target count $N$'),
@@ -438,6 +460,7 @@ def main(*, publish=False):
     mean_accuracy.to_csv(OUT / 'observed_length_means_all_counts.csv', index=False)
     full_range_audit = full_range_figure(intervals, publish=publish)
     manifest = dict(
+        historical_result_check=reference_check,
         empirical_law_coefficients_used=False, regression_refits=0,
         panel_order=['Non-thinking', 'Thinking', *MODELS],
         left_statistic='Median of 12 model-level accuracies, each over 30 seeds',
@@ -474,9 +497,9 @@ def main(*, publish=False):
         size_inches=[width, height], panel_widths_inches=panel_widths,
         main_legend='Shared N headings above two rows of mode-color swatches',
         main_xlabels='One shared label per pair of panels',
-        font_family='Times New Roman', math_font='STIX',
+        font_family=FONT_FAMILY, math_font='STIX',
         panel_title_weight='bold',
-        fonts_pt_at_manuscript_width={'title': 10.5, 'axis_label': 8.5, 'tick_legend_annotation': 8},
+        fonts_pt_at_manuscript_width={'title': TITLE_PT, 'axis_label': 8.5, 'tick_legend_annotation': 8},
         mode_linestyles={'direct': 'solid', 'native_thinking': 'dashed'},
         length_colors=[to_hex(c) for c in length_colors],
         count_colors={mode: [to_hex(c) for c in colors] for mode, colors in count_colors.items()},
@@ -496,7 +519,9 @@ if __name__ == '__main__':
     parser.add_argument('--qwen-results', type=Path, required=True)
     parser.add_argument('--long-config', type=Path, default=LONG_CONFIG)
     parser.add_argument('--output-dir', type=Path, required=True)
+    parser.add_argument('--verify-reference-results', action='store_true',
+                        help='Require the original paper outcome summary; omit for fresh replication')
     args = parser.parse_args()
     SHORT, SAVED, REQUESTS, QWEN_RERUN = args.short_tables, args.saved_cells_dir, args.request_tables, args.qwen_results
     LONG_CONFIG, OUT = args.long_config, args.output_dir
-    main()
+    main(verify_reference_results=args.verify_reference_results)

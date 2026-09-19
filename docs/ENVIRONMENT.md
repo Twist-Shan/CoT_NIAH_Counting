@@ -64,3 +64,19 @@ They are not repository inputs. Inspect the original CLI's `--cache-dir`,
 `run.py` uses the interpreter that invoked it. It does not activate an
 environment, install packages, launch remote jobs, or download model weights
 merely to display help.
+
+## Figures and PDF composition
+
+Install `requirements/figures.txt` for figure builders, including `pypdf` and
+Pillow on top of the CPU environment. `requirements/figure-assembly.txt` adds
+the optional historical `reportlab`/`pypdfium2` assembler. The figure check
+scans historical modules too, so use the latter when running it.
+
+The tested figure environment extends the CPU lock with pypdf 6.19.0,
+reportlab 5.0.1, pypdfium2 5.13.0 and charset-normalizer 3.5.1. Its full package
+record is `requirements/figures-windows-py312.lock.txt`. It was checked on
+Windows/Python 3.12, not on a second operating system.
+
+See the [figure guide](../figures/README.md) for portable font selection and
+manual vector-artwork exports. Do not install the CPU plotting environment
+over an existing registered GPU inference environment; use separate venvs.

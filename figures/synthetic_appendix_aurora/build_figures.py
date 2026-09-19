@@ -4,6 +4,9 @@ Run from the counting workspace:
   python figures/synthetic_appendix_aurora/build_figures.py
 """
 from pathlib import Path
+import sys as _font_sys
+_font_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import preview_font
 import hashlib
 import html
 import json
@@ -533,7 +536,7 @@ def gallery():
     width, cell_h = 1500, 530
     sheet = Image.new('RGB', (width, cell_h*((len(FIGURES)+2)//3)), 'white')
     draw = ImageDraw.Draw(sheet)
-    font = ImageFont.truetype('C:/Windows/Fonts/arial.ttf', 17)
+    font = preview_font(17)
     for i, f in enumerate(FIGURES):
         im = Image.open(OUT/(f['stem']+'.png')).convert('RGB')
         im.thumbnail((width//3-20, cell_h-55))

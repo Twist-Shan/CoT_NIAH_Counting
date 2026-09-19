@@ -1,6 +1,15 @@
 {
-  "scope": "45 PDF assets referenced by the local manuscript sources. This is a source map, not a claim that all upstream GPU stages were rerun.",
+  "scope": "46 PDF assets referenced by the local manuscript, including the introductory overview. Source coverage and export checks do not establish a complete GPU rerun.",
   "assets": [
+    {
+      "manuscript_asset": "figures/main_figure_v4.pdf",
+      "reference_asset_sha256": "74491e65865e08923e2395a78dbb9c546cbef43a5a70215c6b012648ea0aedd6",
+      "builder": "figures/aurora_attention_pca_concept/build_main_figure_v4.py",
+      "arguments": [],
+      "editable_source": "figures/aurora_attention_pca_concept/main_figure_v4.drawio",
+      "source_evidence": "referenced by sections/intro_v2.tex; editable authored overview and builder inputs restored",
+      "release_validation": "editable source/XML checked; manual diagrams.net PDF export required"
+    },
     {
       "manuscript_asset": "figures/empirical_accuracy_1x4.pdf",
       "reference_asset_sha256": "0fd95f91a3e688df93a0e5c6ad956c66c149253853127acd89d9921953ccacce",
@@ -57,7 +66,7 @@
       "builder": "figures/additional_tasks_aurora/build_figures.py",
       "arguments": [],
       "source_evidence": "manuscript name and builder inspection; final PDF byte match not established",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "three paper figures rendered from archived task-local/natural inputs; built-in layout checks passed; GPU producers not rerun"
     },
     {
       "manuscript_asset": "figures/additional_tasks/02_head_scores.pdf",
@@ -67,7 +76,9 @@
         "additional"
       ],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "three paper figures rendered from archived task-local/natural inputs; built-in layout checks passed; GPU producers not rerun",
+      "portable_builder": "figures/additional_tasks_aurora/build_figures.py",
+      "portable_builder_note": "direct builder already uses one-based labels; historical staging wrapper retained"
     },
     {
       "manuscript_asset": "figures/additional_tasks/03_ablation.pdf",
@@ -75,7 +86,7 @@
       "builder": "figures/additional_tasks_aurora/build_figures.py",
       "arguments": [],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "three paper figures rendered from archived task-local/natural inputs; built-in layout checks passed; GPU producers not rerun"
     },
     {
       "manuscript_asset": "figures/empirical_appendix/empirical_relative_noise.pdf",

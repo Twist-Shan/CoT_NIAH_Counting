@@ -1,5 +1,8 @@
 """Add a reviewed appendix figure set; preserve all older figures and data."""
 from pathlib import Path
+import sys as _font_sys
+_font_sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import preview_font
 import hashlib
 import html
 import json
@@ -231,7 +234,7 @@ def write_gallery():
     main=[f for f in FIGURES if f['group']=='main']
     sheet=Image.new('RGB',(1800,1650),'white')
     draw=ImageDraw.Draw(sheet)
-    font=ImageFont.truetype('C:/Windows/Fonts/arial.ttf',21)
+    font=preview_font(21)
     for i,f in enumerate(main):
         im=Image.open(OUT/f'{f["stem"]}.png').convert('RGB')
         im.thumbnail((570,470))

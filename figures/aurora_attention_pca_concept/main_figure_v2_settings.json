@@ -1,0 +1,183 @@
+{
+  "schema_version": "restrained_aurora_main_figure_v2",
+  "font_family": "Times New Roman",
+  "font_scale": 1.075,
+  "background_color": "#FFFFFF",
+  "muted_text_color": "#4F6176",
+  "main_question_display": "shared first sentence only; full prompts are in caption_v1.md",
+  "design_audit": "Anthropic research-blog inspired: direct labels, hairline dividers, restrained tint, minimal visible metadata, no decorative chrome",
+  "layout_audit": {
+    "column_width": 924,
+    "inter_column_gap": 16,
+    "outer_margin": 0,
+    "panel_edges": {
+      "left": [
+        0,
+        924
+      ],
+      "right": [
+        940,
+        1864
+      ],
+      "top": 0,
+      "bottom": 1194
+    },
+    "asymmetric_columns": {
+      "left": {
+        "A_prompt_demo": [
+          0,
+          402
+        ],
+        "C_attention_strip": [
+          396,
+          576
+        ],
+        "E_pca_comparison": [
+          582,
+          1194
+        ]
+      },
+      "right": {
+        "B_prompt_demo": [
+          0,
+          600
+        ],
+        "D_attention_matrix": [
+          594,
+          1194
+        ]
+      }
+    },
+    "text_alignment": "all single-line labels use verticalAlign=middle and spacing=0; boxed trace items use centered text before the colored end marker"
+  },
+  "selected_seed": 1255,
+  "gold_count": 10,
+  "displayed_occurrences": [
+    3,
+    4,
+    5
+  ],
+  "native_displayed_occurrences": [
+    3,
+    4,
+    5
+  ],
+  "nonthinking": {
+    "layer": 28,
+    "head": 19,
+    "query_position": 10106,
+    "answer_prefix": "Total:",
+    "head_readout_marker": "thin Sunset Pink rule at the exact end of the forced answer prefix, immediately before the generated integer",
+    "needle_total_mass": 0.9256438612937927,
+    "normalized_record_entropy": 0.9329576862045974,
+    "record_masses": [
+      0.0034385323524475098,
+      0.09823894500732422,
+      0.08572125434875488,
+      0.1544647216796875,
+      0.09382015466690063,
+      0.17754238843917847,
+      0.08896458148956299,
+      0.07923275232315063,
+      0.04452860355377197,
+      0.09969192743301392
+    ],
+    "official_span_mass_max_abs_delta": 9.96515154838562e-08,
+    "answer": "Total: 8",
+    "prompt_demo_display": "raw per-token attention clipped at positive q99.7; every token uses one span-independent nonlinear transform, followed by a uniform 0.62 display-lightness multiplier: 0.62*[0.004+0.946*(log(1+1000*v)/log(1001))^0.62]"
+  },
+  "native_thinking": {
+    "layer": 24,
+    "head": 29,
+    "trace_display": "verbatim primary item spans from the stored numbered-list trace; ellipses mark omitted surrounding reasoning and later items",
+    "target_shares": [
+      0.5536659777944519,
+      0.480975983382471,
+      0.9234002404930893,
+      0.8888382346399495,
+      0.8990108847985688,
+      0.8857242218264745,
+      0.6760916866906688,
+      0.919334885808514,
+      0.8955495730312817,
+      0.8510899706424
+    ],
+    "prompt_demo_resolution": "exact key-wise token attention captured at output endpoints 236/244/252; one shared q98 clip and the documented span-independent monotone token transform are applied to all three shown windows; colored rules mark item-end queries",
+    "token_capture": {
+      "array_file": "figures/aurora_attention_pca_concept/seed1255_native_token_attention.npz",
+      "metadata_file": "figures/aurora_attention_pca_concept/seed1255_native_token_attention.json",
+      "query_output_token_indices": [
+        236,
+        244,
+        252
+      ],
+      "query_full_sequence_tokens": [
+        10324,
+        10332,
+        10340
+      ],
+      "target_masses": [
+        0.8619914054870605,
+        0.790810763835907,
+        0.7622971534729004
+      ],
+      "attention_total_masses": [
+        1.0013829469680786,
+        0.9992117881774902,
+        0.9996669888496399
+      ]
+    }
+  },
+  "pca_shared_view": {
+    "yaw_deg": -41.25296124941927,
+    "pitch_deg": -25.783100780887047,
+    "camera_source": "shared adjusted manifold view: yaw=-0.72 rad, pitch=-0.45 rad",
+    "non_fisher_ratio": 8.530132582014335,
+    "native_fisher_ratio": 56.67695114361773,
+    "non_2d_silhouette": 0.020022727256712187,
+    "native_2d_silhouette": 0.1559312507361036
+  },
+  "pca_display_cohort": "confirmation only: 10 seeds × 10 count states per mode",
+  "pca_display_scales": {
+    "non_thinking": 0.75,
+    "native_thinking": 1.0,
+    "note": "uniform screen-space footprint balancing only; axes retain identical fixed lengths and are orientation cues, not scale bars"
+  },
+  "pca_layer_selection": {
+    "rule": "each mode independently maximizes discovery-set grouped-OOF nearest-centroid balanced accuracy; ties are resolved by higher discovery logistic balanced accuracy and then the earlier layer",
+    "non_thinking": {
+      "layer": 12,
+      "discovery_ncc_balanced_accuracy": 0.53
+    },
+    "native_thinking": {
+      "layer": 30,
+      "discovery_ncc_balanced_accuracy": 0.99
+    }
+  },
+  "pca_ncc": {
+    "definition": "held-out confirmation nearest-centroid balanced accuracy; computed independently of the display camera",
+    "non_thinking_confirmation_balanced_accuracy": 0.4600000000000001,
+    "native_thinking_confirmation_balanced_accuracy": 0.9800000000000001
+  },
+  "pca_axis_embedding": "pure dark-gray PC1/PC2/PC3 axes originate at each subplot's screen centre, extend behind each manifold, and share one camera; three sparse background line families remain exactly parallel to the projected PC axes and use three matched, equally spaced positive/negative offset pairs around the visible origin; their central lines align with the labeled axes; PC1 and PC3 use the equivalent negative display sign so their positive rays point down and away from PC2; the non-thinking cloud uses a uniform 0.75x screen-space footprint scale while native-thinking uses 1.00x; the axis lengths remain identical and non-quantitative; ordinary state opacity is fixed at 58% with a fixed 5.6-unit diameter across both modes; centroid nodes use a fixed 15.5-unit diameter; path weight, foreshortening, and far-to-near painter ordering provide the depth cues",
+  "pca_component_signs": {
+    "non_thinking": [
+      -1,
+      1,
+      -1
+    ],
+    "native_thinking": [
+      -1,
+      1,
+      -1
+    ]
+  },
+  "render_audit": {
+    "vertices_checked": 718,
+    "text_cells_checked": 115,
+    "intentional_top_aligned_multiline_cells": 4,
+    "off_canvas_cells": 0,
+    "single_line_vertical_alignment": "middle",
+    "text_spacing": 0
+  }
+}

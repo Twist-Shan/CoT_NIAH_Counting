@@ -1,22 +1,134 @@
 {
-  "haystack": {"family": "realistic", "script": "scripts/sync_paul_graham_full_corpus.py", "paper": "Sections 2–4, Appendix C", "description": "Download and audit the registered essay corpus"},
-  "behavior-freeze": {"family": "realistic", "script": "scripts/freeze_realistic_niah_v3_1.py", "paper": "Section 2, Appendix C", "description": "Construct the paired 1k–20k counting grid"},
-  "behavior": {"family": "realistic", "script": "scripts/run_realistic_niah_v3_1.py", "paper": "Section 2, Appendix C", "description": "Evaluate a registered model on the frozen grid"},
-  "behavior-analysis": {"family": "realistic", "script": "scripts/analyze_realistic_niah_v3_1.py", "paper": "Section 2, Appendix C", "description": "Analyze counting behavior and trace styles"},
-  "long-context-freeze": {"family": "realistic", "script": "scripts/freeze_realistic_niah_v3_3_long_context.py", "paper": "Section 2, Appendix C.4", "description": "Construct the extended context-length grid"},
-  "long-context": {"family": "realistic", "script": "scripts/run_realistic_niah_v3_3_long_context_worker.py", "paper": "Section 2, Appendix C.4", "description": "Run a long-context worker"},
-  "nonthinking-freeze": {"family": "realistic", "script": "scripts/freeze_realistic_niah_v4.py", "paper": "Section 3, Appendix D", "description": "Construct controlled mechanism stimuli"},
-  "nonthinking": {"family": "realistic", "script": "scripts/run_realistic_niah_v4.py", "paper": "Section 3, Appendix D", "description": "Capture states, analyze attention, and run interventions"},
-  "thinking": {"family": "realistic", "script": "scripts/run_realistic_niah_v5.py", "paper": "Section 4, Appendix E", "description": "Native-thinking parsing, retrieval, geometry, and causal stages"},
-  "enumeration": {"family": "realistic", "script": "scripts/run_realistic_niah_v6.py", "paper": "Appendix F", "description": "Structured index/bullet enumeration stages"},
-  "synthetic-train": {"family": "synthetic", "module": "synthetic_counting_v58.run_v58", "paper": "Section 5, Appendix G", "description": "Train and analyze the four-layer, eight-head counting models"},
-  "synthetic-corpus": {"family": "synthetic", "script": "scripts/fetch_tiny_shakespeare.py", "paper": "Appendix G.1", "description": "Restore the Tiny Shakespeare corpus if missing"},
-  "synthetic-alignment": {"family": "synthetic", "script": "scripts/run_v58_alignment_supplement.py", "paper": "Appendix G.2–G.4", "description": "Aligned retrieval and representation analyses"},
-  "synthetic-continuation": {"family": "synthetic", "script": "scripts/run_v58_native_continuation.py", "paper": "Appendix G.3", "description": "Counter-state transplant and continuation"},
-  "qwen-yarn-off": {"family": "realistic", "script": "scripts/qwen_yarn_off/full_run.py", "paper": "Figure 2C, Appendix C", "description": "Prepare and run the four-worker unscaled-RoPE supplement"},
-  "qwen-yarn-off-summary": {"family": "realistic", "script": "scripts/qwen_yarn_off/summarize.py", "paper": "Figure 2C, Appendix C", "description": "Audit and merge every scored YaRN-off request"},
-  "paper-figure2": {"family": "figures", "script": "empirical_law_1x4/build_figure.py", "paper": "Figure 2", "description": "Regenerate the observed-accuracy panels from explicit measurement paths"},
-  "synthetic-report": {"family": "synthetic", "script": "scripts/build_v58_synthetic_report.py", "paper": "Section 5, Appendix G", "description": "Build the historical report from an explicit completed run root"},
-  "additional-kth": {"family": "realistic", "script": "additional_experiments/kth_retrieval.py", "paper": "Appendix H", "description": "Construct kth-record inputs and run natural-output stages"},
-  "additional-category": {"family": "realistic", "script": "additional_experiments/category_full.py", "paper": "Appendix H", "description": "Construct category-counting inputs and generate natural outputs"}
+  "haystack": {
+    "family": "realistic",
+    "script": "scripts/sync_paul_graham_full_corpus.py",
+    "paper": "Sections 2–4, Appendix C",
+    "description": "Download and audit the registered essay corpus"
+  },
+  "behavior-freeze": {
+    "family": "realistic",
+    "script": "scripts/freeze_realistic_niah_v3_1.py",
+    "paper": "Section 2, Appendix C",
+    "description": "Construct the paired 1k–20k counting grid"
+  },
+  "behavior": {
+    "family": "realistic",
+    "script": "scripts/run_realistic_niah_v3_1.py",
+    "paper": "Section 2, Appendix C",
+    "description": "Evaluate a registered model on the frozen grid"
+  },
+  "behavior-analysis": {
+    "family": "realistic",
+    "script": "scripts/analyze_realistic_niah_v3_1.py",
+    "paper": "Section 2, Appendix C",
+    "description": "Analyze counting behavior and trace styles"
+  },
+  "long-context-freeze": {
+    "family": "realistic",
+    "script": "scripts/freeze_realistic_niah_v3_3_long_context.py",
+    "paper": "Section 2, Appendix C.4",
+    "description": "Construct the extended context-length grid"
+  },
+  "long-context": {
+    "family": "realistic",
+    "script": "scripts/run_realistic_niah_v3_3_long_context_worker.py",
+    "paper": "Section 2, Appendix C.4",
+    "description": "Run a long-context worker"
+  },
+  "nonthinking-freeze": {
+    "family": "realistic",
+    "script": "scripts/freeze_realistic_niah_v4.py",
+    "paper": "Section 3, Appendix D",
+    "description": "Construct controlled mechanism stimuli"
+  },
+  "nonthinking": {
+    "family": "realistic",
+    "script": "scripts/run_realistic_niah_v4.py",
+    "paper": "Section 3, Appendix D",
+    "description": "Capture states, analyze attention, and run interventions"
+  },
+  "thinking": {
+    "family": "realistic",
+    "script": "scripts/run_realistic_niah_v5.py",
+    "paper": "Section 4, Appendix E",
+    "description": "Native-thinking parsing, retrieval, geometry, and causal stages"
+  },
+  "enumeration": {
+    "family": "realistic",
+    "script": "scripts/run_realistic_niah_v6.py",
+    "paper": "Appendix F",
+    "description": "Structured index/bullet enumeration stages"
+  },
+  "synthetic-train": {
+    "family": "synthetic",
+    "module": "synthetic_counting_v58.run_v58",
+    "paper": "Section 5, Appendix G",
+    "description": "Train and analyze the four-layer, eight-head counting models"
+  },
+  "synthetic-corpus": {
+    "family": "synthetic",
+    "script": "scripts/fetch_tiny_shakespeare.py",
+    "paper": "Appendix G.1",
+    "description": "Restore the Tiny Shakespeare corpus if missing"
+  },
+  "synthetic-alignment": {
+    "family": "synthetic",
+    "script": "scripts/run_v58_alignment_supplement.py",
+    "paper": "Appendix G.2–G.4",
+    "description": "Aligned retrieval and representation analyses"
+  },
+  "synthetic-continuation": {
+    "family": "synthetic",
+    "script": "scripts/run_v58_native_continuation.py",
+    "paper": "Appendix G.3",
+    "description": "Counter-state transplant and continuation"
+  },
+  "qwen-yarn-off": {
+    "family": "realistic",
+    "script": "scripts/qwen_yarn_off/full_run.py",
+    "paper": "Figure 2C, Appendix C",
+    "description": "Prepare and run the four-worker unscaled-RoPE supplement"
+  },
+  "qwen-yarn-off-summary": {
+    "family": "realistic",
+    "script": "scripts/qwen_yarn_off/summarize.py",
+    "paper": "Figure 2C, Appendix C",
+    "description": "Audit and merge every scored YaRN-off request"
+  },
+  "paper-figure2": {
+    "family": "figures",
+    "script": "empirical_law_1x4/build_figure.py",
+    "paper": "Figure 2",
+    "description": "Regenerate the observed-accuracy panels from explicit measurement paths"
+  },
+  "synthetic-report": {
+    "family": "synthetic",
+    "script": "scripts/build_v58_synthetic_report.py",
+    "paper": "Section 5, Appendix G",
+    "description": "Build the historical report from an explicit completed run root"
+  },
+  "additional-kth": {
+    "family": "realistic",
+    "script": "additional_experiments/kth_retrieval.py",
+    "paper": "Appendix H",
+    "description": "Construct kth-record inputs and run natural-output stages"
+  },
+  "additional-category": {
+    "family": "realistic",
+    "script": "additional_experiments/category_full.py",
+    "paper": "Appendix H",
+    "description": "Construct category-counting inputs and generate natural outputs"
+  },
+  "additional-prepare": {
+    "family": "realistic",
+    "script": "additional_experiments/deployment/prepare_fresh_task_local.py",
+    "paper": "Appendix H",
+    "description": "Audit new natural generations and freeze a portable task-local campaign"
+  },
+  "additional-figures": {
+    "family": "figures",
+    "script": "additional_tasks_aurora/build_figures.py",
+    "paper": "Appendix H, Figures 42-44",
+    "description": "Render behavior, head scores and ablations from an analyzed task-local campaign"
+  }
 }

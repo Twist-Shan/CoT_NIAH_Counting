@@ -5,11 +5,14 @@ For a larger construction canvas, scale by canvas_width / 6.5. Do not shrink
 font sizes to make a crowded panel fit; enlarge/rearrange the panel instead.
 """
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import paper_font
 
 PAPER_WIDTH_INCHES = 6.5
 PAPER_PT = {"title": 11.0, "letter": 11.0, "axis": 10.0, "tick": 9.0,
             "legend": 9.0, "annotation": 9.0, "dense": 7.5}
-FONT_FAMILY = "Times New Roman"
+FONT_FAMILY = paper_font()
 TITLE_WEIGHT = "normal"
 MODELS = ["Qwen3-8B", "Gemma4-E4B"]
 COLORS = ["#168DCA", "#E87824"]
@@ -26,12 +29,6 @@ def scaled_sizes(canvas_width=6.5):
 def apply_style(canvas_width=6.5):
     """Register reference fonts, configure Matplotlib, and return role sizes."""
     import matplotlib.pyplot as plt
-    from matplotlib import font_manager
-    for filename in ["times.ttf", "timesbd.ttf", "timesi.ttf", "timesbi.ttf"]:
-        path = Path("C:/Windows/Fonts") / filename
-        if not path.is_file():
-            raise FileNotFoundError(f"Required appendix font absent: {path}")
-        font_manager.fontManager.addfont(str(path))
     sizes = scaled_sizes(canvas_width)
     scale = float(canvas_width) / PAPER_WIDTH_INCHES
     plt.rcParams.update({

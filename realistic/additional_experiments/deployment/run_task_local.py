@@ -27,6 +27,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True)
     ap.add_argument("--stage", choices=["discover", "canary", "full"], required=True)
+    ap.add_argument("--cache-dir", type=Path, help="Override model cache after relocating a frozen package")
     args = ap.parse_args()
     started = time.perf_counter()
     cfg = read(R / "protocol.json")
@@ -45,7 +46,7 @@ def main():
     from realistic_niah_v5.causal import _first_generated_city_record
     if not torch.cuda.is_available(): raise RuntimeError("CUDA is required for this stage")
     torch.manual_seed(20260908)
-    model, tok, adapter = load_registered_model(resolve_model_spec(args.model), cache_dir=cfg["cache"])
+    model, tok, adapter = load_registered_model(resolve_model_spec(args.model), cache_dir=args.cache_dir or cfg["cache"])
     model.eval()
     widths = list(adapter.num_heads)
     assert widths == cfg["widths"][args.model]
@@ -59,6 +60,8 @@ def main():
 
     def inputs(plan):
         source = Path(plan["source"])
+        if not source.is_absolute():
+            source = R / source
         for name, expected in plan["source_hashes"].items():
             assert sha(source / name) == expected
         p, g = read(source / "prompt.json"), read(source / "generation.json")
@@ -100,6 +103,51 @@ def main():
     for task in cfg["tasks"]:
         plans = read(R / "plans" / f"{task}_{args.model}.json")
         if args.stage == "discover":
+            if cfg.get('input_mode') == 'fresh_natural_generations':
+                from task_local_inputs import broad_spans, broad_score
+                for mode in ['nonthinking', 'native_thinking']:
+                    broad_observations, broad_files = [], {}
+                    for plan in plans:
+                        if plan['mode'] != mode or plan['split'] != 'discovery':
+                            continue
+                        path = out / task / 'broad' / mode / (plan['case_id']+'.json')
+                        if path.exists():
+                            row = read(path)
+                            assert row['protocol_sha256'] == sha(R / 'protocol.json')
+                        else:
+                            row = dict(case_id=plan['case_id'], seed=plan['seed'], split='discovery',
+                                mode=mode, heads=[], protocol_sha256=sha(R / 'protocol.json'))
+                            if plan['broad_prefix']:
+                                prompt, generation, ids = inputs(plan)
+                                spans = broad_spans(plan, prompt, tok)
+                                enc = encode_ids(ids[:plan['broad_prefix']])
+                                backend(); matrices, starts = query_attention_rows(model, adapter, enc); backend()
+                                for layer, (matrix, start) in enumerate(zip(matrices, starts)):
+                                    for head, alpha in enumerate(matrix):
+                                        masses = [float(alpha[max(0, a-start):min(len(alpha), b-start)].sum())
+                                                  if b > start and a-start < len(alpha) else 0.
+                                                  for a, b in spans]
+                                        row['heads'].append([layer, head, broad_score(masses)])
+                                row.update(prefix_length=plan['broad_prefix'], spans=spans, backend=backend())
+                            else:
+                                row['unavailable'] = plan['unavailable'].get('broad')
+                            write(path, row)
+                        if row['heads']:
+                            broad_observations.append(row)
+                        broad_files[path.relative_to(R).as_posix()] = sha(path)
+                    ranking = rank_discovery(broad_observations)
+                    bank = dict(model=args.model, task=task, mode=mode, assay='broad', ranking=ranking,
+                        sizes=cfg['broad_sizes'][args.model], source_hashes=broad_files, conditions={})
+                    for k in bank['sizes']:
+                        selected = select_heads(ranking, k)
+                        randoms = [random_control(selected, widths, 7000+i) for i in range(3)]
+                        bank['conditions'][str(k)] = dict(selected=selected, random=randoms,
+                            control_audit=control_audit(selected, widths, randoms))
+                    bankpath = R / 'banks' / f'{task}_{args.model}_{mode}_broad.json'
+                    if bankpath.exists():
+                        assert read(bankpath) == bank
+                    else:
+                        write(bankpath, bank)
             observations = []
             for p in plans:
                 if p["mode"] != "native_thinking" or p["split"] != "discovery": continue

@@ -3,8 +3,8 @@ import argparse,json,hashlib,sys,time,re,math,random
 from pathlib import Path
 from collections import Counter,defaultdict
 HERE=Path(__file__).resolve().parent
-sys.path[:0]=[str(HERE),str(HERE/'src'),str(HERE/'helpers')]
-from compile_transfer_registry_v3 import token_boundaries
+sys.path[:0]=[str(HERE),str(HERE/'src'),str(HERE/'helpers'),str(HERE.parents[1]/'src')]
+from compile_transfer_registry import token_boundaries
 from realistic_niah_v5.parsing import parse_trace_record
 from realistic_niah_v5.causal_sites import _rank_event_rows,_structural_event_rows
 
