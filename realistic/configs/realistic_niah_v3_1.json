@@ -1,0 +1,367 @@
+{
+  "schema_version": "realistic_niah_v3_1_preregistration_v1",
+  "protocol_version": "realistic_niah_v3_1",
+  "status": "preregistered_not_yet_executed",
+  "registration_date": "2026-08-07",
+  "inherits_from": "realistic_niah_v3",
+  "scope": [
+    "behavior_comparison",
+    "empirical_law",
+    "observable_cot_style_classification"
+  ],
+  "excluded_scope": [
+    "mechanism_dataset",
+    "mechanistic_representation_analysis",
+    "attention_head_analysis",
+    "activation_patching",
+    "causal_intervention",
+    "causal_mediation"
+  ],
+  "canonical_tokenizer": "Qwen/Qwen3-8B",
+  "canonical_tokenizer_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "target_passage_tokens": [
+    1000,
+    2000,
+    3000,
+    5000,
+    8000,
+    10000,
+    15000,
+    20000
+  ],
+  "needle_counts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    15,
+    18,
+    20
+  ],
+  "seeds": [
+    1234,
+    1235,
+    1236,
+    1237,
+    1238,
+    1239,
+    1240,
+    1241,
+    1242,
+    1243,
+    1244,
+    1245,
+    1246,
+    1247,
+    1248,
+    1249,
+    1250,
+    1251,
+    1252,
+    1253,
+    1254,
+    1255,
+    1256,
+    1257,
+    1258,
+    1259,
+    1260,
+    1261,
+    1262,
+    1263
+  ],
+  "seed_is_paired_cluster": true,
+  "expected_stimuli": 3360,
+  "final_length_includes_needles": true,
+  "insertion_depth_coordinate": "needle_char_start/final_passage_characters",
+  "insertion_depth_minimum_inclusive": 0.05,
+  "insertion_depth_maximum_inclusive": 0.95,
+  "haystack_source_mode": "multi_file_no_repeat",
+  "query_layout": "cue_before_query_after",
+  "prompt_modes": [
+    "direct",
+    "enumeration_index",
+    "enumeration_bullet",
+    "native_thinking"
+  ],
+  "all_prompt_modes_confirmatory": true,
+  "switchable_models": [
+    "Qwen3-4B",
+    "Qwen3-8B",
+    "Qwen3-14B",
+    "Qwen3-32B",
+    "Gemma4-E4B",
+    "Gemma4-12B",
+    "Gemma4-26B-A4B",
+    "Gemma4-31B",
+    "Nemotron-Nano-v2-9B",
+    "Nemotron-3-Nano-4B"
+  ],
+  "matched_reasoning_pairs": {
+    "GLM-Z1-9B-0414": "GLM-4-9B-0414",
+    "Ministral-3-Reasoning-8B": "Ministral-3-Instruct-8B"
+  },
+  "model_revisions": {
+    "Qwen3-4B": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "Qwen3-8B": "b968826d9c46dd6066d109eabc6255188de91218",
+    "Qwen3-14B": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+    "Qwen3-32B": "9216db5781bf21249d130ec9da846c4624c16137",
+    "Gemma4-E4B": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+    "Gemma4-12B": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+    "Gemma4-26B-A4B": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "Gemma4-31B": "842da3794eaa0b77d5f08bae87a17459d91ff475",
+    "Nemotron-Nano-v2-9B": "6533e8de2c68e4536bf7c411d7a3ce5734111476",
+    "Nemotron-3-Nano-4B": "dfaf35de3e30f1867dd8dbc38a7fc9fb52d3914f",
+    "GLM-4-9B-0414": "645b8482494e31b6b752272bf7f7f273ef0f3caf",
+    "GLM-Z1-9B-0414": "b221b06fefb23ca320922cf6e68ab5f2fb82de81",
+    "Ministral-3-Instruct-8B": "5b26027e7b19eeb4b7352e1fed3926375dd2cb4d",
+    "Ministral-3-Reasoning-8B": "81eaece1948f3875421d9a45bc55487d10e2d894"
+  },
+  "raw_checkpoint_count": 14,
+  "behavior_comparison_slots": 12,
+  "expected_shards": 48,
+  "expected_requests_per_shard": 3360,
+  "expected_requests_total": 161280,
+  "outcomes": {
+    "primary_accuracy": {
+      "name": "parsed_exact_accuracy",
+      "numerator": "n_correct_parsed",
+      "denominator": "n_total",
+      "parse_failure_is_incorrect": true
+    },
+    "required_accuracy_decomposition": [
+      "n_total",
+      "n_parseable",
+      "parse_rate",
+      "n_correct_parsed",
+      "parsed_exact_accuracy",
+      "conditional_numeric_accuracy",
+      "n_format_compliant",
+      "format_compliance_rate",
+      "n_correct_and_format_compliant",
+      "n_truncated",
+      "truncation_rate",
+      "strict_accuracy"
+    ],
+    "primary_bias": {
+      "name": "trimmed_signed_bias_10",
+      "defined_on": "successfully parsed responses",
+      "signed_deviation": "predicted_count - N",
+      "tail_fraction_each_side": 0.1,
+      "trim_count": "floor(0.10 * n_parseable_in_cell)",
+      "implementation": "order_statistic_symmetric_trim",
+      "minimum_parseable_per_confirmatory_cell": 20,
+      "impute_parse_failure": false
+    },
+    "secondary_bias_and_tail_diagnostics": [
+      "mean_signed_deviation",
+      "median_signed_deviation",
+      "mean_absolute_deviation",
+      "median_absolute_deviation",
+      "absolute_deviation_q90",
+      "absolute_deviation_q95",
+      "maximum_absolute_deviation",
+      "undercount_rate_among_parseable",
+      "overcount_rate_among_parseable",
+      "top_5_percent_absolute_error_share"
+    ]
+  },
+  "empirical_law": {
+    "fit_separately_by_prompt_mode": true,
+    "shared_candidate_structure_across_models": true,
+    "model_specific_intercepts": true,
+    "model_specific_slopes": true,
+    "accuracy_link": "logit",
+    "bias_link": "identity",
+    "accuracy_observation_models": {
+      "primary": {
+        "name": "request_level_bernoulli_logistic",
+        "unit": "request",
+        "distribution": "Bernoulli",
+        "outcome": "parsed exact correctness"
+      },
+      "distributional_confirmatory": {
+        "unit": "behavior_slot x prompt_mode x N x L cell",
+        "outcome": "n_correct_parsed out of n_total",
+        "reference_distribution": "Binomial",
+        "overdispersed_distribution": "Beta-Binomial",
+        "mean_link": "logit",
+        "beta_binomial_parameterization": "a = mu * kappa_model_mode; b = (1 - mu) * kappa_model_mode",
+        "overdispersion": "rho_model_mode = 1 / (kappa_model_mode + 1)",
+        "kappa_constant_over_N_and_L": true,
+        "primary_metric": "held-out negative log predictive density",
+        "diagnostics": [
+          "held-out Brier score",
+          "calibration by predicted-probability bin",
+          "randomized probability integral transform",
+          "50 percent predictive interval coverage",
+          "80 percent predictive interval coverage",
+          "95 percent predictive interval coverage",
+          "kappa paired-seed bootstrap interval",
+          "rho paired-seed bootstrap interval"
+        ],
+        "binomial_always_reported_as_reference": true,
+        "interaction_claim_primary_source": "request_level_bernoulli_logistic",
+        "beta_binomial_interaction_is_robustness_analysis": true
+      }
+    },
+    "length_unit": "L_k = L / 1000",
+    "log_base": "natural",
+    "candidate_registry_in_tie_break_order": [
+      {
+        "name": "intercept",
+        "terms": []
+      },
+      {
+        "name": "N",
+        "terms": ["N"]
+      },
+      {
+        "name": "L",
+        "terms": ["L_k"]
+      },
+      {
+        "name": "logN",
+        "terms": ["logN"]
+      },
+      {
+        "name": "logL",
+        "terms": ["logL"]
+      },
+      {
+        "name": "linear_additive",
+        "terms": ["N", "L_k"]
+      },
+      {
+        "name": "log_additive",
+        "terms": ["logN", "logL"]
+      },
+      {
+        "name": "N_logL_additive",
+        "terms": ["N", "logL"]
+      },
+      {
+        "name": "logN_L_additive",
+        "terms": ["logN", "L_k"]
+      },
+      {
+        "name": "linear_interaction",
+        "terms": ["N", "L_k", "N:L_k"],
+        "parent": "linear_additive"
+      },
+      {
+        "name": "log_interaction",
+        "terms": ["logN", "logL", "logN:logL"],
+        "parent": "log_additive"
+      },
+      {
+        "name": "N_logL_interaction",
+        "terms": ["N", "logL", "N:logL"],
+        "parent": "N_logL_additive"
+      },
+      {
+        "name": "logN_L_interaction",
+        "terms": ["logN", "L_k", "logN:L_k"],
+        "parent": "logN_L_additive"
+      }
+    ],
+    "interaction_eligibility": {
+      "hierarchical_parents_required": true,
+      "must_improve_primary_held_seed_loss_over_parent": true,
+      "joint_null": "all model-specific interaction slopes equal zero",
+      "test": "paired-seed cluster bootstrap",
+      "familywise_correction": "Holm across four interaction candidates within outcome x prompt_mode",
+      "adjusted_alpha": 0.05,
+      "report_model_specific_intervals": true,
+      "report_model_specific_holm_adjusted_p_values": true
+    },
+    "selection": {
+      "nested_in_training_split": true,
+      "accuracy_primary_loss": "log_loss",
+      "accuracy_secondary_metrics": [
+        "Brier_score",
+        "calibration_intercept",
+        "calibration_slope",
+        "deviance_explained"
+      ],
+      "bias_primary_loss": "MAE",
+      "bias_secondary_metrics": ["RMSE", "R2"],
+      "rule": "one_standard_error_then_fewest_terms_then_registry_order"
+    }
+  },
+  "validation": {
+    "candidate_selection_nested_within_outer_training_data": true,
+    "accuracy_seed_grouped_folds": 5,
+    "bias_seed_grouped_folds": 3,
+    "bias_split_minimum_parseable": "ceil(2 * seeds_in_split / 3)",
+    "seed_fold_assignment": "sort seed IDs ascending and assign round-robin",
+    "leave_one_N_level_out": true,
+    "leave_one_L_level_out": true,
+    "report_boundary_extrapolation_separately": true,
+    "leave_one_behavior_slot_out_structure_stability": true,
+    "leave_one_behavior_slot_out_is_not_zero_calibration_prediction": true,
+    "paired_seed_cluster_bootstrap_replicates": 2000,
+    "bootstrap_recompute_cell_summaries": true,
+    "bootstrap_report_fixed_structure_inference": true,
+    "bootstrap_report_full_reselection_stability": true,
+    "bootstrap_reselection_interaction_set": "condition on interactions eligible in the full-data held-loss plus Holm-adjusted joint test"
+  },
+  "prompt_mode_comparisons": {
+    "all_six_pairwise_contrasts_confirmatory": true,
+    "accuracy_interval": "paired-seed cluster bootstrap 95% interval",
+    "accuracy_test": "exact McNemar",
+    "multiplicity": "Holm across six contrasts within behavior slot",
+    "bias_interval": "paired-seed cluster bootstrap 95% interval",
+    "separate_same_checkpoint_from_checkpoint_confounded": true
+  },
+  "cot_style": {
+    "codebook": "docs/realistic_niah_v3_1_cot_style_codebook.md",
+    "unit": "request completion",
+    "representation": "non-exclusive flags plus one exclusive dominant style",
+    "classifier_frozen_before_outcome_join": true,
+    "labels": [
+      "index_enumeration",
+      "bullet_enumeration",
+      "word_enumeration",
+      "running_tally",
+      "arithmetic_grouping",
+      "scan_or_retrieval_summary",
+      "answer_only",
+      "mixed",
+      "other_unclassifiable"
+    ],
+    "process_flags": [
+      "repetition",
+      "restart",
+      "self_correction",
+      "template_leakage",
+      "truncated",
+      "empty_reasoning"
+    ],
+    "human_validation_random_sample": 600,
+    "human_validation_challenge_sample": 200,
+    "dominant_style_minimum_kappa": 0.75,
+    "multilabel_minimum_macro_f1": 0.8,
+    "macro_f1_zero_support_rule": "omit a label only when both human-positive and automated-positive support are zero",
+    "conditional_outcome_analysis_is_associational": true
+  },
+  "execution": {
+    "prospective_amendment_date": "2026-08-07",
+    "logical_shards": 48,
+    "physical_model_bundles": 14,
+    "one_model_load_per_bundle_attempt": true,
+    "prompt_payload_storage": "sha256_only_reconstructible_from_frozen_inputs",
+    "output_token_ids_retained": true,
+    "confirmatory_reference_fit_backend": "scipy_float64_cpu",
+    "optional_acceleration_fit_backend": "torch_float64_cpu_or_cuda",
+    "gpu_backend_requires_scipy_parity": true
+  },
+  "amendment_policy": "date, rationale, affected hypotheses, and confirmatory/exploratory status must be recorded before the affected analysis"
+}

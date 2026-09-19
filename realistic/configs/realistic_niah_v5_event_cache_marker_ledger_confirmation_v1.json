@@ -1,0 +1,78 @@
+{
+  "schema_version": "event_cache_marker_ledger_confirmation_plan_v1",
+  "frozen_date": "2026-08-25",
+  "status": "frozen_before_confirmation_execution",
+  "model": "Qwen3-8B",
+  "receiver": 5,
+  "valid_variant": "insert_valid_item",
+  "invalid_variant": "insert_markerless_valid_payload",
+  "discovery_seeds": [1288, 1289, 1290, 1291, 1293],
+  "confirmation_seeds": [1255, 1257, 1259, 1262, 1265, 1268, 1271],
+  "read_layers": [15, 16, 24],
+  "primary_read_layer": 24,
+  "primary_intervention": {
+    "region": "marker",
+    "components": ["key", "value"],
+    "layers": "all_decoder_layers",
+    "directions": [
+      "insert_valid_item_to_insert_markerless_valid_payload",
+      "insert_markerless_valid_payload_to_insert_valid_item"
+    ],
+    "estimand": "within_seed_mean_donor_axis_progress_across_directions",
+    "null": "mean progress equals zero under sign flips",
+    "test": "exact_two_sided_seed_sign_flip",
+    "alpha": 0.05,
+    "minimum_effect_size": 0.5
+  },
+  "specificity_contrasts": [
+    {
+      "name": "marker_minus_closing",
+      "control_region": "closing",
+      "minimum_effect_size": 0.25,
+      "test": "exact_two_sided_seed_sign_flip",
+      "alpha": 0.05
+    },
+    {
+      "name": "marker_minus_payload",
+      "control_region": "payload",
+      "minimum_effect_size": 0.25,
+      "test": "exact_two_sided_seed_sign_flip",
+      "alpha": 0.05
+    }
+  ],
+  "implementation_controls": {
+    "full_event_key_value_expected_axis_progress": 1.0,
+    "full_event_cache_must_exactly_equal_donor": true,
+    "identity_regions": ["b5", "preceding_event_width"],
+    "identity_regions_expected_changed_elements": 0,
+    "dense_cache_equivalence_seed": 1255,
+    "dense_cache_probe_predictions_must_match": true
+  },
+  "interpretation_rule": {
+    "marker_ledger_supported_if": [
+      "primary sign-flip p < 0.05",
+      "primary mean donor-axis progress >= 0.5",
+      "marker-minus-closing sign-flip p < 0.05 and mean >= 0.25",
+      "marker-minus-payload sign-flip p < 0.05 and mean >= 0.25",
+      "all implementation controls pass"
+    ],
+    "compact_closing_commit_disfavored_if": "marker-minus-closing specificity criterion passes",
+    "scope": "The result localizes causal history to the inserted marker K/V field; it does not by itself identify individual attention heads."
+  },
+  "frozen_inputs": {
+    "eligible_generations_sha256": "4d72dd74399b4500bf1d1ce57831693b8c9a919c90c72ce74f6676546d45e3a4",
+    "frozen_probes_sha256": "085c3a71df3d2d6eb176e76eb930b39b98d32a95e11286459d317eac1ab41a39",
+    "runner_sha256": "f03b9ab43f658f6dd46b4dbaf5cbe684bc45e2e14c96c727ea5ee260de955121",
+    "cache_splice_module_sha256": "9541d1a2b72200c96bc9f081a1b17936dbc7bc50c5c6f0d33ff41637f484cce9",
+    "discovery_trials_sha256": "8cfca37b8463a8a7303c4c377f3c0ade7901aee8f210ac6535babe59d5bec7f0",
+    "discovery_summary_sha256": "8f2e115ff1ae1bfb78ee70e9fae3a9143429344c2bbde23dfbfa8ee1e0724fcf"
+  },
+  "discovery_snapshot": {
+    "marker_bidirectional_l24_mean_progress": 0.9403394562542872,
+    "closing_bidirectional_l24_mean_progress": 0.01700207303179586,
+    "payload_bidirectional_l24_mean_progress": 0.04428893824353526,
+    "preclosing_bidirectional_l24_mean_progress": 0.9829979784402903,
+    "b5_bidirectional_l24_mean_progress": 0.0,
+    "preceding_event_width_bidirectional_l24_mean_progress": 0.0
+  }
+}

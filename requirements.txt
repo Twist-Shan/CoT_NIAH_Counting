@@ -1,0 +1,3 @@
+# CPU checks, synthetic training, and offline analysis. Install PyTorch for
+# your hardware before this file if a specific CUDA wheel is required.
+-r requirements/cpu.txt

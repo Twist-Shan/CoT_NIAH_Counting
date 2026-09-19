@@ -1,0 +1,74 @@
+{
+  "schema_version": "realistic_niah_v6_bullet_terminal_relay_geometry_amendment_v1",
+  "status": "FROZEN_AFTER_SUFFIX8_ESTIMABILITY_AUDIT_BEFORE_SUFFIX4_INTERVENTIONS",
+  "frozen_utc": "2026-09-01T04:57:37.9151227Z",
+  "base_extension_contract": "configs/realistic_niah_v6_answer_trace_extension_v1.json",
+  "base_extension_contract_sha256": "5176fbc48942925f2ccf77ed1be1d0054518d682433eadbe2741fd62df420201",
+  "scientific_label": "post_hoc_task_adapted_bullet_relay_replication",
+  "motivation": {
+    "original_geometry": "suffix8",
+    "affected_observation": "enumeration_bullet/Gemma4-E4B had zero geometry-eligible true-source seeds because every registered pair contained a trace item shorter than eight tokens",
+    "planned_seed_count": 10,
+    "planned_pair_count": 190,
+    "not_applicable_pair_count": 190,
+    "planned_factorial_rows": 1140,
+    "eligible_seed_count": 0,
+    "diagnosis": "token-span support mismatch between the fixed suffix8 geometry and the Bullet surface grammar; not a zero effect and not a scientific gate failure",
+    "evidence_manifest_sha256": "d0cfe454e34aa7ee5275b12c93d202bca88fed448ff069289d984b49445c9134",
+    "suffix8_intervention_outputs_existed": true,
+    "suffix8_effect_magnitudes_may_have_been_read": true
+  },
+  "scope": {
+    "prompt_modes": [
+      "enumeration_bullet"
+    ],
+    "models": [
+      "Qwen3-8B",
+      "Gemma4-E4B"
+    ],
+    "split": "confirmation",
+    "application_unit": "the complete Bullet grammar across both registered models",
+    "reason_for_uniform_application": "avoid choosing geometry by a model-specific intervention result"
+  },
+  "adaptation": {
+    "original_geometry": "suffix8",
+    "replication_geometry": "suffix4",
+    "geometry_choice_rule": "use the largest smaller fixed-width geometry already registered in the audited kernel; do not inspect suffix4 intervention outcomes and do not adapt width per pair",
+    "pair_ineligibility_rule": "a pair shorter than suffix4 remains not_applicable in all six factorial arms",
+    "per_pair_geometry_adaptation": false,
+    "same_source_conditions": true,
+    "same_relay_conditions": true,
+    "same_model_specific_layers": true,
+    "same_cohort_and_pair_plan_rule": true,
+    "same_sequence_margin_estimands": true,
+    "same_true_source_seed_bootstrap": true,
+    "same_primary_and_secondary_gates": true,
+    "original_suffix8_artifacts_preserved": true,
+    "output_directory_name": "terminal_relay_partial_confirmation_suffix4"
+  },
+  "selection_firewall": {
+    "suffix4_intervention_outputs_existed": false,
+    "suffix4_intervention_outcomes_read": false,
+    "suffix4_effect_magnitudes_read": false,
+    "geometry_chosen_using_suffix4_outcomes": false,
+    "models_selected_using_intervention_outcomes": false,
+    "cohort_changed": false,
+    "pair_selection_rule_changed": false,
+    "source_or_relay_layers_changed": false,
+    "estimands_or_gates_changed": false
+  },
+  "claim_boundary": {
+    "may_replace_original_suffix8_assay": false,
+    "may_be_called_original_frozen_confirmation": false,
+    "may_close_the_bullet_grammar_estimability_gap": true,
+    "original_suffix8_not_applicable_result_must_remain_reported": true,
+    "allowed_claim_if_primary_gates_pass": "Under the task-adapted suffix4 Bullet geometry, a terminal trace state causally changes answer scoring in part through the post-terminal residual suffix.",
+    "prohibited_claims": [
+      "complete mediation",
+      "exclusive mediation through the answer-query token",
+      "suffix4 was part of the original extension contract",
+      "the suffix8 Bullet-Gemma cell had a zero effect",
+      "the adapted geometry proves an identical neural circuit across grammars or models"
+    ]
+  }
+}

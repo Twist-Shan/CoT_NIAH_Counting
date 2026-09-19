@@ -1,0 +1,50 @@
+{
+  "schema_version": "realistic_niah_v5_behavior_anchor_routing_v1",
+  "policy_id": "gemma_k8_target_grammar_retrieval_window_dev_v1",
+  "axis": "target_grammar_class",
+  "routes": {
+    "adjacent_rank_after_city": {
+      "required": [
+        "p0_item_end",
+        "unit_pre_d1",
+        "city_pre_d1"
+      ],
+      "optional": [
+        "record_clause_pre_d1",
+        "post_open_delimiter"
+      ]
+    },
+    "adjacent_rank_before_city": {
+      "required": [
+        "p0_item_end",
+        "pre_marker_d1",
+        "post_marker",
+        "city_pre_d1"
+      ],
+      "optional": [
+        "record_clause_pre_d1",
+        "post_open_delimiter"
+      ]
+    },
+    "same_unit_rank_after_city": {
+      "required": [
+        "p0_item_end",
+        "unit_pre_d1",
+        "post_open_delimiter",
+        "city_pre_d1"
+      ],
+      "optional": []
+    },
+    "same_unit_rank_before_city": {
+      "required": [
+        "p0_item_end",
+        "pre_marker_d1",
+        "post_marker",
+        "city_pre_d1"
+      ],
+      "optional": [
+        "post_open_delimiter"
+      ]
+    }
+  }
+}

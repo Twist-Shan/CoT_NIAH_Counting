@@ -1,0 +1,2 @@
+# Separate Linux/CUDA environment for the vLLM behavioral benchmark.
+-r ../realistic/requirements-inference-v3.txt

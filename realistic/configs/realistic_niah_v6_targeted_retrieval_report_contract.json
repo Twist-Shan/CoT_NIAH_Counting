@@ -1,0 +1,122 @@
+{
+  "schema_version": "realistic_niah_v6_targeted_retrieval_report_contract_v1",
+  "status": "FROZEN_OUTCOME_BLIND_PROTOCOL_CORRECTION",
+  "frozen_at_utc": "2026-08-28T23:12:44Z",
+  "scope": "targeted_retrieval_discovery_and_confirmation_only",
+  "applies_to_prompt_modes": [
+    "enumeration_index",
+    "enumeration_bullet"
+  ],
+  "models": {
+    "Qwen3-8B": {
+      "bank_grid": [
+        32,
+        64,
+        80,
+        96,
+        112,
+        128
+      ],
+      "control_matching_by_k": {
+        "32": "layer_matched",
+        "64": "layer_matched",
+        "80": "layer_matched",
+        "96": "layer_matched",
+        "112": "layer_matched",
+        "128": "global"
+      },
+      "random_condition_by_k": {
+        "32": "layer_matched_random",
+        "64": "layer_matched_random",
+        "80": "layer_matched_random",
+        "96": "layer_matched_random",
+        "112": "layer_matched_random",
+        "128": "global_random"
+      },
+      "report_reference_k": 128
+    },
+    "Gemma4-E4B": {
+      "bank_grid": [
+        1,
+        2,
+        4,
+        6,
+        8
+      ],
+      "control_matching_by_k": {
+        "1": "layer_matched",
+        "2": "layer_matched",
+        "4": "layer_matched",
+        "6": "layer_matched",
+        "8": "layer_matched"
+      },
+      "random_condition_by_k": {
+        "1": "layer_matched_random",
+        "2": "layer_matched_random",
+        "4": "layer_matched_random",
+        "6": "layer_matched_random",
+        "8": "layer_matched_random"
+      },
+      "report_reference_k": 6
+    }
+  },
+  "downstream_bank_selection": {
+    "selection_split": "v6_discovery",
+    "primary_estimand": "seed_equal_selected_minus_mean_of_three_registered_random_next_city_failure",
+    "rule": "maximize_primary_estimand_exact_tie_smaller_k",
+    "selected_independently_by_prompt_mode_and_model": true,
+    "report_reference_k_is_audit_reference_not_forced_choice": true,
+    "confirmation_may_not_reselect_k": true,
+    "negative_discovery_result_is_retained": true
+  },
+  "source_evidence": {
+    "native_thinking_report": {
+      "path_at_freeze": "reports/NiaH_Native-Thinking_report.html",
+      "sha256": "d5aee7e430244ecff18456b438b780010e52adac40ac76dacd2033b3ad96883c",
+      "displayed_qwen_grid": [
+        32,
+        64,
+        80,
+        96,
+        112,
+        128
+      ],
+      "displayed_gemma_grid": [
+        1,
+        2,
+        4,
+        6,
+        8
+      ]
+    },
+    "qwen_final_merged_dose_grid": {
+      "path_at_freeze": "reports/v5_native_final_localizers/analysis/qwen_final_merged_dose_grid.json",
+      "sha256": "cafaa2437248c4ef63c593e775d61473c6f97b9ce55541d08ae4ac2ad34d17db",
+      "k128_random_condition": "global_random"
+    },
+    "gemma_hybrid_dose_grid": {
+      "path_at_freeze": "reports/v5_native_hybrid_supplement/Gemma4-E4B/analysis_hybrid_supplement_registered_v1/hybrid_dose_grid_complete.json",
+      "sha256": "d6a724f1c43a908e0a76ed29d42d84851bbb6385ca1b2a7469c876600890efa5",
+      "all_registered_random_conditions": "layer_matched_random"
+    }
+  },
+  "protocol_correction": {
+    "trigger": "qwen_k125_layer_matched_control_structural_infeasibility",
+    "trigger_is_sample_failure": false,
+    "targeted_behavior_outcomes_observed_before_freeze": false,
+    "confirmation_outcomes_observed_before_freeze": false,
+    "selection_outcomes_used_to_choose_grid_or_control_family": false,
+    "discovery_outcomes_may_choose_downstream_k_within_frozen_grid": true,
+    "user_clarification_received_before_targeted_behavior": true,
+    "completed_qwen_k32_to_k112_plans_may_be_reused_only_after_hash_and_arm_audit": true,
+    "qwen_k125_is_not_registered_in_the_cited_final_report_grid": true,
+    "qwen_k125_partial_plan_output_is_not_a_scientific_result": true,
+    "frozen_base_config_files_mutated": false,
+    "base_config_qwen_grid_is_known_overinclusive_for_this_subprotocol": true,
+    "base_config_sha256": {
+      "enumeration_index": "d4ddd0da1a526de3f16d51ad4124cfdf54f49a8dc71b8c08717471bae6deadce",
+      "enumeration_bullet": "b3947fce752495487d46a9c985eb157b7277a9f6435be0a89cabe4173890bb82"
+    },
+    "reason_base_config_remains_unchanged": "Preserve hashes already embedded in completed generation, representation, replacement, and source-write artifacts. This narrower contract supersedes only the targeted-retrieval grid/control fields."
+  }
+}

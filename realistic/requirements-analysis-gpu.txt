@@ -1,0 +1,5 @@
+-r requirements-analysis.txt
+
+# Install the CUDA-enabled wheel matching the host driver/runtime. The inference
+# environment already provides this dependency on the registered GPU machines.
+torch>=2.4,<3

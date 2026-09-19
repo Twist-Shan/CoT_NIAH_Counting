@@ -1,0 +1,61 @@
+{
+  "schema_version": "realistic_niah_v5_partial_endpoint_inspection_strict_v2",
+  "recorded_utc": "2026-08-21T15:46:47Z",
+  "status": "USER_REQUESTED_EXPLORATORY_PARTIAL_SNAPSHOT_FULLY_COMPLETED_SEEDS_ONLY",
+  "supersedes_for_inference": "configs/realistic_niah_v5_partial_endpoint_inspection_20260821_1542.json",
+  "reason_for_refinement": "The preliminary snapshot excluded incomplete five-arm anchors but retained the partially completed terminal seed. This strict snapshot also requires every frozen anchor for an included seed to be complete.",
+  "pause": {
+    "method": "SIGSTOP",
+    "Gemma4-E4B_runner_pid": 44291,
+    "Qwen3-8B_runner_pid": 45823,
+    "verified_process_state": "T",
+    "supervisors_and_gatekeepers_left_running": true
+  },
+  "analysis": {
+    "script": "scripts/inspect_realistic_niah_v5_targeted_count_partial_snapshot.py",
+    "script_sha256": "954855e55b1f6ebcb2b5ad08e0019c9726be8d91f1fc89264feffeab59031807",
+    "bootstrap_unit": "seed",
+    "bootstrap_samples": 10000,
+    "inclusion": "Only seeds for which the completed five-arm anchor count equals the frozen anchor-registry count.",
+    "formal_gate_written": false
+  },
+  "snapshots": {
+    "Qwen3-8B": {
+      "path": "work/v5_native_count_stream/exploratory_partial_endpoint_snapshot_20260821_1544_strict/Qwen3-8B/snapshot.json",
+      "sha256": "9050ef869c9952d20fa1e281fea7c8567b6c5e9e080b059212764b599b635c27",
+      "observed_shards": 481,
+      "fully_completed_seeds": 11,
+      "complete_anchors": 89,
+      "excluded_partial_seed": 1245,
+      "snapshot_all_primary_pass": true,
+      "clean_accuracy": [0.976911976911977, 0.9437229437229437, 1.0],
+      "selected_minus_random_final_count_failure": [0.6857263107263107, 0.6263227513227514, 0.7472342472342471],
+      "selected_minus_random_joint_retrieval_count_failure": [0.7693001443001443, 0.6863861832611831, 0.8477047258297259],
+      "selected_minus_random_exact_minus_one": [-0.007575757575757575, -0.03787878787878787, 0.022727272727272728]
+    },
+    "Gemma4-E4B": {
+      "path": "work/v5_native_count_stream/exploratory_partial_endpoint_snapshot_20260821_1544_strict/Gemma4-E4B/snapshot.json",
+      "sha256": "976eb2d19030c9987517c3b849112ae2934bd1906a7f0b588182a0efd266f048",
+      "observed_shards": 505,
+      "fully_completed_seeds": 14,
+      "complete_anchors": 98,
+      "excluded_partial_seed": 1248,
+      "snapshot_all_primary_pass": false,
+      "clean_accuracy": [1.0, 1.0, 1.0],
+      "selected_minus_random_final_count_failure": [0.1016439909297052, -0.015360449735449729, 0.21368598828420252],
+      "selected_minus_random_joint_retrieval_count_failure": [0.5846655328798186, 0.48749716553287975, 0.6707766439909297],
+      "selected_minus_random_final_undercount": [0.5942554799697656, 0.5130319349962207, 0.6711678004535145],
+      "selected_minus_random_exact_minus_one": [0.5863189720332577, 0.5080073696145124, 0.659734977324263]
+    }
+  },
+  "protocol_implications": {
+    "partial_aggregate_effects_read": true,
+    "confirmation_seeds_opened": false,
+    "bridge_opened": false,
+    "design_changed_after_partial_read": false,
+    "partial_snapshot_is_formal_discovery": false,
+    "partial_snapshot_can_open_confirmation_or_bridge": false,
+    "fixed_horizon_discovery_remains_interpretable_only_if": "Both runners resume unchanged, all frozen 20 discovery seeds complete, and no stopping, branch selection, sample change, gate change, or design change is made from either partial snapshot.",
+    "disclosure_required": true
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "targeted_retrieval": {"min_lift": 2.0, "min_mass": 0.10, "min_queries": 2},
+  "induction": {"min_lift": 2.0, "min_mass": 0.10, "min_queries": 2},
+  "successor": {"min_lift": 2.0, "min_mass": 0.10, "min_queries": 2},
+  "compute_dtype": "float32",
+  "allow_multi_label": true,
+  "max_full_attention_tokens": 4096
+}

@@ -1,0 +1,74 @@
+{
+  "schema_version": "realistic_niah_v4_4_ablation_seed_extrapolation_selection_v1",
+  "selection_status": "frozen_before_seed_extrapolation",
+  "selection_rule": {
+    "applied_separately_per_model": true,
+    "candidate_head_bank": "broad_aggregation",
+    "candidate_domain": [1, 2, 3, 4, 5],
+    "frozen_values_source": "human review of the completed dual-population discovery diagnostics",
+    "no_reselection_rule": "neither model nor top_n may be changed after any seed 1296..1315 outcome is observed",
+    "interpretation": "pre-specified intervention doses for out-of-seed replication, not estimates of a unique number of functional heads"
+  },
+  "discovery_source": {
+    "implementation_commit": "c185ea95d0a67127f52d9901b303683185287b03",
+    "table": "reports/v4_non-thinking_causal/v4_4_causal_v2/dual_population_ablation_top_n_1_5.csv",
+    "table_sha256": "364e3cd28f9aa7c3ca3476bc762e05f01b7800c35177729f6494f809197a4775",
+    "candidate_summary_table": "reports/v4_non-thinking_causal/v4_4_causal_v2/ablation_candidate_summary.csv",
+    "candidate_summary_table_sha256": "bfe540f36c5f0d184a65df47fe4a480e2ccea7d8352fb2177de83a8f14043762",
+    "ablation_discovery_seeds": [1274, 1275, 1276, 1277, 1278, 1279, 1280, 1281, 1282, 1283],
+    "prior_seed_end_inclusive": 1295,
+    "prior_seed_scope_note": "1295 is a conservative upper bound covering every prior V4.4 correct-intervention supplement, not only the ablation discovery prefix"
+  },
+  "confirmation_design": {
+    "seeds": [
+      1296,
+      1297,
+      1298,
+      1299,
+      1300,
+      1301,
+      1302,
+      1303,
+      1304,
+      1305,
+      1306,
+      1307,
+      1308,
+      1309,
+      1310,
+      1311,
+      1312,
+      1313,
+      1314,
+      1315
+    ],
+    "counts": [1, 2, 3, 4, 5],
+    "scope": "answer_query",
+    "random_replicates": 3,
+    "random_baseline": "all_heads_in_matched_layers_without_replacement_overlap_allowed",
+    "shared_run_rule": "all-example and clean-correct analyses are derived from the same intervention rows; clean-correct is the exact baseline-correct and format-valid subset",
+    "all_examples_primary_endpoint": "ranked-minus-layer-matched-random absolute generated-count shift",
+    "clean_correct_primary_endpoint": "ranked-minus-layer-matched-random correct-to-wrong rate",
+    "uncertainty": "nonparametric seed-cluster bootstrap 95% CI with 10000 deterministic draws",
+    "companion_test": "two-sided seed-cluster sign-flip test for registered accuracy, absolute-error, and prediction-change endpoints",
+    "multiplicity_note": "four model-by-dose families are reported individually; any joint confirmatory claim must account for these four frozen comparisons"
+  },
+  "models": {
+    "Qwen3-8B": {
+      "head_bank": "broad_aggregation",
+      "top_ns": [2, 4],
+      "freeze_rationale": {
+        "2": "discovery candidate for the all-example absolute-shift endpoint",
+        "4": "discovery candidate for the clean-correct failure endpoint"
+      }
+    },
+    "Gemma4-E4B": {
+      "head_bank": "broad_aggregation",
+      "top_ns": [1, 2],
+      "freeze_rationale": {
+        "1": "strongest discovery candidate for both registered populations",
+        "2": "pre-specified adjacent dose requested before seed extrapolation"
+      }
+    }
+  }
+}

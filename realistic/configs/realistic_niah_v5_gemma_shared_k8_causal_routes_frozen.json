@@ -1,0 +1,55 @@
+{
+  "schema_version": "realistic_niah_v5_behavior_anchor_routing_v1",
+  "policy_id": "gemma_shared_p0_k8_native_routes_frozen_20260819_v1",
+  "status": "frozen_after_development_only_exact_site_smokes_before_registered_confirmation",
+  "axis": "target_grammar_class",
+  "head_bank": {
+    "selection_grammar": "same_unit_rank_before_city",
+    "selection_anchor_role": "p0_item_end",
+    "selection_metric": "source_attention_mass",
+    "bank_size": 8,
+    "selected_bank_sha256": "93a174e36bf14938fdea4a147a032e245caef760f9631e193553f9828d8a6874",
+    "ablation_schedule": "selected pre-O slices off from p0_item_end through every later decode forward"
+  },
+  "development_evidence": {
+    "adjacent_rank_after_city": "K8 selected failed on 15/30 versus 1/30 clean at p0_item_end; marker/city-adjacent alternatives were much weaker",
+    "same_unit_rank_before_city": "K8 selected failed on 10/30 versus 1/30 clean at p0_item_end; post-marker and unit-pre alternatives were null",
+    "bank_identity": "The independently ranked K8 head sets were identical across the two dominant grammars",
+    "confirmation_role": "Early technical smokes may have touched individual prompts; the frozen formal ranking uses discovery seeds 1234-1253 only"
+  },
+  "routes": {
+    "adjacent_rank_before_city": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "same_unit_rank_before_city": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "structural_explicit_rank_before_city": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "adjacent_rank_after_city": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "same_unit_rank_after_city": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "structural_invariant_bullet": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "structural_unmarked": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "evidence_sequence_unranked": {
+      "required": ["p0_item_end"],
+      "optional": []
+    }
+  },
+  "fallback": null
+}

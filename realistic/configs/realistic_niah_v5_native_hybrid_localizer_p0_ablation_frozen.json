@@ -1,0 +1,110 @@
+{
+  "schema_version": "realistic_niah_v5_native_hybrid_localizer_p0_ablation_v1",
+  "policy_id": "native_hybrid_localizer_p0_persistent_ablation_frozen_20260820_v1",
+  "status": "frozen_before_8gpu_execution",
+  "scientific_contract": {
+    "selection_metric": "target_source_attention_mass",
+    "selection_aggregation": "equal_seed_mean_of_within_seed_event_means",
+    "selection_scope": "within_target_grammar",
+    "selection_site_rule": {
+      "rank_before_city": "post_marker",
+      "rank_after_city": "p0_item_end",
+      "marker_neutral": "p0_item_end"
+    },
+    "intervention_start_anchor_role": "p0_item_end",
+    "decode_head_ablation_steps": -1,
+    "random_control_repeats": 3,
+    "interpretation": "The grammar-specific query site localizes the head bank. Persistent ablation from P0 tests downstream necessity of that bank; it does not by itself prove that retrieval occurs temporally at P0 or P2.",
+    "primary_split": "confirmation",
+    "primary_curve_weighting": "registered_anchor_weighted",
+    "exploratory_rule": "confirmation_anchors_lt_10"
+  },
+  "models": {
+    "Qwen3-8B": {
+      "registry_rows": 256,
+      "registry_sha256": "23134cfaf617d988fdbec7bbc4f1a7033fd17a5e7c360cdfc2c71c7ec5542c22",
+      "doses": [32, 64, 80, 96, 112, 128],
+      "primary_bank_size": 128,
+      "supplement_execution": {
+        "run_grammars": [
+          "adjacent_rank_before_city",
+          "same_unit_rank_before_city",
+          "structural_explicit_rank_before_city"
+        ],
+        "reuse_grammars": [
+          "adjacent_rank_after_city",
+          "structural_unmarked",
+          "structural_invariant_bullet",
+          "evidence_sequence_unranked"
+        ],
+        "prior_full_completion": "reports/v5_native_grammar_specific_p0/Qwen3-8B/qwen_grammar_specific_p0_k128_full_panel_complete.json",
+        "prior_full_completion_sha256": "8ab54c19db2f799ba30250ebf5652d26923f61dbc2af767d2d28a9b35023df5d",
+        "prior_dose_completion": "reports/v5_native_grammar_specific_p0/Qwen3-8B/qwen_grammar_specific_p0_dose_grid_complete.json",
+        "prior_dose_completion_sha256": "5f9880b673d853dca38b431abbd14f87791c0bab6f4bf192c4bbb19a75a84ad6"
+      },
+      "control_policy": {
+        "32": "prefer_exact_layer_matched_else_global",
+        "64": "prefer_exact_layer_matched_else_global",
+        "80": "prefer_exact_layer_matched_else_global",
+        "96": "prefer_exact_layer_matched_else_global",
+        "112": "prefer_exact_layer_matched_else_global",
+        "128": "global_same_k"
+      },
+      "grammars": {
+        "adjacent_rank_after_city": "p0_item_end",
+        "adjacent_rank_before_city": "post_marker",
+        "same_unit_rank_before_city": "post_marker",
+        "structural_unmarked": "p0_item_end",
+        "structural_invariant_bullet": "p0_item_end",
+        "evidence_sequence_unranked": "p0_item_end",
+        "structural_explicit_rank_before_city": "post_marker"
+      }
+    },
+    "Gemma4-E4B": {
+      "registry_rows": 270,
+      "registry_sha256": "021f1e5d3b95f232c0cf69c08236b592dbf2f54e8e04df6abaa27c097a0a96f8",
+      "doses": [1, 2, 4, 6, 8],
+      "primary_bank_size": 8,
+      "supplement_execution": {
+        "run_grammars": [
+          "adjacent_rank_before_city",
+          "same_unit_rank_before_city"
+        ],
+        "reuse_grammars": [
+          "adjacent_rank_after_city",
+          "same_unit_rank_after_city",
+          "structural_invariant_bullet"
+        ],
+        "prior_full_completion": "reports/v5_native_grammar_specific_p0/Gemma4-E4B/gemma_grammar_specific_p0_k8_full_panel_complete.json",
+        "prior_full_completion_sha256": "81a09b55ae2ff91731398afef986b587bafb4a4531494ccc78a140d8f1005581",
+        "prior_dose_completion": "reports/v5_native_grammar_specific_p0/Gemma4-E4B/gemma_grammar_specific_p0_dose_grid_complete.json",
+        "prior_dose_completion_sha256": "c33d8ba3e3dff96b083b3f8a91f8bafebfbbeacccc3a3957aeb758df11fba03d"
+      },
+      "control_policy": {
+        "1": "prefer_exact_layer_matched_else_global",
+        "2": "prefer_exact_layer_matched_else_global",
+        "4": "prefer_exact_layer_matched_else_global",
+        "6": "prefer_exact_layer_matched_else_global",
+        "8": "prefer_exact_layer_matched_else_global"
+      },
+      "grammars": {
+        "adjacent_rank_after_city": "p0_item_end",
+        "adjacent_rank_before_city": "post_marker",
+        "same_unit_rank_after_city": "p0_item_end",
+        "same_unit_rank_before_city": "post_marker",
+        "structural_invariant_bullet": "p0_item_end"
+      }
+    }
+  },
+  "registered_sidecar": {
+    "model_label": "Qwen3-8B",
+    "target_grammar_class": "adjacent_rank_before_city",
+    "bank_size": 112,
+    "selection_anchor_role": "p0_item_end",
+    "layer_profile_reference_anchor_role": "post_marker",
+    "intervention_start_anchor_role": "p0_item_end",
+    "purpose": "Separates layer-distribution change from within-layer head identity change. This is a diagnostic, not part of the primary dose curve.",
+    "p0_ranking": "work/v5_qwen_p0_grammar_head_bank_overlap_v1/ranking_adjacent_rank_before_city.csv",
+    "p0_ranking_sha256": "6d30e65eda3e8e199cdc0ab03fba04c81c0dea5102adb27c6f1ece528a0fd0b6"
+  }
+}

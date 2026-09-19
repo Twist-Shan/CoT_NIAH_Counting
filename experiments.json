@@ -1,0 +1,18 @@
+{
+  "haystack": {"family": "realistic", "script": "scripts/sync_paul_graham_full_corpus.py", "paper": "Sections 2–4, Appendix C", "description": "Download and audit the registered essay corpus"},
+  "behavior-freeze": {"family": "realistic", "script": "scripts/freeze_realistic_niah_v3_1.py", "paper": "Section 2, Appendix C", "description": "Construct the paired 1k–20k counting grid"},
+  "behavior": {"family": "realistic", "script": "scripts/run_realistic_niah_v3_1.py", "paper": "Section 2, Appendix C", "description": "Evaluate a registered model on the frozen grid"},
+  "behavior-analysis": {"family": "realistic", "script": "scripts/analyze_realistic_niah_v3_1.py", "paper": "Section 2, Appendix C", "description": "Analyze counting behavior and trace styles"},
+  "long-context-freeze": {"family": "realistic", "script": "scripts/freeze_realistic_niah_v3_3_long_context.py", "paper": "Section 2, Appendix C.4", "description": "Construct the extended context-length grid"},
+  "long-context": {"family": "realistic", "script": "scripts/run_realistic_niah_v3_3_long_context_worker.py", "paper": "Section 2, Appendix C.4", "description": "Run a long-context worker"},
+  "nonthinking-freeze": {"family": "realistic", "script": "scripts/freeze_realistic_niah_v4.py", "paper": "Section 3, Appendix D", "description": "Construct controlled mechanism stimuli"},
+  "nonthinking": {"family": "realistic", "script": "scripts/run_realistic_niah_v4.py", "paper": "Section 3, Appendix D", "description": "Capture states, analyze attention, and run interventions"},
+  "thinking": {"family": "realistic", "script": "scripts/run_realistic_niah_v5.py", "paper": "Section 4, Appendix E", "description": "Native-thinking parsing, retrieval, geometry, and causal stages"},
+  "enumeration": {"family": "realistic", "script": "scripts/run_realistic_niah_v6.py", "paper": "Appendix F", "description": "Structured index/bullet enumeration stages"},
+  "synthetic-train": {"family": "synthetic", "module": "synthetic_counting_v58.run_v58", "paper": "Section 5, Appendix G", "description": "Train and analyze the four-layer, eight-head counting models"},
+  "synthetic-corpus": {"family": "synthetic", "script": "scripts/fetch_tiny_shakespeare.py", "paper": "Appendix G.1", "description": "Restore the Tiny Shakespeare corpus if missing"},
+  "synthetic-alignment": {"family": "synthetic", "script": "scripts/run_v58_alignment_supplement.py", "paper": "Appendix G.2–G.4", "description": "Aligned retrieval and representation analyses"},
+  "synthetic-continuation": {"family": "synthetic", "script": "scripts/run_v58_native_continuation.py", "paper": "Appendix G.3", "description": "Counter-state transplant and continuation"},
+  "additional-freeze": {"family": "realistic", "script": "additional_experiments/freeze.py", "paper": "Appendix H", "description": "Construct kth-retrieval and category-counting cases"},
+  "additional": {"family": "realistic", "script": "additional_experiments/run.py", "paper": "Appendix H", "description": "Run additional-task model stages"}
+}

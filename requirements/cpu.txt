@@ -1,0 +1,16 @@
+numpy>=1.26,<2
+scipy>=1.11,<2
+pandas>=2.2,<4
+scikit-learn>=1.4,<2
+matplotlib>=3.8
+plotly>=5.20
+seaborn>=0.13
+pyyaml>=6
+tqdm>=4.66
+torch>=2.2
+transformers>=4.41
+accelerate>=0.30
+sentencepiece>=0.2
+safetensors>=0.4
+jinja2>=3.1
+pytest>=8

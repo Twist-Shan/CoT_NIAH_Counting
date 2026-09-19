@@ -1,0 +1,47 @@
+{
+  "schema_version": "realistic_niah_v6_index_item_end_generation_container_amendment_v1",
+  "status": "FROZEN_RECOVERY_BEFORE_GEMMA_SENSITIVITY_BEHAVIOR_OUTCOMES",
+  "frozen_utc": "2026-09-01T01:17:54.9207928Z",
+  "model_label": "Gemma4-E4B",
+  "prompt_mode": "enumeration_index",
+  "scientific_scope": "artifact_container_identity_only",
+  "reason": "The original sensitivity contract froze the SHA-256 of an appendable aggregate generations.jsonl. Later already-authorized main-suite generation and replacement queues rebuilt that aggregate from immutable per-request shards, so its whole-container hash changed even though the frozen discovery cohort and all of its generation objects remained unchanged.",
+  "original_sensitivity_frozen_at_utc": "2026-08-29T18:35:39Z",
+  "original_frozen_generations_sha256": "5167b935520f24f66395949dae0b375ad113b7ec4037bbbcf35b16eb3db18e46",
+  "observed_aggregate_generations_sha256": "49dbedc95171aeb3ce6ab1ec7a531a7985361ca66832c4dfdd3dcd89f6456429",
+  "observed_aggregate_row_count": 595,
+  "frozen_cohort_registry_sha256": "9a276ba09eb8dcec11b25a2971087e6adf2ba893ec3fe65735b38bc87f50e548",
+  "frozen_cohort_row_count": 200,
+  "canonical_frozen_cohort_rows_sha256": "03c6385cef8204f4b91b8df51f5df3c6e7d5060248d0d3b0feb8a871263cd866",
+  "row_equivalence_audit": {
+    "status": "PASS",
+    "identity_key": "source_request_id -> request_id",
+    "canonicalization": "sort generation objects by request_id; JSON sort_keys=true, separators=(',', ':'), ensure_ascii=false; newline after every row",
+    "registry_rows": 200,
+    "selected_generation_rows": 200,
+    "duplicate_request_ids": 0,
+    "missing_registry_requests": 0,
+    "rows_without_object_equal_immutable_shard": 0,
+    "rows_with_only_post_freeze_matching_shards": 0,
+    "object_equal_pre_freeze_shards": 200
+  },
+  "outcome_firewall": {
+    "gemma_sensitivity_behavior_directory_existed_before_amendment": false,
+    "gemma_sensitivity_behavior_outcomes_existed_before_amendment": false,
+    "behavior_outcomes_read_for_amendment": false,
+    "head_scores_read_for_amendment": false,
+    "source_write_values_read_for_amendment": false,
+    "fixed_k_changed": false,
+    "analysis_slot_seeds_changed": false,
+    "registered_cells_changed": false,
+    "intervention_scope_changed": false,
+    "scientific_gate_changed": false
+  },
+  "allowed_recovery": "Accept the later aggregate container only if its exact SHA-256 and row count match this amendment, the original frozen cohort registry still matches, the canonical 200-row cohort digest matches, and every cohort row is object-equal to an immutable shard whose modification time is no later than the original sensitivity freeze.",
+  "forbidden_recovery": [
+    "accept an arbitrary later generations.jsonl",
+    "change frozen K, seeds, cells, anchors, controls, or estimands",
+    "select rows using source-write values or behavior outcomes",
+    "replace or reinterpret the primary registered result"
+  ]
+}

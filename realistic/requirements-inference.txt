@@ -1,0 +1,13 @@
+-r requirements.txt
+
+# vLLM 0.25.1 expects the pre-5.14 flat OLMo 3 RoPE configuration produced
+# by Transformers 5.5.3. Later 5.x releases nest parameters by attention type
+# and currently fail OLMo 3 initialization in vLLM with KeyError: rope_theta.
+transformers==5.5.3
+
+# Pinned production inference engine for Qwen3, Gemma 4 / Gemma 4 Unified,
+# DeepSeek-R1-Qwen3, GLM-Z1, and OLMo 3.
+vllm==0.25.1
+
+# Required by Mistral's official tokenizer/load path for Ministral 3.
+mistral-common>=1.8.6,<2

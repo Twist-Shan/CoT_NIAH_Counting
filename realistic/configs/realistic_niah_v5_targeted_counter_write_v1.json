@@ -1,0 +1,41 @@
+{
+  "schema_version": "realistic_niah_v5_targeted_counter_write_protocol_v1",
+  "status": "FROZEN_BEFORE_ANY_TEACHER_FORCED_WRITE_OUTCOME",
+  "frozen_date": "2026-08-22",
+  "seed_contract": {
+    "discovery": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+    "confirmation": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "outcome_blind": true,
+    "selection_rank_used": false
+  },
+  "token_policy": "teacher-force the complete frozen trace; no generated suffix is compared across arms",
+  "write_intervention": "zero the frozen targeted-bank pre-O head slices at the registered final retrieval query only",
+  "carrier_rule": {
+    "rank_after_city": "rank marker core",
+    "rank_before_city": "retrieved-city through post-update commit tail"
+  },
+  "mediator_intervention": "cumulatively clamp the clean carrier state from the model-specific source layer through the penultimate layer",
+  "matched_control": "equal-token near-depth non-item clean states clamped at the same carrier positions and layers",
+  "primary_estimands": [
+    "selected carrier deformation relative to clean",
+    "reduction in final-layer boundary-state distance after clean carrier restoration",
+    "clean-carrier restoration advantage over the matched-position state control"
+  ],
+  "secondary_diagnostics": [
+    "selected-versus-mean-layer-matched-random carrier deformation specificity",
+    "selected-versus-mean-layer-matched-random boundary deformation specificity"
+  ],
+  "gate_policy": "direction and magnitude of the three primary estimands are decisive; confidence intervals and p-values are retained as records",
+  "models": {
+    "Qwen3-8B": {
+      "source_layer": 19,
+      "targeted_bank_size": 128,
+      "targeted_bank_sha256": "ef30a8a083468c6e88cb5b0924403884ad758fedbc743de36dd03ab9bc4a742b"
+    },
+    "Gemma4-E4B": {
+      "source_layer": 16,
+      "targeted_bank_size": 6,
+      "targeted_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1"
+    }
+  }
+}

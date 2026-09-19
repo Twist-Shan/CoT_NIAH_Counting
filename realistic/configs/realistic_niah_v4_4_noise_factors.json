@@ -1,0 +1,80 @@
+{
+  "schema_version": "realistic_niah_v4_4_noise_factor_config_v1",
+  "group_column": "seed",
+  "merge_keys": ["sample_id", "layer"],
+  "targets": ["noise_total", "noise_parallel", "noise_orthogonal"],
+  "numeric": [
+    "count",
+    "running_index",
+    "gold_count",
+    "absolute_position",
+    "normalized_position",
+    "distance_from_previous_event",
+    "local_span_tokens",
+    "trace_progress",
+    "trace_length_tokens",
+    "retrieval_full_span_mass",
+    "retrieval_head_bank_mass",
+    "attention_entropy",
+    "attention_coverage",
+    "residual_stream_norm",
+    "previous_step_norm",
+    "trajectory_curvature",
+    "absolute_deviation",
+    "signed_error"
+  ],
+  "categorical": [
+    "model_label",
+    "role",
+    "mode",
+    "prompt_variant",
+    "event_type",
+    "trace_token_type",
+    "layer_type",
+    "correct",
+    "sampling_replicate"
+  ],
+  "feature_groups": {
+    "task_structure": [
+      "count",
+      "running_index",
+      "gold_count",
+      "event_type"
+    ],
+    "position_and_spacing": [
+      "absolute_position",
+      "normalized_position",
+      "distance_from_previous_event",
+      "local_span_tokens"
+    ],
+    "trace_form": [
+      "trace_progress",
+      "trace_length_tokens",
+      "trace_token_type",
+      "sampling_replicate"
+    ],
+    "attention_routing": [
+      "retrieval_full_span_mass",
+      "retrieval_head_bank_mass",
+      "attention_entropy",
+      "attention_coverage",
+      "layer_type"
+    ],
+    "representation_dynamics": [
+      "residual_stream_norm",
+      "previous_step_norm",
+      "trajectory_curvature"
+    ],
+    "behavior": [
+      "correct",
+      "absolute_deviation",
+      "signed_error"
+    ],
+    "condition": [
+      "model_label",
+      "role",
+      "mode",
+      "prompt_variant"
+    ]
+  }
+}

@@ -1,0 +1,648 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:cot-niah-counting:dataset-schema",
+    "title": "Dynamic NIAH v2 JSONL row",
+    "description": "Schema for each JSONL row emitted by scripts/generate_dynamic_niah_v2.py.",
+    "type": "object",
+    "required": [
+        "schema_version",
+        "id",
+        "task_type",
+        "tokenizer",
+        "haystack",
+        "needles",
+        "realized_insertions",
+        "context",
+        "query",
+        "messages",
+        "gold_answer",
+        "control_gold_answer",
+        "relevant_records",
+        "control_relevant_records",
+        "controls"
+    ],
+    "properties": {
+        "schema_version": {
+            "type": "string",
+            "const": "dynamic_niah_v2_dataset_v1"
+        },
+        "id": {
+            "type": "string",
+            "pattern": "^dynamic_niah_v2_[0-9]+$"
+        },
+        "task_type": {
+            "type": "string",
+            "description": "Logical task family; supported values include argmax, count_avg, match_count, and literal_count."
+        },
+        "counting_needle_kind": {
+            "type": "string",
+            "enum": [
+                "city_score",
+                "marker"
+            ],
+            "description": "Needle content family for match_count rows."
+        },
+        "marker_text": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "Exact marker text when counting_needle_kind is marker."
+        },
+        "tokenizer": {
+            "type": "object",
+            "required": [
+                "name",
+                "backend"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "backend": {
+                    "type": "string",
+                    "enum": [
+                        "simple",
+                        "huggingface"
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "haystack": {
+            "type": "object",
+            "required": [
+                "source_file",
+                "window_start",
+                "window_end",
+                "seed",
+                "target_haystack_tokens",
+                "base_tokens"
+            ],
+            "properties": {
+                "source_file": {
+                    "type": "string"
+                },
+                "window_start": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "window_end": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "seed": {
+                    "type": "integer"
+                },
+                "target_haystack_tokens": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "base_tokens": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/token"
+                    }
+                }
+            },
+            "additionalProperties": true
+        },
+        "needles": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/needle"
+            }
+        },
+        "realized_insertions": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/realized_insertion"
+            }
+        },
+        "context": {
+            "type": "string"
+        },
+        "query": {
+            "type": "string"
+        },
+        "messages": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/message"
+            }
+        },
+        "gold_answer": {
+            "$ref": "#/$defs/answer"
+        },
+        "control_gold_answer": {
+            "$ref": "#/$defs/control_answer"
+        },
+        "relevant_records": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/relevant_record"
+            }
+        },
+        "control_relevant_records": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/relevant_record"
+            }
+        },
+        "controls": {
+            "type": "object",
+            "required": [
+                "insertion_positions",
+                "control_switch",
+                "prompt_style",
+                "thinking_mode",
+                "seeds",
+                "control_seed_derivation"
+            ],
+            "properties": {
+                "insertion_positions": {
+                    "type": "array",
+                    "items": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ],
+                        "minimum": 0
+                    }
+                },
+                "control_switch": {
+                    "type": "array",
+                    "items": {
+                        "type": "boolean"
+                    }
+                },
+                "prompt_style": {
+                    "type": "string",
+                    "enum": [
+                        "vanilla",
+                        "vanilla_no_cue",
+                        "easier"
+                    ]
+                },
+                "counting_needle_kind": {
+                    "type": "string",
+                    "enum": [
+                        "city_score",
+                        "marker"
+                    ]
+                },
+                "marker_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "thinking_mode": {
+                    "type": "boolean"
+                },
+                "seeds": {
+                    "type": "object",
+                    "required": [
+                        "global_random_seed",
+                        "haystack_seed",
+                        "needle_seeds"
+                    ],
+                    "properties": {
+                        "global_random_seed": {
+                            "type": "integer"
+                        },
+                        "haystack_seed": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ]
+                        },
+                        "needle_seeds": {
+                            "type": "object"
+                        },
+                        "needle_seed": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "control_seed_derivation": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": true,
+    "$defs": {
+        "token": {
+            "description": "Tokenizer output. Hugging Face tokenizers usually produce integers; the simple test tokenizer produces strings.",
+            "type": [
+                "integer",
+                "string",
+                "number",
+                "boolean",
+                "null"
+            ]
+        },
+        "message": {
+            "type": "object",
+            "required": [
+                "role",
+                "content"
+            ],
+            "properties": {
+                "role": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true
+        },
+        "relevant_record": {
+            "type": "object",
+            "required": [
+                "needle_id"
+            ],
+            "properties": {
+                "needle_id": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "score": {
+                    "type": "integer"
+                },
+                "canary": {
+                    "type": "string"
+                },
+                "literal": {
+                    "type": "string"
+                },
+                "copy_index": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "delimited_text": {
+                    "type": "string"
+                },
+                "marker": {
+                    "type": "string"
+                },
+                "needle_kind": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true
+        },
+        "answer": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/argmax_answer"
+                },
+                {
+                    "$ref": "#/$defs/count_avg_answer"
+                },
+                {
+                    "$ref": "#/$defs/count_answer"
+                }
+            ]
+        },
+        "control_answer": {
+            "anyOf": [
+                {
+                    "$ref": "#/$defs/argmax_control_answer"
+                },
+                {
+                    "$ref": "#/$defs/count_avg_control_answer"
+                },
+                {
+                    "$ref": "#/$defs/count_control_answer"
+                }
+            ]
+        },
+        "needle": {
+            "type": "object",
+            "required": [
+                "needle_id",
+                "decoded_text",
+                "tokens",
+                "token_length",
+                "record",
+                "is_control",
+                "inserted_tokens",
+                "inserted_decoded_text",
+                "control"
+            ],
+            "properties": {
+                "needle_id": {
+                    "type": "string"
+                },
+                "decoded_text": {
+                    "type": "string"
+                },
+                "tokens": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/token"
+                    }
+                },
+                "token_length": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "record": {
+                    "type": "object",
+                    "description": "Task-specific record metadata. City-score tasks include city and score; literal_count includes canary/literal metadata.",
+                    "properties": {
+                        "city": {
+                            "type": "string"
+                        },
+                        "score": {
+                            "type": "integer"
+                        },
+                        "canary": {
+                            "type": "string"
+                        },
+                        "literal": {
+                            "type": "string"
+                        },
+                        "copy_index": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "delimited_text": {
+                            "type": "string"
+                        },
+                        "marker": {
+                            "type": "string"
+                        },
+                        "needle_kind": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "is_control": {
+                    "type": "boolean"
+                },
+                "inserted_tokens": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/token"
+                    }
+                },
+                "inserted_decoded_text": {
+                    "type": "string"
+                },
+                "control": {
+                    "oneOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "$ref": "#/$defs/control_segment"
+                        }
+                    ]
+                },
+                "requested_position": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "is_inserted": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": true
+        },
+        "control_segment": {
+            "type": "object",
+            "required": [
+                "seed",
+                "source_file",
+                "segment_start_token",
+                "segment_end_token",
+                "decoded_text",
+                "token_length"
+            ],
+            "properties": {
+                "seed": {
+                    "type": "integer"
+                },
+                "source_file": {
+                    "type": "string"
+                },
+                "segment_start_token": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "segment_end_token": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "decoded_text": {
+                    "type": "string"
+                },
+                "token_length": {
+                    "type": "integer",
+                    "minimum": 1
+                }
+            },
+            "additionalProperties": true
+        },
+        "realized_insertion": {
+            "type": "object",
+            "required": [
+                "needle_id",
+                "requested_position",
+                "final_position",
+                "token_length",
+                "tokens",
+                "decoded_text",
+                "is_control",
+                "inserted_from",
+                "needle_token_length",
+                "control"
+            ],
+            "properties": {
+                "needle_id": {
+                    "type": "string"
+                },
+                "requested_position": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "final_position": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "token_length": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "tokens": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/token"
+                    }
+                },
+                "decoded_text": {
+                    "type": "string"
+                },
+                "is_control": {
+                    "type": "boolean"
+                },
+                "inserted_from": {
+                    "type": "string",
+                    "enum": [
+                        "needle",
+                        "control"
+                    ]
+                },
+                "needle_token_length": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "control": {
+                    "oneOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "$ref": "#/$defs/control_segment"
+                        }
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "argmax_answer": {
+            "type": "object",
+            "required": [
+                "city",
+                "score"
+            ],
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "score": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": true
+        },
+        "count_avg_answer": {
+            "type": "object",
+            "required": [
+                "count",
+                "average_score"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "average_score": {
+                    "type": "number"
+                }
+            },
+            "additionalProperties": true
+        },
+        "argmax_control_answer": {
+            "type": "object",
+            "required": [
+                "city",
+                "score",
+                "has_answer"
+            ],
+            "properties": {
+                "city": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "score": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "has_answer": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": true
+        },
+        "count_avg_control_answer": {
+            "type": "object",
+            "required": [
+                "count",
+                "average_score",
+                "has_answer"
+            ],
+            "properties": {
+                "count": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "average_score": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "has_answer": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": true
+        },
+        "count_answer": {
+            "type": "object",
+            "required": [
+                "count"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "additionalProperties": true
+        },
+        "count_control_answer": {
+            "type": "object",
+            "required": [
+                "count",
+                "has_answer"
+            ],
+            "properties": {
+                "count": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ],
+                    "minimum": 0
+                },
+                "has_answer": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": true
+        }
+    }
+}

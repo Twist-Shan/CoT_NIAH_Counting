@@ -1,0 +1,89 @@
+{
+  "schema_version": "realistic_niah_v6_mechanism_diagnostic_extension_v1",
+  "status": "FROZEN_BEFORE_NEW_DIAGNOSTIC_MODEL_OUTCOMES",
+  "frozen_utc_date": "2026-08-31",
+  "baseline_report": {
+    "path": "reports/NiaH_Enumeration_report.html",
+    "sha256": "ff29b6482cce4ad42d81b246443ec81912c9b49e280a7cab9fcdacd2dc58f400",
+    "immutable_interpretation": "All original V6 nulls and gates remain frozen and must be reported."
+  },
+  "global_rules": {
+    "frozen_k_may_change": false,
+    "seed_selection_may_use_intervention_outcomes": false,
+    "existing_passed_stage_may_be_rerun": false,
+    "new_results_replace_original_v6_gates": false,
+    "new_results_label": "post-hoc mechanism diagnostic extension",
+    "confirmation_qualification": "Split reuse after related V6 outcomes were inspected; informative held-out intervention results, but not pristine prospective confirmation."
+  },
+  "full_commit_to_targeted_query": {
+    "new_model_trials": false,
+    "reason": "The prospectively generated V6 native-loop shards already contain the Native-report full_donor_patch, self_patch, count_subspace_transplant and norm_matched_orthogonal_patch arms; the first V6 analyzer omitted the full-state registered contrast.",
+    "primary_endpoint": "donor_minus_receiver_successor_attention_mass",
+    "primary_contrasts": [
+      "full_donor_patch - self_patch",
+      "full_donor_patch - norm_matched_orthogonal_patch"
+    ],
+    "secondary_endpoint": "donor_vs_receiver_city_log_odds",
+    "greedy_city_adoption_required": false
+  },
+  "targeted_next_city_continuous_readout": {
+    "kernel": "causal-heads fixed_next_city_token_span",
+    "banks": "reuse each cell's selected frozen K and three frozen random controls",
+    "anchor_selection": "deterministic diverse primary-anchor subset, at most one anchor per source seed before any repeat",
+    "discovery_anchor_limit": 20,
+    "confirmation_anchor_limit": 10,
+    "teacher_forced_visible_path": true,
+    "primary_outcome": "target_city_log_probability",
+    "secondary_outcomes": [
+      "target_city_logit_margin",
+      "target_city_log_odds"
+    ],
+    "primary_estimands": [
+      "clean - selected_bank",
+      "mean(three random banks) - selected_bank"
+    ],
+    "strong_gate": "both seed-bootstrap 95% confidence-interval lower bounds exceed zero",
+    "motivation": "The original binary free-generation failure endpoint is ceiling-limited in both Index cells and cannot detect sub-threshold likelihood changes."
+  },
+  "bullet_gemma_decode_aligned_carrier": {
+    "scope": "Gemma4-E4B x enumeration_bullet only",
+    "selected_bank_size": 2,
+    "selected_bank_identity_changed": false,
+    "source_layer": 16,
+    "original_null_retained": "query_local",
+    "diagnostic_head_ablation_scope": "query_through_carrier",
+    "diagnostic_positions": "all teacher-forced positions from the registered targeted query through the final grammar carrier token, inclusive",
+    "primary_outcome": "carrier_state_rms_distance_mean_downstream",
+    "secondary_outcome": "boundary_state_rms_distance_to_clean_final",
+    "restoration_outcome": "selected-mask boundary distance minus selected-mask plus clean-carrier-clamp boundary distance",
+    "motivation": "The binary K2 behavior arm keeps the bank off on every cached decode step, while the original carrier assay zeroed one query token only."
+  },
+  "bullet_local_terminal_bridge": {
+    "scope": [
+      "Qwen3-8B x enumeration_bullet",
+      "Gemma4-E4B x enumeration_bullet"
+    ],
+    "source_layers": {
+      "Qwen3-8B": 19,
+      "Gemma4-E4B": 16
+    },
+    "background": "keep all earlier trace items clean and replace only the terminal item with the frozen same-length ordinary-token control",
+    "primary_estimands": [
+      "clean - terminal_token_ablation",
+      "ablated_terminal_state_restore - terminal_token_ablation",
+      "clean - clean_terminal_state_occluded"
+    ],
+    "primary_outcome": "expected_count_utility",
+    "strong_gate": "all three seed-bootstrap 95% confidence-interval lower bounds exceed zero",
+    "motivation": "The original Bullet sufficiency arm restored one item into an otherwise globally uninformative and grammatically incoherent trace; local mediation tests the token-to-state arrow without that global-sufficiency requirement."
+  },
+  "ncc_geometry": {
+    "new_pass_required": false,
+    "interpretation": "NCC asks whether the intervention moves states along one discovery-fitted linear count-centroid geometry. The Native report does not establish a unified linear counter geometry, so these nulls are retained as limits rather than treated as implementation failures.",
+    "positive_evidence_used_instead": [
+      "cross-validated running/final-count decodability",
+      "full-vector carrier and commit deformation/restoration",
+      "full-state commit-to-query routing"
+    ]
+  }
+}

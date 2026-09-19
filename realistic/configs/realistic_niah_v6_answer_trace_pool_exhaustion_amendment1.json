@@ -1,0 +1,69 @@
+{
+  "schema_version": "realistic_niah_v6_answer_trace_pool_exhaustion_amendment_v1",
+  "status": "FROZEN_AFTER_POOL_EXHAUSTION_BEFORE_AFFECTED_CELL_INTERVENTIONS",
+  "frozen_utc": "2026-09-01T03:04:00Z",
+  "trigger": "Gemma4-E4B enumeration_bullet all-count answer-trace cohort exhausted the original confirmation reserve pool after resolving eight of nine affected analysis slots",
+  "affected_cell": {
+    "prompt_mode": "enumeration_bullet",
+    "model_label": "Gemma4-E4B",
+    "split": "confirmation",
+    "phase": "answer_trace_confirmation"
+  },
+  "observed_fail_closed_state": {
+    "affected_analysis_slots": [1254, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "accepted_replacement_seed_by_slot_before_exhaustion": {
+      "1254": 1374,
+      "1256": 1379,
+      "1257": 1381,
+      "1258": 1385,
+      "1259": 1386,
+      "1260": 1402,
+      "1261": 1405,
+      "1262": 1412
+    },
+    "remaining_analysis_slots": [1263],
+    "original_confirmation_reserve_range": [1364, 1413],
+    "failure_message": "Coherent panel reserve pool exhausted; fail closed and amend the protocol explicitly",
+    "failure_log_snapshot_sha256": "1cdb072e5b1ed15269b9de42a1e50da84b59c3f2234fdab2a0dbac20b3e77f61"
+  },
+  "immutable_inputs": {
+    "extension_contract": "configs/realistic_niah_v6_answer_trace_extension_v1.json",
+    "extension_contract_sha256": "5176fbc48942925f2ccf77ed1be1d0054518d682433eadbe2741fd62df420201",
+    "replacement_policy": "configs/realistic_niah_v6_replacement_policy_amendment2.json",
+    "replacement_policy_sha256": "71792eaf9f572bfa5d7e793032dd257615b6e612f366a7a5fd0fdcbf8feabfb6",
+    "pool_manifest": "replacement_seed_pool_amendment2/manifest.json",
+    "pool_manifest_sha256": "c410c35ff0ca4d1bccc08da7449113277f04774befa1b43a2ff132f6c8cbbecd",
+    "replacement_stimuli": "replacement_seed_pool_amendment2/stimuli.jsonl",
+    "replacement_stimuli_sha256": "0bfeeebbeda14043af815322b5dba2eb0108b27f101d2962d6c335b7b9245b7b",
+    "reused_preexisting_confirmation_suffix": [1514, 1613],
+    "suffix_was_frozen_utc": "2026-08-30T21:09:55Z",
+    "new_seeds_added_by_this_amendment": []
+  },
+  "recovery_rule": {
+    "remaining_analysis_slots": [1263],
+    "required_counts_per_candidate": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "candidate_order": "continue ascending cumulative confirmation reserve order without reuse",
+    "eligibility_rule": "one unused true source seed must be fresh-V6-strict for every count 1..10",
+    "replacement_unit": "entire count-1-to-10 source trajectory",
+    "pool_exhaustion_policy": "fail_closed"
+  },
+  "selection_firewall": {
+    "affected_cell_intervention_outputs_existed": false,
+    "intervention_outcomes_read": false,
+    "hidden_states_read": false,
+    "attention_scores_read": false,
+    "head_ranks_read": false,
+    "effect_magnitudes_read": false
+  },
+  "scientific_scope_unchanged": {
+    "frozen_k": true,
+    "frozen_layers": true,
+    "frozen_sites": true,
+    "frozen_decoding": true,
+    "frozen_estimands": true,
+    "frozen_bootstrap": true,
+    "frozen_analysis_slots": true,
+    "frozen_strict_parser": true
+  },
+  "authorization": "existing V6 pipeline minimal audited recovery under the user's continuing supervision authorization"
+}

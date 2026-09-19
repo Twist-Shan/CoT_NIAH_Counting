@@ -1,0 +1,46 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v2",
+  "phase": "first_pass_n10_posthoc_diagnostics",
+  "row_selection": "first_pass_noindex",
+  "random_seed": 20260827,
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "max_new_tokens": 8,
+  "run_greedy": true,
+  "status": "posthoc_mechanism_diagnostic",
+  "cohort_contract": {
+    "fixed_count": 10,
+    "selection_population": "first_pass_noindex_enumeration",
+    "discovery_seeds_used_for_confirmation_geometry_fit": [1267, 1290, 1293, 1359, 1384, 1506, 1539, 1621, 1750, 1771, 1791, 1810, 1893, 2056, 2128, 2254, 2295, 2298, 2302, 2322],
+    "confirmation_seeds_reserved": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024]
+  },
+  "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+  "experiments": {
+    "countscope": {
+      "enabled": true,
+      "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+      "receiver_occurrence": 1,
+      "receiver_modes": ["natural_prefix"],
+      "donor_occurrences": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "regions": ["closing", "full"]
+    },
+    "continued_counting": {
+      "enabled": true,
+      "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+      "target_start_occurrence": 1,
+      "source_end_occurrences": [3, 6, 9],
+      "k_values": [1],
+      "regions": ["closing", "full"],
+      "read_hops": [1, 2],
+      "early_stop_hops": [1, 2],
+      "successor_max_new_tokens": 24
+    },
+    "separator_collapse": {
+      "enabled": true,
+      "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+      "source_occurrence": "first_available_after_1",
+      "target_occurrences": "all_later_available_markers",
+      "target_group_mode": "prefix_doses",
+      "regions": ["marker", "opening", "closing", "full"]
+    }
+  }
+}

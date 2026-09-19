@@ -1,0 +1,42 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_serial_bridge_persistent_v1",
+  "frozen_utc": "2026-08-21T10:00:00Z",
+  "activation_rule": "run_only_if_the_stricter_exact_query_bridge_fails_discovery_or_as_a_declared_endpoint_matched_robustness_assay",
+  "formal_protocol": {
+    "discovery_seeds": [
+      1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+      1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+    ],
+    "confirmation_seeds": [
+      1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263
+    ],
+    "confirmation_requires_discovery_pass": true,
+    "selection_rank_prohibited": true,
+    "pair_selection": "all_eligible_registered_seeds_and_terminal_counts",
+    "bootstrap_unit": "seed",
+    "bootstrap_samples": 10000,
+    "random_seed": 20260821
+  },
+  "difference_from_exact_query_bridge": {
+    "only_changed_factor": "write_ablation_window",
+    "exact_query_branch": "one routed query position",
+    "persistent_branch": "every teacher_forced trace position from the routed final N_minus_1_to_N query through the token immediately before answer_query_v3",
+    "answer_readout_bank_ablation": "off; the transferred state is evaluated with the separately frozen model_specific readout factorial"
+  },
+  "unchanged_frozen_factors": {
+    "bank_and_controls": "same model_specific frozen selected bank and three layer_matched random banks",
+    "targeted_site": "same frozen final_transition routed registry",
+    "state_geometry": "terminal suffix8 full hidden state",
+    "Qwen3-8B": "L19-L25 state clamp; L26 residual reset plus all-layer all-head trace-item mask",
+    "Gemma4-E4B": "L16-L41 state clamp; all-layer all-head trace-item mask",
+    "readout_conditions": ["natural", "matched_control", "cut"],
+    "rows_per_sample": 15
+  },
+  "primary_gates": {
+    "targeted_bank_changes_terminal_state_readout": "selected-minus-mean-random correct-count-margin damage CI low > 0",
+    "matched_readout_control_preserves_damage": "selected-minus-mean-random damage under matched readout control CI low > 0",
+    "readout_cut_occludes_targeted_state_effect": "specific interaction CI low > 0",
+    "cut_residual_equivalence": "residual-ratio CI high < 0.20"
+  },
+  "claim_restriction": "The persistent write window matches the behavioral endpoint intervention duration but does not localize which later decode step carries the state effect."
+}

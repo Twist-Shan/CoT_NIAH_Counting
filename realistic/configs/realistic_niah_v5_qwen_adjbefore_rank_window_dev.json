@@ -1,0 +1,15 @@
+{
+  "schema_version": "realistic_niah_v5_behavior_anchor_routing_v1",
+  "policy_id": "qwen_adjacent_rank_before_city_rank_window_dev_20260818_v1",
+  "axis": "target_grammar_class",
+  "routes": {
+    "adjacent_rank_before_city": {
+      "required": [
+        "pre_marker_d1",
+        "post_marker",
+        "city_pre_d1"
+      ],
+      "optional": []
+    }
+  }
+}

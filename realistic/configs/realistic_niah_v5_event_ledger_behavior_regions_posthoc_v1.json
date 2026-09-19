@@ -1,0 +1,19 @@
+{
+  "schema_version": "event_ledger_behavior_regions_posthoc_plan_v1",
+  "post_hoc": true,
+  "selected_after_frozen_behavioral_confirmation_was_read": true,
+  "evaluation_seeds": [1252, 1264, 1269, 1270, 1274, 1280, 1294],
+  "question": "Was the weak confirmatory full-subset recovery caused by testing V-all and late-band KV separately rather than complete marker K+V fields?",
+  "families": [
+    "marker_K_all_layers",
+    "marker_V_all_layers",
+    "marker_KV_all_layers",
+    "marker_KV_L20_23",
+    "closing_KV_all_layers",
+    "marker_closing_KV_all_layers",
+    "nonmarker_event_KV_all_layers",
+    "full_event_KV_all_layers"
+  ],
+  "positive_control": "full-event K+V across all layers must make the hybrid event cache exactly equal to the clean 111 donor cache and therefore recover behavioral-axis progress 1 up to numerical tolerance",
+  "inference_role": "descriptive mechanism refinement only; cannot alter or rescue the frozen behavioral confirmation verdict"
+}

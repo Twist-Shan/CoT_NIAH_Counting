@@ -1,0 +1,28 @@
+{
+  "schema": "additional_task_transfer_v1",
+  "discovery_seeds": [1234, 1235, 1236, 1237],
+  "confirmation_seeds": [1254, 1255, 1256, 1257],
+  "levels": [2, 4, 6, 8],
+  "total_records_new_tasks": 10,
+  "tasks": ["count_all", "kth_needle", "topic_count"],
+  "modes": ["nonthinking", "native_thinking"],
+  "models": ["Qwen3-8B", "Gemma4-E4B"],
+  "random_seed": 20260905,
+  "random_head_replicates": 3,
+  "max_new_tokens_native": 4096,
+  "max_new_tokens_answer": 64,
+  "torch_dtype": "bfloat16",
+  "attention_backend": "sdpa",
+  "ridge_alpha": 10.0,
+  "bootstrap_replicates": 2000,
+  "capture_layers": {
+    "Qwen3-8B": [8, 19, 23, 29],
+    "Gemma4-E4B": [9, 16, 29, 37]
+  },
+  "patch_layers": {
+    "Qwen3-8B": [23, 29],
+    "Gemma4-E4B": [29, 37]
+  },
+  "source_contract": "Existing V4.4 10000-token stimuli; source files are immutable.",
+  "inference_scope": "Exploratory paired pilot; seed is the independent sampling unit."
+}

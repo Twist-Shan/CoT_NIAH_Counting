@@ -1,0 +1,4 @@
+-r requirements-mechanistic-v4.txt
+
+# V4.4.2 aggregation and compressed filestream tables.
+pandas>=2.2,<3

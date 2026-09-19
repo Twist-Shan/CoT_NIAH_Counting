@@ -1,0 +1,35 @@
+{
+  "schema_version": "realistic_niah_v5_behavior_anchor_routing_v1",
+  "policy_id": "qwen_grammar_specific_p0_native_routes_frozen_20260820_v1",
+  "status": "frozen_after_paired_p0_p2_bank_by_site_audit",
+  "axis": "target_grammar_class",
+  "head_bank": {
+    "selection_grammar": "target_grammar_specific",
+    "selection_surface": "all_surfaces_within_target_grammar",
+    "selection_anchor_role": "p0_item_end",
+    "selection_metric": "target_source_attention_mass",
+    "selection_aggregation": "equal_seed_mean_of_within_seed_event_means",
+    "primary_bank_size": 128,
+    "ablation_schedule": "selected pre-O slices off from p0_item_end through every later decode forward"
+  },
+  "design_evidence": {
+    "paired_audit_grammar": "adjacent_rank_before_city",
+    "paired_audit_surface": "rank_before_city_compact",
+    "p0_bank_at_p0": "8/10 failures versus 0/10 clean",
+    "p0_bank_at_p2": "5/10 failures",
+    "p2_bank_at_p0": "10/10 failures",
+    "p2_bank_at_p2": "10/10 failures versus 0/10 clean",
+    "decision": "retain same-site P0 attention ranking and persistent P0 ablation; treat P2 cells only as design audit"
+  },
+  "routes": {
+    "adjacent_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "same_unit_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "structural_explicit_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "adjacent_rank_after_city": {"required": ["p0_item_end"], "optional": []},
+    "same_unit_rank_after_city": {"required": ["p0_item_end"], "optional": []},
+    "structural_invariant_bullet": {"required": ["p0_item_end"], "optional": []},
+    "structural_unmarked": {"required": ["p0_item_end"], "optional": []},
+    "evidence_sequence_unranked": {"required": ["p0_item_end"], "optional": []}
+  },
+  "fallback": null
+}

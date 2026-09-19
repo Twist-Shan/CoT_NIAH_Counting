@@ -1,0 +1,15 @@
+{
+  "schema_version": "event_cache_marker_ledger_freeze_manifest_v1",
+  "frozen_date": "2026-08-25",
+  "frozen_before_any_confirmation_event_cache_run": true,
+  "plan": {
+    "path": "configs/realistic_niah_v5_event_cache_marker_ledger_confirmation_v1.json",
+    "sha256": "6036dc78d40b553202f971c281978f43b1a47f619274c6129a5e69c8f60a0927"
+  },
+  "analysis_script": {
+    "path": "scripts/analyze_realistic_niah_v5_event_cache_splice.py",
+    "sha256": "357eeab9061a04823a36857580234af816601310be318dfea2d7f7bcb90eee18"
+  },
+  "event_cache_seeds_observed_at_freeze": [1288, 1289, 1290, 1291, 1293],
+  "confirmation_seeds_unobserved_at_freeze": [1255, 1257, 1259, 1262, 1265, 1268, 1271]
+}

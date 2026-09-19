@@ -1,0 +1,51 @@
+{
+  "schema_version": "event_ledger_factorial_plan_v1",
+  "frozen_before_model_effects": true,
+  "geometry_preflight": {
+    "artifact": "artifacts/event_ledger_geometry_preflight_v1.json",
+    "all_eligible": true,
+    "model_forward_executed": false,
+    "effect_outcomes_read": false
+  },
+  "cohorts": {
+    "technical_smoke_excluded_from_inference": [1288],
+    "discovery": [1289, 1290, 1291, 1293],
+    "confirmation": [1255, 1257, 1259, 1262, 1265, 1268, 1271]
+  },
+  "construction": {
+    "receiver": 5,
+    "physical_target": 6,
+    "source_occurrences": [2, 3, 4],
+    "factorial_cells": ["000", "001", "010", "011", "100", "101", "110", "111"],
+    "invariants": [
+      "equal sequence length",
+      "equal attention mask",
+      "equal absolute target positions",
+      "only the three inserted marker token locations vary"
+    ]
+  },
+  "frozen_carriers_from_prior_independent_scan": [
+    "marker_V_all_layers",
+    "marker_KV_L20_23"
+  ],
+  "matched_control": "closing_KV_all_layers",
+  "primary_read": {
+    "landmark": "target_boundary",
+    "decoder_block_input_layer": 24
+  },
+  "primary_estimand": {
+    "name": "marker_entry_specificity",
+    "per_seed": "mean singleton donor-axis progress over marker_V_all_layers and marker_KV_L20_23 minus mean singleton donor-axis progress for closing_KV_all_layers",
+    "confirmation_effect_floor": 0.05,
+    "test": "two-sided exact paired sign-flip",
+    "alpha": 0.05
+  },
+  "required_supporting_criteria": {
+    "early_entry_specificity_mean_floor": 0.03,
+    "marker_full_subset_progress_mean_floor": 0.35,
+    "textual_axis_progress_per_valid_marker_mean_floor": 0.15,
+    "all_three_marker_slot_singleton_means_positive": true
+  },
+  "claim_rule": "Call the result evidence for a marker-keyed multi-entry ledger only if the confirmation primary estimand passes both its effect floor and sign-flip test, and every required supporting criterion passes. Otherwise report the failed criterion and retain only the narrower marker-sensitive late-integration claim.",
+  "counter_register_note": "This experiment does not by itself refute a maintained register. The register alternative is evaluated independently by the frozen recurrence-operator scan; the joint interpretation must keep those evidence streams separate."
+}

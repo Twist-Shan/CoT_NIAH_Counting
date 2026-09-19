@@ -1,0 +1,24 @@
+{
+  "schema_version": "realistic_niah_v5_prospective_targeted_selection_v1",
+  "selection_status": "frozen_prospective_default_after_user_width_decision",
+  "frozen_utc": "2026-08-21T14:00:35Z",
+  "model_label": "Gemma4-E4B",
+  "sample_panel": {
+    "seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+    "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263]
+  },
+  "development_selection": {
+    "head_ranking_source_grammar": "same_unit_rank_before_city",
+    "head_ranking_source_anchor": "p0_item_end",
+    "head_ranking_metric": "seed_first_equal_anchor_mean_source_attention_mass",
+    "primary_bank_size": 6,
+    "primary_bank_heads": [[29, 4], [17, 2], [17, 1], [29, 2], [29, 0], [17, 0]],
+    "primary_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1",
+    "source_selection": "configs/realistic_niah_v5_gemma_shared_k8_full300_selection.json",
+    "derivation": "Exact ordered K6 prefix of the previously frozen K8 treatment bank."
+  },
+  "prospective_only": true,
+  "selection_rank_used": false,
+  "no_reselection_rule": "The ordered six-head membership is frozen for every new Gemma targeted-retrieval experiment; historical K8 artifacts remain immutable."
+}

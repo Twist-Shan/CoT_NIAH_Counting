@@ -1,0 +1,110 @@
+{
+  "schema_version": "realistic_niah_v5_shared_retrieval_full300_selection_v2",
+  "selection_status": "frozen_with_discovery_only_head_ranking_before_the_full_300_prompt_grammar_routed_sweep",
+  "model_label": "Qwen3-8B",
+  "sample_panel": {
+    "seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "prompt_units": 300,
+    "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+    "registered_confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "balance": "Thirty prompts per count and ten counts per seed.",
+    "inference_label": "The seed-disjoint registered confirmation split is reported first, followed by full-panel coverage. Earlier parser/site/behavior smokes may have touched individual prompts, so the split is registered confirmation rather than pristine held-out.",
+    "config": "configs/realistic_niah_v5.json",
+    "config_sha256": "361d7ab3129f8c850efac7116cee05716b83519ecc2a7ce6220d7281e06a52b1"
+  },
+  "development_selection": {
+    "ranking_scope_seed_coverage": [1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1247, 1249, 1251, 1252, 1253],
+    "ranking_scope_missing_discovery_seeds": [1234, 1245, 1246, 1248, 1250],
+    "ranking_scope_confirmation_seeds": [],
+    "head_ranking_source_grammar": "adjacent_rank_before_city",
+    "head_ranking_source_surface": "rank_before_city_compact",
+    "head_ranking_source_anchor": "post_marker",
+    "head_ranking_metric": "seed_first_equal_anchor_mean_target_source_attention_mass",
+    "primary_bank_size": 125,
+    "primary_bank_sha256": "73aaaeb8f314bd867eff7df43e35d84ca52b60058c25a5a2fa7e8ffafc513659",
+    "primary_bank_fraction_of_qwen_query_heads": 0.10850694444444445,
+    "registered_nested_dose_grid": [32, 64, 80, 96, 112, 125],
+    "ranking_sha256": "99e9ec7e54011da80804e289696dae31aa81280722158e040ce5490b0a17da48",
+    "plans": {
+      "32": {"path": "work/v5_confirmation_registry/causal_plan_shared_compact_k32_discovery1234_1253_full300_frozen_v2/retrieval_anchor_bank_plan.csv", "sha256": "6b22c13c468d73d3ee4a0dda450b4d29bea910d2fd44dde70eaea26b62c934ee", "selected_bank_sha256": "f55b7bae60930f600c17959324de540267047610e26104121d52cf6b78d7f2bf"},
+      "64": {"path": "work/v5_confirmation_registry/causal_plan_shared_compact_k64_discovery1234_1253_full300_frozen_v2/retrieval_anchor_bank_plan.csv", "sha256": "da2f96d2efe2254290ea89b0be8048992b76d3b0eb9b5376006f56671c5afcc4", "selected_bank_sha256": "0e0d1a39dc3044fd0976d079b55eaabb4849ce61abd0eddae1c6b5513210485a"},
+      "80": {"path": "work/v5_confirmation_registry/causal_plan_shared_compact_k80_discovery1234_1253_full300_frozen_v2/retrieval_anchor_bank_plan.csv", "sha256": "4cd6a9efcf1cf50b477a640448b51c23fba1b24765c50ea74664b1b94a2a15b0", "selected_bank_sha256": "68c5e78fe1c7fcf975ee7f40ea0f569ec36528232cfc41dd6cfd419967ab0ce4"},
+      "96": {"path": "work/v5_confirmation_registry/causal_plan_shared_compact_k96_discovery1234_1253_full300_frozen_v2/retrieval_anchor_bank_plan.csv", "sha256": "099c9559fd7ab49c4b965c2750187c5569421a8081813d79c39f428f51dd2902", "selected_bank_sha256": "c9377b4f543f023aecb4c38d68fe032a2a59a16a9aee2ebe4129207c810967fe"},
+      "112": {"path": "work/v5_confirmation_registry/causal_plan_shared_compact_k112_discovery1234_1253_full300_frozen_v2/retrieval_anchor_bank_plan.csv", "sha256": "3133955b7a2d097dba463d32907d94586e27a2fe75a83157d0ed58e57c669856", "selected_bank_sha256": "d8b8c3456357eede624b9d1773a9815bd386ad66263499b09c036bb275bf984e"},
+      "125": {"path": "work/v5_confirmation_registry/causal_plan_shared_compact_k125_discovery1234_1253_full300_frozen_v2/retrieval_anchor_bank_plan.csv", "sha256": "5b443f447018b760e6a2ce995121c5dfa027195dc01706c6c8b6323eb045e876", "selected_bank_sha256": "73aaaeb8f314bd867eff7df43e35d84ca52b60058c25a5a2fa7e8ffafc513659"}
+    },
+    "nested_membership_audit": "PASS: every smaller bank is an exact prefix subset of each larger bank.",
+    "superseded_all_seed_bank_audit": {
+      "status": "excluded_from_registered_analysis",
+      "overlap_with_discovery_only_K125": "121/125 heads",
+      "jaccard": 0.937984496124031,
+      "interpretation": "The strict split changes four K125 members; only the discovery-only bank is used below."
+    },
+    "plan_label": "Head ranking uses only discovery seeds 1234-1253. The same fixed bank is applied to both the discovery and seed-disjoint registered-confirmation cohorts; pooled full-panel coverage is reported separately from confirmation inference."
+  },
+  "routing": {
+    "policy_id": "qwen_shared_compact_k125_native_routes_frozen_20260818_v1",
+    "path": "configs/realistic_niah_v5_qwen_shared_k125_causal_routes_frozen.json",
+    "sha256": "b7df9c373036b621d1eb6245fee3cee826f1e5bafa4f21feb198ad4d00ab85a8",
+    "rank_before_city": "post_marker",
+    "rank_after_city": "p0_item_end",
+    "marker_neutral": "p0_item_end"
+  },
+  "anchor_registry": {
+    "path": "runs/v5_native_mechanism_reboot_20260818/Qwen3-8B/head_behavior_shared_k125_full300_prompt_balanced_discoverysplit_v2/selected_anchor_registry.jsonl",
+    "sha256": "ed75562232fed47312eecc2562c80c825f7b9c48022ee5b27b4e783fc0ccbf12",
+    "prompt_panel": 300,
+    "eligible_selected_prompts": 256,
+    "maximum_anchors_per_prompt": 1,
+    "algorithm": "prompt_balanced",
+    "algorithm_rule": "Deterministically minimize prior grammar, surface, and transition-index use; all K and arms reuse the same registry.",
+    "count_support": {"1": 0, "2": 25, "3": 25, "4": 29, "5": 29, "6": 30, "7": 29, "8": 29, "9": 30, "10": 30},
+    "grammar_support": {"adjacent_rank_after_city": 131, "adjacent_rank_before_city": 57, "same_unit_rank_before_city": 35, "structural_unmarked": 27, "structural_invariant_bullet": 3, "evidence_sequence_unranked": 2, "structural_explicit_rank_before_city": 1},
+    "registered_confirmation_support": {
+      "anchors": 87,
+      "seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+      "count_support": {"1": 0, "2": 8, "3": 9, "4": 10, "5": 10, "6": 10, "7": 10, "8": 10, "9": 10, "10": 10},
+      "grammar_support": {"adjacent_rank_after_city": 45, "adjacent_rank_before_city": 19, "same_unit_rank_before_city": 15, "structural_unmarked": 6, "structural_invariant_bullet": 1, "evidence_sequence_unranked": 1, "structural_explicit_rank_before_city": 0}
+    },
+    "sample_flow_rule": "All 300 prompts remain in the denominator table; prompts without a locally eligible k-to-k+1 transition are marked not applicable rather than silently dropped."
+  },
+  "intervention": {
+    "conditions": ["clean", "selected_bank", "layer_matched_random_repeat_1", "layer_matched_random_repeat_2", "layer_matched_random_repeat_3"],
+    "selected_arm": "Zero K frozen pre-O head slices at the routed query and every later cached decode forward.",
+    "random_control": "Three distinct selected-excluded banks with exactly matched selected-head counts per layer.",
+    "random_bank_sha256": ["3f0dfb29aba7dfb3ff28b91acbfe71025563a46088d3afbc15a176e8197eb653", "7615e0846c5da3025b211fc022e0f8c870f5944888a1a1b37901cfa1d7842840", "33e1ad4fdf4c7f7e8fa4a2de1c94f68b7aff31f5c6d93449c4e3c387c295391c"],
+    "max_new_tokens": 256,
+    "decode_head_ablation_steps": -1,
+    "endpoint": "The first semantic generated city record equals the parser-registered next prompt needle."
+  },
+  "execution_matrix": {
+    "K125": "All 300 prompt units: shared clean, selected bank, and three layer-matched random repeats on every eligible registered anchor.",
+    "K32_K112": "Registered-confirmation seeds 1254-1263 only: selected bank and three layer-matched random repeats; reuse the identical K125 clean endpoint by prompt-anchor key.",
+    "abandoned_pilot_exclusion": {
+      "path": "runs/v5_native_mechanism_reboot_20260818/Qwen3-8B/head_behavior_shared_k96_full300_prompt_balanced_discoverysplit_v2",
+      "completed_trial_shards": 8,
+      "reason": "Stopped because secondary K doses belong on the registered-confirmation split; this wrong-scope all-panel pilot is excluded by path from every registered analysis."
+    }
+  },
+  "estimands": {
+    "confirmation_primary_all_examples": "On seeds 1254-1263, selected failure minus mean random failure on paired transitions.",
+    "confirmation_secondary_clean_correct": "The same contrast among transitions retrieved correctly by clean generation.",
+    "full_panel_coverage": "Repeat both estimands on all seeds 1234-1263 and label them development-conditioned full-panel estimates.",
+    "dose_response": "On registered-confirmation seeds 1254-1263, pooled seed-level contrasts over K32, K64, K80, K96, K112, and K125; secondary K values reuse the K125 clean arm.",
+    "grammar_specific_k125": "Per-primary-grammar estimates plus natural-frequency pooled and equal-grammar-weight macro summaries."
+  },
+  "inference": {
+    "unit": "seed",
+    "hierarchy": "At most one selected transition per seed-count prompt; average counts within seed, then weight seeds equally.",
+    "bootstrap": "Nonparametric seed-cluster bootstrap with 10000 deterministic draws.",
+    "test": "Two-sided seed-level sign-flip when at least ten seeds support an estimand.",
+    "multiplicity": "Holm correction across six pooled K tests per endpoint and separately across four K125 primary-grammar tests per endpoint.",
+    "small_support_rule": "Fewer than ten supporting seeds is descriptive/exploratory."
+  },
+  "report_contract": {
+    "shared_with_non_thinking": ["raw ranked and raw random arms before contrast", "all-example before clean-correct", "ranked-minus-random primary contrast", "seed-cluster intervals and sign-flip tests", "exact sample flow and hash audit"],
+    "native_specific": ["retain N1-N10", "grammar-routed query sites", "unified-bank transfer by grammar", "failure-mode decomposition"]
+  },
+  "no_reselection_rule": "K values, head membership, routing, anchor registry, controls, endpoint, sample hierarchy, and estimands are frozen for the full-panel sweep."
+}

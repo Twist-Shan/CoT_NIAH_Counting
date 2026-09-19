@@ -1,0 +1,26 @@
+{
+  "schema_version": "realistic_niah_v4_4_5_span_restoration_v1",
+  "protocol_version": "clean_to_equal_token_corruption_layerwise_restoration_v1",
+  "stimulus_seeds": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
+  "discovery_seeds": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
+  "confirmation_seeds": [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
+  "pilot_seeds": [2000, 2001, 2002, 2003],
+  "pilot_counts": [3, 6, 9],
+  "all_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "pilot_layers": {
+    "Qwen3-8B": [0, 4, 8, 12, 16, 20, 24, 28, 32, 35],
+    "Gemma4-E4B": [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 41]
+  },
+  "retrieval_heads": {
+    "Qwen3-8B": [[27, 18], [23, 29], [23, 13], [23, 28], [24, 16], [23, 12], [26, 26], [22, 5], [21, 11], [24, 13], [23, 31], [21, 25], [21, 23], [21, 16], [21, 18], [23, 30], [26, 20], [21, 27], [9, 19], [21, 19], [26, 21], [27, 16], [24, 14], [23, 10], [24, 31], [21, 31], [24, 29], [25, 11], [21, 20], [27, 29], [22, 2], [26, 24]],
+    "Gemma4-E4B": [[29, 4], [35, 2], [35, 7], [35, 1], [35, 3], [29, 2], [29, 0], [35, 0]]
+  },
+  "patch_kinds": ["needle_endpoint", "needle_full", "ordinary_full"],
+  "model_torch_dtype": "bfloat16",
+  "attention_prefix_backend": "sdpa",
+  "candidate_score_reduction": "sum_log_probability_over_answer_and_chat_termination",
+  "strict_generation_max_new_tokens": 8,
+  "save_raw_attention_rows": false,
+  "save_full_hidden_states": false,
+  "atomic_rows": true
+}

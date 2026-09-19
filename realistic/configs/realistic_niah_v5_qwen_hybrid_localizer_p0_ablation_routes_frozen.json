@@ -1,0 +1,32 @@
+{
+  "schema_version": "realistic_niah_v5_behavior_anchor_routing_v1",
+  "policy_id": "qwen_hybrid_localizer_p0_ablation_frozen_20260820_v1",
+  "status": "frozen_before_hybrid_full_panel_and_confirmation_execution",
+  "axis": "target_grammar_class",
+  "head_bank": {
+    "selection_grammar": "target_grammar_specific",
+    "selection_surface": "all_surfaces_within_target_grammar",
+    "selection_metric": "target_source_attention_mass",
+    "selection_aggregation": "equal_seed_mean_of_within_seed_event_means",
+    "selection_anchor_by_marker_order": {
+      "rank_before_city": "post_marker",
+      "rank_after_city": "p0_item_end",
+      "marker_neutral": "p0_item_end"
+    },
+    "registered_dose_grid": [32, 64, 80, 96, 112, 128],
+    "primary_bank_size": 128,
+    "ablation_schedule": "selected pre-O slices off from p0_item_end through every later decode forward",
+    "interpretation": "query site localizes the bank; common P0 onset estimates persistent downstream bank necessity and does not temporally localize retrieval"
+  },
+  "routes": {
+    "adjacent_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "same_unit_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "structural_explicit_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "adjacent_rank_after_city": {"required": ["p0_item_end"], "optional": []},
+    "same_unit_rank_after_city": {"required": ["p0_item_end"], "optional": []},
+    "structural_invariant_bullet": {"required": ["p0_item_end"], "optional": []},
+    "structural_unmarked": {"required": ["p0_item_end"], "optional": []},
+    "evidence_sequence_unranked": {"required": ["p0_item_end"], "optional": []}
+  },
+  "fallback": null
+}

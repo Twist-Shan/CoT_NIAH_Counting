@@ -1,0 +1,46 @@
+{
+  "schema_version": "realistic_niah_v6_coherent_native_loop_replacement_policy_v1",
+  "status": "FROZEN_USER_AUTHORIZED_FAILURE_TOP_UP",
+  "frozen_utc_date": "2026-08-28",
+  "base_replacement_policy": "configs/realistic_niah_v6_replacement_policy.json",
+  "scope": "native-loop count trajectories only",
+  "analysis_slots": {
+    "discovery": "all 20 preregistered discovery seed slots",
+    "confirmation": "all 10 preregistered confirmation seed slots"
+  },
+  "required_counts_per_slot": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "trigger": "replace a complete native-loop trajectory if any required original count is missing, has a runtime failure, or fails the fresh V6 strict parser",
+  "replacement_unit": "one complete true-source seed trajectory across counts 2 through 10",
+  "candidate_order": "ascending seed in the frozen role-specific reserve pool",
+  "candidate_acceptance": "the same candidate seed must have a fresh V6 strict-causal PASS at every required count",
+  "candidate_reuse": false,
+  "successful_original_cells_in_an_affected_trajectory": "replace_for_true-source coherence and list explicitly",
+  "panel_membership_identity": "analysis_slot_seed",
+  "statistical_identity": "true_source_seed",
+  "seed_aliasing": false,
+  "selection_inputs": [
+    "generation presence or runtime status",
+    "fresh_v6_parse.strict_causal_eligible",
+    "ascending role-specific reserve seed order",
+    "source request uniqueness"
+  ],
+  "forbidden_selection_inputs": [
+    "hidden states",
+    "attention scores",
+    "head ranks",
+    "source-write magnitude",
+    "intervention outcomes",
+    "causal effect estimates"
+  ],
+  "pool_exhaustion": "fail closed and require an explicit amendment"
+}

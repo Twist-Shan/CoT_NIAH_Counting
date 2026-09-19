@@ -1,0 +1,63 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v1",
+  "phase": "discovery",
+  "status": "exploratory_plan_before_first_run",
+  "random_seed": 20260826,
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "run_greedy": true,
+  "max_new_tokens": 8,
+  "seeds": [1234, 1235],
+  "experiments": {
+    "countscope": {
+      "enabled": true,
+      "seeds": [1234, 1235],
+      "receiver_occurrence": 1,
+      "donor_occurrences": [2, 5, 8],
+      "regions": ["marker", "closing", "full"]
+    },
+    "continued_counting": {
+      "enabled": true,
+      "seeds": [1234, 1235],
+      "source_end_occurrences": [5, 8],
+      "target_start_occurrence": 1,
+      "k_values": [1, 2, 3],
+      "regions": ["marker", "full"],
+      "read_hops": [1, 2],
+      "successor_max_new_tokens": 24
+    },
+    "linear_additivity": {
+      "enabled": true,
+      "fit_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243],
+      "eval_seeds": [1244, 1245],
+      "layers": [20, 21, 22, 23, 24, 25, 26],
+      "receiver_occurrences": [5],
+      "shifts": [-2, -1, 1, 2],
+      "conditions": [
+        "position_difference",
+        "opposite_position_difference",
+        "norm_matched_orthogonal"
+      ]
+    },
+    "separator_collapse": {
+      "enabled": true,
+      "seeds": [1234, 1235],
+      "source_occurrence": 1,
+      "target_occurrences": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "regions": ["marker", "payload", "closing"]
+    },
+    "maximum_count": {
+      "enabled": true,
+      "seeds": [1234, 1235],
+      "source_target_pairs": [[3, 7], [8, 5]],
+      "k_values": [1, 2, 3],
+      "regions": ["marker", "full"]
+    }
+  },
+  "interpretation_contract": {
+    "countscope": "A donor state is causally decodable only when the donor count becomes candidate argmax or greedy output in the fixed blank receiver; positive CI alone is insufficient.",
+    "continued_counting": "k=1 is the single-state test. Success restricted to k=2 or k=3 supports a transferable short trajectory or ledger prefix, not a memoryless counter.",
+    "linear_additivity": "Successful position-difference steering establishes manipulable affine geometry, not a naturally executed h_{k+1}=h_k+delta update.",
+    "separator_collapse": "Marker collapse must be compared with equal-scope payload and closing collapse before attributing a separator shortcut.",
+    "maximum_count": "Report source-copy, target-minus-k, and max(source,target-minus-k) hypotheses separately; do not infer a max operator from CI alone."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "realistic_niah_v5_parser_provenance_v1",
+  "historical_archive_label": "v26_v44_native_9000",
+  "historical_archive_label_is_parser_rule_id": false,
+  "oracle_assisted": true,
+  "upstream_repository": "anonymous-source",
+  "upstream_commit": "anonymous-snapshot",
+  "entry_point": "realistic_niah_v3.city_list_termination.find_first_terminated_gold_city_list",
+  "files": {
+    "src/realistic_niah_v3/city_list_termination.py": "bb2cd01275a4dbfd339a388a3a830c4c2aa762ec14ad89ca04fd98bbc1b64728",
+    "src/realistic_niah_v3/first_list_cutoff.py": "72781f9060d21fd6c693da4c0b0c0ad58831a031d37bc50fed21ee860ded66b7",
+    "src/realistic_niah_v3/gold_city_cutoff.py": "bc5c37f410b96008023724f3f88895f82fdd39d9a0a05163427f1d3e017c03a9"
+  },
+  "downstream_policy": {
+    "primary_trace_site": "item_end",
+    "primary_cohort": "one_to_one",
+    "gold_city_prior_is_allowed": true,
+    "position_sensitivity_is_preregistered": true,
+    "causal_head_families": [
+      "targeted_retrieval",
+      "progress_transition"
+    ],
+    "causal_head_ranking": "query_weighted_mean_target_needle_raw_mass",
+    "broad_aggregation_used_for_causal_head_selection": false
+  }
+}

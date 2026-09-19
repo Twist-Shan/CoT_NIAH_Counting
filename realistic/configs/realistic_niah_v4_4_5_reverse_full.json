@@ -1,0 +1,123 @@
+{
+  "schema_version": "v445_reverse_full_sparse_validation_v2",
+  "stimulus_sha256": "da4dd86142eb8a07f9a7e53497efd3375184c8e68367d4db994370fcb331f090",
+  "seeds": [
+    1234,
+    1235,
+    1236,
+    1237,
+    1238,
+    1239,
+    1240,
+    1241,
+    1242,
+    1243,
+    1244,
+    1245,
+    1246,
+    1247,
+    1248,
+    1249,
+    1250,
+    1251,
+    1252,
+    1253,
+    1254,
+    1255,
+    1256,
+    1257,
+    1258,
+    1259,
+    1260,
+    1261,
+    1262,
+    1263
+  ],
+  "discovery_seeds": [
+    1234,
+    1235,
+    1236,
+    1237,
+    1238,
+    1239,
+    1240,
+    1241,
+    1242,
+    1243,
+    1244,
+    1245,
+    1246,
+    1247,
+    1248,
+    1249,
+    1250,
+    1251,
+    1252,
+    1253
+  ],
+  "confirmation_seeds": [
+    1254,
+    1255,
+    1256,
+    1257,
+    1258,
+    1259,
+    1260,
+    1261,
+    1262,
+    1263
+  ],
+  "counts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "num_layers": {
+    "Qwen3-8B": 36,
+    "Gemma4-E4B": 42
+  },
+  "effective_text_backend": {
+    "Qwen3-8B": "sdpa",
+    "Gemma4-E4B": "eager"
+  },
+  "primary_metric": "expected_error_increase",
+  "primary_specificity": "reverse_needle_full minus reverse_ordinary_full expected_error_increase",
+  "primary_inference_population": "confirmation_seeds",
+  "bootstrap_unit": "seed; counts averaged within seed",
+  "bootstrap_repetitions": 10000,
+  "bootstrap_seed": 20260909,
+  "historical_comparison_policy": "same-backend primary results remain immutable; only failed Gemma historical comparisons may use separately recorded legacy SDPA donor or clean-baseline reconstruction; unexplained mismatch stops",
+  "pilot_observed_seeds": [
+    1234,
+    1235
+  ],
+  "raw_primary_rows": {
+    "Qwen3-8B": 33300,
+    "Gemma4-E4B": 38700
+  },
+  "all_rows_with_validation": {
+    "Qwen3-8B": 35700,
+    "Gemma4-E4B": 41100
+  },
+  "validation_layers": {
+    "Qwen3-8B": [
+      0,
+      16,
+      21,
+      35
+    ],
+    "Gemma4-E4B": [
+      0,
+      15,
+      17,
+      41
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema_version": "realistic_niah_v5_prospective_count_chain_claim_contract_v1",
+  "frozen_utc": "2026-08-21T14:56:00Z",
+  "status": "FROZEN_BEFORE_PROSPECTIVE_ENDPOINT_EFFECTS_OR_GATES",
+  "monitoring_exposure": {
+    "partial_effects_read": false,
+    "partial_margins_read": false,
+    "partial_gate_values_read": false,
+    "metadata_observed": [
+      "process liveness",
+      "GPU telemetry",
+      "shard counts",
+      "terminal artifact existence",
+      "error-string counts"
+    ],
+    "gemma_prior_raw_progress_exposure": "Recorded separately in configs/realistic_niah_v5_gemma_k6_monitoring_exposure_v1.json; no aggregate effect, margin or gate was exposed and the protocol was already frozen."
+  },
+  "shared_protocol": {
+    "discovery_seeds": [
+      1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+      1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+    ],
+    "confirmation_seeds": [
+      1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263
+    ],
+    "outcome_blind": true,
+    "selection_rank_used": false,
+    "confirmation_requires_all_discovery_gates": true,
+    "same_bank_endpoint_and_bridge_required": true
+  },
+  "models": {
+    "Qwen3-8B": {
+      "prospective_bank_size": 128,
+      "selected_bank_sha256": "ef30a8a083468c6e88cb5b0924403884ad758fedbc743de36dd03ab9bc4a742b",
+      "extension_protocol": "configs/realistic_niah_v5_qwen_k128_count_chain_extension_v1.json",
+      "independent_readout_evidence": "work/v5_native_count_stream/complementary_readout_20d10c_20260821/Qwen3-8B/complementary_complete.json",
+      "readout_mechanism": "complementary L26 residual relay plus direct trace-source reread"
+    },
+    "Gemma4-E4B": {
+      "prospective_bank_size": 6,
+      "selected_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1",
+      "extension_protocol": "configs/realistic_niah_v5_gemma_k6_count_chain_extension_v1.json",
+      "independent_readout_evidence": "work/v5_native_count_stream/serial_source_persistent_20d10c_20260821/Gemma4-E4B/serial_source_complete.json",
+      "readout_mechanism": "distributed all-layer/all-head trace-source readout"
+    }
+  },
+  "terminal_claim_rules": {
+    "MODEL_FULL_CHAIN_CONFIRMED": [
+      "prospective targeted-retrieval-to-final-count endpoint status is PASS",
+      "same-bank full-span targeted-to-terminal-state bridge status is PASS",
+      "independent terminal-state-to-answer-readout evidence status is PASS",
+      "endpoint and bridge bank size and selected-bank SHA-256 are identical to the frozen model default",
+      "endpoint and bridge discovery audits retain 20 seeds",
+      "endpoint and bridge confirmation audits retain 10 seeds",
+      "every bridge phase retains all frozen seeds as applicable",
+      "all plans and audits prove selection_rank_used=false"
+    ],
+    "MODEL_PARTIAL_CHAIN_ONLY": "The prospective endpoint passes but its same-bank bridge does not; retain endpoint and independent readout claims but do not join them into a serial mediator chain.",
+    "PROSPECTIVE_BANK_ENDPOINT_NOT_SUPPORTED": "The prospective endpoint does not pass; do not open its bridge and retain only immutable historical evidence.",
+    "CROSS_MODEL_GENERALITY": "Allowed only if both Qwen3-8B and Gemma4-E4B independently satisfy MODEL_FULL_CHAIN_CONFIRMED."
+  },
+  "exhaustion_rule": "The prospectively frozen full-span bridge is the final allowed same-bank geometry branch. A further head, layer, cut, position or geometry search requires a new outcome-blind preregistration and cannot alter this ledger.",
+  "interpretation_boundary": "A confirmed chain establishes a time-ordered causal route through a sufficient terminal hidden state and model-specific answer readout. It does not establish natural-effect mediation, a unique minimal circuit, or a one-dimensional scalar count code."
+}

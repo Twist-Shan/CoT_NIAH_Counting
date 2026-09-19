@@ -1,0 +1,70 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_serial_bridge_v1",
+  "frozen_utc": "2026-08-21T09:30:00Z",
+  "formal_protocol": {
+    "discovery_seeds": [
+      1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+      1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+    ],
+    "confirmation_seeds": [
+      1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263
+    ],
+    "confirmation_requires_discovery_pass": true,
+    "selection_rank_prohibited": true,
+    "pair_selection": "all_eligible_registered_seeds_and_terminal_counts",
+    "bootstrap_unit": "seed",
+    "bootstrap_samples": 10000,
+    "random_seed": 20260821
+  },
+  "write_intervention": {
+    "mechanism": "retrieval_anchor_localization",
+    "anchor_role": "post_marker_via_frozen_model_specific_routed_registry",
+    "transition": "final_N_minus_1_to_N",
+    "site_scope": "exact_single_query_anchor",
+    "state_donors": [
+      "clean",
+      "selected_bank",
+      "layer_matched_random_repeat_1",
+      "layer_matched_random_repeat_2",
+      "layer_matched_random_repeat_3"
+    ],
+    "bank_source": "model_specific_frozen_targeted_count_plan",
+    "site_source": "model_specific_frozen_final_transition_registry_used_by_the_behavioral_endpoint",
+    "teacher_forced_trace": true
+  },
+  "state_transfer": {
+    "geometry": "terminal_suffix8",
+    "tensor": "full_hidden_state",
+    "alignment": "same_sequence_exact_positions",
+    "temporal_geometry_contract": "routed_query_may_equal_the_first_suffix8_position_but_may_not_follow_it_and_at_least_one_state_token_must_be_strictly_post_query",
+    "Qwen3-8B": {
+      "patch_layers": [19, 20, 21, 22, 23, 24, 25]
+    },
+    "Gemma4-E4B": {
+      "patch_layers": [
+        16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28,
+        29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41
+      ]
+    }
+  },
+  "readout_intervention": {
+    "application": "answer_query_and_numeric_answer_tokens",
+    "Qwen3-8B": {
+      "natural": "natural_relay_plus_clean_source",
+      "matched_control": "natural_relay_plus_token_budget_matched_source_mask",
+      "cut": "L26_post_terminal_suffix_clean_reset_plus_all_layer_all_head_trace_item_mask"
+    },
+    "Gemma4-E4B": {
+      "natural": "clean_source",
+      "matched_control": "token_budget_matched_source_mask",
+      "cut": "all_layer_all_head_trace_item_mask"
+    }
+  },
+  "primary_gates": {
+    "targeted_bank_changes_terminal_state_readout": "selected-minus-mean-random correct-count-margin damage CI low > 0",
+    "matched_readout_control_preserves_damage": "selected-minus-mean-random damage under matched readout control CI low > 0",
+    "readout_cut_occludes_targeted_state_effect": "specific interaction CI high < 0",
+    "cut_residual_equivalence": "residual-ratio CI high < 0.20"
+  },
+  "claim_restriction": "This is a controlled teacher-forced serial bridge. Free-generation propagation to the discrete final count must be supported separately by the frozen targeted-count endpoint confirmation."
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": "realistic_niah_v6_answer_trace_extension_contract_v1",
+  "status": "frozen_before_v6_extension_intervention_outcomes",
+  "frozen_utc": "2026-08-29T19:01:42.2186181Z",
+  "structural_amendment": {
+    "amended_utc": "2026-08-29T19:16:21.9040891Z",
+    "reason": "pre-intervention registry audit showed that the five-count broad registry can mix source seeds outside its registered five counts; freeze a dedicated all-count coherent registry instead",
+    "answer_or_relay_intervention_outputs_existed": false,
+    "effect_magnitudes_read": false,
+    "sample_replacement_rule_changed": false
+  },
+  "requested_by_user": true,
+  "protocol_relation": "user-added registered existing-split extension; not part of the original frozen 20-frame V6 suite",
+  "native_thinking_alignment": "reuse the Native-thinking answer_query_v3 full-state layer sweep and terminal trace-to-answer partial-mediation kernels without changing their numerical estimands",
+  "prompt_modes": [
+    "enumeration_index",
+    "enumeration_bullet"
+  ],
+  "models": [
+    "Qwen3-8B",
+    "Gemma4-E4B"
+  ],
+  "cohort": {
+    "split": "confirmation",
+    "analysis_slots": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "registry": "dedicated frozen V6 coherent all-count confirmation registry",
+    "base_replacement_policy": "configs/realistic_niah_v6_replacement_policy.json",
+    "base_cell_registry": "replacement/confirmation/selected_cells.jsonl",
+    "required_counts_per_slot": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "trigger": "any original source row in the all-count trajectory fails runtime or fresh V6 strict parsing",
+    "replacement_unit": "entire count-1-to-10 source trajectory for the affected analysis slot",
+    "candidate_order": "ascending confirmation reserve seed order, without reuse",
+    "eligibility_rule": "one unused source seed is present and fresh-V6-strict for every count 1..10",
+    "statistical_identity": "true source seed",
+    "panel_membership_identity": "v6_analysis_slot_seed",
+    "seed_aliasing": false,
+    "replacement_rule": "use the lowest available unused reserve seed for an affected all-count trajectory; no intervention outcome may trigger or choose a replacement"
+  },
+  "answer_query_full_state_patching": {
+    "site_id": "answer_query_v3",
+    "site_definition": "last literal trace token immediately before the first numeric answer token",
+    "surface_site_matched": true,
+    "absolute_position_matched": false,
+    "eligibility": "strict one-to-one and baseline final answer exact for both receiver and donor",
+    "pair_selection": "within each frozen confirmation slot select up to three adjacent available-count edges nearest low/middle/high anchors, then run both directions; selection is blind to patch outcomes",
+    "conditions": [
+      "self_patch",
+      "full_donor_patch"
+    ],
+    "layers": {
+      "Qwen3-8B": [0, 5, 10, 15, 20, 25, 30, 35],
+      "Gemma4-E4B": [0, 6, 12, 18, 23, 29, 35, 41]
+    },
+    "max_new_tokens": 16,
+    "decoding": "deterministic greedy",
+    "primary_estimand": "seed-equal probability that the receiver's parsed greedy count exactly adopts the donor count",
+    "invalid_output_policy": "unparsable or outside 1..10 remains in the denominator as adoption failure",
+    "bootstrap": "10000-repetition true-source-seed cluster bootstrap",
+    "descriptive_onset_only": "first sampled layer with adoption >= 0.5 and CI low > 0; never used to choose a tested layer"
+  },
+  "terminal_trace_to_answer_partial_mediation": {
+    "source_conditions": [
+      "self_patch",
+      "full_donor_patch"
+    ],
+    "relay_conditions": [
+      "natural_relay",
+      "answer_query_clean_reset",
+      "post_terminal_suffix_clean_reset"
+    ],
+    "geometry": "suffix8",
+    "layers": {
+      "Qwen3-8B": {
+        "source": 19,
+        "relay": 26
+      },
+      "Gemma4-E4B": {
+        "source": 16,
+        "relay": 34
+      }
+    },
+    "max_new_tokens": 16,
+    "primary_gates": [
+      "terminal_state_patch_effect seed-bootstrap 95% CI low > 0",
+      "post_terminal_suffix_specific_mediation seed-bootstrap 95% CI low > 0"
+    ],
+    "secondary_gate": "answer_query_only_mediation seed-bootstrap 95% CI low > 0",
+    "allowed_claim_if_primary_gates_pass": "A terminal trace state causally changes answer scoring in part through the post-terminal residual suffix.",
+    "prohibited_claims": [
+      "complete mediation",
+      "exclusive mediation through the answer-query token",
+      "greedy-answer control unless the supplementary greedy endpoint supports it",
+      "memoryless arithmetic +1 recurrence"
+    ]
+  },
+  "scheduling": {
+    "gpu": 0,
+    "wait_for": [
+      "Qwen3-8B primary confirmation complete",
+      "Gemma4-E4B primary confirmation complete",
+      "index item-end sensitivity complete"
+    ],
+    "execution": "four model-mode cells sequentially; no collision with the frozen primary queues"
+  }
+}

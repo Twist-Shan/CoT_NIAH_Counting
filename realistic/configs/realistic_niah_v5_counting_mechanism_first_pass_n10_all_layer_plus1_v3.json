@@ -1,0 +1,36 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v2",
+  "phase": "first_pass_n10_posthoc_all_layer_plus1",
+  "row_selection": "first_pass_noindex",
+  "random_seed": 20260827,
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "max_new_tokens": 8,
+  "run_greedy": false,
+  "status": "posthoc_all_layer_scan_no_selection_claim",
+  "cohort_contract": {
+    "fixed_count": 10,
+    "selection_population": "first_pass_noindex_enumeration",
+    "discovery_seeds_used_for_confirmation_geometry_fit": [1267, 1290, 1293, 1359, 1384, 1506, 1539, 1621, 1750, 1771, 1791, 1810, 1893, 2056, 2128, 2254, 2295, 2298, 2302, 2322],
+    "confirmation_seeds_reserved": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024]
+  },
+  "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+  "experiments": {
+    "linear_additivity": {
+      "enabled": true,
+      "fit_seeds": [1267, 1290, 1293, 1359, 1384, 1506, 1539, 1621, 1750, 1771, 1791, 1810, 1893, 2056, 2128, 2254, 2295, 2298, 2302, 2322],
+      "eval_seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+      "layer_bands": {
+        "layer_00": [0], "layer_01": [1], "layer_02": [2], "layer_03": [3], "layer_04": [4], "layer_05": [5],
+        "layer_06": [6], "layer_07": [7], "layer_08": [8], "layer_09": [9], "layer_10": [10], "layer_11": [11],
+        "layer_12": [12], "layer_13": [13], "layer_14": [14], "layer_15": [15], "layer_16": [16], "layer_17": [17],
+        "layer_18": [18], "layer_19": [19], "layer_20": [20], "layer_21": [21], "layer_22": [22], "layer_23": [23],
+        "layer_24": [24], "layer_25": [25], "layer_26": [26], "layer_27": [27], "layer_28": [28], "layer_29": [29],
+        "layer_30": [30], "layer_31": [31], "layer_32": [32], "layer_33": [33], "layer_34": [34], "layer_35": [35]
+      },
+      "receiver_occurrences": [2, 5, 8],
+      "shifts": [1],
+      "conditions": ["position_difference", "opposite_position_difference", "norm_matched_orthogonal"],
+      "alpha": 1.0
+    }
+  }
+}

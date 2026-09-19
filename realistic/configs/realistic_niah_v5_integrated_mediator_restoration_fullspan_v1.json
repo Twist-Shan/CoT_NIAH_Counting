@@ -1,0 +1,36 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_mediator_restoration_fullspan_v1",
+  "frozen_utc": "2026-08-21T10:44:00Z",
+  "activation_rule": "run_only_for_a_model_if_suffix8_mediator_restoration_fails_discovery",
+  "formal_protocol": {
+    "discovery_seeds": [
+      1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+      1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+    ],
+    "confirmation_seeds": [
+      1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263
+    ],
+    "confirmation_requires_discovery_pass": true,
+    "selection_rank_prohibited": true,
+    "pair_selection": "all_eligible_registered_seeds_and_terminal_counts",
+    "bootstrap_unit": "seed",
+    "bootstrap_samples": 10000,
+    "random_seed": 20260821
+  },
+  "only_changed_factor": {
+    "suffix8_branch": "last eight tokens of the terminal trace item",
+    "fullspan_branch": "every token in the same example's terminal trace item",
+    "alignment": "same-sequence exact positions; no cross-occurrence or cross-example length matching is used"
+  },
+  "unchanged_frozen_factors": {
+    "write_window": "query_through_trace",
+    "banks": "same selected bank and three layer-matched random banks",
+    "targeted_site": "same final N_minus_1_to_N routed registry",
+    "factorial": "five receiver write banks by self/clean-restored mediator by natural/matched/cut readout, 30 rows per sample",
+    "Qwen3-8B": "L19-L25 mediator clamp and L26 plus direct-source joint cut",
+    "Gemma4-E4B": "L16-L41 mediator clamp and distributed trace-source cut",
+    "primary_gates": "identical to suffix8 mediator restoration",
+    "greedy_exact_count": "supplementary_only"
+  },
+  "claim_restriction": "This final geometry robustness branch can establish a distributed terminal-span mediator but cannot localize a smaller token subset. No further position search is permitted from its outcome."
+}

@@ -1,0 +1,2 @@
+# Preserve the source experiment's registered numerical environment.
+-r ../realistic/requirements-mechanistic-v4_4_2.txt

@@ -1,0 +1,22 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v2",
+  "phase": "first_pass_n3_posthoc_matched_receiver",
+  "row_selection": "first_pass_noindex",
+  "random_seed": 20260827,
+  "candidate_counts": [1, 2, 3, 4, 5, 6],
+  "max_new_tokens": 8,
+  "run_greedy": true,
+  "status": "posthoc_receiver_calibration_diagnostic",
+  "cohort_contract": {"fixed_count": 3},
+  "seeds": [1257, 1271, 1427, 1685, 1835, 1916, 1985, 2201, 2213, 2249],
+  "experiments": {
+    "countscope": {
+      "enabled": true,
+      "seeds": [1257, 1271, 1427, 1685, 1835, 1916, 1985, 2201, 2213, 2249],
+      "receiver_occurrence": 1,
+      "receiver_modes": ["scrubbed_prompt_natural_item"],
+      "donor_occurrences": [1, 2, 3],
+      "regions": ["closing", "full"]
+    }
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "schema_version": "realistic_niah_v6_mechanism_followup_v3",
+  "status": "FROZEN_BEFORE_V3_AGGREGATE_MULTIHOP_REPARSE",
+  "frozen_utc_date": "2026-08-31",
+  "scientific_question": "Does the already generated full-item-span intervention carry a content-bound enumeration state beyond first-city adoption, and can the exact native-aligned representation panels be visualized without changing any frozen V6 selection?",
+  "baseline_reports": {
+    "enumeration_narrative": {
+      "path": "reports/NiaH_Enumeration_report.html",
+      "sha256": "6bb7eef8a49f2a8822559c603ea75c07d4c03377ee5fc20bde570bdad25c688d"
+    },
+    "native_thinking_reference": {
+      "path": "reports/NiaH_Native-Thinking_report.html",
+      "sha256": "865ab576e487ccc9543651d9a2444283e5385352c3f364b8437e03073cf7b24c"
+    }
+  },
+  "provenance_disclosure": {
+    "aggregate_multihop_outcomes_seen_before_freeze": false,
+    "schema_smoke_row_seen_before_freeze": true,
+    "schema_smoke_row_scope": "The first receiver_self row of Qwen3-8B enumeration_bullet forward_skip was inspected only to verify that completion_text and generated ordinal lists were retained. Its observed continuation is therefore disclosed and V3 remains a post-hoc robustness analysis, not a prospective confirmatory experiment.",
+    "qualification": "All V3 multihop claims must be labelled POSTHOC_AGGREGATE_REPARSE_AFTER_ONE_SCHEMA_SMOKE_ROW. The 3D panels are descriptive views of discovery-fitted projections and are not causal evidence."
+  },
+  "freeze_corrections": [
+    {
+      "utc_date": "2026-08-31",
+      "field": "full_item_span_multihop_reparse.frozen_inputs.enumeration_index/Gemma4-E4B/forward_skip.manifest_sha256",
+      "original_transcription": "89e0318d3564a2144af2f7f0eb85150fd9d65573fc51d7fa2f7f0af85b201",
+      "corrected_from_downloaded_file": "89e0318d3564a214e6aa4263a00a68f562842ec01201a878dc705c057cabf9ec",
+      "reason": "Clerical hash transcription error detected by the mandatory pre-analysis hash check; no endpoint, denominator, seed, direction, layer, or analysis rule changed.",
+      "outcome_dependent_change": false
+    },
+    {
+      "utc_date": "2026-08-31",
+      "field": "full_item_span_multihop_reparse.frozen_inputs.enumeration_bullet/Gemma4-E4B/backward_rewind.trials_sha256",
+      "original_transcription": "4562cb081cc901ce66f8fa3bcf223b39445fb56abea21d31ff5b1406cf88e8",
+      "corrected_from_downloaded_file": "4562cb081cc901ce66f8fa3bcf223b39445fbaf56abea21d31ff5b1406cf88e8",
+      "reason": "Clerical hash transcription error detected by the mandatory pre-analysis hash check; no endpoint, denominator, seed, direction, layer, or analysis rule changed.",
+      "outcome_dependent_change": false
+    }
+  ],
+  "global_firewall": {
+    "new_model_forward_required_by_default": false,
+    "new_model_forward_allowed_only_if_registered_fields_are_missing": true,
+    "frozen_k_may_change": false,
+    "frozen_heads_may_change": false,
+    "frozen_item_span_layer_may_change": false,
+    "frozen_directions_may_change": false,
+    "seed_selection_may_use_intervention_outcomes": false,
+    "original_v6_and_v2_nulls_are_retained": true,
+    "new_results_replace_original_v6_or_v2_gates": false,
+    "all_scope_results_are_reported": true
+  },
+  "full_item_span_multihop_reparse": {
+    "input_root": "mechanism_followup_v2/full_item_greedy",
+    "frozen_inputs": {
+      "enumeration_index/Qwen3-8B/forward_skip": {
+        "manifest_sha256": "554c908452d427dfe7fcd53cbcefafbbc9de1455dc04912da6af49ed58ad8d21",
+        "trials_sha256": "04e9eb2b5c6fe9ec276cda7095eab2561e81765118f23c21c8bc505e8fc948c8"
+      },
+      "enumeration_index/Qwen3-8B/backward_rewind": {
+        "manifest_sha256": "c9dbcbf87d65e12939ab4f0fa651d80345d5de689e3fc82f58b38f8b78e2d462",
+        "trials_sha256": "f9b1e422d58df5b0b46130c0b453e615c84bae8c0482eb97e818e654c3087037"
+      },
+      "enumeration_index/Gemma4-E4B/forward_skip": {
+        "manifest_sha256": "89e0318d3564a214e6aa4263a00a68f562842ec01201a878dc705c057cabf9ec",
+        "trials_sha256": "af93e6673f9cdc89802987a6a9fdff4f8818fdd3356c24979333a9890ae11784"
+      },
+      "enumeration_index/Gemma4-E4B/backward_rewind": {
+        "manifest_sha256": "7ac861057d863fe0fd4ba25277219f7802e30814d90d0a000fe21ff60c5f0ade",
+        "trials_sha256": "7f671f2aafd0fd67257092dd4a9a807bf27d8ca35ba38f4fc459438a22018ae8"
+      },
+      "enumeration_bullet/Qwen3-8B/forward_skip": {
+        "manifest_sha256": "97c20fb1c5ae148aca427de5e9a124296592cef2e50f899bd4071268bcc45a22",
+        "trials_sha256": "3e0f56883b92fabd58ed85c6c8783d2517cb355b6e7f4dc5b99c1d8796a676a0"
+      },
+      "enumeration_bullet/Qwen3-8B/backward_rewind": {
+        "manifest_sha256": "4d74a2b31f5d9f8438741bbd6946518c19d1319ffef809e8fc90ca3f0c77f3c6",
+        "trials_sha256": "c36bd224cf41edce563b8d8fef46edda15c8289e6dfb46e283b8217f04a64523"
+      },
+      "enumeration_bullet/Gemma4-E4B/forward_skip": {
+        "manifest_sha256": "2083d5c88cf7822bacc75a0b7f0eb85150fd9d65573fc51d7fa2f7f0af85b201",
+        "trials_sha256": "3a5fa1074af51cbfed581904cb852c08841bc4de5be547044508ba9c37369fcf"
+      },
+      "enumeration_bullet/Gemma4-E4B/backward_rewind": {
+        "manifest_sha256": "edf58f014e2898630f5d0890a771e1895dfe06fd56cb979eb4f2ab6f682a6892",
+        "trials_sha256": "4562cb081cc901ce66f8fa3bcf223b39445fbaf56abea21d31ff5b1406cf88e8"
+      }
+    },
+    "cells": [
+      "Qwen3-8B x enumeration_index",
+      "Gemma4-E4B x enumeration_index",
+      "Qwen3-8B x enumeration_bullet",
+      "Gemma4-E4B x enumeration_bullet"
+    ],
+    "directions": {
+      "forward_skip": {
+        "receiver_occurrence": 5,
+        "donor_occurrence": 6
+      },
+      "backward_rewind": {
+        "receiver_occurrence": 7,
+        "donor_occurrence": 6
+      }
+    },
+    "conditions": [
+      "receiver_self",
+      "native_donor",
+      "donor_to_receiver"
+    ],
+    "seed_count_per_direction": 10,
+    "ordinal_source": "generated_known_city_ordinals_any_surface",
+    "grammar_specific_ordinal_lists_are_audit_only": true,
+    "donor_expected_sequence": "The consecutive gold occurrence ordinals donor_occurrence + 1 through gold_count, in order.",
+    "receiver_expected_sequence": "The consecutive gold occurrence ordinals receiver_occurrence + 1 through gold_count, in order.",
+    "prefix_rule": "Starting at the first generated known-city ordinal, count the longest exact prefix matching the relevant expected sequence; do not skip, reorder, or repair generated ordinals.",
+    "registered_depths": [
+      1,
+      2,
+      4
+    ],
+    "primary_outcome": "donor_prefix_depth_at_least_4",
+    "primary_estimand": "paired mean(donor_to_receiver donor-prefix-depth>=4 - receiver_self donor-prefix-depth>=4), seed clustered and direction averaged within cell",
+    "secondary_outcomes": [
+      "donor_prefix_depth_at_least_1",
+      "donor_prefix_depth_at_least_2",
+      "exact_donor_path_prefix_depth",
+      "receiver_self receiver-prefix positive control",
+      "native_donor donor-prefix positive control",
+      "conditional donor depth-2 and depth-4 persistence among donor_to_receiver rows with depth-1 adoption"
+    ],
+    "denominator_rule": "All ten frozen seeds in each direction remain in every unconditional denominator. Truncated, empty, ambiguous, duplicate, or nonmatching generations score zero for unmet registered depths and are reported separately.",
+    "uncertainty": {
+      "method": "paired seed-cluster bootstrap",
+      "replicates": 10000,
+      "random_seed": 606831,
+      "confidence_interval": 0.95
+    },
+    "strong_alignment_gate": "For a cell, the primary paired depth-4 effect passes only if its 95% bootstrap lower bound is greater than zero; individual directions and conditional persistence remain descriptive.",
+    "no_new_forward_eligibility": "If every frozen trials.jsonl contains all conditions, all ten seeds, completion_text, generation_truncated, and generated_known_city_ordinals_any_surface, no new model generation is permitted."
+  },
+  "representation_3d": {
+    "source_analysis_root": "native_aligned_representation",
+    "source_analysis_manifest_sha256": "cf9f92e56f73a1a2b2a3e0c6aa1cb4181db1df5a98ef2d711c0f855da33ccfa7",
+    "source_alignment_audit_sha256": "24674f0e69f68b2d70001f62764bf3a0a46756ca4f2b08044a3bcd7b4f4f268f",
+    "panels": {
+      "running_index": {
+        "token_site": "item_end",
+        "label": "occurrence",
+        "split_fit": "discovery",
+        "split_display": "confirmation"
+      },
+      "final_count": {
+        "token_site": "answer_query_v3",
+        "label": "gold_count",
+        "split_fit": "discovery",
+        "split_display": "confirmation"
+      }
+    },
+    "cells": "all four model x grammar cells",
+    "layers": "all captured post-block layers; the native-aligned discovery-selected layer is the default selector value",
+    "transform": "For each endpoint, cell, and layer independently: fit StandardScaler and deterministic PCA(n_components=3, svd_solver=full, whiten=false) on discovery states only; flip each axis only when its discovery coordinate-label correlation is finite and negative; project confirmation states without refitting.",
+    "display": "Show every confirmation point, connect confirmation label centroids in ordinal order, expose grammar/model/layer selectors, synchronize drag rotation between the running and final panels, and display explained-variance ratio. Axes are arbitrary PCA coordinates.",
+    "selection_firewall": "No 3D coordinate, confirmation label, or visual appearance may alter a frozen selected layer or any inferential gate.",
+    "qualification": "DESCRIPTIVE_DISCOVERY_FIT_CONFIRMATION_PROJECTION"
+  },
+  "report_replication_contract": {
+    "target_path": "reports/NiaH_Enumeration_report.html",
+    "reference_path": "reports/NiaH_Native-Thinking_report.html",
+    "topology": "Mirror the Native-thinking report's narrative mechanism sequence and evidence hierarchy while retaining Enumeration-specific Index/Bullet contrasts and every V6/V2/V3 result.",
+    "required_content": [
+      "executive mechanism verdict",
+      "task and grammar contract",
+      "running and final representation analyses",
+      "static layerwise and endpoint figures",
+      "interactive running/final 3D representation comparison",
+      "targeted retrieval and query-through-city audit",
+      "retrieval-through-carrier mediation",
+      "full-state direct and multihop commit-to-query continuation",
+      "terminal necessity versus global sufficiency",
+      "NCC and low-dimensional update/stop nulls",
+      "Index versus Bullet and Native-thinking comparison matrix",
+      "limitations, claim ledger, source hashes, and audit appendices"
+    ],
+    "asset_policy": "Single self-contained HTML with no external runtime or CDN dependency.",
+    "outcome_policy": "Scientific alignment means matching the experiment matrix and reporting standard, not forcing the same sign or significance. Every null and failure remains visible."
+  }
+}

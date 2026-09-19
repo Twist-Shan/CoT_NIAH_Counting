@@ -1,0 +1,150 @@
+{
+  "schema_version": "realistic_niah_v3_config_v1",
+  "protocol_version": "realistic_niah_v3",
+  "scope": [
+    "behavior_comparison",
+    "empirical_law"
+  ],
+  "excluded_scope": [
+    "mechanistic_representation_analysis",
+    "attention_head_analysis",
+    "activation_patching",
+    "causal_intervention",
+    "causal_mediation"
+  ],
+  "canonical_tokenizer": "Qwen/Qwen3-8B",
+  "canonical_tokenizer_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "target_passage_tokens": [
+    2000,
+    3000,
+    5000,
+    8000,
+    10000,
+    15000,
+    20000
+  ],
+  "needle_counts": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    12,
+    15,
+    18,
+    20
+  ],
+  "seeds": [
+    1234,
+    1235,
+    1236,
+    1237,
+    1238,
+    1239,
+    1240,
+    1241,
+    1242,
+    1243
+  ],
+  "expected_stimuli": 980,
+  "final_length_includes_needles": true,
+  "insertion_depth_coordinate": "needle_char_start/final_passage_characters",
+  "insertion_depth_minimum_inclusive": 0.05,
+  "insertion_depth_maximum_inclusive": 0.95,
+  "haystack_source_mode": "multi_file_no_repeat",
+  "query_layout": "cue_before_query_after",
+  "prompt_modes": [
+    "direct",
+    "enumeration_index",
+    "enumeration_bullet",
+    "native_thinking"
+  ],
+  "switchable_models": [
+    "Qwen3-4B",
+    "Qwen3-8B",
+    "Qwen3-14B",
+    "Qwen3-32B",
+    "Gemma4-E4B",
+    "Gemma4-12B",
+    "Gemma4-26B-A4B",
+    "Gemma4-31B",
+    "Nemotron-Nano-v2-9B",
+    "Nemotron-3-Nano-4B"
+  ],
+  "matched_reasoning_pairs": {
+    "GLM-Z1-9B-0414": "GLM-4-9B-0414",
+    "Ministral-3-Reasoning-8B": "Ministral-3-Instruct-8B"
+  },
+  "model_revisions": {
+    "Qwen3-4B": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "Qwen3-8B": "b968826d9c46dd6066d109eabc6255188de91218",
+    "Qwen3-14B": "40c069824f4251a91eefaf281ebe4c544efd3e18",
+    "Qwen3-32B": "9216db5781bf21249d130ec9da846c4624c16137",
+    "Gemma4-E4B": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+    "Gemma4-12B": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+    "Gemma4-26B-A4B": "4d7ae4984b7db7de8f8457170b3f1a419ee76d52",
+    "Gemma4-31B": "842da3794eaa0b77d5f08bae87a17459d91ff475",
+    "Nemotron-Nano-v2-9B": "6533e8de2c68e4536bf7c411d7a3ce5734111476",
+    "Nemotron-3-Nano-4B": "dfaf35de3e30f1867dd8dbc38a7fc9fb52d3914f",
+    "GLM-4-9B-0414": "645b8482494e31b6b752272bf7f7f273ef0f3caf",
+    "GLM-Z1-9B-0414": "b221b06fefb23ca320922cf6e68ab5f2fb82de81",
+    "Ministral-3-Instruct-8B": "5b26027e7b19eeb4b7352e1fed3926375dd2cb4d",
+    "Ministral-3-Reasoning-8B": "81eaece1948f3875421d9a45bc55487d10e2d894"
+  },
+  "raw_checkpoint_count": 14,
+  "behavior_comparison_slots": 12,
+  "expected_shards": 48,
+  "expected_requests_per_shard": 980,
+  "expected_requests_total": 47040,
+  "primary_accuracy": "parsed integer equals true N; every request remains in the denominator",
+  "strict_accuracy": "exact count and mode-specific format compliant and not length-truncated",
+  "signed_deviation": "predicted_count - N, defined only after parse success",
+  "empirical_law_predictors": [
+    "N",
+    "L/1000",
+    "ln(N)",
+    "ln(L/1000)",
+    "N/(L/1000)",
+    "hierarchical first-order interactions"
+  ],
+  "accuracy_distribution_families": [
+    "binomial_logit",
+    "binomial_probit",
+    "binomial_cloglog",
+    "beta_binomial_logit"
+  ],
+  "accuracy_distribution_diagnostics": [
+    "Dunn-Smyth randomized quantile residual Q-Q plot",
+    "Q-Q correlation R-squared",
+    "Shapiro-Wilk",
+    "Cramer-von Mises"
+  ],
+  "native_thinking_counting_styles": [
+    "indexed_list",
+    "bullet_list",
+    "mixed_structured_list",
+    "ordinal_word_enumeration",
+    "inline_tally_or_arithmetic",
+    "prose_reasoning",
+    "no_visible_reasoning"
+  ],
+  "cross_validation": "five-fold grouped by seed across all N, L, models, and modes",
+  "formal_scheduler": {
+    "algorithm": "resource_aware_greedy_backfill",
+    "maximum_gpus": 8,
+    "Gemma4-31B": {
+      "gpus_required": 2,
+      "tensor_parallel_size": 2
+    },
+    "Qwen3-32B": {
+      "gpus_required": 1,
+      "tensor_parallel_size": 1,
+      "gpu_memory_utilization": 0.92
+    }
+  }
+}

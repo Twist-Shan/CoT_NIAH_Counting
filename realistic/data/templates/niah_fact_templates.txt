@@ -1,0 +1,2 @@
+In the {year} travel preference audit, {entity} was listed under region {region} and category {category}; its satisfaction score was {score}.
+Survey note: {entity} belongs to {region} in category {category}; score recorded: {score}.

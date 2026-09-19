@@ -1,0 +1,23 @@
+{
+  "schema": "enumeration_native_sampling_alignment_v1",
+  "user_instruction": "Native thinking 如何处理的我们就如何处理",
+  "scope": "Correct Enumeration sample selection to the corresponding Native assay; preserve prior shared-cohort experiments as supplementary results.",
+  "models": ["Qwen3-8B", "Gemma4-E4B"],
+  "modes": ["enumeration_index", "enumeration_bullet"],
+  "update": {
+    "confirmation_quota_per_model_mode": 10,
+    "selection": "First ten baseline format-and-geometry eligible confirmation seeds in ascending registered order, independently in each model and mode.",
+    "cross_mode_intersection_required": false,
+    "selection_uses_final_correctness": false,
+    "selection_uses_intervention_outcomes": false,
+    "current_candidates": "Reuse the existing 50 confirmation baseline candidates per cell; all four Enumeration cells already exceed the quota.",
+    "if_candidates_insufficient": "Like the Native format-only scan, freeze an ordered, bounded reserve scan before generating more baselines; stop at the eligibility quota and retain the full attempt ledger. Do not select or stop based on intervention effects.",
+    "native_reference": "Native Qwen N10 scan selected first 20 discovery and first 10 confirmation format-eligible traces after 1089 attempts. Native Gemma prompted cohort selected 20/10 after 52 attempts. Models had their own cohorts.",
+    "reuse": "Reuse only identical selected seed/geometry/condition rows from the completed fresh_causal_v1 queue, with source, code, runtime and raw-generation hashes. Run the missing selected seeds with the same frozen kernel."
+  },
+  "read_blanking": "Keep 100 unfiltered original inputs per Enumeration cell. No correctness or no-index filter and no replenishment of the behavioral denominator.",
+  "relay": "Use Native's one-to-one trace criterion plus executable query/patch geometry, separately per Enumeration mode. Do not apply Update's no-index gate. Cross-mode intersections are supplemental; compare widths only on shared width support within each population.",
+  "native_thinking_reference_scope": "Retain the existing frozen Native assay cohorts as the paper's Native reference. Fresh Qwen/Gemma Thinking shared-cohort reruns are separately labeled; Gemma FOUND is an Update auxiliary and must not replace natural Native Read/Relay.",
+  "chronology": "User-requested sampling correction after the fixed-pool coverage audit and start of shared-cohort interventions. It is not the original prospective sampling protocol.",
+  "unchanged": "Enumeration prompts, model revisions, selected layers, intervention scopes, k values, condition definitions, numerical kernels, decoding budgets and seed-cluster estimands."
+}

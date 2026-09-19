@@ -1,0 +1,24 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v2",
+  "phase": "first_pass_n10_posthoc_continued_post_item",
+  "row_selection": "first_pass_noindex",
+  "random_seed": 20260827,
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "max_new_tokens": 8,
+  "run_greedy": true,
+  "status": "posthoc_boundary_timing_diagnostic",
+  "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+  "experiments": {
+    "continued_counting": {
+      "enabled": true,
+      "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+      "target_start_occurrence": 1,
+      "source_end_occurrences": [3, 6, 9],
+      "k_values": [1],
+      "regions": ["post_item"],
+      "read_hops": [1, 2],
+      "early_stop_hops": [1, 2],
+      "successor_max_new_tokens": 24
+    }
+  }
+}

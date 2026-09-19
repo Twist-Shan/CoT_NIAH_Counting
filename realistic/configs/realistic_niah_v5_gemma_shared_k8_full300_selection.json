@@ -1,0 +1,115 @@
+{
+  "schema_version": "realistic_niah_v5_shared_retrieval_full300_selection_v2",
+  "selection_status": "frozen_with_discovery_only_head_ranking_before_registered_confirmation_dose_grid",
+  "model_label": "Gemma4-E4B",
+  "sample_panel": {
+    "seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253, 1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "prompt_units": 300,
+    "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+    "registered_confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "balance": "Thirty prompts per count and ten counts per seed.",
+    "inference_label": "The seed-disjoint registered-confirmation split is reported first, followed by development-conditioned full-panel coverage. Earlier parser and exact-site smokes may have touched individual old-panel prompts, so the split is registered confirmation rather than pristine held-out.",
+    "config": "configs/realistic_niah_v5.json",
+    "config_sha256": "b58deeef587fa275519b30a83abd5ced4980e4f20b856f6c6478faad76e3758e"
+  },
+  "development_selection": {
+    "ranking_scope_seed_coverage": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252],
+    "ranking_scope_missing_discovery_seeds": [1253],
+    "ranking_scope_confirmation_seeds": [],
+    "head_ranking_source_grammar": "same_unit_rank_before_city",
+    "head_ranking_source_anchor": "p0_item_end",
+    "head_ranking_metric": "seed_first_equal_anchor_mean_source_attention_mass",
+    "primary_bank_size": 8,
+    "primary_bank_heads": [[29, 4], [17, 2], [17, 1], [29, 2], [29, 0], [17, 0], [23, 5], [23, 2]],
+    "primary_bank_sha256": "93a174e36bf14938fdea4a147a032e245caef760f9631e193553f9828d8a6874",
+    "registered_nested_dose_grid": [1, 2, 4, 6, 8],
+    "source_writes": "runs/v5_native_mechanism_reboot_20260818/Gemma4-E4B/source_attention_p0_samebefore_k8_dev_v1",
+    "plans": {
+      "1": {
+        "path": "runs/v5_native_mechanism_reboot_20260818/Gemma4-E4B/causal_plan_p0_samebefore_k1_discovery1234_1253_full300_frozen_v3/retrieval_anchor_bank_plan.csv",
+        "sha256": "5ef2e7797e4b9547a9f0b59973eb0d5013deec909cf92ddaa38028fe34a5a81c",
+        "selected_bank_sha256": "c6f39bcd466b00da7f2c0934120c267226a64d48fcd0a332b0e3253cc68b6607"
+      },
+      "2": {
+        "path": "runs/v5_native_mechanism_reboot_20260818/Gemma4-E4B/causal_plan_p0_samebefore_k2_discovery1234_1253_full300_frozen_v3/retrieval_anchor_bank_plan.csv",
+        "sha256": "1e283ec0e0491139eb8f3b0bebd051be0eef275f587edb773eda8289dee9f046",
+        "selected_bank_sha256": "fbd267458cbf2222cb2495a29b5c8a19640aac9018bfdf0c9c0cc67de07af3f5"
+      },
+      "4": {
+        "path": "runs/v5_native_mechanism_reboot_20260818/Gemma4-E4B/causal_plan_p0_samebefore_k4_discovery1234_1253_full300_frozen_v3/retrieval_anchor_bank_plan.csv",
+        "sha256": "a34e2bc57bf829bc532b590a470ca3a29a9099a714ddb5f0e79867b9b8f3ce6e",
+        "selected_bank_sha256": "f52ac093d6c3d4b550c3ecc1f485aaf23876afc5a6027f6a83b50c709bf7d34b"
+      },
+      "6": {
+        "path": "runs/v5_native_mechanism_reboot_20260818/Gemma4-E4B/causal_plan_p0_samebefore_k6_discovery1234_1253_full300_frozen_v3/retrieval_anchor_bank_plan.csv",
+        "sha256": "348b42d7ff89f9e185d694966b0adc8b7370987cbcea6561bd91a07d1fbee224",
+        "selected_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1"
+      },
+      "8": {
+        "path": "runs/v5_native_mechanism_reboot_20260818/Gemma4-E4B/causal_plan_p0_samebefore_k8_discovery1234_1253_full300_frozen_v2/retrieval_anchor_bank_plan.csv",
+        "sha256": "275704a13ac3d2992e6e33208191413af715438342d253569a447b39d4d807ca",
+        "selected_bank_sha256": "93a174e36bf14938fdea4a147a032e245caef760f9631e193553f9828d8a6874"
+      }
+    },
+    "nested_membership_audit": "PASS: K1, K2, K4, and K6 are exact ordered prefixes of the frozen K8 treatment bank.",
+    "plan_label": "Head ranking uses discovery seeds only. The same frozen ordered bank is applied at p0_item_end across grammar classes; pooled confirmation is the primary inference target."
+  },
+  "routing": {
+    "policy_id": "gemma_shared_p0_k8_native_routes_frozen_20260819_v1",
+    "path": "configs/realistic_niah_v5_gemma_shared_k8_causal_routes_frozen.json",
+    "sha256": "69301ed7c28f250fb50ef59472917e41ad16901bc6003674325aa12b0f1199c6",
+    "all_grammar_classes": "p0_item_end",
+    "interpretation": "The intervention begins at the previous completed item and remains active through every later cached decode forward."
+  },
+  "anchor_registry": {
+    "path": "runs/v5_native_mechanism_reboot_20260818/Gemma4-E4B/head_behavior_shared_k8_full300_prompt_balanced_discoverysplit_v2/selected_anchor_registry.jsonl",
+    "sha256": "021f1e5d3b95f232c0cf69c08236b592dbf2f54e8e04df6abaa27c097a0a96f8",
+    "prompt_panel": 300,
+    "eligible_selected_prompts": 270,
+    "maximum_anchors_per_prompt": 1,
+    "algorithm": "prompt_balanced",
+    "count_support": {"1": 0, "2": 30, "3": 30, "4": 30, "5": 30, "6": 30, "7": 30, "8": 30, "9": 30, "10": 30},
+    "grammar_support": {"adjacent_rank_after_city": 115, "adjacent_rank_before_city": 5, "same_unit_rank_after_city": 8, "same_unit_rank_before_city": 140, "structural_invariant_bullet": 2},
+    "registered_confirmation_support": {
+      "anchors": 90,
+      "seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+      "count_support": {"1": 0, "2": 10, "3": 10, "4": 10, "5": 10, "6": 10, "7": 10, "8": 10, "9": 10, "10": 10},
+      "grammar_support": {"adjacent_rank_after_city": 30, "adjacent_rank_before_city": 1, "same_unit_rank_after_city": 0, "same_unit_rank_before_city": 58, "structural_invariant_bullet": 1}
+    },
+    "sample_flow_rule": "All 300 prompts remain in denominator tables; N=1 has no k-to-k+1 transition and is explicitly not applicable."
+  },
+  "intervention": {
+    "conditions": ["clean", "selected_bank", "layer_matched_random_repeat_1", "layer_matched_random_repeat_2", "layer_matched_random_repeat_3"],
+    "selected_arm": "Zero K frozen pre-O head slices at p0_item_end and at every later cached decode forward.",
+    "random_control": "Three distinct selected-excluded banks with exactly matched selected-head counts per layer.",
+    "max_new_tokens": 256,
+    "decode_head_ablation_steps": -1,
+    "endpoint": "The first semantic generated city record equals the parser-registered next prompt needle."
+  },
+  "execution_matrix": {
+    "K8": "All eligible prompts: shared clean, selected bank, and three layer-matched random repeats.",
+    "K1_K6": "Registered-confirmation seeds 1254-1263 only: selected bank and three layer-matched random repeats; reuse the identical K8 clean endpoint by prompt-anchor key."
+  },
+  "estimands": {
+    "confirmation_primary_all_examples": "On seeds 1254-1263, selected failure minus mean random failure on paired transitions.",
+    "confirmation_secondary_clean_correct": "The same contrast among transitions retrieved correctly by the shared K8 clean arm.",
+    "full_panel_coverage": "K8 only, reported as development-conditioned full-panel coverage.",
+    "dose_response": "Nested K1, K2, K4, K6, and K8 on registered confirmation; secondary K values reuse the K8 clean arm.",
+    "grammar_specific_k8": "Natural-frequency pooled, dominant-grammar-specific, and descriptive rare-grammar results."
+  },
+  "inference": {
+    "unit": "seed",
+    "hierarchy": "At most one selected transition per seed-count prompt; average counts within seed, then weight seeds equally.",
+    "bootstrap": "Nonparametric seed-cluster bootstrap with 10000 deterministic draws.",
+    "test": "Two-sided seed-level sign-flip when at least ten seeds support an estimand.",
+    "multiplicity": "Holm correction across five pooled K tests per endpoint and separately across adequately supported grammar tests.",
+    "small_support_rule": "Fewer than ten supporting seeds is descriptive or exploratory."
+  },
+  "report_contract": {
+    "shared_with_non_thinking": ["raw ranked and raw random arms before contrast", "all-example before clean-correct", "ranked-minus-random primary contrast", "seed-cluster intervals and sign-flip tests", "exact sample flow and hash audit"],
+    "native_specific": ["N=1 is explicitly not applicable", "parser-registered k-to-k+1 transitions", "grammar-routed anchor semantics", "persistent retry-safe ablation", "failure-mode decomposition"],
+    "separation_rule": "Representation geometry is reported separately and is not used as causal evidence."
+  },
+  "no_reselection_rule": "K values, ordered head membership, p0_item_end routing, registry, matched controls, endpoint, hierarchy, and estimands are frozen before confirmation K-dose execution."
+}

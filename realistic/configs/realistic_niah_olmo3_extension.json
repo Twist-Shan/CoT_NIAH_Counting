@@ -1,0 +1,30 @@
+{
+  "schema_version": "realistic_niah_olmo3_extension_config_v1",
+  "protocol_version": "realistic_niah_v2_olmo3_extension_v1",
+  "logical_model_label": "Olmo3-7B",
+  "source_stimuli_sha256": "b739122c96adf73ec6df4abe0266af239a026b4de6f09f309933231f604c7f71",
+  "expected_stimuli": 500,
+  "expected_requests_total": 2000,
+  "checkpoints": {
+    "Olmo3-7B-Instruct": {
+      "model_id": "allenai/Olmo-3-7B-Instruct",
+      "revision": "6e5971d9eba42665f5bd5a0fcf047f299ce1dccc",
+      "prompt_modes": [
+        "direct",
+        "enumeration_index",
+        "enumeration_bullet"
+      ],
+      "reasoning_policy": "off_only",
+      "expected_requests": 1500
+    },
+    "Olmo3-7B-Think": {
+      "model_id": "allenai/Olmo-3-7B-Think",
+      "revision": "d97e442d7cc678210054dbcc9b440894d62c89a4",
+      "prompt_modes": [
+        "native_thinking"
+      ],
+      "reasoning_policy": "always_on",
+      "expected_requests": 500
+    }
+  }
+}

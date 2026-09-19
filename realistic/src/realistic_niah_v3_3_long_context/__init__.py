@@ -1,0 +1,21 @@
+"""Gemma4-31B V3.3 long-context holdout extension."""
+
+from .spec import (
+    EXPECTED_REQUESTS,
+    EXPECTED_STIMULI,
+    FORMAL_PROMPT_MODES,
+    MODEL_LABELS,
+    MODEL_REVISIONS,
+    PASSAGE_LENGTHS,
+    PROTOCOL_VERSION,
+)
+
+__all__ = [
+    "EXPECTED_REQUESTS",
+    "EXPECTED_STIMULI",
+    "FORMAL_PROMPT_MODES",
+    "MODEL_LABELS",
+    "MODEL_REVISIONS",
+    "PASSAGE_LENGTHS",
+    "PROTOCOL_VERSION",
+]

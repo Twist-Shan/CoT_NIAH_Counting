@@ -1,0 +1,124 @@
+{
+  "schema_version": "realistic_niah_reasoning_models_extension_config_v1",
+  "protocol_version": "realistic_niah_v2_reasoning_models_extension_v1",
+  "source_stimuli_sha256": "b739122c96adf73ec6df4abe0266af239a026b4de6f09f309933231f604c7f71",
+  "expected_stimuli": 500,
+  "expected_shards": 20,
+  "expected_requests_total": 10000,
+  "logical_groups": {
+    "Nemotron-Nano-v2-9B": {
+      "comparison_type": "same_checkpoint_thinking_toggle",
+      "variants": [
+        "Nemotron-Nano-v2-9B"
+      ]
+    },
+    "Nemotron-3-Nano-4B": {
+      "comparison_type": "same_checkpoint_thinking_toggle",
+      "variants": [
+        "Nemotron-3-Nano-4B"
+      ]
+    },
+    "Granite-3.3-Instruct-8B": {
+      "comparison_type": "same_checkpoint_thinking_toggle",
+      "variants": [
+        "Granite-3.3-Instruct-8B"
+      ]
+    },
+    "Cogito-v1-Preview-8B": {
+      "comparison_type": "same_checkpoint_thinking_toggle",
+      "variants": [
+        "Cogito-v1-Preview-8B"
+      ]
+    },
+    "Ministral-3-8B": {
+      "comparison_type": "separate_instruct_reasoning_checkpoints",
+      "variants": [
+        "Ministral-3-Instruct-8B",
+        "Ministral-3-Reasoning-8B"
+      ]
+    }
+  },
+  "checkpoints": {
+    "Nemotron-Nano-v2-9B": {
+      "model_id": "nvidia/NVIDIA-Nemotron-Nano-9B-v2",
+      "revision": "6533e8de2c68e4536bf7c411d7a3ce5734111476",
+      "prompt_modes": [
+        "direct",
+        "enumeration_index",
+        "enumeration_bullet",
+        "native_thinking"
+      ],
+      "reasoning_policy": "switchable",
+      "chat_template_control": "system_reasoning_signal",
+      "engine_profile": "mamba_float32",
+      "expected_requests": 2000
+    },
+    "Nemotron-3-Nano-4B": {
+      "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-4B-BF16",
+      "revision": "dfaf35de3e30f1867dd8dbc38a7fc9fb52d3914f",
+      "prompt_modes": [
+        "direct",
+        "enumeration_index",
+        "enumeration_bullet",
+        "native_thinking"
+      ],
+      "reasoning_policy": "switchable",
+      "chat_template_control": "enable_thinking_kwarg",
+      "engine_profile": "mamba_float32",
+      "expected_requests": 2000
+    },
+    "Granite-3.3-Instruct-8B": {
+      "model_id": "ibm-granite/granite-3.3-8b-instruct",
+      "revision": "51dd4bc2ade4059a6bd87649d68aa11e4fb2529b",
+      "prompt_modes": [
+        "direct",
+        "enumeration_index",
+        "enumeration_bullet",
+        "native_thinking"
+      ],
+      "reasoning_policy": "switchable",
+      "chat_template_control": "thinking_kwarg",
+      "engine_profile": "standard",
+      "expected_requests": 2000
+    },
+    "Cogito-v1-Preview-8B": {
+      "model_id": "deepcogito/cogito-v1-preview-llama-8B",
+      "revision": "64c42369b3f322fbffb277bfff146551dd2823cc",
+      "prompt_modes": [
+        "direct",
+        "enumeration_index",
+        "enumeration_bullet",
+        "native_thinking"
+      ],
+      "reasoning_policy": "switchable",
+      "chat_template_control": "enable_thinking_kwarg",
+      "engine_profile": "standard",
+      "expected_requests": 2000
+    },
+    "Ministral-3-Instruct-8B": {
+      "model_id": "mistralai/Ministral-3-8B-Instruct-2512",
+      "revision": "5b26027e7b19eeb4b7352e1fed3926375dd2cb4d",
+      "prompt_modes": [
+        "direct",
+        "enumeration_index",
+        "enumeration_bullet"
+      ],
+      "reasoning_policy": "off_only",
+      "chat_template_control": "none",
+      "engine_profile": "mistral_common",
+      "expected_requests": 1500
+    },
+    "Ministral-3-Reasoning-8B": {
+      "model_id": "mistralai/Ministral-3-8B-Reasoning-2512",
+      "revision": "81eaece1948f3875421d9a45bc55487d10e2d894",
+      "prompt_modes": [
+        "native_thinking"
+      ],
+      "reasoning_policy": "always_on",
+      "chat_template_control": "none",
+      "system_prompt_strategy": "ministral3_reasoning",
+      "engine_profile": "mistral_common",
+      "expected_requests": 500
+    }
+  }
+}

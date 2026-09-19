@@ -1,0 +1,35 @@
+{
+  "schema_version": "realistic_niah_v5_single_seed_walkthrough_protocol_v1",
+  "status": "FROZEN_CASE_STUDY_BEFORE_EXECUTION",
+  "frozen_date": "2026-08-22",
+  "purpose": "Native-thinking analogue of the one-example NIAH-counting.html restoration walkthrough",
+  "case_study_not_inferential": true,
+  "case_selected_by_outcome": false,
+  "selection_rule": "metadata-only confirmation case with a complete ten-item trace and supported explicit rank/city grammar",
+  "intervention": {
+    "baseline": "replace every registered prompt record and parsed trace item with same-length ordinary prompt text",
+    "restores": [
+      "one full clean item span at occurrence k",
+      "one grammar-aware clean counter carrier at occurrence k",
+      "an equal-token ordinary-state control at the same carrier positions"
+    ],
+    "layer_mode": "cumulative clamp from the frozen source layer through the final decoder block",
+    "answer_query_patched": false,
+    "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  },
+  "models": {
+    "Qwen3-8B": {
+      "seed": 1254,
+      "gold_count": 10,
+      "request_id": "Qwen3-8B/native_thinking/v5/V4_4_T10000_N10_seed1254",
+      "source_layer": 19
+    },
+    "Gemma4-E4B": {
+      "seed": 1258,
+      "gold_count": 10,
+      "request_id": "Gemma4-E4B/native_thinking/v5/V4_4_T10000_N10_seed1258",
+      "source_layer": 16
+    }
+  },
+  "reporting": "show all k=1..10 paths and raw effect-size diagnostics; do not report a p-value, confidence interval, or population claim"
+}

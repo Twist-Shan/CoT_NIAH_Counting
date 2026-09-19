@@ -1,0 +1,44 @@
+{
+  "schema_version": "realistic_niah_v4_4_5_serial_mediation_v1",
+  "protocol_version": "same_forward_source_retrieval_late_partial_serial_mediation_v1",
+  "stimulus_sha256": "da4dd86142eb8a07f9a7e53497efd3375184c8e68367d4db994370fcb331f090",
+  "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+  "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+  "counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "rank": 3,
+  "model_torch_dtype": "bfloat16",
+  "attention_prefix_backend": "sdpa",
+  "strict_generation_max_new_tokens": 8,
+  "stages": {
+    "Qwen3-8B": {
+      "source_layer": 8,
+      "retrieval_layer": 23,
+      "late_answer_layer": 29,
+      "retrieval_heads": [29, 13, 28, 12, 31, 30, 10]
+    },
+    "Gemma4-E4B": {
+      "source_layer": 9,
+      "retrieval_layer": 29,
+      "late_answer_layer": 37,
+      "retrieval_heads": [4, 2, 0]
+    }
+  },
+  "arms": [
+    "C",
+    "O",
+    "S",
+    "S_Rorth",
+    "S_Raligned",
+    "S_Torth",
+    "S_Taligned",
+    "S_Rorth_Torth",
+    "S_Raligned_Torth",
+    "S_Rorth_Taligned",
+    "S_Raligned_Taligned"
+  ],
+  "retrieval_control_seed": 20260819,
+  "realized_norm_relative_tolerance": 0.05,
+  "orthogonality_max_abs_cosine_tolerance": 0.01,
+  "stimulus_scope": "canonical V4.4 frozen confirmation panel only",
+  "claim_scope": "ordered partial serial mediation; not pathway uniqueness"
+}

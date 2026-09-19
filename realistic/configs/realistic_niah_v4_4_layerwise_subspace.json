@@ -1,0 +1,63 @@
+{
+  "schema_version": "realistic_niah_v4_4_layerwise_subspace_v1",
+  "rank": 3,
+  "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+  "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+  "prompt_removal": {
+    "counts": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "primary_condition": "actual_rank3_remove",
+    "control_condition": "actual_normmatched_orthogonal",
+    "realized_norm_relative_tolerance": 0.025,
+    "primary_endpoint": "all_absolute_error_specificity",
+    "layers": {
+      "Qwen3-8B": [0, 4, 8, 12, 16, 20, 24, 28, 32, 35],
+      "Gemma4-E4B": [0, 4, 8, 9, 12, 16, 20, 24, 28, 32, 36, 40, 41]
+    }
+  },
+  "answer_query_removal": {
+    "counts": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "primary_condition": "actual_rank3_remove",
+    "control_condition": "actual_normmatched_orthogonal",
+    "realized_norm_relative_tolerance": 0.05,
+    "primary_endpoint": "all_absolute_error_specificity",
+    "layers": {
+      "Qwen3-8B": [0, 4, 8, 12, 16, 20, 24, 28, 32, 35],
+      "Gemma4-E4B": [0, 4, 8, 9, 12, 16, 20, 24, 28, 32, 36, 40, 41]
+    }
+  },
+  "answer_transport": {
+    "pairs": [[1, 2], [2, 1], [5, 6], [6, 5]],
+    "conditions": ["aligned_dose_1", "aligned_dose_2", "matched_orthogonal"],
+    "realized_norm_relative_tolerance": 0.025,
+    "primary_endpoint": "target_donor_fraction",
+    "required_contrasts": ["aligned_dose_1_minus_orthogonal", "dose_2_minus_dose_1"],
+    "boundaries": {
+      "Qwen3-8B": [[0, 1], [3, 4], [7, 8], [11, 12], [15, 16], [19, 20], [23, 24], [27, 28], [28, 29], [31, 32], [34, 35]],
+      "Gemma4-E4B": [[0, 1], [3, 4], [7, 8], [8, 9], [11, 12], [15, 16], [19, 20], [23, 24], [27, 28], [31, 32], [35, 36], [36, 37], [39, 40], [40, 41]]
+    }
+  },
+  "linear_map": {
+    "roles": ["prompt_running", "answer_query"],
+    "all_adjacent_layers": true,
+    "ridge_relative_scale": 0.001,
+    "group_folds": 5,
+    "bootstrap_seed_resamples": 500,
+    "count_pairing_permutations": 500,
+    "rank_sensitivity": [1, 2, 3]
+  },
+  "map_causal_link": {
+    "role": "answer_query",
+    "rank": 3,
+    "stable_cv_centroid_r2_min": 0.9,
+    "stable_bootstrap_map_relative_frobenius_median_max": 0.1,
+    "primary_contrast": "aligned_dose_1_minus_orthogonal",
+    "primary_metric": "target_donor_fraction",
+    "primary_estimand": "confirmation seed mean over locally stable registered boundaries minus seed mean over unstable registered boundaries"
+  },
+  "multiplicity": {
+    "prompt_removal": "Holm within model, population, and endpoint across registered layers",
+    "answer_query_removal": "Holm within model, population, and endpoint across registered layers",
+    "answer_transport": "Holm within model, metric, and contrast across registered boundaries",
+    "map_causal_link": "Holm within model across the six registered metric-by-contrast stable-minus-unstable tests; primary raw and adjusted p are both reported"
+  }
+}

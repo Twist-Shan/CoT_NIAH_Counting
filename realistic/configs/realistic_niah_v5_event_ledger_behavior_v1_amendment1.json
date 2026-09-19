@@ -1,0 +1,17 @@
+{
+  "schema_version": "event_ledger_behavior_plan_v1_amendment1",
+  "timing": "after excluded smoke halted in the first condition before any behavioral outcome was computed; before all completed smoke, discovery, and confirmation runs",
+  "scope": "remove non-inferential greedy secondary endpoint",
+  "technical_failure": "Transformers cache returned by cached suffix continuation contains non-leaf tensors and cannot be deep-copied for a second reusable decode branch",
+  "original_secondary": "two-token free greedy decode",
+  "amended_endpoint_set": "registered candidate answer+termination sequence scores for counts 1..10 only",
+  "rationale": "Candidate scoring is the preregistered behavioral endpoint used by every primary and supporting criterion. Greedy decoding was descriptive only and required an unsafe cache reuse or a second numerically distinct prefill.",
+  "unchanged": [
+    "all cohorts and geometry exclusions",
+    "all intervention families",
+    "primary estimand, effect floor, sign-flip test, and alpha",
+    "all required supporting criteria",
+    "claim rule"
+  ],
+  "behavioral_effect_outcomes_read_before_amendment": false
+}

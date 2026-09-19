@@ -1,0 +1,144 @@
+{
+  "schema_version": "realistic_niah_v5_causal_exact_site_policy_v1",
+  "policy_id": "grammar_specific_exact_query_development_20260818_v1",
+  "status": "development_only_not_confirmatory",
+  "selection_axis": [
+    "model_label",
+    "target_grammar_class"
+  ],
+  "invariants": {
+    "one_exact_site_per_plan": true,
+    "selection_and_ablation_share_query_token": true,
+    "selection_metric": "seed_first_equal_anchor_mean_target_source_attention_mass",
+    "scored_attention_target": "full_registered_target_prompt_record_span",
+    "behavior_outcome": "direct_greedy_free_generation_first_semantic_city_record_v2",
+    "legacy_behavior_outcome": "first_generated_gold_city_v1_retained_for_audit_only",
+    "site_screen_conditions": [
+      "clean",
+      "selected_bank"
+    ],
+    "site_screen_is_inferential": false,
+    "random_controls_required_after_site_freeze": true,
+    "multi_site_window_allowed_in_primary_exact_site_estimand": false,
+    "exploratory_multi_site_window_allowed": true,
+    "multi_site_window_requires_selection_site": true,
+    "multi_site_window_reuses_one_frozen_head_bank": true
+  },
+  "models": {
+    "Gemma4-E4B": {
+      "bank_size": 8,
+      "routes": {
+        "adjacent_rank_after_city": {
+          "status": "selected_development",
+          "anchor_role": "p0_item_end",
+          "clean_stable_n": 29,
+          "selected_bank_failures": 14,
+          "failure_rate": 0.4827586206896552,
+          "support_note": "Dominant grammar; literal strict top-8 rerun reproduced 14/29 failures.",
+          "candidates": {
+            "p0_item_end": "14/29",
+            "unit_pre_d1": "3/28",
+            "record_clause_pre_d1": "1/30",
+            "city_pre_d1": "6/30",
+            "post_open_delimiter": "0/4"
+          }
+        },
+        "adjacent_rank_before_city": {
+          "status": "selected_small_n_development",
+          "anchor_role": "p0_item_end",
+          "clean_stable_n": 5,
+          "selected_bank_failures": 4,
+          "failure_rate": 0.8,
+          "support_note": "Only five development seeds; use for site localization, not effect-size inference.",
+          "candidates": {
+            "p0_item_end": "4/5",
+            "record_clause_pre_d1": "2/5",
+            "pre_marker_d1": "0/5",
+            "post_marker": "0/5",
+            "city_pre_d1": "0/5"
+          }
+        },
+        "same_unit_rank_before_city": {
+          "status": "selected_development",
+          "anchor_role": "p0_item_end",
+          "clean_stable_n": 29,
+          "selected_bank_failures": 9,
+          "failure_rate": 0.3103448275862069,
+          "support_note": "P0 is the only screened site with a material effect.",
+          "candidates": {
+            "p0_item_end": "9/29",
+            "post_open_delimiter": "6/30",
+            "unit_pre_d1": "0/30",
+            "pre_marker_d1": "0/29",
+            "post_marker": "0/30"
+          }
+        },
+        "same_unit_rank_after_city": {
+          "status": "unresolved_insufficient_support",
+          "anchor_role": null,
+          "support_note": "Only four development seeds and no failures at any screened exact site.",
+          "candidates": {
+            "p0_item_end": "0/4",
+            "unit_pre_d1": "0/4",
+            "post_open_delimiter": "0/4",
+            "city_pre_d1": "0/4"
+          }
+        },
+        "structural_invariant_bullet": {
+          "status": "unresolved_secondary_cohort",
+          "anchor_role": null,
+          "support_note": "Marker-neutral secondary cohort; current eligible transition capture is too sparse for freezing a site."
+        }
+      }
+    },
+    "Qwen3-8B": {
+      "bank_size": 32,
+      "exploratory_bank_sizes": [64],
+      "positive_control_bank_sizes": [1152],
+      "status": "model_specific_screen_unresolved",
+      "routes": {
+        "adjacent_rank_after_city": {
+          "status": "unresolved_weak_effect",
+          "anchor_role": null,
+          "support_note": "No screened exact site approached the prespecified >=50% disruption target. P0 K64 produced no new failures relative to K32 on the same ten-transition cohort.",
+          "candidates_k32": {
+            "p0_item_end": "2/30",
+            "unit_pre_d1": "0/10",
+            "record_clause_pre_d1": "0/10",
+            "city_pre_d1": "0/10"
+          },
+          "diagnostics": {
+            "representation_item_end_exact_layer_18_all_32_query_heads": "0/10",
+            "p0_k32_on_k64_matched_cohort": "1/10",
+            "p0_k64_on_same_cohort": "1/10",
+            "p0_k32_vs_k64_matched_outcome_discordance": "0/10",
+            "p0_k64_incremental_failures_over_k32": "0/10"
+          }
+        },
+        "adjacent_rank_before_city": {
+          "status": "unresolved_head_selection_and_token_window",
+          "anchor_role": null,
+          "support_note": "Exact-site K32 was null. Reusing the post-marker-selected bank across pre-marker, post-marker, and city-pre sites gave semantic first-record failures of 0/10 at K32, 1/10 at K64, and 4/10 when all 1152 query heads were removed. This implicates both head selection and incomplete token-window coverage; no sparse site is frozen.",
+          "candidates_k32": {
+            "p0_item_end": "0/10",
+            "post_marker": "0/10"
+          },
+          "rank_window_diagnostics_v2": {
+            "anchor_roles": [
+              "pre_marker_d1",
+              "post_marker",
+              "city_pre_d1"
+            ],
+            "head_selection_anchor_role": "post_marker",
+            "top32_semantic_first_record_failures": "0/10",
+            "top64_semantic_first_record_failures": "1/10",
+            "all1152_semantic_first_record_failures": "4/10",
+            "all1152_strict_registered_path_deviations": "10/10",
+            "scoring_policy": "first_semantic_city_record_v2",
+            "next_test": "broader clause/unit or continuous pre-marker-to-city window, followed by causal rather than attention-mass head selection"
+          }
+        }
+      }
+    }
+  }
+}

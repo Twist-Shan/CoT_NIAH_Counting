@@ -1,0 +1,36 @@
+{
+  "schema_version": "realistic_niah_v5_targeted_retrieval_prospective_defaults_v1",
+  "frozen_utc": "2026-08-21T14:00:35Z",
+  "status": "FROZEN",
+  "scope": "Every newly created targeted-retrieval, targeted-count, integrated-bridge or mediator-restoration run root after this freeze.",
+  "protocol": {
+    "discovery_seed_count": 20,
+    "confirmation_seed_count": 10,
+    "outcome_blind": true,
+    "selection_rank_used": false,
+    "new_run_root_required": true,
+    "reuse_mismatched_plan_prohibited": true
+  },
+  "models": {
+    "Qwen3-8B": {
+      "bank_size": 128,
+      "heads_per_layer": 32,
+      "selection": "configs/realistic_niah_v5_qwen_shared_k128_targeted_selection_frozen.json",
+      "routing": "configs/realistic_niah_v5_qwen_shared_k128_causal_routes_frozen.json",
+      "selected_bank_sha256": "ef30a8a083468c6e88cb5b0924403884ad758fedbc743de36dd03ab9bc4a742b"
+    },
+    "Gemma4-E4B": {
+      "bank_size": 6,
+      "heads_per_layer": 8,
+      "selection": "configs/realistic_niah_v5_gemma_shared_k6_targeted_selection_frozen.json",
+      "routing": "configs/realistic_niah_v5_gemma_shared_k6_causal_routes_frozen.json",
+      "selected_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1"
+    }
+  },
+  "historical_exceptions": {
+    "work/v5_native_count_stream/targeted_count_chain_20d10c_20260821/Qwen3-8B": "immutable K125 evidence",
+    "work/v5_native_count_stream/targeted_count_chain_20d10c_20260821/Gemma4-E4B": "immutable K8 evidence",
+    "work/v5_native_count_stream/integrated_mediator_restoration_fullspan_20d10c_20260821/Qwen3-8B": "continue K125 plan",
+    "work/v5_native_count_stream/integrated_mediator_restoration_fullspan_20d10c_20260821/Gemma4-E4B": "continue K8 plan"
+  }
+}

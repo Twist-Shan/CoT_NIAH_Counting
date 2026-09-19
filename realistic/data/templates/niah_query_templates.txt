@@ -1,0 +1,2 @@
+Among {category} cities in {region}, which city has the highest satisfaction score? Return only the city and score.
+Within region {region} and category {category}, identify the city with the maximum satisfaction score. Output: city, score.

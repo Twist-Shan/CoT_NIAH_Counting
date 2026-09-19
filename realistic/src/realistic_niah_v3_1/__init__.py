@@ -1,0 +1,25 @@
+"""Registered Realistic NIAH V3.1 experiment and analysis."""
+
+from .spec import (
+    EXPECTED_REQUESTS,
+    EXPECTED_SHARDS,
+    EXPECTED_STIMULI,
+    NEEDLE_COUNTS,
+    PASSAGE_LENGTHS,
+    PROTOCOL_VERSION,
+    SEEDS,
+    V31_FREEZE_PROTOCOL,
+    V31_RUN_PROTOCOL,
+)
+
+__all__ = [
+    "EXPECTED_REQUESTS",
+    "EXPECTED_SHARDS",
+    "EXPECTED_STIMULI",
+    "NEEDLE_COUNTS",
+    "PASSAGE_LENGTHS",
+    "PROTOCOL_VERSION",
+    "SEEDS",
+    "V31_FREEZE_PROTOCOL",
+    "V31_RUN_PROTOCOL",
+]

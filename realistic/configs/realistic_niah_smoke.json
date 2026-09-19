@@ -1,0 +1,34 @@
+{
+  "schema_version": "realistic_niah_smoke_v2",
+  "protocol_version": "realistic_niah_v2",
+  "haystack_source_mode": "multi_file_no_repeat",
+  "haystack_corpus_protocol": "ruler_paul_graham_full_url_list_v1",
+  "models": [
+    "Qwen3-8B",
+    "Gemma4-12B",
+    "DeepSeek-R1-0528-Qwen3-8B",
+    "GLM-Z1-9B-0414"
+  ],
+  "target_passage_tokens": [2000, 20000],
+  "needle_counts": [6, 20, 30],
+  "seeds": [2234, 2235],
+  "prompt_modes": ["native_thinking"],
+  "query_layout": "cue_before_query_after",
+  "gate": {
+    "primary_requirement": "zero_truncations",
+    "retain_as_diagnostics": [
+      "registered_success",
+      "exact_count",
+      "parse_status",
+      "response_format_compliant",
+      "output_tokens",
+      "reasoning_enumeration_restart_count",
+      "reasoning_duplicate_record_mentions",
+      "reasoning_duplicate_lines",
+      "overthinking_flag"
+    ]
+  },
+  "expected_stimuli_per_model": 12,
+  "expected_requests_per_model": 12,
+  "expected_requests_total": 48
+}

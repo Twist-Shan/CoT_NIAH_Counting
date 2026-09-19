@@ -1,0 +1,101 @@
+entity,region,category
+Tokyo,Asia,metro
+Seoul,Asia,metro
+Bangkok,Asia,tourism
+Singapore,Asia,metro
+Kuala Lumpur,Asia,metro
+Jakarta,Asia,metro
+Manila,Asia,metro
+Hanoi,Asia,tourism
+Ho Chi Minh City,Asia,metro
+Phnom Penh,Asia,tourism
+Vientiane,Asia,tourism
+Yangon,Asia,tourism
+Dhaka,Asia,metro
+Kathmandu,Asia,tourism
+Colombo,Asia,tourism
+Mumbai,Asia,metro
+Delhi,Asia,metro
+Bengaluru,Asia,metro
+Chennai,Asia,metro
+Hyderabad,Asia,metro
+Karachi,Asia,metro
+Lahore,Asia,metro
+Islamabad,Asia,metro
+Tashkent,Asia,metro
+Almaty,Asia,metro
+Astana,Asia,metro
+Baku,Asia,metro
+Tbilisi,Asia,tourism
+Yerevan,Asia,tourism
+Ulaanbaatar,Asia,metro
+Beijing,Asia,metro
+Shanghai,Asia,metro
+Shenzhen,Asia,metro
+Guangzhou,Asia,metro
+Chengdu,Asia,metro
+Wuhan,Asia,metro
+Xi’an,Asia,tourism
+Nanjing,Asia,metro
+Hangzhou,Asia,tourism
+Harbin,Asia,tourism
+Taipei,Asia,metro
+Kaohsiung,Asia,metro
+Hong Kong,Asia,metro
+Macau,Asia,tourism
+Osaka,Asia,metro
+Kyoto,Asia,tourism
+Nagoya,Asia,metro
+Sapporo,Asia,tourism
+Fukuoka,Asia,metro
+Busan,Asia,metro
+Paris,Europe,tourism
+Berlin,Europe,metro
+Lyon,Europe,food
+London,Europe,metro
+Madrid,Europe,tourism
+Barcelona,Europe,tourism
+Rome,Europe,tourism
+Milan,Europe,metro
+Lisbon,Europe,tourism
+Porto,Europe,food
+Amsterdam,Europe,metro
+Rotterdam,Europe,metro
+Brussels,Europe,metro
+Antwerp,Europe,food
+Vienna,Europe,metro
+Prague,Europe,tourism
+Budapest,Europe,tourism
+Warsaw,Europe,metro
+Krakow,Europe,tourism
+Copenhagen,Europe,metro
+Stockholm,Europe,metro
+Oslo,Europe,metro
+Helsinki,Europe,metro
+Dublin,Europe,metro
+Zurich,Europe,metro
+Geneva,Europe,metro
+Athens,Europe,tourism
+Istanbul,Europe,metro
+Bucharest,Europe,metro
+Sofia,Europe,metro
+Belgrade,Europe,metro
+Zagreb,Europe,metro
+Ljubljana,Europe,tourism
+Sarajevo,Europe,tourism
+Skopje,Europe,tourism
+Tirana,Europe,tourism
+Reykjavik,Europe,tourism
+Tallinn,Europe,tourism
+Riga,Europe,tourism
+Vilnius,Europe,tourism
+New York,Americas,metro
+Los Angeles,Americas,metro
+Chicago,Americas,metro
+Toronto,Americas,metro
+Vancouver,Americas,tourism
+Mexico City,Americas,metro
+Sao Paulo,Americas,metro
+Buenos Aires,Americas,metro
+Lima,Americas,tourism
+Bogota,Americas,metro

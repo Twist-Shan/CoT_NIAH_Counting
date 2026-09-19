@@ -1,0 +1,27 @@
+"""Realistic NIAH V4 non-thinking mechanistic analysis."""
+
+from .spec import (
+    CONFIRMATION_SEEDS,
+    DESIGN_VARIANTS,
+    DESIGN_VARIANT_CONTROLS,
+    DISCOVERY_SEEDS,
+    MODEL_SPECS,
+    NEEDLE_COUNTS,
+    PROTOCOL_VERSION,
+    SEEDS,
+    TARGET_PASSAGE_TOKENS,
+    V4Config,
+)
+
+__all__ = [
+    "CONFIRMATION_SEEDS",
+    "DESIGN_VARIANTS",
+    "DESIGN_VARIANT_CONTROLS",
+    "DISCOVERY_SEEDS",
+    "MODEL_SPECS",
+    "NEEDLE_COUNTS",
+    "PROTOCOL_VERSION",
+    "SEEDS",
+    "TARGET_PASSAGE_TOKENS",
+    "V4Config",
+]

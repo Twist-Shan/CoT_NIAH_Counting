@@ -1,0 +1,56 @@
+{
+  "schema_version": "realistic_niah_v4_4_full_span_topk_confirmation_selection_v2",
+  "selection_status": "frozen_before_seed_extrapolation",
+  "ranking_definition": {
+    "query": "answer_query",
+    "mass_definition": "sum of answer-query attention over every token in each active needle span",
+    "occurrence_coverage": "exp(entropy(per-needle mass))/needle_count",
+    "score": "mean(broad_mass * exp(entropy(per-needle mass))/needle_count)",
+    "ordering": "descending score with the discovery registry order frozen before confirmation",
+    "excluded_alternatives": ["needle endpoint-key mass", "single-token span_end mass", "first-needle localization score"]
+  },
+  "selection_rule": {
+    "applied_separately_per_model": true,
+    "candidate_head_bank": "broad_aggregation",
+    "candidate_domain": [1, 32],
+    "frozen_values_source": "pre-specified geometric K grid over the hash-locked full-span discovery ranking",
+    "no_reselection_rule": "neither the registry order nor K grid may change after any seed 1316..1335 outcome is observed",
+    "interpretation": "a dose-response and saturation audit, not an estimate of a unique number of functional heads"
+  },
+  "discovery_source": {
+    "implementation_commit": "22f828bef736bfa4c91e292a5f4c31e838e3cc4b",
+    "table": "reports/v4_non-thinking_causal/v4_4_causal_v2/dual_population_ablation_top_n_1_5.csv",
+    "table_sha256": "364e3cd28f9aa7c3ca3476bc762e05f01b7800c35177729f6494f809197a4775",
+    "candidate_summary_table": "reports/v4_non-thinking_causal/v4_4_causal_v2/ablation_candidate_summary.csv",
+    "candidate_summary_table_sha256": "bfe540f36c5f0d184a65df47fe4a480e2ccea7d8352fb2177de83a8f14043762",
+    "ablation_discovery_seeds": [1274, 1275, 1276, 1277, 1278, 1279, 1280, 1281, 1282, 1283],
+    "prior_seed_end_inclusive": 1315,
+    "prior_seed_scope_note": "1315 includes the previous seed-extrapolation campaign; this sweep uses the next untouched contiguous suffix"
+  },
+  "confirmation_design": {
+    "base_config": "configs/realistic_niah_v4_4_full_span_topk_confirmation.json",
+    "seeds": [1316, 1317, 1318, 1319, 1320, 1321, 1322, 1323, 1324, 1325, 1326, 1327, 1328, 1329, 1330, 1331, 1332, 1333, 1334, 1335],
+    "counts": [1, 2, 3, 4, 5],
+    "scope": "answer_query",
+    "random_replicates": 3,
+    "random_baseline": "all_heads_in_matched_layers_without_replacement_overlap_allowed",
+    "shared_run_rule": "all-example and clean-correct analyses are derived from the same intervention rows",
+    "all_examples_primary_endpoint": "ranked-minus-layer-matched-random absolute generated-count shift",
+    "clean_correct_primary_endpoint": "ranked-minus-layer-matched-random correct-to-wrong rate",
+    "uncertainty": "nonparametric seed-cluster bootstrap 95% CI with 10000 deterministic draws",
+    "companion_test": "two-sided seed-cluster sign-flip tests with Holm correction across the twelve frozen model-by-K comparisons for each endpoint",
+    "multiplicity_note": "the two models by six doses form twelve frozen comparisons per endpoint"
+  },
+  "models": {
+    "Qwen3-8B": {
+      "head_bank": "broad_aggregation",
+      "top_ns": [1, 2, 4, 8, 16, 32],
+      "ranking_registry_sha256": "7caa1362c675ea47818cf0420d78c66963a2cca3aca17639e16327fb14434492"
+    },
+    "Gemma4-E4B": {
+      "head_bank": "broad_aggregation",
+      "top_ns": [1, 2, 4, 8, 16, 32],
+      "ranking_registry_sha256": "52646c9bec4d90336f469c46aecd8ffbaf54008648f7aef45f56215984744de7"
+    }
+  }
+}

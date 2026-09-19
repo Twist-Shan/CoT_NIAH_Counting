@@ -1,0 +1,29 @@
+{
+  "schema_version": "realistic_niah_v5_marker_circuit_plan_amendment_v1",
+  "parent_plan": "realistic_niah_v5_marker_circuit_scan_v1.json",
+  "amendment_date": "2026-08-25",
+  "timing": "after deterministic geometry failure and before any discovery effect output was written or inspected",
+  "trigger": {
+    "seed": 1250,
+    "stage": "build_list_event_variants",
+    "error": "Inserted item lacks registered marker or payload tokens",
+    "model_intervention_results_written": false,
+    "partial_discovery_outputs_present": false
+  },
+  "change": {
+    "original_discovery_seeds": [1241, 1242, 1243, 1244, 1250],
+    "amended_discovery_seeds": [1241, 1242, 1243, 1244],
+    "confirmation_seeds_unchanged": [1252, 1264, 1269, 1270, 1274, 1280, 1283, 1284]
+  },
+  "rationale": "Preserve all eight untouched confirmation seeds instead of reallocating one after a discovery eligibility failure. Discovery is used only for deterministic cell selection; all inferential claims remain gated by the unchanged confirmation cohort.",
+  "unchanged": [
+    "intervention definitions",
+    "layer bands",
+    "query and key roles",
+    "selection rules",
+    "confirmation estimands",
+    "effect-size floors",
+    "Holm family-wise correction"
+  ],
+  "seed_1250_excluded_from_all_analysis": true
+}

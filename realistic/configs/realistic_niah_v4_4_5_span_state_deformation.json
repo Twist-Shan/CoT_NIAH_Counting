@@ -1,0 +1,32 @@
+{
+  "schema_version": "realistic_niah_v4_4_5_span_state_deformation_v1",
+  "protocol_version": "clean_corrupt_full_vector_span_deformation_v1",
+  "cohort_label": "canonical_v4_4_confirmation",
+  "stimulus_sha256": "da4dd86142eb8a07f9a7e53497efd3375184c8e68367d4db994370fcb331f090",
+  "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+  "counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "layers": {
+    "Qwen3-8B": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+    "Gemma4-E4B": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+  },
+  "independently_frozen_reusable_windows": {
+    "Qwen3-8B": [0, 20],
+    "Gemma4-E4B": [0, 16]
+  },
+  "conditions": ["clean", "needle_corrupt", "ordinary_corrupt"],
+  "primary_metric": "needle_raw_rms_change_minus_ordinary_raw_rms_change",
+  "secondary_metrics": [
+    "needle_relative_rms_change_minus_ordinary_relative_rms_change",
+    "needle_mean_cosine_distance_minus_ordinary_mean_cosine_distance"
+  ],
+  "inference_unit": "seed_after_averaging_counts",
+  "pointwise_test": "two_sided_exact_seed_sign_flip_nominal",
+  "window_test": "two_sided_exact_seed_sign_flip_on_independently_frozen_window_mean",
+  "bootstrap_draws": 50000,
+  "bootstrap_seed": 44523,
+  "model_torch_dtype": "bfloat16",
+  "attention_backend": "sdpa",
+  "fresh_seeds_enabled": false,
+  "layer_selection_from_current_outcome_enabled": false,
+  "save_full_hidden_tensors": false
+}

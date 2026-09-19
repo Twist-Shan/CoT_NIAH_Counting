@@ -1,0 +1,27 @@
+{
+  "schema_version": "realistic_niah_v5_gemma_k6_monitoring_exposure_v1",
+  "recorded_utc": "2026-08-21T14:19:36Z",
+  "experiment_root": "work/v5_native_count_stream/targeted_count_chain_k6_20d10c_20260821_v1/Gemma4-E4B",
+  "exposure": {
+    "cause": "A routine launch-log tail displayed the first seven per-arm progress lines.",
+    "raw_progress_lines_seen": 7,
+    "planned_progress_lines": 675,
+    "aggregate_effects_seen": false,
+    "margins_seen": false,
+    "claim_gates_seen": false,
+    "seed_level_summaries_seen": false
+  },
+  "timing": {
+    "bank_and_protocol_frozen_utc": "2026-08-21T14:00:35Z",
+    "chain_extension_frozen_utc": "2026-08-21T14:18:31Z",
+    "exposure_after_freeze": true
+  },
+  "response": {
+    "design_changed": false,
+    "bank_changed": false,
+    "sample_plan_changed": false,
+    "gate_changed": false,
+    "monitoring_policy": "Until phase completion, inspect only process state, shard counts, terminal artifacts and error-pattern presence; do not tail normal per-arm outcome lines."
+  },
+  "validity_assessment": "The exposure does not drive selection because every treatment, control, seed, endpoint and gate was already frozen. It is nevertheless disclosed and no adaptive decision may use the seven lines."
+}

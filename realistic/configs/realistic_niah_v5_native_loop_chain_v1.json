@@ -1,0 +1,121 @@
+{
+  "schema_version": "realistic_niah_v5_native_loop_chain_v1",
+  "frozen_utc": "2026-08-21T16:19:06Z",
+  "status": "FROZEN_BEFORE_ANY_NATIVE_LOOP_OUTCOME",
+  "amendments": [
+    {
+      "utc": "2026-08-21T16:27:46Z",
+      "stage": "BEFORE_ANY_NATIVE_LOOP_OUTCOME",
+      "change": "Replace the structurally incomplete signed offsets +/-5 with +/-2; freeze the dose panel at +/-1, +/-2, +/-3.",
+      "reason": "The frozen generation registry could not supply every registered seed at distance 5. No native-loop outcome had been generated or inspected."
+    },
+    {
+      "utc": "2026-08-21T16:34:00Z",
+      "stage": "BEFORE_ANY_NATIVE_LOOP_OUTCOME",
+      "change": "For P0 local transitions, prefer complete one-to-one traces and permit a partial_unique trace only when a seed-by-signed-offset cell has no complete candidate and both donor and receiver own observed next-city transitions. Boundary stop trials remain complete one-to-one only.",
+      "reason": "Gemma confirmation seed 1257 has no complete distance-3 trajectory but has parser-registered partial_unique local transitions. This preserves the fixed 10-seed confirmation contract without replacing a seed or inspecting outcomes."
+    }
+  ],
+  "scientific_chain": [
+    "P0 count state",
+    "grammar-routed targeted retrieval",
+    "next item",
+    "updated endpoint state",
+    "continue/stop"
+  ],
+  "seed_contract": {
+    "discovery": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+    "confirmation": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "outcome_blind_pair_construction": true,
+    "selection_rank_used": false
+  },
+  "pair_panel": {
+    "primary_offsets": [-1, 1],
+    "registered_dose_offsets": [-3, -2, -1, 1, 2, 3],
+    "counts": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "dose_count_ranges": {
+      "absolute_offset_1": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "absolute_offset_2": [4, 5, 6, 7, 8, 9, 10],
+      "absolute_offset_3": [5, 6, 7, 8, 9, 10]
+    },
+    "one_identity_hash_selected_trace_per_seed_signed_offset": true,
+    "local_cohort_policy": "prefer_complete_one_to_one_then_partial_unique_with_both_local_next_city_transitions",
+    "boundary_cohort_policy": "complete_one_to_one_only",
+    "terminal_injection_counts": [3, 4, 5, 6, 7, 8, 9, 10],
+    "nonterminal_injection_counts": [2, 3, 4, 5, 6, 7, 8, 9, 10]
+  },
+  "conditions": {
+    "p0": [
+      "clean",
+      "self_patch",
+      "full_donor_patch",
+      "count_subspace_transplant",
+      "norm_matched_orthogonal_patch",
+      "count_component_removed",
+      "count_component_restored"
+    ],
+    "boundary": [
+      "clean",
+      "self_patch",
+      "full_donor_patch",
+      "count_subspace_transplant",
+      "norm_matched_orthogonal_patch"
+    ]
+  },
+  "models": {
+    "Qwen3-8B": {
+      "targeted_bank_size": 128,
+      "targeted_selection": "configs/realistic_niah_v5_qwen_shared_k128_targeted_selection_frozen.json",
+      "targeted_routing": "configs/realistic_niah_v5_qwen_shared_k128_causal_routes_frozen.json",
+      "targeted_bank_sha256": "ef30a8a083468c6e88cb5b0924403884ad758fedbc743de36dd03ab9bc4a742b",
+      "p0_state_layer": 19,
+      "count_basis": "work/v5_native_count_stream/representation_20260820/Qwen3-8B/item_end_discovery_basis.npz",
+      "count_basis_sha256": "c47eb52436fbe18c6d2fb3da6e1b5e8d11d674873fe34870c6263b675c817e64",
+      "count_basis_rank": 3,
+      "count_basis_fit_split": "discovery",
+      "run_root": "work/v5_native_count_stream/native_loop_chain_k128_k6_20d10c_20260821_v1/Qwen3-8B"
+    },
+    "Gemma4-E4B": {
+      "targeted_bank_size": 6,
+      "targeted_selection": "configs/realistic_niah_v5_gemma_shared_k6_targeted_selection_frozen.json",
+      "targeted_routing": "configs/realistic_niah_v5_gemma_shared_k6_causal_routes_frozen.json",
+      "targeted_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1",
+      "p0_state_layer": 16,
+      "count_basis": "work/v5_native_count_stream/representation_20260820/Gemma4-E4B/item_end_discovery_basis.npz",
+      "count_basis_sha256": "6c5d43da9db45a99bf62f1ba894bfcee12caa2f152f1a5879227740975f50e8d",
+      "count_basis_rank": 3,
+      "count_basis_fit_split": "discovery",
+      "run_root": "work/v5_native_count_stream/native_loop_chain_k128_k6_20d10c_20260821_v1/Gemma4-E4B"
+    }
+  },
+  "discovery_gates": {
+    "commit_to_retrieval": [
+      "p0_attention_ordinal_steering",
+      "p0_city_log_odds_steering",
+      "p0_first_city_steering"
+    ],
+    "update": [
+      "natural_backstep_repeat",
+      "count_component_restoration"
+    ],
+    "stop": [
+      "terminal_state_causes_stop",
+      "nonterminal_state_causes_continue"
+    ],
+    "rule": "Every primary seed-bootstrap 95% CI lower bound must be greater than zero. Confirmation opens only after all discovery gates pass."
+  },
+  "interpretation": {
+    "all_confirmation_gates_pass": "The model supports the complete minimal native-thinking causal loop from a P0 count state through targeted retrieval to update and stop.",
+    "commit_only": "The count representation controls retrieval address, but recurrent update/termination is not established.",
+    "update_without_stop": "The endpoint state controls the next retrieval but is not a unified stop state.",
+    "negative": "Retain targeted-retrieval and terminal-readout endpoints separately; do not concatenate them into a complete loop."
+  },
+  "excluded_from_mainline": [
+    "answer-query broad-head discovery",
+    "full-span integrated mediator bridge",
+    "QK/OV decomposition",
+    "city-identity writer localization",
+    "updater head or MLP ranking",
+    "selection-rank subsampling"
+  ]
+}

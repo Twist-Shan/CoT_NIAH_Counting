@@ -1,0 +1,89 @@
+{
+  "schema_version": "realistic_niah_v5_marker_circuit_confirmation_freeze_v1",
+  "frozen_date": "2026-08-25",
+  "status": "frozen_after_discovery_before_confirmation_execution",
+  "parent_plan": "realistic_niah_v5_marker_circuit_scan_v1.json",
+  "eligibility_amendment": "realistic_niah_v5_marker_circuit_scan_v1.amendment1.json",
+  "discovery_seeds": [1241, 1242, 1243, 1244],
+  "confirmation_seeds": [1252, 1264, 1269, 1270, 1274, 1280, 1283, 1284],
+  "excluded_seeds": {
+    "1288": "technical smoke only",
+    "1250": "deterministic marker/payload geometry failure"
+  },
+  "frozen_discovery_selection": {
+    "component": {
+      "component_label": "V",
+      "components": ["value"],
+      "position_region": "inserted_marker",
+      "layers": "all_decoder_layers",
+      "read_layer": 24,
+      "directions": "bidirectional_mean",
+      "selection_value": 0.5297950356857128,
+      "comparison_K_value": 0.30091972017896174,
+      "joint_KV_reference_value": 0.8583948972911728
+    },
+    "layer_band": {
+      "component_label": "KV",
+      "components": ["key", "value"],
+      "position_region": "inserted_marker",
+      "band_label": "L20_23",
+      "layers": [20, 21, 22, 23],
+      "read_layer": 24,
+      "directions": "bidirectional_mean",
+      "selection_value": 0.573479112664304,
+      "selected_minus_mean_other_pre_read_bands": 0.5325643438377973,
+      "post_read_control_value": 0.0
+    },
+    "exact_edge": {
+      "query_role": "target_marker",
+      "key_role": "inserted_marker",
+      "scope": "one query-key edge across all layers and heads",
+      "read_layer": 24,
+      "valid_branch_raw_selection_value": 0.09877601116984919,
+      "alternative_query_target_boundary_value": 0.03959176928057231,
+      "markerless_same_position_value": 0.023507427162009417,
+      "valid_non_marker_key_control_mean": 0.1472776869256785,
+      "frozen_primary_composite_value": 0.013383454126005223
+    }
+  },
+  "confirmation_primary_tests": [
+    {
+      "family": "component",
+      "selected_cell": "V-only all-layer marker cache splice",
+      "per_seed_estimand": "mean L24 donor-axis progress across the two splice directions",
+      "minimum_mean_effect": 0.2,
+      "test": "exact two-sided seed sign-flip"
+    },
+    {
+      "family": "layer_band",
+      "selected_cell": "L20_23 marker K+V cache splice",
+      "per_seed_estimand": "selected bidirectional L24 progress minus mean bidirectional progress of L00_03,L04_07,L08_11,L12_15,L16_19",
+      "minimum_mean_effect": 0.05,
+      "additional_raw_selected_band_minimum": 0.15,
+      "test": "exact two-sided seed sign-flip"
+    },
+    {
+      "family": "exact_edge",
+      "selected_cell": "target_marker query to inserted_marker key",
+      "per_seed_estimand": "valid marker-edge progress - 0.5 * markerless same-position progress - 0.5 * mean(valid payload-first,payload-mid,closing,B5 key-control progress)",
+      "minimum_mean_effect": 0.01,
+      "additional_raw_valid_marker_edge_minimum": 0.02,
+      "test": "exact two-sided seed sign-flip"
+    }
+  ],
+  "multiplicity": {
+    "procedure": "Holm adjustment over the three primary p-values",
+    "alpha": 0.05,
+    "success_requires_adjusted_p_below_alpha_and_effect_floor": true
+  },
+  "frozen_hashes": {
+    "discovery_trials_sha256": "23d332f3f3222173f5cb339135ea60d65c62ce394bed2362546b65741f013778",
+    "discovery_summary_sha256": "9b8a2938706ca10924cfe12fe0c88cdb7db9a3d643a71e21cdb18c3a9eb73d35",
+    "geometry_preflight_sha256": "0078c9c61456f9fca56df1938e8eae435ffdf4b12770d1b75656251f77380f31",
+    "parent_plan_sha256": "81e6a0e441910aa5ccff63a692b582a2049e872e229a9fc37de93a25023f8dd7",
+    "eligibility_amendment_sha256": "84b985a0cda3719d4feaf17e8a057fcc7ac68febfea0ab568c9d20b1b5a7d6b1",
+    "runner_sha256": "0fdc020ee83d942d34192f908a40717eece5066a0367b057302dab9af43df27c",
+    "marker_circuit_module_sha256": "4ac8e1c164100737ad979f647b1506e7b8d11d283cc8ad32ae58b96199a9a32d"
+  },
+  "confirmation_execution_rule": "Run the unchanged full grid on all eight confirmation seeds; only the frozen cells and formulas above are confirmatory. All other confirmation cells are secondary descriptive checks."
+}

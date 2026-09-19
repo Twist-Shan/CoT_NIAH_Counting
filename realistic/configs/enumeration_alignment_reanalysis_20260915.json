@@ -1,0 +1,18 @@
+{
+  "schema_version": "enumeration_alignment_reanalysis_v1",
+  "analysis_status": "posthoc_saved_output_reanalysis",
+  "bootstrap_draws": 10000,
+  "bootstrap_random_seed": 20260915,
+  "thinking_bundle": "work/cot_update_ncc_l21_20260915/bundle",
+  "enumeration_continuations": "work/v6_report_remote/full_item_greedy",
+  "thinking_relay_pairs": "work/cot_completion_20260912/terminal_intervals/common_support_pairs.csv",
+  "enumeration_report": "reports/NiaH_Enumeration_report.html",
+  "expected_thinking_rows": 1080,
+  "expected_enumeration_rows": 240,
+  "expected_generated_rows": 960,
+  "expected_scoring_only_rows": 360,
+  "expected_thinking_relay_pairs": 86,
+  "expected_thinking_layers_one_based": {"Qwen3-8B": 19, "Gemma4-E4B": 21},
+  "expected_enumeration_layers_one_based": {"Qwen3-8B": 1, "Gemma4-E4B": 22},
+  "hops": [1, 2, 3, 4]
+}

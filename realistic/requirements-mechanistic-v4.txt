@@ -1,0 +1,11 @@
+-r requirements.txt
+
+# Formal GPU runs are validated against the CUDA 12.8 wheels for this pair.
+torch==2.7.0
+torchvision==0.22.0
+
+# Gemma 4 support and the exact attention/cache APIs used by V4.
+transformers==5.14.1
+
+# Keep the compiled scientific stack on one NumPy ABI.
+numpy>=1.26,<2

@@ -1,0 +1,55 @@
+{
+  "schema_version": "realistic_niah_v5_commit_state_to_targeted_query_confirmation_v1",
+  "status": "FROZEN_BEFORE_CONFIRMATION_OUTCOME",
+  "frozen_date": "2026-08-22",
+  "scientific_scope": "full commit hidden state -> frozen targeted-query attention",
+  "discovery_provenance": "post-hoc analysis of previously sealed 20-seed native-loop full_donor_patch arms",
+  "confirmation_provenance": "prospective untouched 10-seed confirmation split",
+  "seed_contract": {
+    "discovery": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+    "confirmation": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+    "outcome_blind": true,
+    "selection_rank_used": false
+  },
+  "intervention": {
+    "source": "full donor post-block hidden state at the completed-item commit endpoint",
+    "receiver": "same-layer receiver commit endpoint immediately upstream of its registered targeted retrieval query",
+    "conditions": [
+      "clean",
+      "self_patch",
+      "full_donor_patch",
+      "count_subspace_transplant",
+      "norm_matched_orthogonal_patch"
+    ],
+    "signed_offsets": [-3, -2, -1, 1, 2, 3],
+    "primary_offsets": [-1, 1]
+  },
+  "primary_endpoint": "donor_minus_receiver_successor_attention_mass at the frozen grammar-routed targeted query",
+  "primary_contrasts": [
+    "full_donor_patch - self_patch",
+    "full_donor_patch - norm_matched_orthogonal_patch"
+  ],
+  "confirmation_gate": "both primary contrasts have positive mean effect; 95% CI and sign-flip p-value are retained as records, not used to choose the claim",
+  "secondary_diagnostics": [
+    "full_donor_patch - count_subspace_transplant",
+    "donor_vs_receiver_city_log_odds",
+    "distance-2 and distance-3 dose response"
+  ],
+  "excluded_requirement": "greedy donor-city adoption is not required for the direct commit-state-to-targeted-query edge",
+  "models": {
+    "Qwen3-8B": {
+      "source_layer": 19,
+      "targeted_bank_size": 128,
+      "targeted_bank_sha256": "ef30a8a083468c6e88cb5b0924403884ad758fedbc743de36dd03ab9bc4a742b",
+      "confirmation_plan_sha256": "a64ede593478eefbb1d1d5d50e88646d2aa4eeefa824c018d215afac806284f5",
+      "sealed_discovery_analysis_sha256": "a1936017eb6b29006b3a8818c88ac767ee87748e3b367e121798bc62e5662c1b"
+    },
+    "Gemma4-E4B": {
+      "source_layer": 16,
+      "targeted_bank_size": 6,
+      "targeted_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1",
+      "confirmation_plan_sha256": "97adb5a6f01944d29b4340db5dfed0134653d5cd29c2f8a7efe234b98ad53441",
+      "sealed_discovery_analysis_sha256": "7fa87d7cece0a3fd5a7d7085e8f1ed5540b38537df08d403f4a2d95d8d460f9b"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "realistic_niah_v6_index_item_end_anchor_sensitivity_v1",
+  "status": "FROZEN_EXPLORATORY_BEFORE_NEW_ARM_OUTCOMES",
+  "frozen_at_utc": "2026-08-29T18:35:39Z",
+  "motivation": "Post-hoc location sensitivity requested after the primary enumeration-index post_marker discovery effect was observed to be weak. All newly introduced p0_item_end behavior arms are frozen before their intervention outcomes are generated or read.",
+  "scientific_scope": "exploratory_discovery_only",
+  "prompt_mode": "enumeration_index",
+  "primary_protocol_unchanged": true,
+  "primary_confirmation_unchanged": true,
+  "confirmation_authorized": false,
+  "new_behavior_outcomes_read_before_freeze": false,
+  "head_scores_read_before_freeze": false,
+  "k_reselection_allowed": false,
+  "seed_replacement_policy_changed": false,
+  "analysis_slot_seeds": [
+    1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+    1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+  ],
+  "fixed_design": {
+    "bank_selection_anchor_roles": ["post_marker", "p0_item_end"],
+    "intervention_start_anchor_roles": ["post_marker", "p0_item_end"],
+    "cells": [
+      "p2bank_at_p2",
+      "p2bank_at_p0",
+      "p0bank_at_p2",
+      "p0bank_at_p0"
+    ],
+    "p2bank_at_p2_is_existing_observed_reference": true,
+    "new_cells": ["p2bank_at_p0", "p0bank_at_p2", "p0bank_at_p0"],
+    "conditions": ["clean", "selected_bank", "registered_random_bank"],
+    "random_repeats": 3,
+    "anchor_sampling": "prompt_final_transition",
+    "fixed_gold_count": 10,
+    "max_new_tokens": 256,
+    "decode_head_ablation_steps": -1,
+    "head_ablation_tensor_site": "attention_output_projection_input_pre_o",
+    "primary_outcome": "next_city_failure",
+    "cell_estimand": "seed_equal_selected_bank_failure_minus_mean_of_three_registered_random_bank_failures",
+    "primary_sensitivity_contrast": "effect_p0bank_at_p0_minus_effect_p2bank_at_p2",
+    "factorial_contrasts": [
+      "effect_p2bank_at_p0_minus_effect_p2bank_at_p2",
+      "effect_p0bank_at_p0_minus_effect_p0bank_at_p2",
+      "effect_p0bank_at_p0_minus_effect_p2bank_at_p0",
+      "effect_p0bank_at_p2_minus_effect_p2bank_at_p2"
+    ],
+    "bootstrap_samples": 10000,
+    "bootstrap_random_seed": 20260829,
+    "unit_of_inference": "original_analysis_slot_seed"
+  },
+  "models": {
+    "Qwen3-8B": {
+      "fixed_k": 128,
+      "selection_metric": "target_source_attention_mass",
+      "random_control_matching": "global",
+      "random_condition": "global_random",
+      "primary_selected_k_effect_observed_before_freeze": 0.05,
+      "frozen_primary_plan_sha256": "7829731b535ccee85733b0bee5745655800a0d8d4cd4128104a89d230dbfc6f3",
+      "frozen_primary_panel_sha256": "9114c7ae0def68041722fc3ed0ab73fcd5e5e41ac853119c104fd76cecbf7b42",
+      "frozen_generations_sha256": "d9bedce08a1d2f3cf8a1999744fce3d91c09424602095c446e4540413a72e2cc",
+      "frozen_cohort_registry_sha256": "c411aac3f3a165af99a9d9a76ccc09f81c6f85069eae4bff3ba12cb9a8876c38",
+      "frozen_primary_selection_sha256": "dcd399badfdb67461890237f3397fe38ec12eb51268f073ad3a571c9fd75ac76"
+    },
+    "Gemma4-E4B": {
+      "fixed_k": 8,
+      "selection_metric": "source_attention_mass",
+      "random_control_matching": "layer_matched",
+      "random_condition": "layer_matched_random",
+      "primary_selected_k_effect_observed_before_freeze": 0.05,
+      "frozen_primary_plan_sha256": "13068ad6dae576d9eb6efb86aa94fc9f9fa6dbda96511d2aac0e6b59f18c0188",
+      "frozen_primary_panel_sha256": "98f75ff178fc89351a436176c9412a606ff1976c3e38629b0bae3c81f97c090a",
+      "frozen_generations_sha256": "5167b935520f24f66395949dae0b375ad113b7ec4037bbbcf35b16eb3db18e46",
+      "frozen_cohort_registry_sha256": "9a276ba09eb8dcec11b25a2971087e6adf2ba893ec3fe65735b38bc87f50e548",
+      "frozen_primary_selection_sha256": "9419460760cfc62c4f440e70ac50a6ce749061b1ecbf8789e839df327ffa5808"
+    }
+  },
+  "shared_frozen_dependencies": {
+    "v6_index_config_sha256": "d4ddd0da1a526de3f16d51ad4124cfdf54f49a8dc71b8c08717471bae6deadce",
+    "targeted_retrieval_report_contract_sha256": "47c54ac0d7f8c9ed16694f83b34449a8335312ad19639daf2bd99791dc1f9cb2"
+  },
+  "interpretation_policy": {
+    "label": "post_hoc_motivated_prospectively_frozen_sensitivity",
+    "may_replace_primary_result": false,
+    "may_relabel_primary_confirmation": false,
+    "positive_item_end_result": "evidence that the weak primary index effect is anchor-sensitive",
+    "negative_item_end_result": "evidence against anchor timing as the sole explanation",
+    "no_outcome_dependent_extra_anchors": true,
+    "no_outcome_dependent_seed_addition": true,
+    "no_outcome_dependent_k_change": true
+  }
+}

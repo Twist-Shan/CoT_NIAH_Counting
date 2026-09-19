@@ -1,0 +1,26 @@
+{
+  "schema_version": "realistic_niah_v5_behavior_anchor_routing_v1",
+  "policy_id": "gemma_shared_p0_k6_native_routes_frozen_20260821_v1",
+  "status": "frozen_prospective_default_ordered_prefix_of_historical_k8",
+  "axis": "target_grammar_class",
+  "head_bank": {
+    "selection_grammar": "same_unit_rank_before_city",
+    "selection_anchor_role": "p0_item_end",
+    "selection_metric": "source_attention_mass",
+    "bank_size": 6,
+    "selected_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1",
+    "ablation_schedule": "selected pre-O slices off from p0_item_end through every later decode forward"
+  },
+  "routes": {
+    "adjacent_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "same_unit_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "structural_explicit_rank_before_city": {"required": ["p0_item_end"], "optional": []},
+    "adjacent_rank_after_city": {"required": ["p0_item_end"], "optional": []},
+    "same_unit_rank_after_city": {"required": ["p0_item_end"], "optional": []},
+    "structural_invariant_bullet": {"required": ["p0_item_end"], "optional": []},
+    "structural_unmarked": {"required": ["p0_item_end"], "optional": []},
+    "evidence_sequence_unranked": {"required": ["p0_item_end"], "optional": []}
+  },
+  "fallback": null,
+  "prospective_only": true
+}

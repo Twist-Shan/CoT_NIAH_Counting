@@ -1,0 +1,167 @@
+{
+  "schema_version": "realistic_niah_v3_2_empirical_law_analysis_v1",
+  "analysis_version": "V3.2",
+  "status": "frozen_post_generation_analysis_amendment",
+  "frozen_date_local": "2026-08-26",
+  "timezone": "America/Chicago",
+  "timing_disclosure": "Frozen after V3.1 response generation and after an ordinary-mean exploratory analysis, but before V3.2 accuracy and trimmed-bias candidate fitting.",
+  "inference_protocol": "realistic_niah_v3_1",
+  "inference_git_commit": "939410edde9885fea5c791e90fdb632254bd327c",
+  "immutable_input": {
+    "request_level_sha256": "c72db941c112b3bacb3295b304931e0dbbe2c16af87e8fa4af3bfd0ab172c819",
+    "requests": 161280,
+    "physical_model_revisions": 14,
+    "comparison_slots": 12,
+    "model_mode_slots": 48,
+    "seeds_per_cell": 30,
+    "N_levels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 20],
+    "L_levels": [1000, 2000, 3000, 5000, 8000, 10000, 15000, 20000],
+    "prompt_modes": [
+      "direct",
+      "enumeration_index",
+      "enumeration_bullet",
+      "native_thinking"
+    ]
+  },
+  "estimands": {
+    "accuracy": {
+      "name": "parsed_exact_accuracy",
+      "analysis_unit": "request",
+      "success": "parsed integer equals true N",
+      "parse_failure_is_failure": true
+    },
+    "bias": {
+      "name": "trimmed_signed_bias_10",
+      "analysis_unit": "model x prompt_mode x N x L cell",
+      "signed_error": "predicted_count - N",
+      "trim_fraction_each_tail": 0.1,
+      "trim_count": "floor(0.10 * n_parseable)",
+      "minimum_parseable": 20,
+      "cell_weighting": "equal",
+      "link": "identity"
+    },
+    "discarded_law_estimands": ["mean_signed_deviation"]
+  },
+  "predictors": {
+    "L_k": "L / 1000",
+    "logN": "natural_log(N)",
+    "logL": "natural_log(L_k)"
+  },
+  "candidate_registry": [
+    {"id": "intercept", "terms": []},
+    {"id": "N", "terms": ["N"]},
+    {"id": "L_k", "terms": ["L_k"]},
+    {"id": "logN", "terms": ["logN"]},
+    {"id": "logL", "terms": ["logL"]},
+    {"id": "N__L_k", "terms": ["N", "L_k"]},
+    {"id": "logN__logL", "terms": ["logN", "logL"]},
+    {"id": "N__logL", "terms": ["N", "logL"]},
+    {"id": "logN__L_k", "terms": ["logN", "L_k"]},
+    {
+      "id": "N__L_k__N_x_L_k",
+      "terms": ["N", "L_k", "N_x_L_k"],
+      "parent": "N__L_k",
+      "interaction": "N_x_L_k"
+    },
+    {
+      "id": "logN__logL__logN_x_logL",
+      "terms": ["logN", "logL", "logN_x_logL"],
+      "parent": "logN__logL",
+      "interaction": "logN_x_logL"
+    },
+    {
+      "id": "N__logL__N_x_logL",
+      "terms": ["N", "logL", "N_x_logL"],
+      "parent": "N__logL",
+      "interaction": "N_x_logL"
+    },
+    {
+      "id": "logN__L_k__logN_x_L_k",
+      "terms": ["logN", "L_k", "logN_x_L_k"],
+      "parent": "logN__L_k",
+      "interaction": "logN_x_L_k"
+    }
+  ],
+  "accuracy_families": {
+    "headline": {
+      "id": "bernoulli_logit",
+      "analysis_unit": "request",
+      "candidate_search": "all_13"
+    },
+    "link_robustness": [
+      {
+        "id": "bernoulli_probit",
+        "analysis_unit": "request",
+        "candidate_search": "all_13"
+      },
+      {
+        "id": "bernoulli_cloglog",
+        "analysis_unit": "request",
+        "candidate_search": "all_13"
+      }
+    ],
+    "overdispersion_robustness": {
+      "id": "beta_binomial_logit",
+      "analysis_unit": "cell_success_count",
+      "candidate_search": "headline_selected_structure_only",
+      "dispersion": "separate_by_comparison_slot_and_prompt_mode"
+    },
+    "binomial_logit": "parity_audit_only"
+  },
+  "selection": {
+    "procedure": "focused_empirical_law",
+    "shared_structure_within_prompt_mode": true,
+    "slot_specific_coefficients": true,
+    "condition_folds": 5,
+    "condition_fold_rule": "(index(N) + index(L)) mod 5",
+    "accuracy_primary_loss": "request_level_log_loss",
+    "accuracy_primary_score": "1 - candidate_log_loss / intercept_log_loss",
+    "accuracy_secondary_metrics": [
+      "brier_score",
+      "calibration_intercept",
+      "calibration_slope",
+      "accuracy"
+    ],
+    "bias_primary_loss": "mae",
+    "bias_primary_score": "r2",
+    "bias_secondary_metrics": ["rmse"],
+    "practical_standardized_effect_threshold": 0.1,
+    "special_term_significant_slot_fraction_threshold": 0.5,
+    "special_cv_score_gain_threshold": 0.02,
+    "special_cv_gain_bh_q_threshold": 0.05,
+    "median_cv_score_tolerance": 0.02,
+    "q25_cv_score_tolerance": 0.05,
+    "near_best_tie_break_order": [
+      "fewer_predictors",
+      "lower_median_primary_loss",
+      "higher_median_primary_score",
+      "higher_q25_primary_score",
+      "candidate_registry_order"
+    ],
+    "headline_lomo": true,
+    "trimmed_bias_lomo": true,
+    "robustness_family_lomo": false,
+    "held_seed_nested_selection": false,
+    "held_N_nested_selection": false,
+    "held_L_nested_selection": false
+  },
+  "uncertainty": {
+    "ols_and_bernoulli_glm_covariance": "HC3",
+    "coefficient_multiplicity": "Benjamini-Hochberg across comparison slots within outcome_family x prompt_mode x candidate x term",
+    "special_term_gain_test": "one-sided paired Wilcoxon across comparison slots",
+    "special_term_gain_multiplicity": "Benjamini-Hochberg across registered interactions within prompt mode",
+    "beta_binomial_intervals": "model_based_Hessian_Wald",
+    "bootstrap_repetitions": 0
+  },
+  "reporting": {
+    "headline_accuracy_family": "bernoulli_logit",
+    "required_accuracy_robustness": [
+      "bernoulli_probit",
+      "bernoulli_cloglog",
+      "beta_binomial_logit"
+    ],
+    "ordinary_mean_bias_law_allowed": false,
+    "claim_domain": "registered_N_L_grid_and_frozen_model_set_only"
+  }
+}
+

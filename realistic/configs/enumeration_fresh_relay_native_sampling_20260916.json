@@ -1,0 +1,101 @@
+{
+  "schema": "enumeration_fresh_relay_native_sampling_v1",
+  "models": [
+    "Qwen3-8B",
+    "Gemma4-E4B"
+  ],
+  "modes": [
+    "enumeration_index",
+    "enumeration_bullet"
+  ],
+  "source_population": "The same ten fixed Read source seeds, analyzed within each Enumeration mode. Native reference cohorts remain their existing frozen assay cohorts.",
+  "count_ranges_by_donor_offset": {
+    "-1": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "-3": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "-5": [
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  "count_range_provenance": "Frozen V5 TERMINAL_LAST_COUNT_RANGES; same directed terminal panel for all six cells",
+  "widths": [
+    4,
+    8
+  ],
+  "primary_width": 4,
+  "width_comparison": "Within each mode, compare widths only on their common eligible pairs. Cross-mode pair intersections are supplementary.",
+  "baseline_gate": "Native terminal-relay --cohort one_to_one: parser detected and one-to-one, plus executable actual query/patch geometry. No Update no-index requirement, no final-count correctness filter, no cross-mode intersection requirement.",
+  "selection_uses_final_correctness": false,
+  "selection_uses_intervention_outcomes": false,
+  "no_replacement_or_padding": true,
+  "answer_site_id": "answer_query_v3",
+  "thinking_answer_query": "Actual full baseline answer query; the FOUND semantic-span adapter verifies identical token IDs through the terminal item and retains all actual input IDs, attention masks, sequence length and query position. No synthetic early-stop suffix is supplied to the model.",
+  "source_conditions": [
+    "self_patch",
+    "full_donor_patch"
+  ],
+  "relay_conditions": [
+    "natural_relay",
+    "answer_query_clean_reset",
+    "post_terminal_suffix_clean_reset"
+  ],
+  "layers_zero_based": {
+    "Qwen3-8B": {
+      "source": 19,
+      "relay": 26
+    },
+    "Gemma4-E4B": {
+      "source": 16,
+      "relay": 34
+    }
+  },
+  "source_clamp": "Every post-block layer from source through relay-1; no source clamp at or after relay",
+  "max_new_tokens": 16,
+  "dtype": "bfloat16",
+  "attention_backend": "sdpa",
+  "bootstrap": {
+    "unit": "true_source_seed",
+    "repetitions": 10000,
+    "seed": 20260915
+  },
+  "estimands": [
+    "signed baseline damage",
+    "signed remaining damage",
+    "paired damage interaction",
+    "signed damage reduction",
+    "absolute damage reduction"
+  ],
+  "ratio_policy": "Use paired seed-cluster bootstrap; no per-pair ratio average; unstable denominator means not estimable With fewer than two independent seeds, report descriptive point estimates only and no seed-bootstrap confidence interval.",
+  "implementation_repair": {
+    "supersedes": "enumeration_fresh_relay_20260916_v3.json",
+    "reason": "The generic full-trace parser does not recognize literal FOUND markers and excluded audited Gemma prompted-Thinking semantic items. Reuse the already-frozen FOUND item audit without changing model inputs or actual answer queries.",
+    "previous_output": "fresh_relay_registry_v1 is retained as a CPU diagnostic; its Gemma common-cohort counts are invalid because of this parser incompatibility.",
+    "unchanged": "Original candidate inputs, source widths, clamp/reset layers, 2x3 conditions, generation budgets, numerical kernels and seed-cluster estimands.",
+    "relay_intervention_outcomes_available_at_repair": false,
+    "second_revision": "The strict canonical re-tokenization assumption failed for a valid generated FOUND output. Add literal stored-token offset validation; retain v2 failure logs. This changes token mapping only, before any relay intervention.",
+    "sampling_amendment": "User explicitly requested Native Thinking sample handling. Supersede the extra Update-format and three-mode intersection gates before any relay GPU trial. Keep all earlier registries as diagnostics."
+  },
+  "status": "FIXED_BEFORE_RELAY_INTERVENTION; CPU eligibility compilation does not certify GPU hooks",
+  "semantic_token_mapping": "Use the original exact token map when decoded text re-encodes to the frozen IDs. For noncanonical generated segmentation, derive offsets only from exact monotone decoded prefixes of the same frozen IDs; reject unstable boundaries. Never re-tokenize or replace source model inputs.",
+  "cohort_policy": "native_assay_specific_per_mode",
+  "native_reference_scope": "Use original Native one-to-one relay as the reference. Gemma FOUND baselines are a prompted Update auxiliary, not the natural Native relay population."
+}

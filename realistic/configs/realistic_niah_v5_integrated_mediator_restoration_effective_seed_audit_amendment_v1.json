@@ -1,0 +1,29 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_mediator_restoration_effective_seed_audit_amendment_v1",
+  "frozen_utc": "2026-08-21T13:54:39Z",
+  "trigger": "Outcome-blind review of the terminal evidence assembler found that the analyzer counted planned seed identifiers but did not separately assert that every frozen seed contributed at least one geometry-applicable sample.",
+  "outcome_blindness": {
+    "partial_effects_read": false,
+    "partial_margins_read": false,
+    "information_used": [
+      "analyzer source code",
+      "registered 20-discovery/10-confirmation seed contract",
+      "status and geometry metadata"
+    ]
+  },
+  "audit_hardening": {
+    "rule": "Every one of the 20 discovery seeds or 10 confirmation seeds must contribute at least one status=ok restoration sample after predeclared geometry exclusions.",
+    "failure_mode": "Abort analysis instead of estimating effects with an implicitly reduced effective seed set.",
+    "new_audit_fields": [
+      "applicable_seed_count",
+      "applicable_seeds"
+    ]
+  },
+  "unchanged_frozen_factors": [
+    "all intervention cells and sample plans",
+    "full-span mediator geometry",
+    "selected and layer-matched-random head banks",
+    "all estimands, bootstrap settings, thresholds and claim gates",
+    "selection_rank prohibited"
+  ]
+}

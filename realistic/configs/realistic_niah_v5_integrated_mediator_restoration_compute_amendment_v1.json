@@ -1,0 +1,24 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_mediator_restoration_compute_amendment_v1",
+  "frozen_utc": "2026-08-21T11:34:00Z",
+  "reason": "outcome_blind_compute_optimization_after_observing_runtime_only",
+  "outcomes_examined_before_amendment": false,
+  "unchanged": [
+    "20 discovery and 10 confirmation seeds",
+    "all registered seed/count samples",
+    "five receiver write conditions",
+    "self-state and clean-state-restoration mediators",
+    "natural, matched-control, and cut readouts",
+    "30 rows per sample",
+    "teacher-forced correct-count margins for every row",
+    "all primary gates and seed bootstrap rules",
+    "head banks, routed site, write window, state layers, state positions, and readout cuts"
+  ],
+  "changed": {
+    "before": "run 16-token greedy generation for all 30 rows per sample",
+    "after": "run 16-token greedy generation only for clean receiver by self-state mediator by natural readout",
+    "justification": "only that cell supplies the preregistered clean endpoint adequacy gate; no other restoration gate or analyzer field uses greedy output"
+  },
+  "partial_roots_policy": "retain the pre-amendment incomplete roots read-only, exclude every shard from formal analysis, and restart both models in fresh rerun1 roots",
+  "claim_effect": "none; this amendment changes compute only and cannot add, remove, or relax a scientific gate"
+}

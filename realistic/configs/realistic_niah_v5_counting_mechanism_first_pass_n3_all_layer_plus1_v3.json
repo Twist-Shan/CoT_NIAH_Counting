@@ -1,0 +1,36 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v2",
+  "phase": "first_pass_n3_posthoc_all_layer_plus1",
+  "row_selection": "first_pass_noindex",
+  "random_seed": 20260827,
+  "candidate_counts": [1, 2, 3, 4, 5, 6],
+  "max_new_tokens": 8,
+  "run_greedy": false,
+  "status": "posthoc_all_layer_scan_no_selection_claim",
+  "cohort_contract": {
+    "fixed_count": 3,
+    "selection_population": "first_pass_noindex_enumeration",
+    "discovery_seeds_used_for_confirmation_geometry_fit": [1235, 1243, 1253, 1290, 1374, 1398, 1498, 1503, 1524, 1569, 1609, 1644, 1669, 1779, 1930, 1990, 2104, 2145, 2149, 2292],
+    "confirmation_seeds_reserved": [1257, 1271, 1427, 1685, 1835, 1916, 1985, 2201, 2213, 2249]
+  },
+  "seeds": [1257, 1271, 1427, 1685, 1835, 1916, 1985, 2201, 2213, 2249],
+  "experiments": {
+    "linear_additivity": {
+      "enabled": true,
+      "fit_seeds": [1235, 1243, 1253, 1290, 1374, 1398, 1498, 1503, 1524, 1569, 1609, 1644, 1669, 1779, 1930, 1990, 2104, 2145, 2149, 2292],
+      "eval_seeds": [1257, 1271, 1427, 1685, 1835, 1916, 1985, 2201, 2213, 2249],
+      "layer_bands": {
+        "layer_00": [0], "layer_01": [1], "layer_02": [2], "layer_03": [3], "layer_04": [4], "layer_05": [5],
+        "layer_06": [6], "layer_07": [7], "layer_08": [8], "layer_09": [9], "layer_10": [10], "layer_11": [11],
+        "layer_12": [12], "layer_13": [13], "layer_14": [14], "layer_15": [15], "layer_16": [16], "layer_17": [17],
+        "layer_18": [18], "layer_19": [19], "layer_20": [20], "layer_21": [21], "layer_22": [22], "layer_23": [23],
+        "layer_24": [24], "layer_25": [25], "layer_26": [26], "layer_27": [27], "layer_28": [28], "layer_29": [29],
+        "layer_30": [30], "layer_31": [31], "layer_32": [32], "layer_33": [33], "layer_34": [34], "layer_35": [35]
+      },
+      "receiver_occurrences": [1, 2],
+      "shifts": [1],
+      "conditions": ["position_difference", "opposite_position_difference", "norm_matched_orthogonal"],
+      "alpha": 1.0
+    }
+  }
+}

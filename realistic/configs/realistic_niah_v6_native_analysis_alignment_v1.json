@@ -1,0 +1,58 @@
+{
+  "schema_version": "realistic_niah_v6_native_analysis_alignment_v1",
+  "status": "FROZEN_ANALYSIS_PATH_CORRECTION",
+  "scientific_question": "Hold the original V4.4 stimulus panel, models, decoding, split, numerical kernels, estimands, controls, and reporting hierarchy fixed while changing only the structured enumeration grammar (explicit index versus invariant bullet).",
+  "direct_grammar_contrast": {
+    "modes": ["enumeration_index", "enumeration_bullet"],
+    "models": ["Qwen3-8B", "Gemma4-E4B"],
+    "population": "original_registered_all_sample_panel",
+    "replacement_rows_allowed": false,
+    "identity_fields": ["split", "seed", "gold_count", "stimulus_id"],
+    "within_model_only": true
+  },
+  "representation": {
+    "running_index": {
+      "site_kind": "item_end",
+      "cohort": "parser_hit",
+      "alignment_key": ["split", "seed", "gold_count", "occurrence"],
+      "alignment_scope": "exact_common_support_across_all_four_model_by_grammar_cells",
+      "labels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    "final_count": {
+      "site_kind": "answer_query_v3",
+      "alignment_key": ["split", "seed", "gold_count"],
+      "alignment_scope": "exact_full_registered_300_trajectory_panel_across_all_four_cells",
+      "labels": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    },
+    "preprocessing": "StandardScaler plus whitened PCA fitted inside every grouped discovery fold; held-out transforms are fitted on discovery only.",
+    "pca_dim": 16,
+    "grouped_discovery_cv_folds": 5,
+    "layer_selection": "maximize mean discovery grouped-CV logistic and nearest-centroid balanced accuracy; tie-break by NCC, logistic, then earlier within-cell layer",
+    "confirmation_policy": "evaluate every layer on held-out confirmation, but never use confirmation values for site or layer selection",
+    "independent_layer_selection": "select separately within every model-by-grammar cell; never force layer-number matching across architectures or grammars",
+    "legacy_generic_ten_site_scan": "historical_discovery_freeze_provenance_only_not_primary_evidence"
+  },
+  "report_path": [
+    {"native_section": "1_behavior", "v6_frames": [1]},
+    {"native_section": "2_representation_measurement", "v6_frames": [2]},
+    {"native_section": "3_counter_state", "v6_frames": [4, 12, 14, 15, 16]},
+    {"native_section": "4_targeted_retrieval", "v6_frames": [5]},
+    {"native_section": "5_counter_update", "v6_frames": [7, 8, 9]},
+    {"native_section": "6_terminal_readout", "v6_frames": [10, 11, 13]},
+    {"native_section": "7_evidence_synthesis", "v6_frames": [17]},
+    {"native_section": "8_extension_audit", "v6_frames": [19, 20]},
+    {"native_section": "appendix_design_and_walkthrough", "v6_frames": [3, 6, 18]}
+  ],
+  "causal_population_policy": {
+    "cellwise_native_replication": "resolved strict-format cohort with frozen discovery choices and disjoint held-out confirmation",
+    "cross_grammar_claim": "permitted only when the exact original source identities are common; otherwise report the two cellwise replications without a direct grammar-effect estimand",
+    "replacement_role": "replacement preserves fixed cellwise quota but does not create source identity for a cross-grammar contrast",
+    "negative_results": "retain and report; never replace a row because of an effect estimate or claim gate"
+  },
+  "forbidden_primary_paths": [
+    "generic classification/regression over every captured token site",
+    "correct-only versus all-sample duplication for every report frame",
+    "layer or cohort reselection using confirmation outcomes",
+    "cross-grammar causal claims on source-mismatched replacement rows"
+  ]
+}

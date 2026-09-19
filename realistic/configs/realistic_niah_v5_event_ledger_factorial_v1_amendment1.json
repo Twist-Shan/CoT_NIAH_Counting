@@ -1,0 +1,26 @@
+{
+  "schema_version": "event_ledger_factorial_plan_v1_amendment1",
+  "scope": "technical cache/textual equivalence gate only",
+  "timing": "after excluded smoke; after discovery seed 1289 halted before any output artifact or effect summary; before every completed discovery and confirmation run",
+  "observed_failure": {
+    "seed": 1289,
+    "variant": "markers_111",
+    "landmark": "target_marker",
+    "read_layer": 16,
+    "cosine_similarity": 0.9999208420987162,
+    "mean_absolute_delta": 0.00722995400428772,
+    "probe_argmax_match": false
+  },
+  "original_gate": "cosine similarity >= 0.999 and identical frozen-probe argmax",
+  "amended_gate": "cosine similarity >= 0.999; probe argmax agreement is retained as a descriptive audit",
+  "rationale": "The primary cache estimand uses continuous donor-axis progress with clean endpoints computed under the same chunking path. The textual supporting estimand is computed entirely under its own common chunking path. A near-identical hidden state can cross a discrete probe decision boundary, so cross-path argmax identity is neither required by nor used in either estimand.",
+  "unchanged": [
+    "cohorts",
+    "intervention families",
+    "primary estimand",
+    "primary effect floor",
+    "sign-flip test and alpha",
+    "all supporting effect criteria",
+    "confirmation remains unread"
+  ]
+}

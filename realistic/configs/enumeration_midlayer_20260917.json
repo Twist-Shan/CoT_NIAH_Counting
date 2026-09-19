@@ -1,0 +1,23 @@
+{
+  "model": "Qwen3-8B",
+  "mode": "enumeration_index",
+  "layer_one_based": 19,
+  "selection": "Middle layer fixed after seven-layer exploratory scan; not the NCC-maximizing layer",
+  "candidate_seed_start": 2026091640,
+  "candidate_seed_stop_exclusive": 2026091670,
+  "confirmation_quota": 10,
+  "sampling_order": "Exclude previously used discovery and intervention seeds; then take first ten geometry-eligible seeds in ascending order within the fixed pool",
+  "donor_k": [4, 6, 8],
+  "directions": ["forward", "backward"],
+  "scopes": ["endpoint", "four_token_tail", "item_span"],
+  "conditions": ["receiver_self", "native_donor", "donor_to_receiver"],
+  "max_new_tokens": 96,
+  "prefill_chunk_size": 512,
+  "smoke_rows": 54,
+  "formal_rows": 540,
+  "bootstrap_seed": 20260915,
+  "bootstrap_repetitions": 10000,
+  "correctness_filter": false,
+  "behavioral_effect_required_for_smoke": false,
+  "chronology": "Layer choice follows previous L30 and seven-layer outcomes. Confirmation inputs are previously generated but unused in that layer selection and previous causal interventions. Keep all historical outcomes."
+}

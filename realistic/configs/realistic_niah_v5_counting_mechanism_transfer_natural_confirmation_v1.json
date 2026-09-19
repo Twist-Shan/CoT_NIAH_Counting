@@ -1,0 +1,42 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v1",
+  "phase": "natural_confirmation",
+  "status": "frozen_closing_countscope_confirmation",
+  "random_seed": 20260826,
+  "row_selection": "maximum_gold_count_per_seed",
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "run_greedy": true,
+  "max_new_tokens": 8,
+  "seeds": [1256, 1261],
+  "experiments": {
+    "countscope": {
+      "enabled": true,
+      "seeds": [1256, 1261],
+      "receiver_occurrence": 1,
+      "donor_occurrences": [2, 5, 7],
+      "regions": ["closing"]
+    },
+    "continued_counting": {"enabled": false},
+    "linear_additivity": {"enabled": false},
+    "separator_collapse": {"enabled": false},
+    "maximum_count": {"enabled": false}
+  },
+  "cohort_contract": {
+    "source": "natural_no_enumeration_audit_20260823/Qwen3-8B/eligible_generations.jsonl",
+    "prompt_modified_for_unnumbered_format": false,
+    "source_archive_prompt": "original_frozen_native_thinking_prompt",
+    "selection": "maximum eligible gold_count per seed; final-answer correctness and intervention outcomes unused",
+    "model": "Qwen3-8B",
+    "confirmation_seeds": [1256, 1261],
+    "discovery_seeds_excluded": [1246, 1252],
+    "runtime_requires_no_count_enumeration_audit": true
+  },
+  "confirmation_contract": {
+    "frozen_after_discovery_observation": "closing CountScope paper_ci was positive in all 6 donor-by-seed discovery trials",
+    "primary_endpoint": "mean paper_ci across donors 2,5,7 is positive within each confirmation seed",
+    "secondary_endpoint": "paper_ci is positive in each of the 6 confirmation trials",
+    "strong_counter_endpoint": "candidate argmax or greedy output adopts the donor count",
+    "interpretation": "positive CI without adoption is graded causal count information, not a sufficient counter state",
+    "no_condition_selection_after_confirmation": true
+  }
+}

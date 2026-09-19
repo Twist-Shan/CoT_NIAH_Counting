@@ -1,0 +1,78 @@
+{
+  "schema_version": "realistic_niah_v5_token_level_ablation_design_v1",
+  "status": "prospective_before_gpu_execution",
+  "shared_contract": {
+    "physical_token_deletion": false,
+    "sequence_length_preserved": true,
+    "absolute_query_position_preserved": true,
+    "query_token_preserved": true,
+    "blank_operation": "zero token state after embedding and after every decoder block",
+    "head_bank_policy": "reuse frozen formal bank without reselection",
+    "attention_query_policy": "same exact query token used by the frozen bank/localizer",
+    "registry_event_key": "request_id + from_occurrence + to_occurrence",
+    "route_anchor_policy": "route anchor freezes the causal event and persistent-ablation start; it does not replace the bank localizer query",
+    "aggregation": "event mean within request/seed, then equal-weight seed mean",
+    "matched_control_repeats": 3
+  },
+  "answer_query": {
+    "conditions": [
+      "clean",
+      "prompt_all_blank",
+      "prompt_records_blank",
+      "trace_all_blank",
+      "prompt_and_trace_blank"
+    ],
+    "primary_endpoints": [
+      "exact_count",
+      "absolute_error",
+      "gold_first_answer_token_log_probability"
+    ],
+    "head_bank_diagnostics": [
+      "prompt_records_mass",
+      "prompt_records_broad_score",
+      "trace_context_mass",
+      "trace_context_broad_score"
+    ],
+    "factorial": {
+      "first_factor": "prompt available",
+      "second_factor": "trace available",
+      "interaction": "both_blank - prompt_blank - trace_blank + clean"
+    }
+  },
+  "targeted_retrieval": {
+    "conditions": [
+      "clean",
+      "early_half_trace_blank",
+      "cumulative_trace_blank",
+      "recent_transition_blank",
+      "full_trace_blank",
+      "early_half_trace_matched_control",
+      "cumulative_trace_matched_control",
+      "recent_transition_matched_control",
+      "full_trace_matched_control"
+    ],
+    "blank_factorial": {
+      "clean": [1, 1],
+      "cumulative_trace_blank": [0, 1],
+      "recent_transition_blank": [1, 0],
+      "full_trace_blank": [0, 0],
+      "factor_order": [
+        "cumulative trace present",
+        "recent transition present"
+      ],
+      "interaction": "full_blank - cumulative_blank - recent_blank + clean"
+    },
+    "primary_endpoints": [
+      "bank_target_attention_share_of_gold_mass",
+      "bank_target_top1_fraction",
+      "target_city_log_probability"
+    ],
+    "secondary_endpoints": [
+      "bank_mean_target_minus_max_wrong_mass",
+      "bank_source_specific_ov_write_norm_sum",
+      "target_mean_token_logit_margin",
+      "target_city_retrieved"
+    ],
+    "low_k_policy": "early/cumulative arms are not applicable when no earlier completed item exists"
+  }
+}

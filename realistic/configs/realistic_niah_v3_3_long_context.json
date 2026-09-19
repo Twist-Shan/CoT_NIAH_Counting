@@ -1,0 +1,134 @@
+{
+  "schema_version": "realistic_niah_v3_3_long_context_preregistration_v1",
+  "protocol_version": "realistic_niah_v3_3_long_context",
+  "status": "prospective_holdout_not_yet_executed",
+  "registration_date": "2026-09-06",
+  "inherits_measurement_protocol_from": "realistic_niah_v3_1",
+  "scientific_role": "out_of_range_long_context_holdout_for_frozen_v3_2_laws",
+  "confirmatory_scope": [
+    "evaluate_frozen_V3.2_accuracy_and_MAE_laws_at_new_lengths",
+    "compare_direct_non_thinking_with_native_thinking"
+  ],
+  "exploratory_scope": [
+    "refit_law_coefficients_with_the_long_context_holdout_added",
+    "inspect_departures_from_the_frozen_V3.2_curves"
+  ],
+  "excluded_scope": [
+    "enumeration_index",
+    "enumeration_bullet",
+    "new_model_selection_using_holdout_results",
+    "model_revision_changes",
+    "prompt_changes"
+  ],
+  "models": [
+    {
+      "label": "Gemma4-31B",
+      "model_id": "google/gemma-4-31B-it",
+      "revision": "842da3794eaa0b77d5f08bae87a17459d91ff475",
+      "config_max_position_embeddings": 262144,
+      "context_extension": null
+    },
+    {
+      "label": "Qwen3-32B",
+      "model_id": "Qwen/Qwen3-32B",
+      "revision": "9216db5781bf21249d130ec9da846c4624c16137",
+      "config_max_position_embeddings": 40960,
+      "context_extension": {
+        "method": "YaRN",
+        "rope_type": "yarn",
+        "factor": 4.0,
+        "original_max_position_embeddings": 32768,
+        "validated_context_claim_tokens": 131072
+      }
+    }
+  ],
+  "canonical_tokenizer": "Qwen/Qwen3-8B",
+  "canonical_tokenizer_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "target_passage_tokens": [
+    25000,
+    30000,
+    40000,
+    50000,
+    60000,
+    70000,
+    80000,
+    90000,
+    100000
+  ],
+  "needle_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 18, 20],
+  "seeds": [
+    1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+    1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253,
+    1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263
+  ],
+  "seed_is_paired_cluster": true,
+  "expected_stimuli": 3780,
+  "prompt_modes": ["direct", "native_thinking"],
+  "expected_requests_per_model": 7560,
+  "expected_requests": 15120,
+  "query_layout": "cue_before_query_after",
+  "final_length_includes_needles": true,
+  "insertion_depth_coordinate": "needle_char_start/final_passage_characters",
+  "insertion_depth_minimum_inclusive": 0.05,
+  "insertion_depth_maximum_inclusive": 0.95,
+  "haystack_source_mode": "multi_file_no_repeat",
+  "engine": {
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 2,
+    "max_model_len": 131072,
+    "gpu_memory_utilization": 0.92,
+    "max_num_seqs": 1,
+    "request_batch_size": 1,
+    "enforce_eager": true,
+    "disable_custom_all_reduce": true,
+    "enable_prefix_caching": true
+  },
+  "decoding": {
+    "direct": {"max_tokens": 64, "temperature": 0.0},
+    "native_thinking_by_model": {
+      "Gemma4-31B": {
+        "max_tokens": 4096,
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64
+      },
+      "Qwen3-32B": {
+        "max_tokens": 4096,
+        "temperature": 0.6,
+        "top_p": 0.95,
+        "top_k": 20
+      }
+    }
+  },
+  "preflight": {
+    "required_before_formal_generation": true,
+    "target_passage_tokens": 100000,
+    "needle_count": 20,
+    "seed": 1234,
+    "prompt_modes": ["direct", "native_thinking"],
+    "output_is_excluded_from_formal_results": true
+  },
+  "parallel_layout": {
+    "independent_model_jobs": 2,
+    "nodes_per_job": 1,
+    "h100_80gb_gpus_per_job": 4,
+    "workers_per_job": 2,
+    "gpus_per_worker": 2,
+    "worker_0_lengths": [30000, 60000, 70000, 100000],
+    "worker_1_lengths": [25000, 40000, 50000, 80000, 90000]
+  },
+  "checkpoint": {
+    "strategy": "atomic_batch_parts_then_single_canonical_merge",
+    "formal_worker_outputs_are_disjoint": true,
+    "final_merge_requires_unique_request_ids": true,
+    "cross_commit_resume_requires_explicit_allowlist": true
+  },
+  "primary_holdout_evaluation": {
+    "coefficients_and_law_structure": "frozen_from_V3.2_before_opening_holdout",
+    "accuracy_metrics": ["request_log_loss", "Brier_score", "calibration"],
+    "conditional_MAE_metrics": ["absolute_prediction_error", "cell_MAE"],
+    "report_by_mode": true,
+    "report_by_length": true,
+    "refitting_is_exploratory": true
+  }
+}

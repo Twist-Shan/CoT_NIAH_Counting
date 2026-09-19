@@ -1,0 +1,13 @@
+-r requirements.txt
+
+# V3 excludes OLMo 3 and includes the Gemma 4 Unified checkpoints.  Those
+# checkpoints use model_type=gemma4_unified, which is supported by 5.14.1 but
+# not by the older 5.5.3 pin retained in requirements-inference.txt solely for
+# the historical OLMo 3 extension.
+transformers==5.14.1
+
+# Pinned engine used by the V2 production runs and the V3 runtime preflight.
+vllm==0.25.1
+
+# Required by the official Ministral 3 tokenizer/load path.
+mistral-common>=1.8.6,<2

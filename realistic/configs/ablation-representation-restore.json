@@ -1,0 +1,24 @@
+{
+  "num_critical_tokens": 10,
+  "randomize_from_top_layer": true,
+  "ablation_random_seed": 12345,
+  "critical_token_calc_layer": 24,
+  "patterns": [
+    "massive_activation",
+    "attention_sink",
+    "needle_sensitive",
+    "massive_activation_all",
+    "attention_sink_all",
+    "needle_sensitive_all",
+    "needle_span",
+    "needle_tail"
+  ],
+  "attention_sink_score": "received_uniform_ratio",
+  "max_new_tokens": null,
+  "temperature": 0.0,
+  "haystack_dir": "data/haystacks/paul_graham",
+  "irrelevant_token_pool_size": 5000,
+  "edge_exclusion_tokens": 5,
+  "save_unablated_hidden_states": true,
+  "hidden_states_dtype": "bfloat16"
+}

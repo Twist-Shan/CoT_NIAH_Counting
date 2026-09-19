@@ -1,0 +1,62 @@
+{
+  "schema_version": "realistic_niah_v5_partial_endpoint_inspection_v1",
+  "recorded_utc": "2026-08-21T15:43:18Z",
+  "status": "USER_REQUESTED_EXPLORATORY_PARTIAL_SNAPSHOT",
+  "trigger": "User requested that both endpoint runners be paused and current significance inspected.",
+  "pause": {
+    "method": "SIGSTOP",
+    "reversible_with": "SIGCONT",
+    "Gemma4-E4B_runner_pid": 44291,
+    "Qwen3-8B_runner_pid": 45823,
+    "verified_process_state": "T",
+    "verified_gpu_utilization_percent": [0, 0],
+    "supervisors_and_gatekeepers_left_running": true
+  },
+  "analysis": {
+    "script": "scripts/inspect_realistic_niah_v5_targeted_count_partial_snapshot.py",
+    "script_sha256": "1df2e8ff40d28aa61cd6e10de1ac5df3a688e394f8e870425c5c478ff7b35cee",
+    "bootstrap_unit": "seed",
+    "bootstrap_samples": 10000,
+    "incomplete_anchor_policy": "Exclude only anchors lacking the preregistered 1 clean, 1 selected-bank, and 3 matched-random arms; no outcome-based row exclusion.",
+    "formal_gate_written": false
+  },
+  "snapshots": {
+    "Qwen3-8B": {
+      "path": "work/v5_native_count_stream/exploratory_partial_endpoint_snapshot_20260821_1540/Qwen3-8B/snapshot.json",
+      "sha256": "60487ff5f5b78ab5a0803e0dafd816ed5555efd1d31fa4cb81f8f4097423ab74",
+      "observed_shards": 481,
+      "complete_anchors": 96,
+      "complete_trial_rows": 480,
+      "discarded_incomplete_trial_rows": 1,
+      "observed_seeds": 12,
+      "snapshot_all_primary_pass": true,
+      "clean_accuracy": [0.9669312169312171, 0.9312169312169313, 1.0],
+      "selected_minus_random_final_count_failure": [0.6920745149911817, 0.6360187940917108, 0.7492862654320988],
+      "selected_minus_random_joint_retrieval_count_failure": [0.7766203703703703, 0.6979717813051147, 0.850201168430335]
+    },
+    "Gemma4-E4B": {
+      "path": "work/v5_native_count_stream/exploratory_partial_endpoint_snapshot_20260821_1540/Gemma4-E4B/snapshot.json",
+      "sha256": "7336f3b7abb5f94ee7aac3d3b1f7094aac7201f928704d185c9e89dc6be149d8",
+      "observed_shards": 505,
+      "complete_anchors": 101,
+      "complete_trial_rows": 505,
+      "discarded_incomplete_trial_rows": 0,
+      "observed_seeds": 15,
+      "snapshot_all_primary_pass": false,
+      "clean_accuracy": [1.0, 1.0, 1.0],
+      "selected_minus_random_final_count_failure": [0.08005291005291003, -0.032725088183421513, 0.19154475308641974],
+      "selected_minus_random_joint_retrieval_count_failure": [0.5605026455026454, 0.45735449735449746, 0.6520390211640211],
+      "selected_minus_random_exact_minus_one": [0.5620458553791886, 0.472716049382716, 0.642416225749559]
+    }
+  },
+  "protocol_implications": {
+    "partial_aggregate_effects_read": true,
+    "confirmation_seeds_opened": false,
+    "bridge_opened": false,
+    "design_changed_after_partial_read": false,
+    "partial_snapshot_is_formal_discovery": false,
+    "partial_snapshot_can_open_confirmation_or_bridge": false,
+    "fixed_horizon_discovery_remains_interpretable_only_if": "Both runners resume unchanged, all frozen 20 discovery seeds complete, and no stopping, branch selection, sample change, gate change, or design change is made from this partial snapshot.",
+    "disclosure_required": true
+  }
+}

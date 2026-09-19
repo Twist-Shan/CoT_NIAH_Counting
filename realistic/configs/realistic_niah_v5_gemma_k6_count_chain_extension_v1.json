@@ -1,0 +1,51 @@
+{
+  "schema_version": "realistic_niah_v5_gemma_k6_count_chain_extension_v1",
+  "frozen_utc": "2026-08-21T14:18:31Z",
+  "status": "FROZEN_BEFORE_K6_ENDPOINT_EFFECTS",
+  "model_label": "Gemma4-E4B",
+  "provenance": {
+    "user_bank_decision_utc": "2026-08-21T14:00:35Z",
+    "historical_k8_fullspan_completed_utc": "2026-08-21T14:15:04Z",
+    "ordering_audit": "PASS: Gemma Top-6 was frozen before the historical Top-8 full-span discovery result existed.",
+    "partial_k6_effects_read": false,
+    "partial_k6_margins_read": false
+  },
+  "bank": {
+    "size": 6,
+    "selection": "configs/realistic_niah_v5_gemma_shared_k6_targeted_selection_frozen.json",
+    "routing": "configs/realistic_niah_v5_gemma_shared_k6_causal_routes_frozen.json",
+    "selected_bank_sha256": "2a7652c68454a5333f19324ec5517fe8c22b03ef4955088a283229c8576211b1"
+  },
+  "stages": [
+    {
+      "name": "targeted_retrieval_to_final_count",
+      "root": "work/v5_native_count_stream/targeted_count_chain_k6_20d10c_20260821_v1/Gemma4-E4B",
+      "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+      "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+      "confirmation_rule": "Open only if every frozen discovery gate passes."
+    },
+    {
+      "name": "targeted_retrieval_to_terminal_state_to_readout",
+      "root": "work/v5_native_count_stream/integrated_mediator_restoration_fullspan_k6_20d10c_20260821_v1/Gemma4-E4B",
+      "open_rule": "Open only if the K6 targeted-retrieval-to-final-count endpoint reaches PASS.",
+      "bridge_design": "within_example_clean_state_restoration",
+      "write_window": "query_through_trace",
+      "mediator_geometry": "full_span",
+      "mediator_layers": [16, 41],
+      "readout_cut": "distributed all-layer/all-head trace-source mask",
+      "discovery_seed_count": 20,
+      "confirmation_seed_count": 10,
+      "confirmation_rule": "Open only if every frozen discovery gate passes."
+    }
+  ],
+  "invariants": [
+    "outcome-blind sample and control construction",
+    "selection_rank prohibited",
+    "three layer-matched selected-excluded random banks",
+    "every frozen seed must retain at least one applicable sample",
+    "all historical K8 artifacts remain immutable",
+    "no head, layer, cut or position search after reading K6 outcomes"
+  ],
+  "interpretation_if_confirmed": "Gemma's prospectively frozen compact K6 targeted bank causally changes the final count through a recoverable terminal trace-item state that is consumed by its independently confirmed distributed trace-source readout.",
+  "interpretation_if_exhausted": "K6 targeted endpoint or integrated bridge is not supported under the frozen protocol; retain the separately confirmed endpoint/readout evidence without claiming a complete serial mediator chain."
+}

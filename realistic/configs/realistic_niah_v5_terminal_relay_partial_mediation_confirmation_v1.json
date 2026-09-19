@@ -1,0 +1,64 @@
+{
+  "schema_version": "realistic_niah_v5_terminal_relay_partial_confirmation_plan_v1",
+  "frozen_local_date": "2026-08-28",
+  "motivation": "The pre-registered discovery assay rejected near-complete mediation because the post-terminal suffix reset left more than 20% residual effect, while its already-registered patch-by-reset interaction was positive. This follow-up narrows the claim before any confirmation outcomes are inspected.",
+  "models": [
+    "Qwen3-8B",
+    "Gemma4-E4B"
+  ],
+  "data_split": "canonical untouched confirmation seeds",
+  "seed_count_per_model": 10,
+  "selection_policy": "all eligible registered confirmation seeds; no outcome ranking",
+  "intervention": {
+    "source_conditions": [
+      "self_patch",
+      "full_donor_patch"
+    ],
+    "relay_conditions": [
+      "natural_relay",
+      "answer_query_clean_reset",
+      "post_terminal_suffix_clean_reset"
+    ],
+    "geometry": "suffix8",
+    "qwen_layers": {
+      "source": 19,
+      "relay": 26
+    },
+    "gemma_layers": {
+      "source": 16,
+      "relay": 34
+    }
+  },
+  "primary_estimands": [
+    {
+      "id": "terminal_state_patch_effect",
+      "gate": "seed-bootstrap 95% CI low > 0"
+    },
+    {
+      "id": "post_terminal_suffix_specific_mediation",
+      "gate": "seed-bootstrap 95% CI low > 0"
+    }
+  ],
+  "secondary_estimands": [
+    {
+      "id": "answer_query_only_mediation",
+      "gate": "seed-bootstrap 95% CI low > 0"
+    },
+    {
+      "id": "post_terminal_suffix_residual_equivalence",
+      "role": "effect-size boundary only; not a gate for partial mediation"
+    },
+    {
+      "id": "greedy_exact_count_support",
+      "role": "supplementary behavioral endpoint only"
+    }
+  ],
+  "allowed_claim_if_primary_confirmation_gates_pass": "A terminal trace state causally changes answer scoring in part through the post-terminal residual suffix.",
+  "additional_claim_if_answer_query_secondary_gate_passes": "The answer-query residual itself carries a nonzero part of this mediated effect.",
+  "prohibited_claims": [
+    "complete mediation",
+    "exclusive mediation through the answer-query token",
+    "greedy-answer control unless the supplementary greedy endpoint also supports it",
+    "memoryless arithmetic +1 recurrence"
+  ]
+}

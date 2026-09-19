@@ -1,0 +1,29 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v1",
+  "phase": "natural_discovery_smoke",
+  "status": "single_arm_frozen_prompt_gpu_smoke",
+  "random_seed": 20260826,
+  "row_selection": "maximum_gold_count_per_seed",
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "run_greedy": true,
+  "max_new_tokens": 8,
+  "seeds": [1246],
+  "experiments": {
+    "countscope": {
+      "enabled": true,
+      "seeds": [1246],
+      "receiver_occurrence": 1,
+      "donor_occurrences": [5],
+      "regions": ["closing"]
+    },
+    "continued_counting": {"enabled": false},
+    "linear_additivity": {"enabled": false},
+    "separator_collapse": {"enabled": false},
+    "maximum_count": {"enabled": false}
+  },
+  "cohort_contract": {
+    "source": "natural_no_enumeration_audit_20260823/Qwen3-8B/eligible_generations.jsonl",
+    "prompt_modified_for_unnumbered_format": false,
+    "runtime_requires_no_count_enumeration_audit": true
+  }
+}

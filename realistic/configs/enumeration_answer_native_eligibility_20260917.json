@@ -1,0 +1,50 @@
+{
+  "schema": "enumeration_native_eligibility_answer_patch_v3",
+  "models": [
+    "Qwen3-8B",
+    "Gemma4-E4B"
+  ],
+  "modes": [
+    "enumeration_index",
+    "enumeration_bullet"
+  ],
+  "population": "The original ten Read confirmation source seeds and N=1..10. Select independently within each Enumeration format; match Qwen/Gemma directed pairs within that format.",
+  "eligibility": "Both models have one-to-one parsed traces, a correct baseline count, and the frozen legal answer_query_v3 at both endpoints. No Update format/no-index gate.",
+  "pair_selection": "Intersect eligible counts within each seed and format. From consecutive edges in the sorted common count grid, select distinct edges nearest midpoint anchors 1.5 then 9.5; break ties by smaller count gap then lower count. Run both directions of each edge.",
+  "native_selector": "scripts/build_v5_cross_model_answer_query_layer_sweep_plan.py::_selected_edges",
+  "directed_pairs_per_seed": 4,
+  "expected_source_seeds": 10,
+  "expected_pairs_per_model_mode": 40,
+  "insufficient_counts_policy": "Record all eligible counts and stop before GPU freezing; do not silently change pairs per seed, alias seeds, or select using patch outcomes.",
+  "selection_uses_patch_outcomes": false,
+  "site_id": "answer_query_v3",
+  "conditions": [
+    "self_patch",
+    "full_donor_patch"
+  ],
+  "num_layers": {
+    "Qwen3-8B": 36,
+    "Gemma4-E4B": 42
+  },
+  "layer_indexing": "Zero-based internally; test every decoder block. One-based labels in paper.",
+  "max_new_tokens": 16,
+  "dtype": "bfloat16",
+  "attention_backend": "sdpa",
+  "smoke_rule": "First two changed pairs per model, covering both directions; require zero self delta and exact self-versus-unmodified token replay, regardless of gold correctness. Donor success is not a technical gate.",
+  "primary_estimand": "Donor-count adoption averaged across four directed pairs within each source seed, then equally across ten seeds; compare with paired self control.",
+  "invalid_or_truncated_output_policy": "Keep in all relevant denominators; missing or out-of-range answer fails adoption.",
+  "bootstrap": {
+    "unit": "true_source_seed",
+    "repetitions": 10000,
+    "seed": 20260915
+  },
+  "gpu_prerequisite": "Wait for the newly requested fixed N10 Qwen layer comparison to complete; never interrupt active jobs.",
+  "chronology": "Post-v2 outcomes amendment on reused source inputs. Only changed directed pairs are newly executed; common pairs retain original raw evidence. This is not independent confirmation.",
+  "clean_regeneration_required": false,
+  "record_unmodified_query_replay": true,
+  "smoke_pair_count": 2,
+  "reuse_completed_stage": "supplements/enumeration_alignment_20260916/fresh_answer_patch_gpu_v2",
+  "prerequisite_complete_phase": "QWEN_INDEX_LAYER_DIAGNOSTIC_GPU_COMPLETE_ANALYSIS_PENDING",
+  "selection_amendment": "User requested Native eligibility after observing v2 outcomes. Restore original baseline-correct/one-to-one/query eligibility and identical low/high pair selector; no clean-replay correctness screen. Keep all replay failures in denominators.",
+  "self_reference": "Self must match exact tokens of unmodified query replay and make zero state change. Gold correctness and donor adoption are outcomes; preserve all errors."
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "realistic_niah_v3_2_empirical_law_analysis_freeze_v2",
+  "analysis_version": "V3.2",
+  "frozen_date_local": "2026-08-26",
+  "manifest_amended_date_local": "2026-08-27",
+  "amendment": {
+    "status": "post_freeze_documentation_amendment",
+    "scope": "human_readable_spec_only",
+    "reason": "Document the separately registered inverse-N candidate and raw-scale count-error extensions without changing the frozen request set or base machine-readable analysis contract.",
+    "inference_requests_changed": false,
+    "base_machine_readable_contract_changed": false,
+    "original_files_sha256": {
+      "docs/realistic_niah_v3_2_empirical_law_analysis_spec.md": "933d96dfb1cd97f4181fad1dcc8d8bfc696bd57725f75d79c7949834c73e3216",
+      "configs/realistic_niah_v3_2_empirical_law_analysis.json": "0ca903e962f181c8ac2a7df7544c3f3ae6a5e0650f05a9dddb5febbd32f2dece"
+    }
+  },
+  "files": {
+    "docs/realistic_niah_v3_2_empirical_law_analysis_spec.md": "f4396685f5ab8ecdf4e82df3621a477255f94d96fe936d9c389969e4aebb2456",
+    "configs/realistic_niah_v3_2_empirical_law_analysis.json": "0ca903e962f181c8ac2a7df7544c3f3ae6a5e0650f05a9dddb5febbd32f2dece"
+  },
+  "immutable_request_level_sha256": "c72db941c112b3bacb3295b304931e0dbbe2c16af87e8fa4af3bfd0ab172c819",
+  "inference_git_commit": "939410edde9885fea5c791e90fdb632254bd327c"
+}

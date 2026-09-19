@@ -1,0 +1,36 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v1",
+  "phase": "natural_broad_generality_scan",
+  "status": "frozen_structural_eligibility_donor5",
+  "random_seed": 20260826,
+  "row_selection": "maximum_gold_count_per_seed",
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "run_greedy": true,
+  "max_new_tokens": 8,
+  "seeds": [1236, 1246, 1252, 1256, 1261],
+  "experiments": {
+    "countscope": {
+      "enabled": true,
+      "seeds": [1236, 1246, 1252, 1256, 1261],
+      "receiver_occurrence": 1,
+      "donor_occurrences": [5],
+      "regions": ["closing"]
+    },
+    "continued_counting": {"enabled": false},
+    "linear_additivity": {"enabled": false},
+    "separator_collapse": {"enabled": false},
+    "maximum_count": {"enabled": false}
+  },
+  "generality_contract": {
+    "seed_selection": "all outcome-blind natural maximum-count rows with N >= 5",
+    "primary_metric": "log(patched donor / patched receiver-original) - log(blank donor / blank receiver-original)",
+    "secondary_metric": "paper causal influence",
+    "strong_endpoint": "candidate argmax or greedy donor-count adoption",
+    "interpretation": "positive relative log-odds without adoption is graded causal ordinal information only"
+  },
+  "cohort_contract": {
+    "prompt_modified_for_unnumbered_format": false,
+    "runtime_requires_no_count_enumeration_audit": true,
+    "results_not_used_for_seed_selection": true
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "counting_mechanism_transfer_plan_v2",
+  "phase": "first_pass_n10_posthoc_countscope_no_norm_rescale",
+  "row_selection": "first_pass_noindex",
+  "random_seed": 20260827,
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+  "max_new_tokens": 8,
+  "run_greedy": true,
+  "status": "posthoc_norm_rescaling_diagnostic",
+  "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+  "experiments": {
+    "countscope": {
+      "enabled": true,
+      "seeds": [1307, 1364, 1553, 1598, 1688, 1805, 1979, 1982, 2009, 2024],
+      "receiver_occurrence": 1,
+      "receiver_modes": ["scrubbed_prompt_natural_item"],
+      "donor_occurrences": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "regions": ["closing", "post_item", "full"],
+      "norm_rescale_replacement": false
+    }
+  }
+}

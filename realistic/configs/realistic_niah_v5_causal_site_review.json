@@ -1,0 +1,96 @@
+{
+  "schema_version": "realistic_niah_v5_causal_site_review_config_v1",
+  "purpose": "Freeze grammar-aware native-thinking causal token sites for human review before any intervention runner consumes them.",
+  "models": {
+    "Qwen3-8B": {
+      "input_jsonl": "work/v5_trace_parser_v2/Qwen3-8B_generations_reparsed.jsonl",
+      "expected_rows": 300,
+      "tokenizer_repo": "Qwen/Qwen3-8B",
+      "tokenizer_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+      "tokenizer_json": "work/hf_tokenizers/models--Qwen--Qwen3-8B/snapshots/b968826d9c46dd6066d109eabc6255188de91218/tokenizer.json"
+    },
+    "Gemma4-E4B": {
+      "input_jsonl": "work/v5_trace_parser_v2/Gemma4-E4B_generations_reparsed.jsonl",
+      "expected_rows": 300,
+      "tokenizer_repo": "google/gemma-4-E4B-it",
+      "tokenizer_revision": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+      "tokenizer_json": "work/hf_tokenizers/models--google--gemma-4-E4B-it/snapshots/ee0ef6023621cff504d758262d4e04895a5af4a2/tokenizer.json"
+    }
+  },
+  "output_dir": "reports/v5_native_causal_site_review",
+  "classification_axes": {
+    "site_axis": "Per-event association plus actual rank-evidence/city surface order determines causal roles.",
+    "cohort_axis": "Trajectory sequence source and trace completeness determine the estimand; they never move token sites."
+  },
+  "cohort_policy": {
+    "primary_rank_resolved_full_chain": "rank_supported_episode plus one_to_one; eligible for retrieval, progress transition, terminal stop, and later serial mediation",
+    "secondary_structural_marker_neutral": "one_to_one structural fallback; marker-neutral/structural sensitivity, not pooled into primary rank-resolved effects",
+    "secondary_structural_recap": "structural extension of an earlier ranked episode; recap/consolidation sensitivity only",
+    "secondary_local_partial_unique": "local observed retrieval and continue transitions only; no correct terminal-count estimand",
+    "occurrence_retrieval_only_duplicates": "source retrieval at each emitted occurrence only; no unique-count/progress claim",
+    "secondary_evidence_sequence_exploratory": "exact unique coverage recovered from score-supported first mentions; exploratory retrieval, continue, and terminal stop; occurrence index is not rank evidence",
+    "secondary_evidence_sequence_partial_exploratory": "partial score-supported first-mention sequence; exploratory local retrieval and continue only; no terminal-count or rank-marker claim"
+  },
+  "estimand_eligibility": {
+    "continue": [
+      "primary_rank_resolved_full_chain",
+      "secondary_structural_marker_neutral",
+      "secondary_structural_recap",
+      "secondary_local_partial_unique",
+      "secondary_evidence_sequence_exploratory",
+      "secondary_evidence_sequence_partial_exploratory"
+    ],
+    "terminal_stop": [
+      "primary_rank_resolved_full_chain",
+      "secondary_structural_marker_neutral",
+      "secondary_structural_recap",
+      "secondary_evidence_sequence_exploratory"
+    ],
+    "rank_core_or_format_shell": [
+      "primary_rank_resolved_full_chain",
+      "secondary_structural_marker_neutral",
+      "secondary_structural_recap",
+      "secondary_local_partial_unique"
+    ],
+    "duplicate_trace_restriction": "occurrence-level source-to-city retrieval only",
+    "evidence_sequence_restriction": "no rank-core, marker, or accumulator claim; compiler-assigned 1..M is occurrence bookkeeping only"
+  },
+  "semantic_site_policy": {
+    "semantic_span_normalization": "strip parser-edge Unicode whitespace from semantic item, city-unit, and rank-evidence surface; additionally strip edge punctuation from rank evidence when an alphanumeric core remains; retain all original/surface/core boundaries; do not trim city or Total: ",
+    "retrieval_transition": "transition k -> k+1; every anchor scores exactly the same next-city token span, while intervening text is teacher-forced but not scored",
+    "p0_item_end": "last token of committed item k; earliest event-specific anchor for city k+1",
+    "unit_pre_d1": "token immediately before the target city-bearing semantic unit",
+    "pre_marker_d1": "token immediately before an explicit marker only when that marker precedes the target city",
+    "post_marker": "last marker-core token only when that marker precedes the target city",
+    "post_open_delimiter": "last token of a separable opening bracket or invariant bullet; fused delimiter/content tokens are explicit N/A",
+    "record_clause_pre_d1": "token immediately before the literal clause In the 2024 city score audit when present in the target event",
+    "city_pre_d1": "output token immediately before the first token overlapping the target city span",
+    "block_pre_d1": "token before the first compiled event; exploratory non-event-specific anchor, excluded from primary pooling",
+    "anchor_equivalence": "semantic roles resolving to one model token are one intervention with all aliases retained; they are never double counted",
+    "city_target_span": "smallest output-token interval overlapping the full registered city surface",
+    "rank_evidence_core_span": "tokens overlapping semantic ordinal/count content after whitespace and removable edge-punctuation normalization; causal marker state uses this span",
+    "rank_evidence_surface_span": "tokens overlapping the whitespace-trimmed parser evidence surface; retained for visible-surface removal controls and audit",
+    "rank_visible_format_shell_tokens": "tokens in rank_evidence_surface_span but outside rank_evidence_core_span; paired visible syntax/delimiter control, allowed to be empty",
+    "pre_marker_state": "output token immediately before the first token overlapping rank_evidence_core_span",
+    "post_marker_state": "last output token overlapping rank_evidence_core_span",
+    "post_update_commit_state": "last output token overlapping the selected event semantic span",
+    "continue_to_next_city": "all tokens after current commit through next-city end, with next-city-only tokens saved separately",
+    "stop_to_answer_query_v3": "all tokens after final observed commit through the independent answer_query_v3 boundary",
+    "semantic_target_only": "for retrieval-anchor localization, only the identical next-city token span enters the primary score; interstitial distance is retained as a diagnostic",
+    "prompt_source_record": "the frozen full prompt record span registered for the event city"
+  },
+  "primary_gates": {
+    "exact_output_retokenization": true,
+    "prompt_source_city_registry_exact": true,
+    "all_primary_events_have_retrieval_and_commit_sites": true,
+    "all_rank_evidence_core_spans_have_zero_right_spill": true,
+    "all_primary_continue_targets_are_strictly_after_commit": true,
+    "all_primary_trajectories_have_answer_query_v3_stop_target": true,
+    "gold_n_or_final_total_used_for_running_site_construction": false
+  },
+  "review_sampling": {
+    "examples_per_model_grammar_cohort": 2,
+    "include_every_plan_with_exclusion": true,
+    "max_exclusion_examples": 100
+  }
+}

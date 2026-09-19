@@ -1,0 +1,37 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_bridge_metadata_fix_v1",
+  "recorded_utc": "2026-08-21T15:23:49Z",
+  "status": "RESULT_INDEPENDENT_METADATA_ONLY_FIX_BEFORE_ANY_PROSPECTIVE_BRIDGE_RUN",
+  "file": "src/realistic_niah_v5/integrated_bridge.py",
+  "old_sha256": "7b0daf3e718f5aa66de62253010fb96b3c4eaec399c2694b56676d33840400a4",
+  "new_sha256": "f78dc0dfa0c91c6d039a77af457290e23653bd7fbdf2da6248ac74781cb41607",
+  "issue": "The output-only targeted_anchor_role field was hard-coded to Qwen's post_marker label even when the frozen Gemma route was p0_item_end.",
+  "fix": {
+    "Qwen3-8B": "post_marker",
+    "Gemma4-E4B": "p0_item_end"
+  },
+  "scientific_design_unchanged": [
+    "selected and random head banks",
+    "bank hashes",
+    "anchor registry and routed query positions",
+    "20 discovery and 10 confirmation seeds",
+    "sample selection",
+    "patch positions and layers",
+    "readout cuts",
+    "outcomes",
+    "statistical gates and thresholds"
+  ],
+  "timing_and_blinding": {
+    "Qwen3-8B_prospective_bridge_started": false,
+    "Gemma4-E4B_prospective_bridge_started": false,
+    "prospective_endpoint_aggregate_effects_read": false,
+    "prospective_endpoint_claim_gates_read": false,
+    "live_per_trial_progress_logs_observed": true,
+    "fix_trigger": "static source audit of model-specific provenance fields"
+  },
+  "verification": {
+    "local_tests": "16 passed",
+    "remote_targeted_test": "7 passed",
+    "test_added": "test_integrated_bridge_records_model_specific_targeted_anchor_role"
+  }
+}

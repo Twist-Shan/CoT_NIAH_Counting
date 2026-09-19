@@ -1,0 +1,90 @@
+{
+  "schema_version": "realistic_niah_v4_4_counter_channel_campaign_v1",
+  "base_v4_config": "configs/realistic_niah_v4.json",
+  "analysis_rank": 3,
+  "rank_sensitivity": [1, 2, 3],
+  "group_split_unit": "seed",
+  "cpu": {
+    "stages": [
+      "absolute_deviation",
+      "layer_manifest_validation",
+      "subspace_overlap_and_angles",
+      "cross_layer_and_cross_role_decoding",
+      "answer_query_classifier_screen",
+      "answer_query_classifier_layer_sweep",
+      "conditional_variance",
+      "noise_factor_ablation",
+      "projected_intervention_statistics",
+      "cluster_bootstrap_and_report"
+    ],
+    "classification_folds": 5,
+    "classification_pca_components": 32,
+    "classification_screen_algorithms": [
+      "logistic_l2",
+      "ridge_classifier",
+      "linear_svm",
+      "rbf_svm",
+      "nearest_centroid",
+      "shrinkage_lda",
+      "gaussian_nb",
+      "knn_k1_euclidean",
+      "knn_k3_euclidean",
+      "knn_k5_euclidean",
+      "knn_k7_euclidean",
+      "knn_k9_euclidean",
+      "knn_k3_cosine",
+      "knn_k5_cosine",
+      "random_forest",
+      "extra_trees",
+      "hist_gradient_boosting"
+    ],
+    "full_layer_sweep_algorithms": [
+      "logistic_l2",
+      "ridge_classifier",
+      "linear_svm",
+      "nearest_centroid",
+      "shrinkage_lda",
+      "knn_k5_cosine"
+    ]
+  },
+  "gpu": {
+    "stages": [
+      "capture_or_pack_all_layer_states",
+      "reconstruct_attention_features_if_missing",
+      "projected_prompt_patch",
+      "answer_query_subspace_sufficiency",
+      "downstream_subspace_removal",
+      "serial_prompt_patch_then_answer_removal",
+      "optional_native_trace_sampling_replicates"
+    ],
+    "intervention_conditions": [
+      "projected_patch",
+      "orthogonal_norm_matched",
+      "projected_patch_plus_removal",
+      "removal_only"
+    ],
+    "removal_doses": [0.5, 1.0],
+    "max_new_tokens": 16
+  },
+  "handoff": {
+    "layer_manifest_schema": "one npz per model/role/layer",
+    "required_npz_arrays": ["states", "count", "seed"],
+    "recommended_npz_arrays": [
+      "sample_id",
+      "split",
+      "correct",
+      "prediction",
+      "running_index",
+      "gold_count",
+      "prompt_variant",
+      "mode",
+      "absolute_position",
+      "normalized_position",
+      "retrieval_mass",
+      "attention_entropy",
+      "sampling_replicate"
+    ],
+    "raw_tensors_remain_on_filestream": true,
+    "cpu_outputs_may_be_copied_to_report_bundle": true
+  }
+}

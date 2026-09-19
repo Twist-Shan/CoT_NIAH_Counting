@@ -1,0 +1,68 @@
+{
+  "schema_version": "realistic_niah_experiment_v2",
+  "protocol_version": "realistic_niah_v2",
+  "canonical_tokenizer": "Qwen/Qwen3-8B",
+  "haystack_source_mode": "multi_file_no_repeat",
+  "haystack_corpus_protocol": "ruler_paul_graham_full_url_list_v1",
+  "target_passage_tokens": [2000, 3000, 5000, 10000, 20000],
+  "needle_counts": [1, 2, 3, 4, 5, 6, 8, 10, 20, 30],
+  "seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243],
+  "query_layout": "cue_before_query_after",
+  "prompt_modes": [
+    "direct",
+    "enumeration_index",
+    "enumeration_bullet",
+    "native_thinking"
+  ],
+  "reasoning_only_prompt_modes": [
+    "native_thinking"
+  ],
+  "reasoning_only_models": [
+    "DeepSeek-R1-0528-Qwen3-8B",
+    "GLM-Z1-9B-0414"
+  ],
+  "models": [
+    "Qwen3-1.7B",
+    "Qwen3-4B",
+    "Qwen3-8B",
+    "Qwen3-32B",
+    "Gemma4-E4B",
+    "Gemma4-12B",
+    "DeepSeek-R1-0528-Qwen3-8B",
+    "GLM-Z1-9B-0414"
+  ],
+  "model_revisions": {
+    "Qwen3-1.7B": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+    "Qwen3-4B": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "Qwen3-8B": "b968826d9c46dd6066d109eabc6255188de91218",
+    "Qwen3-32B": "9216db5781bf21249d130ec9da846c4624c16137",
+    "Gemma4-E4B": "ee0ef6023621cff504d758262d4e04895a5af4a2",
+    "Gemma4-12B": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+    "DeepSeek-R1-0528-Qwen3-8B": "6e8885a6ff5c1dc5201574c8fd700323f23c25fa",
+    "GLM-Z1-9B-0414": "b221b06fefb23ca320922cf6e68ab5f2fb82de81",
+    "GLM-4-9B-0414": "645b8482494e31b6b752272bf7f7f273ef0f3caf"
+  },
+  "matched_nonthinking_controls": {
+    "DeepSeek-R1-0528-Qwen3-8B": "Qwen3-8B",
+    "GLM-Z1-9B-0414": "GLM-4-9B-0414"
+  },
+  "matched_control_prompt_modes": [
+    "direct",
+    "enumeration_index",
+    "enumeration_bullet"
+  ],
+  "decoding_temperatures": {
+    "nonthinking_modes": 0.0,
+    "qwen3_native_thinking": 0.6,
+    "gemma4_native_thinking": 1.0,
+    "deepseek_r1_qwen3_native_thinking": 0.6,
+    "glm_z1_native_thinking": 0.6
+  },
+  "expected_stimuli": 500,
+  "expected_requests_per_full_mode_model": 2000,
+  "expected_requests_per_reasoning_only_model": 500,
+  "expected_requests_total": 13000,
+  "expected_requests_total_scope": "primary_eight_model_panel_only",
+  "expected_glm4_control_requests": 1500,
+  "expected_all_planned_requests": 14500
+}

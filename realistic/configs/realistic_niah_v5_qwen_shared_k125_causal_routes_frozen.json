@@ -1,0 +1,49 @@
+{
+  "schema_version": "realistic_niah_v5_behavior_anchor_routing_v1",
+  "policy_id": "qwen_shared_compact_k125_native_routes_frozen_20260818_v1",
+  "status": "frozen_after_development_smokes_before_full_300_prompt_grammar_routed_sweep",
+  "axis": "target_grammar_class",
+  "head_bank": {
+    "selection_grammar": "adjacent_rank_before_city",
+    "selection_surface": "rank_before_city_compact",
+    "selection_anchor_role": "post_marker",
+    "selection_metric": "target_source_attention_mass",
+    "bank_size": 125,
+    "ablation_schedule": "selected pre-O slices off from routed query through every later decode forward"
+  },
+  "routes": {
+    "adjacent_rank_before_city": {
+      "required": ["post_marker"],
+      "optional": []
+    },
+    "same_unit_rank_before_city": {
+      "required": ["post_marker"],
+      "optional": []
+    },
+    "structural_explicit_rank_before_city": {
+      "required": ["post_marker"],
+      "optional": []
+    },
+    "adjacent_rank_after_city": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "same_unit_rank_after_city": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "structural_invariant_bullet": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "structural_unmarked": {
+      "required": ["p0_item_end"],
+      "optional": []
+    },
+    "evidence_sequence_unranked": {
+      "required": ["p0_item_end"],
+      "optional": []
+    }
+  },
+  "fallback": null
+}

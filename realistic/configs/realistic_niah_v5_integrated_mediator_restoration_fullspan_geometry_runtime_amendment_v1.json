@@ -1,0 +1,32 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_mediator_restoration_fullspan_geometry_runtime_amendment_v1",
+  "frozen_utc": "2026-08-21T13:39:00Z",
+  "trigger": "Qwen full-span discovery aborted after 48 completed shards because a planned sample had a targeted query after the start of the terminal receiver or no strictly post-query receiver token.",
+  "outcome_blindness": {
+    "partial_effects_read": false,
+    "partial_margins_read": false,
+    "information_used": [
+      "traceback exception class and text",
+      "completed shard count",
+      "query and terminal-span geometry metadata"
+    ]
+  },
+  "runtime_fix": {
+    "classification": "emit the pre-existing 30-row not_applicable shard for a geometry-ineligible sample instead of aborting the batch",
+    "eligibility_rule": "targeted_query_position <= first_terminal_receiver_position and at least one terminal receiver token is strictly after the targeted query",
+    "resume": "retain the 48 complete Qwen shards and resume the same formal root using the runner's default resume semantics (only --no-resume disables it)",
+    "applies_symmetrically": ["Qwen3-8B", "Gemma4-E4B"]
+  },
+  "unchanged_frozen_factors": [
+    "20 discovery seeds and 10 confirmation seeds",
+    "all eligible registered seed/count cells",
+    "full terminal trace-item mediator geometry",
+    "selected and three layer-matched-random head banks",
+    "query_through_trace write window",
+    "model-specific frozen mediator layers and readout cut",
+    "30 factorial rows per planned sample",
+    "all primary gates and bootstrap settings",
+    "selection_rank prohibited"
+  ],
+  "scientific_scope": "Geometry-ineligible samples remain in the outcome-blind sample plan and audit denominator but do not enter effect estimates, exactly as other predeclared not_applicable geometry rows."
+}

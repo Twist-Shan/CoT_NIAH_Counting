@@ -1,0 +1,50 @@
+{
+  "schema_version": "realistic_niah_v5_qwen_k128_count_chain_extension_v1",
+  "frozen_utc": "2026-08-21T14:21:29Z",
+  "status": "FROZEN_BEFORE_K125_FULLSPAN_OR_K128_ENDPOINT_EFFECTS",
+  "model_label": "Qwen3-8B",
+  "provenance": {
+    "user_bank_decision_utc": "2026-08-21T14:00:35Z",
+    "historical_k125_fullspan_terminal_result_available": false,
+    "partial_k128_effects_read": false,
+    "partial_k128_margins_read": false
+  },
+  "bank": {
+    "size": 128,
+    "selection": "configs/realistic_niah_v5_qwen_shared_k128_targeted_selection_frozen.json",
+    "routing": "configs/realistic_niah_v5_qwen_shared_k128_causal_routes_frozen.json",
+    "selected_bank_sha256": "ef30a8a083468c6e88cb5b0924403884ad758fedbc743de36dd03ab9bc4a742b"
+  },
+  "stages": [
+    {
+      "name": "targeted_retrieval_to_final_count",
+      "root": "work/v5_native_count_stream/targeted_count_chain_k128_20d10c_20260821_v1/Qwen3-8B",
+      "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+      "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+      "confirmation_rule": "Open only if every frozen discovery gate passes."
+    },
+    {
+      "name": "targeted_retrieval_to_terminal_state_to_readout",
+      "root": "work/v5_native_count_stream/integrated_mediator_restoration_fullspan_k128_20d10c_20260821_v1/Qwen3-8B",
+      "open_rule": "Open only if the K128 targeted-retrieval-to-final-count endpoint reaches PASS.",
+      "bridge_design": "within_example_clean_state_restoration",
+      "write_window": "query_through_trace",
+      "mediator_geometry": "full_span",
+      "mediator_layers": [19, 25],
+      "readout_cut": "joint L26 residual-relay reset plus direct trace-source reread mask",
+      "discovery_seed_count": 20,
+      "confirmation_seed_count": 10,
+      "confirmation_rule": "Open only if every frozen discovery gate passes."
+    }
+  ],
+  "invariants": [
+    "outcome-blind sample and control construction",
+    "selection_rank prohibited",
+    "three layer-matched selected-excluded random banks",
+    "every frozen seed must retain at least one applicable sample",
+    "all historical K125 artifacts remain immutable",
+    "no head, layer, cut or position search after reading K128 outcomes"
+  ],
+  "interpretation_if_confirmed": "Qwen's prospectively frozen K128 targeted bank causally changes the final count through a recoverable terminal trace-item state consumed by its independently confirmed complementary residual-relay and direct-reread routes.",
+  "interpretation_if_exhausted": "K128 targeted endpoint or integrated bridge is not supported under the frozen protocol; retain the separately confirmed endpoint/readout evidence without claiming a complete serial mediator chain."
+}

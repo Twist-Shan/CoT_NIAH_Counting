@@ -1,0 +1,49 @@
+{
+  "schema_version": "realistic_niah_v4_4_5_noise_factorial_v2",
+  "stimulus_sha256": "da4dd86142eb8a07f9a7e53497efd3375184c8e68367d4db994370fcb331f090",
+  "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+  "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+  "factorial": {
+    "gold_count": 10,
+    "cells": ["000", "001", "010", "011", "100", "101", "110", "111"],
+    "context_width": 8,
+    "identity_donor_policy": "lowest_different_canonical_seed_with_exact_model_token_length_per_record",
+    "position_policy": "monotone_disjoint_exact_length_ordinary_carriers",
+    "basis_rank": 3
+  },
+  "outside_context": {
+    "arms": ["natural", "candidate_halo_edge_block", "distance_random_control", "attention_mass_control"],
+    "counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "halo_width": 8,
+    "top_keys_per_head": 16,
+    "distance_bin_width": 64,
+    "candidate_control_feasibility_policy": "natural-attention rank subject to unique exact-distance-bin nonhalo-control capacity; retain at most top_keys_per_head",
+    "strict_generation_max_new_tokens": 8,
+    "candidate_head_selection": "discovery mean halo attention density minus nonhalo ordinary density; canonical-rank tie break",
+    "intervention": "subtract_frozen_natural_alpha_times_v_at_source_head_pre_o_answer_query",
+    "controls": ["same-distance-bin deterministic random nonhalo ordinary keys", "same-distance-bin closest preintervention-attention-mass nonhalo ordinary keys"]
+  },
+  "models": {
+    "Qwen3-8B": {
+      "geometry_layer": 8,
+      "source_candidate_heads": [[13, 29], [12, 24], [5, 13], [15, 9], [11, 9], [19, 24], [15, 11], [7, 7], [9, 29], [12, 20]],
+      "retrieval_layer": 23,
+      "retrieval_heads": [29, 13, 28, 12, 31, 30, 10],
+      "late_state_layer": 29
+    },
+    "Gemma4-E4B": {
+      "geometry_layer": 9,
+      "source_candidate_heads": [[5, 5], [5, 0], [5, 3], [11, 3], [11, 2], [17, 1], [17, 3], [5, 1], [11, 0], [17, 5]],
+      "retrieval_layer": 29,
+      "retrieval_heads": [4, 2],
+      "late_state_layer": 37
+    }
+  },
+  "model_torch_dtype": "bfloat16",
+  "attention_prefix_backend": "sdpa",
+  "extension_metadata": {
+    "status": "post_hoc_top6_extension",
+    "selection_rule": "Gemma L29 heads induced by the exact frozen global Top-6 prefix",
+    "primary_behavioral_intervention_unchanged": true
+  }
+}

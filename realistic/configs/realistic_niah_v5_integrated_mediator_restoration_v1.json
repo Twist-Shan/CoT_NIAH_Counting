@@ -1,0 +1,52 @@
+{
+  "schema_version": "realistic_niah_v5_integrated_mediator_restoration_v1",
+  "frozen_utc": "2026-08-21T10:29:00Z",
+  "activation_rule": "run_only_for_a_model_if_its_query_through_trace_persistent_bridge_fails_discovery",
+  "formal_protocol": {
+    "discovery_seeds": [
+      1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+      1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+    ],
+    "confirmation_seeds": [
+      1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263
+    ],
+    "confirmation_requires_discovery_pass": true,
+    "selection_rank_prohibited": true,
+    "pair_selection": "all_eligible_registered_seeds_and_terminal_counts",
+    "bootstrap_unit": "seed",
+    "bootstrap_samples": 10000,
+    "random_seed": 20260821
+  },
+  "frozen_sites": {
+    "write_intervention": "same model-specific frozen targeted bank, three layer-matched random banks, final N_minus_1_to_N routed site, and query_through_trace duration as the persistent bridge",
+    "mediator": "same-sample terminal suffix8 full hidden state",
+    "Qwen3-8B": "L19-L25 mediator clamp; L26 residual reset plus all-layer all-head trace-item readout cut",
+    "Gemma4-E4B": "L16-L41 mediator clamp; all-layer all-head trace-item readout cut",
+    "answer_measure": "teacher-forced correct-count margin with separately confirmed free-generation endpoint",
+    "greedy_exact_count": "supplementary_only"
+  },
+  "factorial": {
+    "receiver_write_conditions": [
+      "clean",
+      "selected_bank",
+      "layer_matched_random_repeat_1",
+      "layer_matched_random_repeat_2",
+      "layer_matched_random_repeat_3"
+    ],
+    "mediator_conditions": [
+      "self_state",
+      "clean_state_restore"
+    ],
+    "readout_conditions": ["natural", "matched_control", "cut"],
+    "rows_per_sample": 30
+  },
+  "primary_gates": {
+    "targeted_receiver_damage": "mean-random self-state matched-control margin minus selected self-state matched-control margin CI low > 0",
+    "clean_state_restores_selected_receiver": "selected clean-restore matched-control margin minus selected self-state matched-control margin CI low > 0",
+    "restoration_is_targeted_specific": "selected restoration minus mean layer-matched-random restoration CI low > 0",
+    "readout_cut_occludes_restoration": "selected restoration under matched control minus selected restoration under cut CI low > 0",
+    "cut_restoration_residual_equivalence": "absolute cut restoration divided by absolute matched-control restoration bootstrap CI high < 0.20",
+    "clean_endpoint_adequacy": "clean self-state natural greedy exact-count accuracy CI low >= 0.50"
+  },
+  "claim_restriction": "This is a controlled within-example mediator-restoration assay. It supports necessity/sufficiency of the frozen terminal state for the targeted intervention effect only when paired with the already frozen natural free-generation endpoint; it is not a minimal circuit or a population natural-indirect-effect estimate."
+}

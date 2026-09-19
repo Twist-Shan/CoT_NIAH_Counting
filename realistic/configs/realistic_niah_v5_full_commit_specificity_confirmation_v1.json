@@ -1,0 +1,43 @@
+{
+  "schema_version": "realistic_niah_v5_count_stream_v1",
+  "experiment_id": "realistic_niah_v5_full_commit_specificity_confirmation_v1",
+  "status": "frozen_confirmation",
+  "answer_site_id": "answer_query_v3",
+  "running_site_kind": "item_end",
+  "development_seeds": [
+    1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243,
+    1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+  ],
+  "broad_ranking_seeds": [
+    1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243
+  ],
+  "broad_k_selection_seeds": [
+    1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253
+  ],
+  "confirmation_seeds": [
+    1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263
+  ],
+  "candidate_counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "broad_selection_metric": "trace_items_broad_score",
+  "development_bank_sizes": [1, 2, 4, 8, 16, 32],
+  "boundary_extension_bank_size": 64,
+  "broad_k_selection_rule": "smallest_within_one_se_of_max_positive",
+  "broad_panel_counts_per_seed": 5,
+  "broad_count_assignment": "odd_even_balanced",
+  "random_controls": 3,
+  "random_control_overlap_policy": "nonthinking_allow_treatment_overlap",
+  "bootstrap_samples": 10000,
+  "trace_patch_donor_offsets": [-5, -3, -1, 1, 3, 5],
+  "trace_patch_seeds_per_cell": 10,
+  "trace_patch_include_count2_terminal_panel": true,
+  "trace_patch_sampling_seed": 20260820,
+  "trace_patch_conditions": [
+    "clean",
+    "self_patch",
+    "full_donor_patch",
+    "progress_projected_patch",
+    "norm_matched_orthogonal_patch"
+  ],
+  "trace_patch_primary_outcome": "donor_vs_receiver_city_log_odds",
+  "trace_patch_primary_direction": "past_to_later_receiver"
+}

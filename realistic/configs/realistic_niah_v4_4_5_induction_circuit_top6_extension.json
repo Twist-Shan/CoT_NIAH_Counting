@@ -1,0 +1,57 @@
+{
+  "schema_version": "realistic_niah_v4_4_5_induction_circuit_v1",
+  "stimulus_sha256": "da4dd86142eb8a07f9a7e53497efd3375184c8e68367d4db994370fcb331f090",
+  "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+  "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+  "counts": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "synthetic": {
+    "sequences": 30,
+    "sequence_length": 81,
+    "anchor_a_position": 16,
+    "successor_a_position": 17,
+    "anchor_b_position": 48,
+    "successor_b_position": 49,
+    "query_position": 80,
+    "conditions": ["repeated_consistent", "unique_anchor", "successor_reassignment", "same_position_ordinary_repeat"],
+    "minimum_relation_advantage": 0.01,
+    "maximum_collapse_ratio": 0.5,
+    "max_retained_heads": 1,
+    "random_seed": 44522
+  },
+  "canonical": {
+    "arms": ["natural", "candidate_edge_block", "mass_distance_control"],
+    "structural_no_previous_match_counts": [1],
+    "primary_relation_counts": [2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "discarded_noop_warmup": {
+      "enabled": true,
+      "seed": 1254,
+      "count": 1,
+      "recorded": false
+    },
+    "distance_bin_width": 64,
+    "strict_generation_max_new_tokens": 8,
+    "intervention": "subtract_frozen_natural_alpha_times_v_at_registered_pre_o_head_slice",
+    "control": "same_head_same_query_same_distance_bin_closest_preintervention_attention_mass"
+  },
+  "models": {
+    "Qwen3-8B": {
+      "candidate_heads": [[13, 29], [12, 24], [5, 13], [15, 9], [11, 9], [19, 24], [15, 11], [7, 7], [9, 29], [12, 20]],
+      "endpoint_geometry_layer": 8,
+      "retrieval_layer": 23,
+      "retrieval_heads": [29, 13, 28, 12, 31, 30, 10]
+    },
+    "Gemma4-E4B": {
+      "candidate_heads": [[5, 5], [5, 0], [5, 3], [11, 3], [11, 2], [17, 1], [17, 3], [5, 1], [11, 0], [17, 5]],
+      "endpoint_geometry_layer": 9,
+      "retrieval_layer": 29,
+      "retrieval_heads": [4, 2]
+    }
+  },
+  "model_torch_dtype": "bfloat16",
+  "attention_prefix_backend": "sdpa",
+  "extension_metadata": {
+    "status": "post_hoc_top6_extension",
+    "selection_rule": "Gemma L29 heads induced by the exact frozen global Top-6 prefix",
+    "primary_behavioral_intervention_unchanged": true
+  }
+}

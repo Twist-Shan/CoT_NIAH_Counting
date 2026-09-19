@@ -1,0 +1,59 @@
+{
+  "schema_version": "realistic_niah_v4_4_5_state_retention_v1",
+  "protocol_version": "heldout_clean_centroid_retention_with_matched_corruption_v1",
+  "cohort_label": "canonical_v4_4_fixed_final_count_10",
+  "stimulus_sha256": "da4dd86142eb8a07f9a7e53497efd3375184c8e68367d4db994370fcb331f090",
+  "discovery_seeds": [1234, 1235, 1236, 1237, 1238, 1239, 1240, 1241, 1242, 1243, 1244, 1245, 1246, 1247, 1248, 1249, 1250, 1251, 1252, 1253],
+  "confirmation_seeds": [1254, 1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262, 1263],
+  "gold_count": 10,
+  "running_indices": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  "layers": {
+    "Qwen3-8B": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+    "Gemma4-E4B": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+  },
+  "pooling_sites": ["span_end", "span_mean"],
+  "conditions": ["clean", "needle_corrupt", "ordinary_corrupt"],
+  "independently_frozen_reusable_windows": {
+    "Qwen3-8B": [0, 20],
+    "Gemma4-E4B": [0, 16]
+  },
+  "centroid_definition": "discovery_seed_mean_full_hidden_vector_by_layer_pooling_and_running_index",
+  "radius_definition": "discovery_sample_rms_euclidean_distance_to_own_class_centroid_with_n_minus_1_denominator",
+  "standardized_distance_definition": "euclidean_distance_to_candidate_centroid_divided_by_that_candidate_class_discovery_radius",
+  "primary_metric": "span_end_correct_distance_specificity",
+  "retention_family": [
+    "span_end_correct_distance_specificity",
+    "span_mean_correct_distance_specificity",
+    "span_end_margin_damage_specificity",
+    "span_mean_margin_damage_specificity",
+    "span_end_accuracy_damage_specificity",
+    "span_mean_accuracy_damage_specificity"
+  ],
+  "deformation_family": [
+    "span_end_relative_rms_specificity",
+    "span_mean_relative_rms_specificity",
+    "span_end_cosine_specificity",
+    "span_mean_cosine_specificity"
+  ],
+  "main_display_priority": [
+    "span_end_correct_distance_specificity",
+    "span_mean_correct_distance_specificity",
+    "span_end_margin_damage_specificity",
+    "span_mean_margin_damage_specificity",
+    "span_end_accuracy_damage_specificity",
+    "span_mean_accuracy_damage_specificity"
+  ],
+  "main_display_selection_rule": "choose_first_priority_candidate_with_positive_window_mean_and_holm_p_below_0_05_in_both_models_else_keep_primary_and_report_null",
+  "inference_unit": "confirmation_seed_after_averaging_ten_running_indices_and_independently_frozen_layers",
+  "window_test": "two_sided_exact_seed_sign_flip",
+  "multiplicity": "holm_within_model_separately_for_six_retention_and_four_deformation_candidates",
+  "layerwise_curves": "exploratory_seed_mean_with_bootstrap_ci_no_layer_selection",
+  "bootstrap_draws": 50000,
+  "bootstrap_seed": 44531,
+  "model_torch_dtype": "bfloat16",
+  "attention_backend": "sdpa",
+  "fresh_seeds_enabled": false,
+  "outcome_adaptive_metric_addition_enabled": false,
+  "layer_selection_from_current_outcome_enabled": false,
+  "save_full_confirmation_hidden_tensors": false
+}

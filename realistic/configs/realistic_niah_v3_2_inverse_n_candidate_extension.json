@@ -1,0 +1,40 @@
+{
+  "schema_version": "realistic_niah_v3_2_inverse_n_candidate_extension_v1",
+  "analysis_version": "V3.2 + inverse-count candidate extension",
+  "status": "post_freeze_candidate_registry_extension",
+  "created_date_local": "2026-08-26",
+  "base_config": "configs/realistic_niah_v3_2_empirical_law_analysis.json",
+  "base_registry_size": 13,
+  "predictor": {
+    "id": "invN",
+    "definition": "1 / N",
+    "domain_requirement": "N > 0"
+  },
+  "candidate_registry_addition": [
+    {"id": "invN", "terms": ["invN"]},
+    {"id": "invN__L_k", "terms": ["invN", "L_k"]},
+    {"id": "invN__logL", "terms": ["invN", "logL"]},
+    {
+      "id": "invN__L_k__invN_x_L_k",
+      "terms": ["invN", "L_k", "invN_x_L_k"],
+      "parent": "invN__L_k",
+      "interaction": "invN_x_L_k"
+    },
+    {
+      "id": "invN__logL__invN_x_logL",
+      "terms": ["invN", "logL", "invN_x_logL"],
+      "parent": "invN__logL",
+      "interaction": "invN_x_logL"
+    }
+  ],
+  "scope": [
+    "accuracy_bernoulli_logit",
+    "accuracy_bernoulli_probit",
+    "accuracy_bernoulli_cloglog",
+    "trimmed_signed_bias_10",
+    "conditional_mae"
+  ],
+  "selection_and_validation": "Identical to frozen V3.2: five-fold held-condition CV, shared topology across slots, slot-specific coefficients, the same near-best rule, hierarchical interaction gate, and LOMO audit.",
+  "bootstrap_repetitions": 0,
+  "provenance_note": "The frozen 13-candidate V3.2 analysis remains immutable. Only the five added candidates are newly fit; their results are merged with the exact frozen candidate tables before model selection is rerun."
+}

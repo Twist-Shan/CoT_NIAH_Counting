@@ -1,0 +1,7 @@
+{
+  "schema_version": "realistic_niah_v4_config_v3",
+  "protocol_version": "realistic_niah_v4_nonthinking_v3",
+  "seeds": [1264, 1265, 1266, 1267, 1268, 1269, 1270, 1271, 1272, 1273],
+  "discovery_seeds": [1264, 1265, 1266, 1267, 1268],
+  "confirmation_seeds": [1269, 1270, 1271, 1272, 1273]
+}

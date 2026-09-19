@@ -1,0 +1,35 @@
+{
+  "schema_version": "realistic_niah_v6_coherent_broad_replacement_policy_v1",
+  "status": "AMENDMENT_FROZEN_BEFORE_COHERENT_BROAD_SELECTION",
+  "authorized_instruction": "If a sample fails, supplement the seed and document it clearly.",
+  "timing_context": {
+    "original_generation_outputs_existed": true,
+    "cell_level_replacement_generation_may_have_started": true,
+    "coherent_broad_intervention_outputs_existed": false,
+    "reserve_strict_results_were_not_read_to_choose_this_rule": true
+  },
+  "base_replacement_policy": "configs/realistic_niah_v6_replacement_policy.json",
+  "applicable_phases": [
+    "k_selection_discovery",
+    "confirmation"
+  ],
+  "trigger": "any_registered_original_cell_for_the_broad_seed_panel_fails_runtime_or_fresh_v6_strict_parse",
+  "replacement_unit": "entire_registered_five_count_broad_seed_panel",
+  "candidate_order": "ascending_base_role_specific_reserve_seed_order",
+  "candidate_reuse_within_panel": false,
+  "eligibility_rule": "one_unused_source_seed_has_fresh_v6_strict_causal_eligible_true_for_every_registered_count_in_the_panel",
+  "successful_original_cells_in_an_affected_seed_panel": "replace_for_true_source_seed_coherence_and_list_explicitly",
+  "pool_exhaustion_policy": "fail_closed_and_request_an_explicit_protocol_amendment",
+  "ranking_discovery_policy": "cell_resolved_fixed_slots_with_analysis_slot_equal_attention_only_ranking_no_behavioral_outcome",
+  "statistical_identity_for_k_and_confirmation": "true_source_seed",
+  "analysis_slot_identity": "original_seed_slot",
+  "seed_aliasing": false,
+  "forbidden_selection_inputs": [
+    "hidden_state",
+    "attention_score",
+    "source_write_magnitude",
+    "head_rank",
+    "intervention_outcome",
+    "causal_effect"
+  ]
+}

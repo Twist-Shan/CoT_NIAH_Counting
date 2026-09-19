@@ -1,0 +1,49 @@
+{
+  "schema_version": "realistic_niah_v4_causal_v2_ablation_confirmation_selection_v1",
+  "selection_status": "frozen_before_confirmation",
+  "selection_rule": {
+    "applied_separately_per_model": true,
+    "candidate_head_bank": "broad_aggregation",
+    "eligibility": "discovery accuracy_effect < 0 and discovery absolute_error_effect > 0",
+    "objective": "maximize discovery absolute_error_effect among eligible top_n values",
+    "tie_break": "smaller top_n",
+    "interpretation": "selected intervention size, not an estimate of the true number of functional heads"
+  },
+  "discovery_source": {
+    "implementation_commit": "dd409f2dff82ccd6400dfc3d7704025cb6939940",
+    "table": "reports/v4_non-thinking_causal/v4_4_causal_v2/ablation_top_k_sweep.csv",
+    "table_sha256": "9cabbd04d760cd9d5776dc27e9f87aa2137d0e15b0c3ab9acfa995368ad1be1f",
+    "screen_seeds": [1254, 1255, 1256, 1257, 1258]
+  },
+  "confirmation_design": {
+    "seeds": [1264, 1265, 1266, 1267, 1268, 1269, 1270, 1271, 1272, 1273],
+    "counts": [7, 8, 9, 10],
+    "scope": "answer_query",
+    "random_replicates": 3,
+    "random_baseline": "all_heads_in_matched_layers_without_replacement_overlap_allowed",
+    "primary_endpoint": "seed_cluster_mean_ranked_minus_random_absolute_error_delta",
+    "secondary_endpoint": "seed_cluster_mean_ranked_minus_random_accuracy_delta",
+    "uncertainty": "seed_cluster_nonparametric_bootstrap_95ci",
+    "test": "two_sided_exact_seed_cluster_sign_flip"
+  },
+  "models": {
+    "Qwen3-8B": {
+      "head_bank": "broad_aggregation",
+      "top_n": 8,
+      "discovery_examples": 20,
+      "discovery_seeds": 5,
+      "discovery_accuracy_effect": -0.05,
+      "discovery_absolute_error_effect": 0.5833333333333334,
+      "discovery_ranked_valid_rate": 1.0
+    },
+    "Gemma4-E4B": {
+      "head_bank": "broad_aggregation",
+      "top_n": 6,
+      "discovery_examples": 20,
+      "discovery_seeds": 5,
+      "discovery_accuracy_effect": -0.016666666666666666,
+      "discovery_absolute_error_effect": 4.12962962962963,
+      "discovery_ranked_valid_rate": 0.9
+    }
+  }
+}
