@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the two experiment families with their original relative-path conventions."""
+"""Run experiment and figure entry points with their relative-path conventions."""
 from __future__ import annotations
 
 import argparse
@@ -16,7 +16,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--list", action="store_true", help="List the paper entry points.")
     parser.add_argument("--dry-run", action="store_true", help="Print command and working directory without executing.")
-    parser.add_argument("experiment", nargs="?", help="Entry-point name, or realistic/synthetic followed by a script path.")
+    parser.add_argument("experiment", nargs="?", help="Entry-point name, or realistic/synthetic/figures followed by a script path.")
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
     registry = json.loads((ROOT / "experiments.json").read_text(encoding="utf-8"))
@@ -30,7 +30,7 @@ def main(argv: list[str] | None = None) -> int:
     extra = args.arguments
     if extra and extra[0] == "--":
         extra = extra[1:]
-    if args.experiment in ("realistic", "synthetic"):
+    if args.experiment in ("realistic", "synthetic", "figures"):
         family = args.experiment
         if not extra:
             parser.error(f"{family} requires a relative .py script path")

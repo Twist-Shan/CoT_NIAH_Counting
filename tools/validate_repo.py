@@ -65,7 +65,7 @@ def validate() -> dict:
         if not target.is_file():
             errors.append(f"Missing entry point: {name}")
     # Check local links in the new reader-facing documents.
-    documents = [ROOT / "README.md", ROOT / "LICENSE_STATUS.md", ROOT / "THIRD_PARTY_NOTICES.md", *(ROOT / "docs").glob("*.md")]
+    documents = [ROOT / "README.md", ROOT / "LICENSE_STATUS.md", ROOT / "THIRD_PARTY_NOTICES.md", ROOT / "figures/README.md", *(ROOT / "docs").glob("*.md")]
     for p in documents:
         for target in re.findall(r"(?<!!)\[[^\]]+\]\(([^)]+)\)", p.read_text(encoding="utf-8")):
             if "://" not in target and not target.startswith("#"):

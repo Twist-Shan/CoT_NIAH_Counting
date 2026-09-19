@@ -1179,7 +1179,12 @@ def median_control(
     return float(rows.median())
 
 
-def build_report(output: Path) -> dict:
+def build_report(output: Path, *, run_root: Path | None = None,
+                 analysis_root: Path | None = None, asset_dir: Path | None = None) -> dict:
+    global DATA, ANALYSIS, ASSET_DIR
+    DATA = Path(run_root).resolve() if run_root is not None else DATA
+    ANALYSIS = Path(analysis_root).resolve() if analysis_root is not None else DATA / "analysis"
+    ASSET_DIR = Path(asset_dir).resolve() if asset_dir is not None else output.parent / "NiaH_Synthetic_report_assets"
     setup_style()
     cfg = read_json(DATA / "config.json")
     run_manifest = read_json(DATA / "manifest.json")
@@ -1724,7 +1729,7 @@ ul{padding-left:22px}.small{font-size:.86rem;color:var(--muted)}a{color:var(--bl
             "analysis": str(ANALYSIS.resolve()),
         },
         "input_hashes": {
-            str(path.relative_to(ROOT)): sha256(path)
+            input_label(path): sha256(path)
             for path in (
                 DATA / "config.json",
                 ANALYSIS / "behavior_confirmation_v58" / "autoregressive_summary.csv",
@@ -1784,15 +1789,31 @@ ul{padding-left:22px}.small{font-size:.86rem;color:var(--muted)}a{color:var(--bl
     return manifest
 
 
+def input_label(path: Path) -> str:
+    """Keep input hashes usable when run artifacts live outside the checkout."""
+    path = path.resolve()
+    for label, parent in (("analysis", ANALYSIS), ("run", DATA), ("source", ROOT)):
+        if path.is_relative_to(parent.resolve()):
+            return label + "/" + path.relative_to(parent.resolve()).as_posix()
+    raise ValueError(f"Input is outside the configured report roots: {path}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--run-root", type=Path, default=DATA,
+                        help="Completed v58 run containing config.json, manifest.json, and tables/")
+    parser.add_argument("--analysis-root", type=Path,
+                        help="Supplemental analysis directory; defaults to <run-root>/analysis")
+    parser.add_argument("--asset-dir", type=Path,
+                        help="Figure directory; defaults next to the output report")
     parser.add_argument(
         "--output",
         type=Path,
         default=REPORT_DIR / "NiaH_Synthetic_report.html",
     )
     args = parser.parse_args()
-    manifest = build_report(args.output.resolve())
+    manifest = build_report(args.output.resolve(), run_root=args.run_root,
+                            analysis_root=args.analysis_root, asset_dir=args.asset_dir)
     print(json.dumps(manifest, ensure_ascii=False, indent=2))
 
 

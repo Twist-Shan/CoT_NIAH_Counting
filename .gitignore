@@ -47,3 +47,10 @@ realistic/data/haystacks/paul_graham_full/
 .DS_Store
 Thumbs.db
 .preparation-marker
+# Generated figure exports require a separate anonymity review before release.
+figures/**/*.pdf
+figures/**/*.png
+figures/**/*.svg
+figures/**/*.csv
+figures/**/plot_data/
+figures/**/data/

@@ -1,5 +1,6 @@
 """Paper figure drafts from existing empirical-law fits; no refitting or filtering."""
 from pathlib import Path
+import argparse
 import base64
 import hashlib
 import json
@@ -14,12 +15,14 @@ import numpy as np
 import pandas as pd
 
 import build_niah_empirical_law_v3_2_report as v32
+import build_niah_all_n_length_comparison as length_comparison
 from build_niah_all_n_length_comparison import load_results, MODE_RULE, MODELS, MODES
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'reports/assets/niah_empirical_paper'
 LONG=ROOT/'reports/assets/niah_empirical_all_n_length'
 SHORT=ROOT/'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
+PREVIEW=ROOT/'reports/NiaH_Empirical-law_paper_preview.html'
 
 
 def save(fig,stem):
@@ -154,17 +157,35 @@ Figure 2 caption:
 <p><strong>适用范围：</strong>图 1 使用 N 的指定函数形式；图 2 为每个 N 单独估计截距。图 2 使用整个长度范围重新拟合，不能当作图 1 原公式的长程验证。</p>
 <h2>建议放入附录</h2><p>12 槽逐模型图、逐 N 拟合诊断、线性与对数的完整比较、冻结短程系数的外推结果、MAE/bias、分段、无截距和交叉项敏感性。</p>
 <p>关于 broad retrieval 和 trace 的解释放入 Discussion；目前的曲线比较尚不能确认对应的因果机制。</p></html>'''
-    (ROOT/'reports/NiaH_Empirical-law_paper_preview.html').write_text(page,encoding='utf-8')
+    PREVIEW.parent.mkdir(parents=True,exist_ok=True)
+    PREVIEW.write_text(page,encoding='utf-8')
 
 
 def main():
+    global OUT, LONG, SHORT, PREVIEW
+    parser=argparse.ArgumentParser(description=__doc__)
+    length_comparison.add_input_arguments(parser)
+    parser.add_argument('--short-tables',type=Path,help='Short-context cell outcomes and selected-law coefficient tables')
+    parser.add_argument('--length-comparison-dir',type=Path,help='Outputs of build_niah_all_n_length_comparison.py')
+    parser.add_argument('--output-dir',type=Path,help='Directory for figure files and build manifest')
+    parser.add_argument('--preview',type=Path,help='HTML preview path; defaults inside a custom output directory')
+    args=parser.parse_args()
+    if args.short_tables is not None:SHORT=args.short_tables.resolve()
+    if args.length_comparison_dir is not None:LONG=args.length_comparison_dir.resolve()
+    if args.output_dir is not None:OUT=args.output_dir.resolve()
+    if args.preview is not None:PREVIEW=args.preview.resolve()
+    elif args.output_dir is not None:PREVIEW=OUT/'preview.html'
+    length_comparison.configure_inputs(linear_dir=args.linear_dir,log_dir=args.log_dir,
+        holdout_metrics=args.holdout_metrics,short_range_metrics=args.short_range_metrics)
     start=time.perf_counter();OUT.mkdir(parents=True,exist_ok=True)
     plt.rcParams.update({'font.family':'DejaVu Sans','font.size':8,'axes.labelsize':8,'xtick.labelsize':7,'ytick.labelsize':7,
                          'pdf.fonttype':42,'ps.fonttype':42,'svg.fonttype':'none','axes.linewidth':.6})
     data,_=load_results();curves=pd.read_csv(LONG/'mode_rule_plotted_predictions.csv.gz')
     source_manifest=json.loads((LONG/'comparison_manifest.json').read_text(encoding='utf-8'))
     for name,digest in source_manifest['input_sha256'].items():
-        assert hashlib.sha256((ROOT/name).read_bytes()).hexdigest()==digest,name
+        source_path=(length_comparison.input_paths()[name]
+                     if source_manifest.get('input_path_format')=='configured-inputs-v1' else ROOT/name)
+        assert hashlib.sha256(source_path.read_bytes()).hexdigest()==digest,name
     assert len(curves)==14000
     count_records=count_figure()
     length_figure(data,curves)
@@ -172,12 +193,14 @@ def main():
     curves.to_csv(OUT/'figure2_plotted_predictions.csv.gz',index=False,compression='gzip')
     data['cell_predictions'].loc[data['cell_predictions'].apply(lambda r:r.length_term==MODE_RULE[r['mode']],axis=1)].to_csv(OUT/'figure2_observed_cells.csv',index=False)
     write_preview(data)
-    inputs=[SHORT/'cell_outcomes.csv.gz',SHORT/'selected_model_coefficients.csv',SHORT/'selected_mode_laws.csv',
-            LONG/'mode_rule_plotted_predictions.csv.gz',LONG/'comparison_summary.csv',LONG/'comparison_manifest.json',Path(__file__)]
+    inputs={f'short/{name}':SHORT/name for name in ('cell_outcomes.csv.gz','selected_model_coefficients.csv','selected_mode_laws.csv')}
+    inputs.update({f'length-comparison/{name}':LONG/name for name in
+                   ('mode_rule_plotted_predictions.csv.gz','comparison_summary.csv','comparison_manifest.json')})
+    inputs['source/build_niah_empirical_paper_figures.py']=Path(__file__)
     manifest=dict(figure1_slots=12,figure1_conditions=len(count_records),figure2_models=2,figure2_modes=2,
         figure2_N_levels=14,figure2_lengths=17,figure2_conditions=952,figure2_curve_points=len(curves),refits=0,
         figure1_spread='interquartile range across model comparison slots',figure2_form=MODE_RULE,
-        input_sha256={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
+        input_sha256={label:hashlib.sha256(p.read_bytes()).hexdigest() for label,p in inputs.items()},
         output_sha256={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in OUT.iterdir() if p.is_file() and p.name not in {'build_manifest.json','validation_manifest.json'}},
         elapsed_seconds=time.perf_counter()-start)
     (OUT/'build_manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')

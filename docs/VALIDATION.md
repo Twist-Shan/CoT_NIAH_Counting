@@ -1,67 +1,80 @@
 # Validation
 
-The following checks were performed on the anonymous source snapshot. These
-results establish the stated software checks, not a rerun of the paper's GPU
-experiments or a confirmation of its numerical results.
+These checks establish software behavior and the explicitly stated report
+regeneration results. They are not a full GPU rerun or an independent
+confirmation of the paper's measurements.
 
-| Check | Result |
+| Check | Observed result |
 |---|---|
-| CPU smoke test | Passed: count parsing, frozen parser and corpus checksums, exact saved/main-preset agreement, trace serialization, SDPA/explicit-attention agreement, causal masking, forward/backward and optimizer step in both modes |
-| Selected realistic regression suite | **166 passed, 2 skipped** |
-| Selected synthetic regression suite | **39 passed** |
-| Registered CLI entry points | All 15 experiment help commands passed; the corpus command verified the included file; Enumeration `print-suite` and the registry listing passed |
-| Local Enumeration Bash orchestration | Eight scripts passed `bash -n`; no GPU execution was performed |
-| Source audit | Python/JSON syntax, registered entry-point files, reader-facing document links, credential/private-path patterns passed |
-| Preparation-time identity scan | No remaining matches for the supplied manuscript's author names, project-associated account names, or identified private login addresses |
-| Original source integrity | All initially inventoried source files retained their original byte hashes in the two source directories |
+| Clean CPU installation | Passed in a newly created Windows AMD64 / Python 3.12.7 virtual environment without system packages; CPU PyTorch followed by `requirements/cpu.txt`; `pip check` reported no broken requirements |
+| CPU smoke | Passed: parser/corpus hashes, saved/main-preset agreement, trace serialization, SDPA/explicit-attention agreement, causal mask, forward/backward and optimizer step in both synthetic modes |
+| Selected realistic tests | **182 passed, 2 skipped** |
+| Selected synthetic tests | **39 passed** |
+| Registered interfaces | All 20 entries checked: 19 help commands plus the included-corpus verification |
+| Final Figure 2 | Rebuilt PDF/SVG/PNG and seven CSVs from explicit external input paths; all seven numerical exports match the original exports with relative/absolute tolerance 1e-12; built-in layout checks passed and PNG inspected |
+| Earlier empirical report figures | Both length-comparison and fitted-law figure builders executed successfully using relocated CSV/JSON inputs |
+| Synthetic integrated report | Rebuilt successfully using an external `--run-root`, output and asset directory |
+| Local Enumeration Bash orchestration | Eight scripts passed `bash -n`; no GPU execution |
+| Source checks | Python/JSON parsing, registered entry files, reader-facing links and credential/private-path scans |
 
-The two skips are explicit: one CUDA-only test and the integration check for the
-original frozen realistic stimulus JSONL, which is not included. That integration
-check still verifies its original checksum and cohort sizes when the artifact
-is restored. It is not counted as passing.
-
-Run the selected original suites with:
+The two skips remain explicit: a CUDA-only test and the check requiring the
+original frozen realistic stimulus JSONL. Neither is counted as passing.
+The restored Qwen layer-diagnostic tests are now included; so are missing-input
+checks for the additional pilot and provenance guards for fresh V3.1 preparation.
+The latter mock the expensive grid auditor to test routing/rejection behavior;
+they do not constitute a newly generated full realistic dataset validation.
 
 ```bash
+python tools/smoke_test.py
 python tools/check_tests.py
+python tools/validate_repo.py --check-manifest
 ```
 
-This command lists the exact test files in its source and isolates the two
-components in separate processes. The complete historical test directories also
-contain artifact-dependent, report-dependent, and old infrastructure tests; the
-counts above apply only to the selected suites.
+`tools/check_tests.py` lists the exact selected test files and runs the two
+components in separate processes. Artifact-dependent and old infrastructure
+tests elsewhere are not included in the stated pass counts.
 
-## Reference CPU environment
+## Observed clean CPU environment
 
-The checks used an existing Python environment on Windows AMD64, not a newly
-installed Linux/CUDA environment:
-
-| Dependency | Observed version |
+| Component | Version |
 |---|---|
 | Python | 3.12.7 |
-| PyTorch | 2.13.0+cpu |
+| PyTorch | 2.14.0+cpu |
 | NumPy | 1.26.4 |
-| pandas | 3.0.3 |
+| pandas | 3.0.6 |
 | SciPy | 1.17.1 |
-| scikit-learn | 1.9.0 |
-| Transformers | 5.13.1 |
-| Plotly | 6.6.0 |
+| scikit-learn | 1.9.1 |
+| statsmodels | 0.15.0 |
+| Matplotlib | 3.11.2 |
+| Transformers | 5.17.0 |
+| Plotly | 7.1.0 |
 | pytest | 9.1.1 |
 
-The original registered GPU requirement pins remain in separate files and were
-not replaced with these CPU versions. A clean dependency installation, real
-checkpoint loading, vLLM inference, full training, intervention runs, and final
-manuscript figure regeneration remain outside this verification.
+The full observed package set is in
+[`cpu-windows-py312.lock.txt`](../requirements/cpu-windows-py312.lock.txt).
+The dependency installation used the declared ranges, then exported this
+resolved lock. It is a tested CPU environment record, not a Linux/CUDA lockfile
+or a claim about GPU model-loading compatibility. The registered inference
+and mechanistic requirement files remain separate.
 
-## Packaging changes and limits
+## Scope of changes and limits
 
-The scientific source layout, model revisions, seeds, parser algorithms, and
-experiment settings were preserved. Snapshot edits remove identifying metadata
-and map private absolute artifact locations to relative locations. The CPU test
-for V5 source immutability now compares file hashes directly, so it also works
-in a downloaded archive without Git history.
+Recovered sources include two Enumeration launchers, the Qwen YaRN-off
+experiment, three technical protocols required by package construction,
+100 figure/analysis/capture helper files, and an editable diagram template.
+Paths and provenance labels were sanitized; paper measurements, selection
+rules and registered model/experiment settings were not replaced with new
+results. Portable CLI options were added for the affected input contracts.
 
-Notebook/account bootstrap code, remote deployment state, cached tensors,
-weights, original logs and Git history were excluded. Local Enumeration
-orchestration required by the source tests was retained and syntax-checked.
-The exact anonymous files are recorded in `MANIFEST.sha256`.
+Figure 2 and report checks consumed local archived inputs solely for validation;
+those inputs and generated exports are not distributed. Other restored figure
+families were not all executed. Model downloads, real GPU inference, training,
+all interventions and full end-to-end paper reproduction remain unverified
+in this packaging environment. Known historical producer gaps are recorded in
+[COMPLETENESS.md](COMPLETENESS.md).
+
+The anonymous preparation includes a separate scan for known manuscript-author
+and account identifiers, credentials and private paths in the release and its
+Git objects. Legitimate third-party attribution is retained. The checksum
+manifest and deterministic ZIP describe the final delivered source snapshot;
+future result uploads and hosting-service metadata require their own review.

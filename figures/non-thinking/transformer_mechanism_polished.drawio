@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile>
+  <diagram id="transformer-mechanism" name="Transformer mechanism">
+    <mxGraphModel dx="2200" dy="1218" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="690" background="#FFFFFF" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="row-high" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=36;fontStyle=1;fontColor=#33332F;align=left;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="High layer" vertex="1">
+          <mxGeometry height="72" width="218" x="34" y="44" as="geometry" />
+        </mxCell>
+        <mxCell id="row-mid" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=36;fontStyle=1;fontColor=#33332F;align=left;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="Mid layer" vertex="1">
+          <mxGeometry height="72" width="218" x="34" y="214" as="geometry" />
+        </mxCell>
+        <mxCell id="row-low" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=36;fontStyle=1;fontColor=#33332F;align=left;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="Low layer" vertex="1">
+          <mxGeometry height="72" width="218" x="34" y="374" as="geometry" />
+        </mxCell>
+        <mxCell id="row-tokens" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=36;fontStyle=1;fontColor=#33332F;align=left;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="Tokens" vertex="1">
+          <mxGeometry height="72" width="218" x="34" y="514" as="geometry" />
+        </mxCell>
+        <mxCell id="row-positions" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=36;fontStyle=1;fontColor=#33332F;align=left;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="Positions" vertex="1">
+          <mxGeometry height="72" width="218" x="34" y="574" as="geometry" />
+        </mxCell>
+        <mxCell id="token-1" parent="1" style="html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=42;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;rounded=1;arcSize=12;strokeColor=#B5B5AC;fillColor=#FAFAF7;strokeWidth=2;" value="&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="64" width="150" x="255" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="low-1" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=40;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;\( h_{\mathcal{T}_1}^{(\ell)} \)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="164" x="248" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="position-1" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;sub style=&quot;vertical-align: baseline;&quot;&gt;\(\mathcal{T}_1\)&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="56" width="157" x="251.5" y="582" as="geometry" />
+        </mxCell>
+        <mxCell id="form-1" edge="1" parent="1" source="token-1" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="low-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieve-branch-1" edge="1" parent="1" source="low-1" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=none;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="token-2" parent="1" style="html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=42;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;rounded=1;arcSize=12;strokeColor=#B5B5AC;fillColor=#FAFAF7;strokeWidth=2;" value="&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="64" width="150" x="485" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="low-2" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=40;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;\( h_{\mathcal{T}_2}^{(\ell)} \)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="164" x="478" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="form-2" edge="1" parent="1" source="token-2" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="low-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieve-branch-2" edge="1" parent="1" source="low-2" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=none;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="560" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="token-3" parent="1" style="html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=42;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;rounded=1;arcSize=12;strokeColor=#B5B5AC;fillColor=#FAFAF7;strokeWidth=2;" value="&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;3&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="64" width="150" x="715" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="low-3" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=40;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;\( h_{\mathcal{T}_3}^{(\ell)} \)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="164" x="708" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="form-3" edge="1" parent="1" source="token-3" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="low-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieve-branch-3" edge="1" parent="1" source="low-3" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=none;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="790" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="token-10" parent="1" style="html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=42;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;rounded=1;arcSize=12;strokeColor=#B5B5AC;fillColor=#FAFAF7;strokeWidth=2;" value="&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;10&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="64" width="150" x="945" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="low-10" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=40;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;\( h_{\mathcal{T}_{10}}^{(\ell)} \)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="164" x="938" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="form-10" edge="1" parent="1" source="token-10" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="low-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieve-branch-10" edge="1" parent="1" source="low-10" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=none;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1020" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ellipsis-0" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#6A6C63;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="⋯" vertex="1">
+          <mxGeometry height="54" width="48" x="421" y="523" as="geometry" />
+        </mxCell>
+        <mxCell id="ellipsis-1" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#6A6C63;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="⋯" vertex="1">
+          <mxGeometry height="54" width="48" x="651" y="523" as="geometry" />
+        </mxCell>
+        <mxCell id="ellipsis-2" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#6A6C63;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="⋯" vertex="1">
+          <mxGeometry height="54" width="48" x="881" y="523" as="geometry" />
+        </mxCell>
+        <mxCell id="ellipsis-3" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#6A6C63;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="⋯" vertex="1">
+          <mxGeometry height="54" width="48" x="1136" y="523" as="geometry" />
+        </mxCell>
+        <mxCell id="answer-token" parent="1" style="html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;rounded=0;arcSize=12;strokeColor=#159CC6;fillColor=#FFFFFF;strokeWidth=2.5;" value="&amp;lt;Ans&amp;gt;" vertex="1">
+          <mxGeometry height="64" width="160" x="1220" y="518" as="geometry" />
+        </mxCell>
+        <mxCell id="position-T" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;T&lt;/i&gt;" vertex="1">
+          <mxGeometry height="56" width="160" x="1220" y="582" as="geometry" />
+        </mxCell>
+        <mxCell id="answer-low" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=40;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;\( h_T^{(\ell)} \)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="1220" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="answer-mid" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=40;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;\( h_T^{(\ell')} \)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="1220" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="answer-high" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=40;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;i&gt;\( h_T^{(\ell'')} \)&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="160" x="1220" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="total" parent="1" style="html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;rounded=1;arcSize=12;strokeColor=#B5B5AC;fillColor=#FFFFFF;strokeWidth=2;" value="Total: 8" vertex="1">
+          <mxGeometry height="64" width="200" x="1437" y="48" as="geometry" />
+        </mxCell>
+        <mxCell id="form-answer" edge="1" parent="1" source="answer-token" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="answer-low">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="query-upward" edge="1" parent="1" source="answer-low" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="answer-mid">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieval-path" edge="1" parent="1" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0;entryY=0.5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="answer-mid">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="250" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="consolidation" edge="1" parent="1" source="answer-mid" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=0.5;exitY=0;entryX=0.5;entryY=1;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="answer-high">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="readout" edge="1" parent="1" style="edgeStyle=none;rounded=1;html=1;strokeColor=#C77A53;strokeWidth=3.75;startArrow=none;endArrow=classic;endFill=1;endSize=12;exitX=1;exitY=0.5;entryX=0;entryY=0.5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;exitPerimeter=0;entryPerimeter=0;" target="total">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1357" y="80" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="form-label" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=34;fontStyle=0;fontColor=#0072B2;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="Form" vertex="1">
+          <mxGeometry height="44" width="150" x="610" y="454" as="geometry" />
+        </mxCell>
+        <mxCell id="retrieve-label" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=34;fontStyle=0;fontColor=#0072B2;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="Retrieve" vertex="1">
+          <mxGeometry height="48" width="240" x="565" y="188" as="geometry" />
+        </mxCell>
+        <mxCell id="consolidate-label" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=34;fontStyle=0;fontColor=#0072B2;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="Consolidate" vertex="1">
+          <mxGeometry height="46" width="230" x="1050" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="XbEThH6K2D68lSNjHB_t-1" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;sub style=&quot;vertical-align: baseline;&quot;&gt;\(\mathcal{T}_2\)&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="56" width="157" x="481.5" y="582" as="geometry" />
+        </mxCell>
+        <mxCell id="XbEThH6K2D68lSNjHB_t-2" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;sub style=&quot;vertical-align: baseline;&quot;&gt;\(\mathcal{T}_3\)&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="56" width="157" x="711.5" y="582" as="geometry" />
+        </mxCell>
+        <mxCell id="XbEThH6K2D68lSNjHB_t-4" parent="1" style="text;html=1;whiteSpace=wrap;fontFamily=Times New Roman;fontSize=38;fontStyle=0;fontColor=#33332F;align=center;verticalAlign=middle;spacing=0;strokeColor=none;fillColor=none;overflow=visible;" value="&lt;sub style=&quot;vertical-align: baseline;&quot;&gt;\(\mathcal{T}_{10}\)&lt;/sub&gt;" vertex="1">
+          <mxGeometry height="56" width="157" x="941.5" y="582" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

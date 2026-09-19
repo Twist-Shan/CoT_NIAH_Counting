@@ -2,6 +2,7 @@ numpy>=1.26,<2
 scipy>=1.11,<2
 pandas>=2.2,<4
 scikit-learn>=1.4,<2
+statsmodels>=0.14,<1
 matplotlib>=3.8
 plotly>=5.20
 seaborn>=0.13

@@ -1,5 +1,6 @@
 """One figure per model: shared linear/log length fits across all N."""
 from pathlib import Path
+import argparse
 import json
 import time
 import hashlib
@@ -27,6 +28,34 @@ MODES=('direct','native_thinking')
 MODE_RULE={'direct':'L_k','native_thinking':'logL'}
 HOLDOUT=ANALYSIS/'v3_3_regression_scan/tables/n_fixed_shared_length_metrics.csv'
 SHORT_RANGE=ROOT/'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_n_fixed_shared_length_20260909/tables/metrics.csv'
+
+
+def add_input_arguments(parser):
+    parser.add_argument('--linear-dir', type=Path, help='Saved L_k fit directory')
+    parser.add_argument('--log-dir', type=Path, help='Saved logL fit directory')
+    parser.add_argument('--holdout-metrics', type=Path, help='Frozen-short-fit long-context metric CSV')
+    parser.add_argument('--short-range-metrics', type=Path, help='Short-context shared-length metric CSV')
+
+
+def configure_inputs(*, linear_dir=None, log_dir=None, holdout_metrics=None,
+                     short_range_metrics=None, output_dir=None):
+    global FOLDERS, HOLDOUT, SHORT_RANGE, ASSETS
+    FOLDERS = {'L_k': Path(linear_dir).resolve() if linear_dir is not None else FOLDERS['L_k'],
+               'logL': Path(log_dir).resolve() if log_dir is not None else FOLDERS['logL']}
+    if holdout_metrics is not None:
+        HOLDOUT = Path(holdout_metrics).resolve()
+    if short_range_metrics is not None:
+        SHORT_RANGE = Path(short_range_metrics).resolve()
+    if output_dir is not None:
+        ASSETS = Path(output_dir).resolve()
+
+
+def input_paths():
+    paths = {f'{term}/{name}': folder / name for term, folder in FOLDERS.items()
+             for name in ('manifest.json', 'metrics.csv', 'coefficients.csv',
+                          'cell_predictions.csv', 'per_N_metrics.csv')}
+    paths.update(holdout_metrics=HOLDOUT, short_range_metrics=SHORT_RANGE)
+    return paths
 
 
 def image_uri(path):
@@ -279,6 +308,13 @@ def build_section():
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    add_input_arguments(parser)
+    parser.add_argument('--output-dir', type=Path, help='Directory for comparison tables, figures, and manifest')
+    args = parser.parse_args()
+    configure_inputs(linear_dir=args.linear_dir, log_dir=args.log_dir,
+                     holdout_metrics=args.holdout_metrics, short_range_metrics=args.short_range_metrics,
+                     output_dir=args.output_dir)
     start=time.perf_counter();ASSETS.mkdir(parents=True,exist_ok=True)
     data,manifests=load_results();compare=comparison_rows(data['metrics'])
     audit=evaluate_mode_rule(data)
@@ -292,8 +328,7 @@ def main():
     for model in MODELS:rule_plotted.extend(draw_mode_rule(model,data))
     pd.DataFrame(rule_plotted).to_csv(ASSETS/'mode_rule_plotted_predictions.csv.gz',index=False,compression='gzip')
     for name,frame in audit.items():frame.to_csv(ASSETS/f'mode_rule_{name}.csv',index=False)
-    inputs=[p/name for p in FOLDERS.values() for name in ('manifest.json','metrics.csv','coefficients.csv','cell_predictions.csv','per_N_metrics.csv')]
-    inputs.extend([HOLDOUT,SHORT_RANGE])
+    inputs=input_paths()
     selected=audit['schemes'].loc[audit['schemes'].is_requested].iloc[0]
     summary=dict(common_mode_form=MODE_RULE,mean_CV_log_loss=float(selected.mean_CV_log_loss),
         group_best_CV_log_loss=float(selected.group_best_CV_log_loss),
@@ -303,7 +338,8 @@ def main():
         refits=0,bootstrap=0)
     (ASSETS/'comparison_manifest.json').write_text(json.dumps(dict(fits=8,requests=28560,unique_conditions=952,
         figures=4,comparison_figures=2,mode_rule_figures=2,mode_rule=summary,
-        input_sha256={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs},
+        input_path_format='configured-inputs-v1',
+        input_sha256={label:hashlib.sha256(p.read_bytes()).hexdigest() for label,p in inputs.items()},
         elapsed_seconds=time.perf_counter()-start),indent=2),encoding='utf-8')
     print(compare.to_string(index=False))
     print(audit['schemes'].to_string(index=False))

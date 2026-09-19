@@ -10,7 +10,9 @@ three requirement files together is not a supported setup.
 python -m venv .venv
 # Linux/macOS: source .venv/bin/activate
 # Windows PowerShell: .\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements/cpu.txt
+python -m pip check
 python tools/smoke_test.py
 python tools/check_tests.py
 ```
@@ -20,6 +22,13 @@ For a dedicated synthetic training environment, use
 machine's CUDA version. The original source requirement files use version
 ranges; they are not a complete lockfile. The CPU verification environment is
 reported in [VALIDATION.md](VALIDATION.md).
+
+A fresh installation of this CPU route was verified. For the exact observed
+Windows/Python 3.12 package set, use
+`requirements/cpu-windows-py312.lock.txt` after installing its matching CPU
+PyTorch wheel. These versions are not substituted for the registered GPU
+environments. `statsmodels` is included because the empirical fit renderer
+actually imports it.
 
 ## Pretrained-model mechanistic experiments
 

@@ -5,6 +5,13 @@ inside its own component. A relative output such as `runs/paper` is therefore
 inside `realistic/` or `synthetic/`. Use absolute paths for externally stored
 inputs. `python run.py --dry-run ...` prints the resolved command without running it.
 
+Use [WORKFLOWS.md](WORKFLOWS.md) for ordered producer/consumer commands,
+the fresh-input preparation route, the Qwen YaRN-off supplement and final
+figure inputs. [The figure map](../figures/README.md) identifies the actual
+final plotting sources. Missing result files are expected in this code release;
+the separately documented [historical source gaps](COMPLETENESS.md) are not
+claimed to be resolved by that packaging choice.
+
 ## Synthetic experiment (Section 5 / Appendix G)
 
 ```bash
@@ -99,6 +106,10 @@ environment variables. Set them for the current checkout before execution;
 the repository does not include a remote account or cluster submission setup.
 
 ## Additional tasks (Appendix H)
+
+The final task-local selection and Broad-scope amendments are listed in
+[WORKFLOWS.md](WORKFLOWS.md#additional-tasks-appendix-h). The following two
+registry entries are the historical pilot, not the complete Appendix H route.
 
 ```bash
 python run.py additional-freeze --help

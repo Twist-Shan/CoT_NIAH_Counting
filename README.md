@@ -4,7 +4,9 @@ Code repository for the paper **Targeted Retrieval, Compact Representations: How
 
 This repository brings together the synthetic training experiments and realistic language-model experiments for studying counting in long contexts. It includes paired Thinking/Non-thinking evaluations, retrieval-head analysis, count-representation analysis, causal interventions, frozen experimental configurations, tests, and code for generating figures and reports. Tiny Shakespeare and small input specifications are included; pretrained weights and generated results are not tracked.
 
-**Start here:** [Installation and quick start](#installation-and-quick-start) · [Reproduction guide](docs/REPRODUCING.md) · [Dataset specification](docs/DATA.md) · [Validation record](docs/VALIDATION.md)
+**Start here:** [Installation and quick start](#installation-and-quick-start) · [Execution workflows](docs/WORKFLOWS.md) · [Paper figure sources](figures/README.md) · [Dataset specification](docs/DATA.md) · [Validation record](docs/VALIDATION.md)
+
+This is a code release: data construction, experiment execution, analysis and figure sources are provided, while large generated inputs and results remain local. The [source coverage record](docs/COMPLETENESS.md) distinguishes recovered paper code from unresolved dependencies in older auxiliary report/pilot workflows.
 
 ## Research problem
 
@@ -28,6 +30,7 @@ CoT_NIAH_Counting/
 ├── requirements/                    CPU, synthetic, and GPU environments
 ├── docs/                            Reproduction, data, paper map, validation
 ├── tools/                           Smoke tests, source audit, ZIP packaging
+├── figures/                         Final figure sources and paper-asset map
 ├── synthetic/
 │   ├── src/synthetic_counting_v58/   Reported synthetic experiment
 │   ├── src/synthetic_counting_v20/   Shared data, model, training, analysis
@@ -50,7 +53,7 @@ The two subprojects retain their original import layout and execution directorie
 
 ## Installation and quick start
 
-Use Python **3.10 or later**. A CPU is sufficient for the smoke test, selected regression tests, and command-line checks. Full synthetic training and pretrained-model experiments require an appropriate GPU environment; see [environment setup](docs/ENVIRONMENT.md).
+Use Python **3.12** for the verified CPU setup. A CPU is sufficient for the smoke test, selected regression tests, and command-line checks. Full synthetic training and pretrained-model experiments require an appropriate GPU environment; see [environment setup](docs/ENVIRONMENT.md).
 
 Download or clone this repository, then open a terminal in its root directory. Create and activate a virtual environment:
 
@@ -63,7 +66,9 @@ On Linux/macOS, activate it with `source .venv/bin/activate`. In PowerShell, use
 Install dependencies and validate the local source:
 
 ```sh
-python -m pip install -r requirements.txt
+python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r requirements/cpu.txt
+python -m pip check
 python tools/smoke_test.py
 python tools/check_tests.py
 python tools/validate_repo.py

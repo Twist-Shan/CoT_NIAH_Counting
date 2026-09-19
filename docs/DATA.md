@@ -38,6 +38,18 @@ the original frozen V3.1 data, call `validate_frozen_dataset` with
 the anonymous labels. The validator checks the data bytes and audit metadata
 before writing that source record.
 
+For **fresh replication**, generate a new grid with the registered tokenizer
+and run `prepare_realistic_niah_v3_1.py --fresh-dataset` as shown in
+[WORKFLOWS.md](WORKFLOWS.md). It reruns the registered content/grid audit and
+records the new SHA256 under a fresh-replication identity. The original-input
+validator and its fixed checksums are unchanged. A different corpus can
+produce different numerical results even under the same experimental protocol.
+
+For **exact-input reproduction**, the original frozen files must be supplied
+and match the retained checksums. The anonymous dataset label is a provenance
+placeholder, not a download endpoint. Exact historical input recovery is not
+a requirement for using the released code to run a fresh experiment.
+
 ## Synthetic construction
 
 The supplied text makes the basic synthetic workflow independent of a corpus

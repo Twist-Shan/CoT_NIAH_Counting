@@ -14,7 +14,9 @@ refer to that manuscript. Paths are relative to the repository root.
 | Section 5; Figure 7; Appendix G.1–G.2 | `synthetic/src/synthetic_counting_v58/`; shared kernels in `synthetic/src/synthetic_counting_v20/`; `synthetic-train` | `synthetic/configs/paper_v58_saved_config.json`; four layers, eight heads, width 512; 256 characters, counts 1–10, seed 1234, 10,000 steps |
 | Appendix G.3–G.4, geometry/causal/dynamics | `synthetic/scripts/run_v58_alignment_supplement.py`, `run_v58_commit_query.py`, `run_v58_native_continuation.py`, `run_v58_top1to8_aligned.py`, `export_v58_geometry_cloud.py`; `synthetic/src/synthetic_counting_v20/` analysis modules | Trained checkpoints, saved manifests, and outputs from preceding stages; confirmation and control policies retained in v58 modules/scripts |
 | Appendix H, kth retrieval and category count | `realistic/additional_experiments/protocol.py`, `kth_retrieval.py`, `category_full.py`, `category_target_broad.py`, `native_broad_full_span.py`, `local_selection.py`, `task_scoring.py` | Task-specific frozen cases, model outputs, head banks, and source-basis inputs |
-| Figure/report preparation | `realistic/scripts/build_niah_empirical_front_figures.py`, `build_niah_empirical_paper_figures.py`, `build_v5_native_thinking_report_final.py`, `build_realistic_niah_v6_enumeration_report.py`; `synthetic/scripts/build_v58_synthetic_report.py` | Completed-run tables/caches. These builders are not evidence that the final manuscript panels were regenerated during repository preparation. |
+| Final Figure 2; Qwen YaRN-off supplement | `realistic/scripts/qwen_yarn_off/full_run.py`, `summarize.py`; `figures/empirical_law_1x4/build_figure.py`; registry `qwen-yarn-off`, `qwen-yarn-off-summary`, `paper-figure2` | Explicit short/long request tables and audited YaRN-off workers; observed statistics, not fitted empirical-law curves |
+| Final figure sources | `figures/`; [45-asset source map](../figures/README.md), `figures/paper_assets.json`, `figures/input_path_catalog.json` | Recovered final display sources and shared helpers; only the final Figure 2 pipeline was executed during this review |
+| Earlier report/figure preparation | `realistic/scripts/build_niah_empirical_front_figures.py`, `build_niah_empirical_paper_figures.py`, `build_v5_native_thinking_report_final.py`, `build_realistic_niah_v6_enumeration_report.py`; `synthetic/scripts/build_v58_synthetic_report.py` | Historical report variants consume completed-run tables/caches; their inclusion is not evidence of final manuscript regeneration |
 
 The paper compares broad retrieval against successive targeted retrieval. The
 score implementations, model revisions, parser algorithms, seeds, and statistical
@@ -32,3 +34,6 @@ account setup, caches, and Git history are excluded from the review workflow.
 The file checksum manifest identifies the exact anonymous source snapshot.
 The private preparation audit, kept outside this repository, records which
 source files were copied and which identifying metadata was changed.
+
+See [WORKFLOWS.md](WORKFLOWS.md) for execution order and
+[COMPLETENESS.md](COMPLETENESS.md) for the bounded source-coverage assessment.

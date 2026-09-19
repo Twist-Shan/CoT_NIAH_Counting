@@ -41,7 +41,7 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help=(
-            "Parent NIAH_repo_and_local_runs directory. Defaults to the parent "
+            "Parent directory containing counting-feature run folders. Defaults to the parent "
             "of the repository root."
         ),
     )

@@ -57,6 +57,8 @@ def prepare(
     expected_commit: str | None = None,
     *,
     require_source_revision: bool = False,
+    fresh_dataset: bool = False,
+    cache_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     run_root = run_root.resolve()
     repo_root = repo_root.resolve()
@@ -68,9 +70,14 @@ def prepare(
     for path in (stimuli_path, manifest_path, audit_path):
         if not path.is_file() or path.stat().st_size == 0:
             raise FileNotFoundError(f"Missing V3.1 dataset file: {path}")
-    dataset_integrity = validate_frozen_dataset(
-        dataset, require_source_revision=require_source_revision
-    )
+    if fresh_dataset:
+        if require_source_revision:
+            raise ValueError("A fresh dataset cannot claim the historical source revision")
+        dataset_integrity = validate_fresh_dataset(dataset, cache_dir=cache_dir)
+    else:
+        dataset_integrity = validate_frozen_dataset(
+            dataset, require_source_revision=require_source_revision
+        )
     dirty = _git(repo_root, "status", "--short")
     if dirty:
         raise RuntimeError("Formal V3.1 preparation requires a clean worktree")
@@ -141,6 +148,7 @@ def prepare(
         },
         "mount": _mount_snapshot(run_root),
         "dataset": {
+            "input_mode": "fresh-replication" if fresh_dataset else "historical-exact-input",
             "stimuli": EXPECTED_STIMULI,
             "dataset_id": dataset_integrity["dataset_id"],
             "revision": dataset_integrity["revision"],
@@ -170,12 +178,36 @@ def prepare(
     return audit
 
 
+def validate_fresh_dataset(dataset: Path, *, cache_dir: str | Path | None = None) -> dict[str, Any]:
+    """Re-audit regenerated inputs under the unchanged registered protocol.
+
+    This separate opt-in route records new hashes. The historical validator
+    and its expected hashes remain unchanged.
+    """
+    from realistic_niah_v3_1.stimuli import audit_v31_grid
+
+    report = audit_v31_grid(stimuli_path=dataset / "stimuli.jsonl",
+                            manifest_path=dataset / "manifest.json",
+                            cache_dir=cache_dir, require_huggingface_tokenizer=True)
+    saved = json.loads((dataset / "audit_report.json").read_text(encoding="utf-8"))
+    digest = _sha256(dataset / "stimuli.jsonl")
+    for audit in (report, saved):
+        if (audit.get("passed") is not True or audit.get("protocol_version") != PROTOCOL_VERSION
+                or audit.get("rows_checked") != EXPECTED_STIMULI
+                or audit.get("stimuli_sha256") != digest):
+            raise RuntimeError("Regenerated V3.1 dataset failed the registered grid/content audit")
+    return {"dataset_id": "fresh-replication/realistic-niah-v3-1", "revision": digest}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Prepare a frozen V3.1 run.")
     parser.add_argument("--run-root", required=True)
     parser.add_argument("--repo-root", default=".")
     parser.add_argument("--expected-commit")
     parser.add_argument("--require-source-revision", action="store_true")
+    parser.add_argument("--fresh-dataset", action="store_true",
+                        help="Re-audit newly generated inputs and record new hashes instead of claiming historical byte identity.")
+    parser.add_argument("--cache-dir", help="Canonical tokenizer cache for a fresh-input audit.")
     args = parser.parse_args()
     print(
         json.dumps(
@@ -184,6 +216,8 @@ def main() -> None:
                 Path(args.repo_root),
                 args.expected_commit,
                 require_source_revision=args.require_source_revision,
+                fresh_dataset=args.fresh_dataset,
+                cache_dir=args.cache_dir,
             ),
             ensure_ascii=False,
             indent=2,

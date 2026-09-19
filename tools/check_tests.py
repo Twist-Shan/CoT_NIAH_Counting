@@ -18,10 +18,13 @@ SUITES = {
         "tests/test_enumeration_fresh_read_audit.py",
         "tests/test_enumeration_fresh_update_audit.py",
         "tests/test_enumeration_update_n10.py",
+        "tests/test_enumeration_qwen_layer_diagnostic.py",
+        "tests/test_release_preparation.py",
         "additional_experiments/test_category_trace_parser.py",
         "additional_experiments/test_kth_retrieval.py",
         "additional_experiments/test_task_scoring.py",
         "additional_experiments/test_protocol.py",
+        "additional_experiments/test_freeze_inputs.py",
     ],
     "synthetic": [
         "tests/test_synthetic_counting_v58.py",

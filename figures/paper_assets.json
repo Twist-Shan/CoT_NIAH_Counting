@@ -1,0 +1,371 @@
+{
+  "scope": "45 PDF assets referenced by the local manuscript sources. This is a source map, not a claim that all upstream GPU stages were rerun.",
+  "assets": [
+    {
+      "manuscript_asset": "figures/empirical_accuracy_1x4.pdf",
+      "reference_asset_sha256": "0fd95f91a3e688df93a0e5c6ad956c66c149253853127acd89d9921953ccacce",
+      "builder": "figures/empirical_law_1x4/build_figure.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "executed on archived measurements; CSVs match at 1e-12"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_broad_retrieval.pdf",
+      "reference_asset_sha256": "cb972003c9a1d3554fdf9c9ad667cf8c13b68544a25d0d8cc565ee8badb9a53e",
+      "builder": "figures/nonthinking_retrieval_horizontal_20260910/build_figure.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_form_retrieve_consolidate.pdf",
+      "reference_asset_sha256": "88041362b305f64fb32e35ab5a7bae3a36375ac012c29a08d45857961d972df0",
+      "builder": "figures/one_based_layer_head_indices_20260911/build_main_figures.py",
+      "arguments": [
+        "nonthinking_main"
+      ],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/native_targeted_retrieval.pdf",
+      "reference_asset_sha256": "0ccbdf5ec70af67bc0b03631af0160f70c237abdf1418f6d5b28a04dc6ce6aac",
+      "builder": "figures/cot-reasoning/attention/build_figure.py",
+      "arguments": [],
+      "source_evidence": "manuscript name and builder inspection; final PDF byte match not established",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/native_retrieve_encode_count_loop.pdf",
+      "reference_asset_sha256": "42510dc4756fc9166755bbd92d1c1a2d2581bfbae6adac3f718b6154ab1248ea",
+      "builder": "figures/cot-reasoning/build_figure.py",
+      "arguments": [],
+      "source_evidence": "manuscript name and builder inspection; final PDF byte match not established",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_section.pdf",
+      "reference_asset_sha256": "058a383072f45787c7ec066425cbe92872bbbb9b813a2a634fd9b1d2379ab8fe",
+      "builder": "figures/synthetic_training_dynamics_font_revision_20260911/build_figure.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/additional_tasks/01_behavior.pdf",
+      "reference_asset_sha256": "4d274ae65fa468af03645e6d89be79330a522077b0c9f4e57dec0b807aa773ff",
+      "builder": "figures/additional_tasks_aurora/build_figures.py",
+      "arguments": [],
+      "source_evidence": "manuscript name and builder inspection; final PDF byte match not established",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/additional_tasks/02_head_scores.pdf",
+      "reference_asset_sha256": "3d403a6f195c4bc48a42dee2e02015bb2c04c353d7982571fbe57af94de1e868",
+      "builder": "figures/one_based_layer_head_indices_20260911/build_figures.py",
+      "arguments": [
+        "additional"
+      ],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/additional_tasks/03_ablation.pdf",
+      "reference_asset_sha256": "ae8dbc3587d1517fd8bae997e33d2c4a1c18f601c3ae18697b0d4ddef7ff993a",
+      "builder": "figures/additional_tasks_aurora/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/empirical_appendix/empirical_relative_noise.pdf",
+      "reference_asset_sha256": "964661acf2b2580dcda8d580901c0f2b957bec612fa65c8e5edec047dfaf43c6",
+      "builder": "figures/nonthinking_relative_noise_20260919/build.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/empirical_appendix/empirical_median_fits.pdf",
+      "reference_asset_sha256": "6fc4e10fa8216ab3c713220cc59d920c8058ca4416004615adc8be9155c1c56f",
+      "builder": "figures/empirical_appendix_revision_20260915/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/empirical_appendix/empirical_accuracy_12models.pdf",
+      "reference_asset_sha256": "f5a1bb7c46b724599f712ab9851a2d982cca2519ccec9771bb66a0213bba4942",
+      "builder": "figures/empirical_law_12models_4x3_20260919/build_figure.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/empirical_appendix/empirical_qwen_all_counts.pdf",
+      "reference_asset_sha256": "3aa25fd051825bb05f8589fd2bdc648b0562402a7d94367afac39452109ae4ad",
+      "builder": "figures/empirical_appendix_revision_20260915/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/empirical_appendix/empirical_gemma_all_counts.pdf",
+      "reference_asset_sha256": "2e3c548d1995db5570c16001bb134ff1604fe1935ee356b2a8fc5b80a93a38c5",
+      "builder": "figures/empirical_appendix_revision_20260915/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/empirical_appendix/empirical_length_candidates.pdf",
+      "reference_asset_sha256": "1ea53e564b0ee0649b3468d6a964222ed6d1371cb06bed72b5e7376b2bdab588",
+      "builder": "figures/empirical_appendix_revision_20260915/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/cot_appendix/cot_full_head_scores.pdf",
+      "reference_asset_sha256": "037abe669c270b7bbe854aea3dcf2aed7378032258f95e15d88347c34532f483",
+      "builder": "figures/enumeration_thinking_style_20260917/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/cot_appendix/cot_count_readouts.pdf",
+      "reference_asset_sha256": "73aac9866da03a679ef76ac01351434e69aafa40088248bb5739c31d4d6fc2b8",
+      "builder": "figures/thinking_appendix_style_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/cot_appendix/cot_count_pca.pdf",
+      "reference_asset_sha256": "f50f1a6ca172cef2a70bca18af503dbba2a456d3400eebd3a96e5c3a9c9d9c95",
+      "builder": "figures/thinking_appendix_style_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/cot_appendix/cot_domain_pca.pdf",
+      "reference_asset_sha256": "a6b8beca3e431754177eee45bc70bf766bfbad1e7d0215f83d1dcc7634e60c85",
+      "builder": "figures/thinking_appendix_style_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/cot_appendix/cot_current_bank_dose.pdf",
+      "reference_asset_sha256": "6d5e6dfa115c9ae8e2674d974f833c60b02f853f4166b9d9a3470b01d744c2b4",
+      "builder": "figures/thinking_appendix_style_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/cot_appendix/cot_progress_controls.pdf",
+      "reference_asset_sha256": "b967ba85ba10295d8455318a8504fe7807b0a1aa0e3d72031d164ea5db8ab7b2",
+      "builder": "figures/thinking_update_concision_20260915/build_scope_figure.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/cot_appendix/cot_answer_readout_controls.pdf",
+      "reference_asset_sha256": "177f13622f90ff3616ccb59f079ff4d953d70d8fd845bbc983ebcd98fb9142ba",
+      "builder": "figures/thinking_appendix_style_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_full_head_scores.pdf",
+      "reference_asset_sha256": "204f0af5ce54de2dd81a9db47478cef11937f1c00349a81f2107aa6d0cc07d6e",
+      "builder": "figures/nonthinking_headmap_thinking_style_20260917/build_figure.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_count_readouts.pdf",
+      "reference_asset_sha256": "a041005ad89909b5c1b92f0d4e0e36f06582c3b997cc603f2a3dac8c762258ff",
+      "builder": "figures/nonthinking_ncc_selection_20260913/build_readouts.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_cue_domain_pca.pdf",
+      "reference_asset_sha256": "44cdd85bb5dd590f559062d10b3c119b56b3e65085ac65751ab481b49c4f0a35",
+      "builder": "figures/nonthinking_appendix_revision_20260913/build_geometry.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_head_ablation.pdf",
+      "reference_asset_sha256": "a257940ec8c83f9ce95518e3662005e1f85626ff066fceb45dd3cc87ccaf6807",
+      "builder": "figures/nonthinking_appendix_effects_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_answer_patching.pdf",
+      "reference_asset_sha256": "5e0c3a14ed31e393e801dab8b1f99c56b73b544efe85fe0f727e59e9ad7f3e06",
+      "builder": "figures/nonthinking_appendix_layout_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_answer_function.pdf",
+      "reference_asset_sha256": "fd3831f5db0b02b246b6237d504651795d0fa1cdab8e749ebca1760e64d8e152",
+      "builder": "figures/nonthinking_appendix_effects_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_serial_mediation.pdf",
+      "reference_asset_sha256": "675631aa52d265fc13cdce4a4a1dd4e44a873968ba4edec7d039d20396fa3c50",
+      "builder": "figures/nonthinking_appendix_effects_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_qwen_routing.pdf",
+      "reference_asset_sha256": "45bf6983e5af76b25c2c841ddae253ea9ab045607d7afd2b3d0d5468cc52e506",
+      "builder": "figures/nonthinking_appendix_effects_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/nonthinking_appendix/nonthinking_gemma_residual.pdf",
+      "reference_asset_sha256": "d48e152752e7abe0f0f9cc58c0bc167a8cb975180243fb2e8114524c25ac596d",
+      "builder": "figures/nonthinking_appendix_effects_20260913/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/enumeration_bullet/enumeration_head_scores.pdf",
+      "reference_asset_sha256": "95adf68eae526cc03b74c70191b4a9bbaa231cf1827ac55bc2e5f3c1de858460",
+      "builder": "figures/enumeration_default_seed_20260918/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/enumeration_bullet/enumeration_representations.pdf",
+      "reference_asset_sha256": "4acf4031bb9893e28f7f46714f9e2bd93768afd769b3218e8124e828c3dd3d22",
+      "builder": "figures/enumeration_thinking_style_20260917/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/enumeration_bullet/enumeration_pca_bullet.pdf",
+      "reference_asset_sha256": "db747e3d8ebda39c9f15423f0465667e267208537bcc4b548248cd5ee439cf4f",
+      "builder": "figures/enumeration_bullet_only_20260917/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/enumeration_bullet/enumeration_retrieve.pdf",
+      "reference_asset_sha256": "7070fec05aeb3b9c9629c9f85141bd6fff7296d81c1855f729e5c9b90f872178",
+      "builder": "figures/enumeration_default_seed_20260918/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/enumeration_bullet/enumeration_update.pdf",
+      "reference_asset_sha256": "79a60814bc92c02597989651a3f903266628722beed781f00b3acb65bdec15d4",
+      "builder": "figures/enumeration_default_seed_20260918/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/enumeration_bullet/enumeration_readout.pdf",
+      "reference_asset_sha256": "ae8e247116c24bd9302ce4e0125b0a06be293f8750bcecea66b172b8e3d195c1",
+      "builder": "figures/enumeration_default_seed_20260918/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/01_training_and_behavior.pdf",
+      "reference_asset_sha256": "8d33fc9ad669ab738937b0b6e6b3cc103a76a05b650411c00636ea5d2f10bd75",
+      "builder": "figures/synthetic_appendix_evidence_revision_20260908/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/02_retrieval_head_scores.pdf",
+      "reference_asset_sha256": "0182623c55077d5a6309bb64756c2cea564f8cdb30d02b3e8ddb057cac5ad96c",
+      "builder": "figures/one_based_layer_head_indices_20260911/build_figures.py",
+      "arguments": [
+        "head_scores"
+      ],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/02_retrieval_ablation.pdf",
+      "reference_asset_sha256": "e27204f18cec9b9a3744451934e3e8006731dc177de272c4e2f3476e5dab3464",
+      "builder": "figures/synthetic_appendix_evidence_revision_20260908/build_figures.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/03_count_geometry_3d.pdf",
+      "reference_asset_sha256": "f5927f4463ddbff26d3d9ca77ace0a6a40a6f7bd1bbe0932927d3ca07c5fb8f7",
+      "builder": "figures/paper_ncc_unification_20260913/build_synthetic_geometry.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/04_count_readability.pdf",
+      "reference_asset_sha256": "06f6e2036198a110496bc1200672015b1a3af6e1179f2b7827afe11c8e03fe18",
+      "builder": "figures/synthetic_appendix_label_revision_20260908/build_readability.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/05_progress_sources.pdf",
+      "reference_asset_sha256": "ba0b607283f4b45b3e9d122ae5b4a994cd1d65803571f3a341f393d07231bfa8",
+      "builder": "figures/synthetic_appendix_label_revision_20260908/build_sources.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/06_counter_interventions.pdf",
+      "reference_asset_sha256": "4599e4581da4a3f65bf1fb29822ed14c344e4aff638f9dbea16193446597fa73",
+      "builder": "figures/synthetic_appendix_label_revision_20260908/build_counter_triptych.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    },
+    {
+      "manuscript_asset": "figures/synthetic_appendix/08_training_dynamics.pdf",
+      "reference_asset_sha256": "a5d78abebda5e2b8e0d2319c45efefa19d6c8e3ce8be385067ae1d2edbbee090",
+      "builder": "figures/paper_ncc_unification_20260913/build_synthetic_dynamics.py",
+      "arguments": [],
+      "source_evidence": "local output byte match plus builder inspection",
+      "release_validation": "source recovered; not rerun during release review"
+    }
+  ]
+}
