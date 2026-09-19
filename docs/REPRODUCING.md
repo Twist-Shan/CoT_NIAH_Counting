@@ -107,20 +107,20 @@ the repository does not include a remote account or cluster submission setup.
 
 ## Additional tasks (Appendix H)
 
-The final task-local selection and Broad-scope amendments are listed in
-[WORKFLOWS.md](WORKFLOWS.md#additional-tasks-appendix-h). The following two
-registry entries are the historical pilot, not the complete Appendix H route.
+The task-input builders, task-local selection and Broad-scope amendments are
+listed in [WORKFLOWS.md](WORKFLOWS.md#additional-tasks-appendix-h). Start with
+the task-specific input and generation entries:
 
 ```bash
-python run.py additional-freeze --help
-python run.py additional --help
+python run.py additional-kth --help
+python run.py additional-category --help
 ```
 
-The freezer takes `--source` for the original controlled stimuli and writes a
-new `--output`. Task-specific retrieval, category-counting, head selection,
-trace parsing, and scoring implementations live in `additional_experiments/`.
-Some analyses require a previously frozen head bank or representation basis;
-those inputs must be generated before these stages can run.
+Each input builder takes `--freeze-source` for the controlled stimuli and
+writes a new `--frozen` directory. Task-specific retrieval, category-counting,
+head selection, trace parsing and scoring implementations live in
+`additional_experiments/`. Subsequent selection and ablation stages consume
+the audited generations, plans and rankings described in the workflow guide.
 
 ## What constitutes a successful reproduction
 

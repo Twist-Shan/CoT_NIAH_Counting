@@ -8,8 +8,9 @@ confirmation of the paper's measurements.
 |---|---|
 | Clean CPU installation | Passed in a newly created Windows AMD64 / Python 3.12.7 virtual environment without system packages; CPU PyTorch followed by `requirements/cpu.txt`; `pip check` reported no broken requirements |
 | CPU smoke | Passed: parser/corpus hashes, saved/main-preset agreement, trace serialization, SDPA/explicit-attention agreement, causal mask, forward/backward and optimizer step in both synthetic modes |
-| Selected realistic tests | **182 passed, 2 skipped** |
+| Selected realistic tests | **176 passed, 2 skipped** |
 | Selected synthetic tests | **39 passed** |
+| Retained V4.4 report tests | **5 passed** after removing assertions for the excluded integrated report |
 | Registered interfaces | All 20 entries checked: 19 help commands plus the included-corpus verification |
 | Final Figure 2 | Rebuilt PDF/SVG/PNG and seven CSVs from explicit external input paths; all seven numerical exports match the original exports with relative/absolute tolerance 1e-12; built-in layout checks passed and PNG inspected |
 | Earlier empirical report figures | Both length-comparison and fitted-law figure builders executed successfully using relocated CSV/JSON inputs |
@@ -19,14 +20,18 @@ confirmation of the paper's measurements.
 
 The two skips remain explicit: a CUDA-only test and the check requiring the
 original frozen realistic stimulus JSONL. Neither is counted as passing.
-The restored Qwen layer-diagnostic tests are now included; so are missing-input
-checks for the additional pilot and provenance guards for fresh V3.1 preparation.
+The restored Qwen layer-diagnostic tests are included, together with provenance
+guards for fresh V3.1 preparation and the retained additional-task checks.
 The latter mock the expensive grid auditor to test routing/rejection behavior;
 they do not constitute a newly generated full realistic dataset validation.
+The current total is 220 passing checks and two skips, including the five
+retained report tests. Six pilot-only tests from the previous selection were
+removed with their corresponding workflow.
 
 ```bash
 python tools/smoke_test.py
 python tools/check_tests.py
+python -m pytest -q -p no:cacheprovider realistic/tests/test_realistic_niah_v4_4_report.py
 python tools/validate_repo.py --check-manifest
 ```
 
@@ -70,8 +75,8 @@ Figure 2 and report checks consumed local archived inputs solely for validation;
 those inputs and generated exports are not distributed. Other restored figure
 families were not all executed. Model downloads, real GPU inference, training,
 all interventions and full end-to-end paper reproduction remain unverified
-in this packaging environment. Known historical producer gaps are recorded in
-[COMPLETENESS.md](COMPLETENESS.md).
+in this packaging environment. The two excluded auxiliary workflows and the
+retained paper evidence are documented in [COMPLETENESS.md](COMPLETENESS.md).
 
 The anonymous preparation includes a separate scan for known manuscript-author
 and account identifiers, credentials and private paths in the release and its

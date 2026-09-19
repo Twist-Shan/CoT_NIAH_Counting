@@ -6,7 +6,7 @@ This repository brings together the synthetic training experiments and realistic
 
 **Start here:** [Installation and quick start](#installation-and-quick-start) · [Execution workflows](docs/WORKFLOWS.md) · [Paper figure sources](figures/README.md) · [Dataset specification](docs/DATA.md) · [Validation record](docs/VALIDATION.md)
 
-This is a code release: data construction, experiment execution, analysis and figure sources are provided, while large generated inputs and results remain local. The [source coverage record](docs/COMPLETENESS.md) distinguishes recovered paper code from unresolved dependencies in older auxiliary report/pilot workflows.
+This is a code release: data construction, experiment execution, analysis and figure sources are provided, while large generated inputs and results remain local. The [source coverage record](docs/COMPLETENESS.md) documents recovered paper code, excluded auxiliary workflows and the limits of the completed validation.
 
 ## Research problem
 

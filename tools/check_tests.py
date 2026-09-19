@@ -24,7 +24,6 @@ SUITES = {
         "additional_experiments/test_kth_retrieval.py",
         "additional_experiments/test_task_scoring.py",
         "additional_experiments/test_protocol.py",
-        "additional_experiments/test_freeze_inputs.py",
     ],
     "synthetic": [
         "tests/test_synthetic_counting_v58.py",

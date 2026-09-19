@@ -148,21 +148,7 @@ class ProtocolTests(unittest.TestCase):
             p.write_text(json.dumps(c, ensure_ascii=False) + "\n", encoding="utf-8")
             self.assertEqual(read_jsonl(p)[0], c)
 
-    def test_bootstrap_weights_seeds_equally(self):
-        from analyze import interval
-        result = interval({1: [0., 0., 0., 0.], 2: [1.]}, 1000)
-        self.assertEqual(result["mean"], .5)
-        self.assertEqual(result["seeds"], 2)
-        self.assertIsNone(interval({1: [1.]}, 100)["lower"])
 
-    def test_count_centroid_basis_rank_and_orthonormality(self):
-        from analyze import source_basis
-        y = np.repeat([1, 2, 3, 4], 3)
-        x = np.stack([y, y*y, y*y*y, np.ones(len(y))], axis=1).astype(float)
-        center, b = source_basis(x, y)
-        self.assertEqual(b.shape, (4, 3))
-        np.testing.assert_allclose(b.T @ b, np.eye(3), atol=1e-6)
-        self.assertEqual(center.shape, (4,))
 
 
 if __name__ == "__main__":

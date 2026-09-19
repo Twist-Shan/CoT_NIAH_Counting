@@ -203,8 +203,19 @@ which uses the preceding `synthetic_training_dynamics_three-panel` exports.
 
 ## Additional tasks: Appendix H
 
-The final path is task-local selection followed by two explicitly distinct
-Broad-scope amendments. It is not the older `additional-freeze` pilot.
+The final path starts with the task-specific inputs and natural generations,
+then task-local selection followed by two explicitly distinct Broad-scope
+amendments.
+
+```bash
+python run.py additional-kth --freeze-source /absolute/path/to/stimuli.jsonl --frozen runs/paper/additional/kth/frozen
+python run.py additional-category --freeze-source /absolute/path/to/stimuli.jsonl --frozen runs/paper/additional/category/frozen
+```
+
+Use the registered V4.4 stimuli containing count-10 cases for seeds 1234-1263.
+Each builder creates 300 task-specific cases. The seed split is 20 discovery
+and 10 evaluation seeds, as specified in Appendix H. Use each entry's `--help`
+for its model/output arguments, then follow the task-local selection stages.
 
 | Order | Preparation → model stages → analysis |
 |---|---|
@@ -221,11 +232,5 @@ the 20/10 discovery/confirmation seeds, model-specific K grids, minimum-overlap
 random controls and exploratory peak-K qualification. Do not manufacture
 missing audits or replace frozen token sequences with retokenized text.
 
-For the **historical pilot only**, explicit prerequisite paths are now possible:
-
-```bash
-python run.py additional-freeze --source /absolute/path/to/stimuli.jsonl --config additional_experiments/configs/pilot_v1.json --head-membership /absolute/path/to/full_span_topk_membership.csv --native-basis-root /absolute/path/to/native_bases --output runs/pilot/frozen
-```
-
-The basis root must contain `<model>/item_end_discovery_basis.json` and `.npz`.
-Its historical export source remains unresolved; see `COMPLETENESS.md`.
+The earlier PCA transfer pilot is excluded from this release; see
+[COMPLETENESS.md](COMPLETENESS.md) for the manuscript-based scope review.

@@ -7,9 +7,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "build_realistic_niah_v4_4_report.py"
 SOURCE = SCRIPT.read_text(encoding="utf-8")
-INTEGRATED_SOURCE = (
-    ROOT / "scripts" / "build_realistic_niah_v4_4_integrated_report.py"
-).read_text(encoding="utf-8")
 
 
 def _literal_assignment(name: str):
@@ -82,12 +79,6 @@ def test_v4_4_report_moves_complete_span_locator_evidence_to_appendix() -> None:
     assert "不是原始的 <code>y(ranked) − y(control)</code>" in SOURCE
     assert "不支持“first-span locator 是独特必要 circuit”" in SOURCE
     assert "V4.4 endpoint phenotype counts and representatives" not in SOURCE
-    assert '<h3>8.3 Complete-first-span attention phenotype</h3>' not in INTEGRATED_SOURCE
-    assert "ensure_first_locator_appendix" in INTEGRATED_SOURCE
-    assert "base = ensure_first_locator_appendix(base, repo_root)" in INTEGRATED_SOURCE
-    assert "remove_first_locator_body_claims" in INTEGRATED_SOURCE
-    assert "remove_legacy_endpoint_phenotype_table" in INTEGRATED_SOURCE
-    assert "base = remove_legacy_endpoint_phenotype_table(base)" in INTEGRATED_SOURCE
 
 
 def test_v4_4_causal_subsections_state_results_and_inference_limits() -> None:
@@ -107,28 +98,8 @@ def test_v4_4_causal_subsections_state_results_and_inference_limits() -> None:
     assert "multi-layer 没有稳定超过 single-layer" in SOURCE
 
 
-def test_integrated_report_defines_layerwise_map_rotation_without_gauge_overclaim() -> None:
-    assert "build_layerwise_subspace_section" in INTEGRATED_SOURCE
-    assert "5.4C · 实验 A 的跨层扫描" in INTEGRATED_SOURCE
-    assert "5.4D · 实验 B 的跨层扫描" in INTEGRATED_SOURCE
-    assert "A<sub>ℓ</sub>=R<sub>ℓ</sub>S<sub>ℓ</sub>" in INTEGRATED_SOURCE
-    assert "PCA basis 可各自右乘任意正交矩阵" in INTEGRATED_SOURCE
-    assert "T<sub>ℓ</sub>=U<sub>ℓ</sub>A<sub>ℓ</sub>U<sub>ℓ+1</sub><sup>T</sup>" in INTEGRATED_SOURCE
-    assert "不是同一个参数化" in INTEGRATED_SOURCE
-    assert "不是把相关性误写成对 rotation matrix 的直接干预" in INTEGRATED_SOURCE
-    assert "outcome-blind stability rule" in INTEGRATED_SOURCE
-    assert "full_operator_cosine_to_next" in INTEGRATED_SOURCE
-    assert "full_operator_relative_drift_to_next" in INTEGRATED_SOURCE
 
 
-def test_integrated_report_keeps_removal_positions_as_separate_estimands() -> None:
-    assert "5.4C-1 · Needle-end prompt removal" in INTEGRATED_SOURCE
-    assert "5.4C-2 · Answer-query removal" in INTEGRATED_SOURCE
-    assert "candidate damage vs clean" in INTEGRATED_SOURCE
-    assert "orthogonal-control damage vs clean" in INTEGRATED_SOURCE
-    assert "不搜索或优化 control 方向" in INTEGRATED_SOURCE
-    assert "layerwise_answer_query_removal_damage_statistics.csv" in INTEGRATED_SOURCE
-    assert '("layerwise answer-query removal", layerwise_answer_audit)' in INTEGRATED_SOURCE
 
 
 def test_variant_filter_rejects_cross_panel_leakage() -> None:

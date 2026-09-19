@@ -4,7 +4,7 @@ This directory restores numerical analyses, measurement capture helpers and plot
 
 The existing subdirectory names preserve cross-imports and identify historical variants. Paths to the experiment components now use `realistic/` and `synthetic/`; figure cross-imports use `figures/`. Manuscript-copy destinations are redirected to the ignored `runs/paper_figures/` tree. These directory substitutions do not change the numerical procedures.
 
-Use [WORKFLOWS.md](../docs/WORKFLOWS.md) for stage order and [COMPLETENESS.md](../docs/COMPLETENESS.md) for known historical source gaps. The [machine-readable asset map](paper_assets.json) identifies 45 locally referenced manuscript PDF assets, their builder and the strength of the matching evidence. The [input path catalog](input_path_catalog.json) helps locate the tables, caches and selections each builder consumes. It is a static index, not an automatically verified complete producer graph.
+Use [WORKFLOWS.md](../docs/WORKFLOWS.md) for stage order and [COMPLETENESS.md](../docs/COMPLETENESS.md) for release scope and validation limits. The [machine-readable asset map](paper_assets.json) identifies 45 locally referenced manuscript PDF assets, their builder and the strength of the matching evidence. The [input path catalog](input_path_catalog.json) helps locate the tables, caches and selections each builder consumes. It is a static index, not an automatically verified complete producer graph.
 
 ## Portable final Figure 2
 
