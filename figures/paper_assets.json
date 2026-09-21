@@ -364,11 +364,11 @@
     },
     {
       "manuscript_asset": "figures/synthetic_appendix/02_retrieval_ablation.pdf",
-      "reference_asset_sha256": "e27204f18cec9b9a3744451934e3e8006731dc177de272c4e2f3476e5dab3464",
+      "reference_asset_sha256": "d190d246943d83a24cd6ac857c4013e33b18c06fa09e6f4f413d6f263732b035",
       "builder": "figures/synthetic_appendix_evidence_revision_20260908/build_figures.py",
       "arguments": [],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "Rendered from archived measurements with next-needle terminology; figure numbers unchanged and layout checked."
     },
     {
       "manuscript_asset": "figures/synthetic_appendix/03_count_geometry_3d.pdf",
@@ -388,11 +388,11 @@
     },
     {
       "manuscript_asset": "figures/synthetic_appendix/05_progress_sources.pdf",
-      "reference_asset_sha256": "ba0b607283f4b45b3e9d122ae5b4a994cd1d65803571f3a341f393d07231bfa8",
+      "reference_asset_sha256": "2363f9cb8f0c7c59e772b7d1becebf58cc61a2c2199ddade55bf16ddc2a70f5e",
       "builder": "figures/synthetic_appendix_label_revision_20260908/build_sources.py",
       "arguments": [],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "Rendered from archived measurements with next-needle terminology; figure numbers unchanged and layout checked."
     },
     {
       "manuscript_asset": "figures/synthetic_appendix/06_counter_interventions.pdf",
