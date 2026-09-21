@@ -125,12 +125,12 @@ def update():
             helper.curve(axes[1][j],list(range(1,5)),[h['conditional'] for h in hops],color,linestyle=ls,marker=marker)
             rows.extend(dict(model=model,mode='enumeration_bullet',layer_one_based=layer,direction=direction,scope='item_span',metric='conditional_next_step',hop=h['hop'],numerator=h['successes'],denominator=h['conditional_eligible'],horizon_eligible=h['horizon_eligible'],**h['conditional']) for h in hops)
         ax.set(xticks=[0,1,2],xticklabels=['Endpoint','Four-token\ntail','Item span'],xlim=(-.45,2.45),ylim=(-.04,1.19),yticks=[0,.5,1]);ax.yaxis.set_major_formatter(PercentFormatter(1,decimals=0))
-        style.panel(ax,f'{"AB"[j]}. {short} L{layer}: patch scope','Target-successor adoption')
+        style.panel(ax,f'{"AB"[j]}. {short} L{layer}: patch scope','Source-successor adoption')
         ax=axes[1][j];ax.set(xticks=[1,2,3,4],xlim=(.85,4.15),ylim=(-.04,1.08),yticks=[0,.5,1]);ax.yaxis.set_major_formatter(PercentFormatter(1,decimals=0))
         style.panel(ax,f'{"CD"[j]}. {short}: continued prefix','Conditional success','Continuation step')
-    fig.legend([Line2D([],[],marker='o',color=style.INK,ls='None'),Line2D([],[],marker='o',color=style.INK,mfc='white',ls='None')],['Target patch','Self patch'],loc='upper center',bbox_to_anchor=(.535,1),ncol=2,columnspacing=2)
+    fig.legend([Line2D([],[],marker='o',color=style.INK,ls='None'),Line2D([],[],marker='o',color=style.INK,mfc='white',ls='None')],['Source patch','Self patch'],loc='upper center',bbox_to_anchor=(.535,1),ncol=2,columnspacing=2)
     fig.legend([Line2D([],[],color=style.INK,ls=ls,marker=m,ms=4) for ls,m in [('-','o'),('--','D')]],['Forward','Backward'],loc='center',bbox_to_anchor=(.5,.025),ncol=2)
-    save(fig,'enumeration_update',rows,dict(scope_estimand='Target and self adoption displayed separately, as in Thinking',statistics_recomputed=True))
+    save(fig,'enumeration_update',rows,dict(scope_estimand='Source and self adoption displayed separately, as in Thinking',statistics_recomputed=True))
 
 def readout():
     rows=js(PREVIOUS/'data/enumeration_readout.json');fig,axes=two_panels()
@@ -145,7 +145,7 @@ def readout():
     axes[1].set(xticks=[0,1,2],xticklabels=['Original','Prompt\nblank','Trace\nblank'],xlim=(-.4,2.4),ylim=(-.04,1.06),yticks=[0,.5,1])
     for ax in axes:ax.yaxis.set_major_formatter(PercentFormatter(1,decimals=0))
     style.panel(axes[0],'A. Answer-state transfer','Source-count match rate','Layer');style.panel(axes[1],'B. Trace blanking','Exact-count accuracy')
-    model_legend(fig);fig.legend([Line2D([],[],color=style.INK,ls=ls) for ls in ['-','--']],['Target patch','Self patch'],loc='center',bbox_to_anchor=(.5,.025),ncol=2)
+    model_legend(fig);fig.legend([Line2D([],[],color=style.INK,ls=ls) for ls in ['-','--']],['Source patch','Self patch'],loc='center',bbox_to_anchor=(.5,.025),ncol=2)
     save(fig,'enumeration_readout',rows,dict(statistics_recomputed=True))
 
 def pca():
