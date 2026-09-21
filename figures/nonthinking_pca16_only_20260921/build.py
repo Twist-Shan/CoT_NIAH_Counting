@@ -1,4 +1,4 @@
-"""Render aligned readouts and dependent cue/noise figures in the existing style."""
+"""Render Non-thinking readouts, cue/domain geometry and relative noise."""
 from pathlib import Path
 import csv, json, importlib.util, sys, hashlib, argparse
 import numpy as np
@@ -77,7 +77,7 @@ def main():
     geo.OUT=OUT; geo.DATA=OUT/'cue_domain_inputs.csv'; geo.META=OUT/'geometry_inputs.json'; geo.metadata=metadata
     geo.main()
 
-    # Recompute relative noise at the newly selected answer-query layers.
+    # Compute relative noise at the selected answer-query layers.
     noise=OUT/'noise'; noise.mkdir(exist_ok=True)
     verify=module('noise_verifier',ROOT/'realistic/scripts/verify_nonthinking_noise_alternatives.py')
     rng=np.random.default_rng(1234); d=rng.integers(0,20,(10000,20)); c=rng.integers(0,10,(10000,10))

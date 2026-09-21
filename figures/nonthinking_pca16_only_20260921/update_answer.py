@@ -1,7 +1,6 @@
-"""Use the exact historical packed answer-query states for the dimension-only scan.
+"""Analyze final-count readability using packed answer-query states.
 
-The later geometry recapture is retained ONLY for the existing relative-noise
-assay; it must not silently replace the historical classifier inputs.
+Classification and relative noise use separate input sets.
 """
 from pathlib import Path
 import argparse,csv,json,shutil,time,hashlib
@@ -50,7 +49,7 @@ def main():
         print('SELECTED',chosen,flush=True)
     a.write_csv(out/'metrics.csv',metrics);a.write_csv(out/'layer_sweep.csv',sweep)
     shutil.copy2(args.previous/'protocol.json',out/'protocol.json')
-    a.save(out/'audit.json',dict(status='PASS',original_answer_sources=hashes,baseline32_checks=checks,running_index_audit=str(args.previous/'audit.json'),elapsed_seconds=time.perf_counter()-start,scope='Only PCA dimension changes; readout datasets, preprocessing and classifier settings preserved. Relative noise uses its own unchanged recapture dataset.'))
+    a.save(out/'audit.json',dict(status='PASS',original_answer_sources=hashes,baseline32_checks=checks,running_index_audit=str(args.previous/'audit.json'),elapsed_seconds=time.perf_counter()-start,scope='PCA16 count readouts; relative noise uses its specified input set.'))
 
 if __name__=='__main__':
     with threadpool_limits(limits=4): main()

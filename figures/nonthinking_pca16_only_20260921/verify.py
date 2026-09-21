@@ -1,4 +1,4 @@
-"""Verify dimension-only change against historical PCA32 and new PCA16 results."""
+"""Verify selected-layer PCA16 cross-validation and held-out scores."""
 from pathlib import Path
 import csv,json,argparse
 import numpy as np

@@ -1,10 +1,10 @@
-"""Refit Non-thinking running-index readouts with PCA16.
+"""Analyze Non-thinking running-index readouts with PCA16.
 
 Run update_answer.py next for the original packed final-count inputs.
 
 Read immutable cached residual states; fit each transform inside seed-grouped CV.
 Keep the original five seed folds, save layer choices before reading held-out states.
-No LLM inference and no changes to historical captures or intervention experiments.
+The analysis reads cached residual states.
 """
 from pathlib import Path
 import argparse, csv, hashlib, json, time, platform
@@ -73,7 +73,7 @@ def main():
     assert not (out/'audit.json').exists(), 'Do not overwrite completed analysis'
     start=time.perf_counter(); hashes={}; sweeps=[]; selections={}; metrics=[]; predictions=[]; foldlog=[]
     mapping=json.loads(args.folds.read_text(encoding='utf-8'))
-    save(out/'protocol.json',dict(only_change='PCA components 32 -> 16',pca_components=16,whiten=False,running_index='PCA(randomized,20260806) then StandardScaler; NCC no shrinkage; logistic C1/max_iter2000',answer_query='StandardScaler then PCA(auto,442); NCC shrinkage0.1; logistic C1/max_iter4000',fit_seeds=FIT,held_out_seeds=TEST,fold_map=mapping,selection='Maximum pooled out-of-fold NCC balanced accuracy; ties logistic then earlier layer',limitation='Existing held-out inputs are reused; this is a dimension-only update, not an independent replication.'))
+    save(out/'protocol.json',dict(analysis='Non-thinking PCA16 readouts',pca_components=16,whiten=False,running_index='PCA(randomized,20260806) then StandardScaler; NCC no shrinkage; logistic C1/max_iter2000',answer_query='StandardScaler then PCA(auto,442); NCC shrinkage0.1; logistic C1/max_iter4000',fit_seeds=FIT,held_out_seeds=TEST,fold_map=mapping,selection='Maximum pooled out-of-fold NCC balanced accuracy; ties logistic then earlier layer',evaluation='Fitting and held-out seeds are disjoint; layer selection uses fitting seeds only.'))
     for model in MODELS:
         selections[model]={}; cache={}
         for role in ['running_index']:
