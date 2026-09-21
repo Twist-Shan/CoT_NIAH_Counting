@@ -112,7 +112,7 @@ def retrieval():
     fig.subplots_adjust(left=.085,right=.985,bottom=.30,top=.85,wspace=.30)
     for ax,d,color,title,base,limits in [
         (axes[0],nt,NT,'A. Non-thinking: final count',21,(0,40)),
-        (axes[1],t,T,'B. Thinking: next marker',100*86/88,(60,100))]:
+        (axes[1],t,T,'B. Thinking: next needle',100*86/88,(60,100))]:
         ax.fill_between(d.top_k,100*d.control_min,100*d.control_max,color=GRAY,alpha=.2,lw=0)
         ax.plot(d.top_k,100*d.selected,'o-',color=color,ms=4)
         ax.plot(d.top_k,100*d.control_mean,'s--',color=GRAY,ms=3.3)
@@ -218,7 +218,7 @@ def sources():
     a.set_title('A. Source positions',loc='left',fontsize=11,pad=8)
     box(a,(.03,.69),.92,.23,'Prompt:  ... a ... b ... a ...',T,'#EDF7FA')
     box(a,(.03,.34),.92,.23,'Trace:  <Sep> a   <Sep> b',VIOLET,'#F3F1FD')
-    a.text(.97,.02,'Next marker: ?',ha='right',fontsize=10)
+    a.text(.97,.02,'Next needle: ?',ha='right',fontsize=10)
     a.text(.48,-.075,'Token positions are unchanged',ha='center',fontsize=9,color=INK)
     ax=fig.add_axes([.52,.29,.46,.55])
     arms=['records','recent','history']; x=np.arange(3); w=.32
@@ -227,11 +227,11 @@ def sources():
         bars=ax.bar(x+off,vals,w,color=color,label=label)
         ax.bar_label(bars,fmt='%.0f',padding=2,fontsize=9)
     ax.axhline(96,color=INK,ls=':',lw=1,label='Clean (96%)')
-    panel(ax,'B. Next-marker prediction','Accuracy (%)')
+    panel(ax,'B. Next-needle prediction','Accuracy (%)')
     ax.set(xticks=x,xticklabels=['Prompt\ntargets','Recent\ntrace item','Full trace\nhistory'],ylim=(0,115),yticks=[0,25,50,75,100])
     fig.legend(*ax.get_legend_handles_labels(),loc='lower right',bbox_to_anchor=(.99,.005),
                ncol=3,fontsize=9,handlelength=1.1,columnspacing=1.,handletextpad=.4)
-    save(fig,'06_progress_sources','Which information supports the next marker?')
+    save(fig,'06_progress_sources','Which information supports the next needle?')
 
 def continuation():
     d=read(OLD/'plot_data/06_continuation_effects.csv')
