@@ -1,4 +1,4 @@
-r"""\gpt: center the next-marker question beneath the source-position boxes."""
+r"""\gpt: center the next-needle question beneath the source-position boxes."""
 from pathlib import Path
 import hashlib
 import json
@@ -18,7 +18,7 @@ from audit_style import inspect_figure
 def save_centered(fig, _stem, _title):
     diagram = fig.axes[0]
     texts = {item.get_text(): item for item in diagram.texts}
-    question = texts['Next marker: ?']
+    question = texts['Next needle: ?']
     question.set_position((.49, .14))
     question.set_ha('center')
     question.set_va('center')
@@ -70,7 +70,7 @@ def main():
         'axes.labelcolor': original.INK, 'axes.titlecolor': original.INK,
     })
     original.sources()
-    print('Centered the next-marker question and installed the paper PDF.')
+    print('Centered the next-needle question and installed the paper PDF.')
 
 
 if __name__ == '__main__':
