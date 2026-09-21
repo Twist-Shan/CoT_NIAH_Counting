@@ -130,5 +130,23 @@
     "script": "additional_tasks_aurora/build_figures.py",
     "paper": "Appendix H, Figures 42-44",
     "description": "Render behavior, head scores and ablations from an analyzed task-local campaign"
+  },
+  "nonthinking-pca16": {
+    "family": "figures",
+    "script": "nonthinking_pca16_only_20260921/analyze.py",
+    "paper": "Section 3, Appendices C–D",
+    "description": "Refit running-index PCA16 readouts on the original seed folds"
+  },
+  "nonthinking-pca16-answer": {
+    "family": "figures",
+    "script": "nonthinking_pca16_only_20260921/update_answer.py",
+    "paper": "Section 3, Appendices C–D",
+    "description": "Scan PCA16 final-count readouts using original packed inputs"
+  },
+  "nonthinking-pca16-figures": {
+    "family": "figures",
+    "script": "nonthinking_pca16_only_20260921/build.py",
+    "paper": "Section 3, Appendices C–D",
+    "description": "Render updated readouts, cue/domain geometry and relative noise"
   }
 }

@@ -1176,6 +1176,28 @@
       "figure_manifest.json",
       "figures/thinking_appendix_style_20260913/build_figures.py",
       "realistic/work/cot_update_ncc_l21_20260915/analysis/summary.json"
+    ],
+    "figures/nonthinking_pca16_only_20260921/analyze.py": [
+      "--source/runs/run_20260731_v4_numeric_presentation_v3",
+      "--folds"
+    ],
+    "figures/nonthinking_pca16_only_20260921/update_answer.py": [
+      "--source/runs/v4_4_counter_channel_20260806/packed/layers",
+      "--source/runs/v4_4_geometry_comparison_20260816",
+      "--previous",
+      "--folds",
+      "--expected"
+    ],
+    "figures/nonthinking_pca16_only_20260921/build.py": [
+      "--results",
+      "--legacy-figures/nonthinking_ncc_selection_20260913/selection.json",
+      "--legacy-figures/nonthinking_ncc_selection_20260913/pca_plot_data.csv",
+      "--legacy-figures/nonthinking_ncc_selection_20260913/geometry_manifest.json",
+      "--legacy-figures/nonthinking_ncc_selection_20260913/domain_report_payload.json",
+      "--cue-report"
+    ],
+    "figures/nonthinking_pca16_only_20260921/verify.py": [
+      "--results"
     ]
   }
 }

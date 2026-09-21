@@ -1,0 +1,7 @@
+# Numerical versions used for the dimension-only update.
+numpy==1.26.4
+scipy==1.13.1
+scikit-learn==1.5.1
+threadpoolctl>=3
+pandas>=2.2,<4
+matplotlib>=3.8

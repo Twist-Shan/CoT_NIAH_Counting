@@ -90,11 +90,20 @@
     },
     {
       "manuscript_asset": "figures/empirical_appendix/empirical_relative_noise.pdf",
-      "reference_asset_sha256": "964661acf2b2580dcda8d580901c0f2b957bec612fa65c8e5edec047dfaf43c6",
-      "builder": "figures/nonthinking_relative_noise_20260919/build.py",
-      "arguments": [],
-      "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "reference_asset_sha256": "7dde3cad6dacbc7505467571612a89793a05a43d032acc5982fe4a0f14a56cde",
+      "builder": "figures/nonthinking_pca16_only_20260921/build.py",
+      "arguments": [
+        "--results",
+        "<PCA16_RESULTS>",
+        "--legacy-figures",
+        "<LEGACY_FIGURES>",
+        "--cue-report",
+        "<CUE_REPORT>",
+        "--output",
+        "<OUTPUT>"
+      ],
+      "source_evidence": "PCA16 dimension-only update; original classifier inputs and three-domain renderer preserved",
+      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript update exactly; no model inference"
     },
     {
       "manuscript_asset": "figures/empirical_appendix/empirical_median_fits.pdf",
@@ -202,19 +211,37 @@
     },
     {
       "manuscript_asset": "figures/nonthinking_appendix/nonthinking_count_readouts.pdf",
-      "reference_asset_sha256": "a041005ad89909b5c1b92f0d4e0e36f06582c3b997cc603f2a3dac8c762258ff",
-      "builder": "figures/nonthinking_ncc_selection_20260913/build_readouts.py",
-      "arguments": [],
-      "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "reference_asset_sha256": "4502bb863c4111d646c4b7d6b60bf0796c1d18b6d0f67d73d080f5e99d0d429f",
+      "builder": "figures/nonthinking_pca16_only_20260921/build.py",
+      "arguments": [
+        "--results",
+        "<PCA16_RESULTS>",
+        "--legacy-figures",
+        "<LEGACY_FIGURES>",
+        "--cue-report",
+        "<CUE_REPORT>",
+        "--output",
+        "<OUTPUT>"
+      ],
+      "source_evidence": "PCA16 dimension-only update; original classifier inputs and three-domain renderer preserved",
+      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript update exactly; no model inference"
     },
     {
       "manuscript_asset": "figures/nonthinking_appendix/nonthinking_cue_domain_pca.pdf",
-      "reference_asset_sha256": "44cdd85bb5dd590f559062d10b3c119b56b3e65085ac65751ab481b49c4f0a35",
-      "builder": "figures/nonthinking_appendix_revision_20260913/build_geometry.py",
-      "arguments": [],
-      "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "reference_asset_sha256": "6893c56d4e0bdc393d26aac23da8b7651cb9ba63f3b35eb74a2ffda04748c99c",
+      "builder": "figures/nonthinking_pca16_only_20260921/build.py",
+      "arguments": [
+        "--results",
+        "<PCA16_RESULTS>",
+        "--legacy-figures",
+        "<LEGACY_FIGURES>",
+        "--cue-report",
+        "<CUE_REPORT>",
+        "--output",
+        "<OUTPUT>"
+      ],
+      "source_evidence": "PCA16 dimension-only update; original classifier inputs and three-domain renderer preserved",
+      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript update exactly; no model inference"
     },
     {
       "manuscript_asset": "figures/nonthinking_appendix/nonthinking_head_ablation.pdf",

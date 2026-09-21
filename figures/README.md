@@ -36,6 +36,8 @@ cohort, duplicate, request-count and scoring-consistency checks remain mandatory
 
 ## Source map
 
+The current Non-thinking readout update is [nonthinking_pca16_only_20260921](nonthinking_pca16_only_20260921/README.md). It changes only readout PCA32 to PCA16 and regenerates the dependent readout, cue/domain and relative-noise figures. Its input contract distinguishes the original packed classifier states from the later relative-noise capture.
+
 Other rows below are recovered sources, not claims of independently rerun results. Some builders run code at import time, so inspect their input contract before importing them. Keep the frozen cohort, parser, discovery selection and control definitions. A dated output directory is a required preceding-stage artifact, not a bundled dataset.
 
 | Manuscript asset | Producing source / final display stage |
@@ -50,7 +52,7 @@ Other rows below are recovered sources, not claims of independently rerun result
 | `figures/additional_tasks/01_behavior.pdf` | [additional_tasks_aurora/build_figures.py](additional_tasks_aurora/build_figures.py) |
 | `figures/additional_tasks/02_head_scores.pdf` | [one_based_layer_head_indices_20260911/build_figures.py](one_based_layer_head_indices_20260911/build_figures.py) additional |
 | `figures/additional_tasks/03_ablation.pdf` | [additional_tasks_aurora/build_figures.py](additional_tasks_aurora/build_figures.py) |
-| `figures/empirical_appendix/empirical_relative_noise.pdf` | [nonthinking_relative_noise_20260919/build.py](nonthinking_relative_noise_20260919/build.py) |
+| `figures/empirical_appendix/empirical_relative_noise.pdf` | [nonthinking_pca16_only_20260921/build.py](nonthinking_pca16_only_20260921/build.py) |
 | `figures/empirical_appendix/empirical_median_fits.pdf` | [empirical_appendix_revision_20260915/build_figures.py](empirical_appendix_revision_20260915/build_figures.py) |
 | `figures/empirical_appendix/empirical_accuracy_12models.pdf` | [empirical_law_12models_4x3_20260919/build_figure.py](empirical_law_12models_4x3_20260919/build_figure.py) |
 | `figures/empirical_appendix/empirical_qwen_all_counts.pdf` | [empirical_appendix_revision_20260915/build_figures.py](empirical_appendix_revision_20260915/build_figures.py) |
@@ -64,8 +66,8 @@ Other rows below are recovered sources, not claims of independently rerun result
 | `figures/cot_appendix/cot_progress_controls.pdf` | [thinking_update_concision_20260915/build_scope_figure.py](thinking_update_concision_20260915/build_scope_figure.py) |
 | `figures/cot_appendix/cot_answer_readout_controls.pdf` | [thinking_appendix_style_20260913/build_figures.py](thinking_appendix_style_20260913/build_figures.py) |
 | `figures/nonthinking_appendix/nonthinking_full_head_scores.pdf` | [nonthinking_headmap_thinking_style_20260917/build_figure.py](nonthinking_headmap_thinking_style_20260917/build_figure.py) |
-| `figures/nonthinking_appendix/nonthinking_count_readouts.pdf` | [nonthinking_ncc_selection_20260913/build_readouts.py](nonthinking_ncc_selection_20260913/build_readouts.py) |
-| `figures/nonthinking_appendix/nonthinking_cue_domain_pca.pdf` | [nonthinking_appendix_revision_20260913/build_geometry.py](nonthinking_appendix_revision_20260913/build_geometry.py) |
+| `figures/nonthinking_appendix/nonthinking_count_readouts.pdf` | [nonthinking_pca16_only_20260921/build.py](nonthinking_pca16_only_20260921/build.py) |
+| `figures/nonthinking_appendix/nonthinking_cue_domain_pca.pdf` | [nonthinking_pca16_only_20260921/build.py](nonthinking_pca16_only_20260921/build.py) |
 | `figures/nonthinking_appendix/nonthinking_head_ablation.pdf` | [nonthinking_appendix_effects_20260913/build_figures.py](nonthinking_appendix_effects_20260913/build_figures.py) |
 | `figures/nonthinking_appendix/nonthinking_answer_patching.pdf` | [nonthinking_appendix_layout_20260913/build_figures.py](nonthinking_appendix_layout_20260913/build_figures.py) |
 | `figures/nonthinking_appendix/nonthinking_answer_function.pdf` | [nonthinking_appendix_effects_20260913/build_figures.py](nonthinking_appendix_effects_20260913/build_figures.py) |

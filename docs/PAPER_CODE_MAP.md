@@ -25,6 +25,8 @@ every exploratory analysis it contains was used in the paper.
 
 ## Why earlier versions remain
 
+The current Section 3 readout and dependent appendix figures use the [Non-thinking PCA16 workflow](../figures/nonthinking_pca16_only_20260921/README.md). Entry points are `nonthinking-pca16`, `nonthinking-pca16-answer` and `nonthinking-pca16-figures`. The update retains each readout's original preprocessing and seed folds, uses the original packed final-count inputs, and preserves all three needle domains. Historical PCA32 configurations and the separate ridge-steering intervention remain available as records of their original runs.
+
 The versioned packages share code. For example, v58 delegates training and
 analysis to v20, uses v35/v44 functionality, and its original tests compare
 against v57. Supplemental scripts also reuse earlier packages. These packages

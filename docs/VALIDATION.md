@@ -98,3 +98,8 @@ and account identifiers, credentials and private paths in the release and its
 Git objects. Legitimate third-party attribution is retained. The checksum
 manifest and deterministic ZIP describe the final delivered source snapshot;
 future result uploads and hosting-service metadata require their own review.
+# Non-thinking PCA16 update validation (2026-09-21)
+
+The current source is `figures/nonthinking_pca16_only_20260921/`. Its selected-layer verification reproduced running-index CV/held-out scores and original packed final-count CV scores. The released builder executed on the archived inputs: five numerical CSV exports and the relative-noise summary matched the manuscript update exactly. All three new registry entries passed `--help` in the verified numerical environment. No model inference was rerun.
+
+Source syntax, input links and release-content checks passed. A broader figure dependency inventory in this numerical environment reports missing optional packages for unrelated GPU/historical PDF scripts (`torch`, `tokenizers`, `pypdf`, `reportlab`, `pypdfium2`); it is not a full-repository execution pass. The PCA16 pipeline itself ran successfully. Use an isolated environment with `requirements/nonthinking-pca16.txt`; the machine's unrelated user-site NumPy 2 installation is incompatible with the verified NumPy 1 environment.
