@@ -354,7 +354,16 @@ def retrieval():
 
 def patching():
     restore=read_csv(OLD / "causal/restore_control_plot.csv")
-    answer=read_csv(OLD / "causal/answer_control_plot.csv")
+    import importlib.util
+    analysis = Path(__file__).resolve().parents[1] / 'answer_state_source_count_20260921/analyze.py'
+    spec = importlib.util.spec_from_file_location('answer_source_count', analysis)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    curves, _, audit = module.compute(REPO / 'exports')
+    names = {'donor_transport': 'Different count', 'same_count_seed': 'Same count', 'self_patch': 'Self patch'}
+    answer = [dict(r, layer=r['layer']-1, arm=names[r['condition']]) for r in curves]
+    for relative, digest in audit['input_sha256'].items():
+        INPUTS[str(REPO / 'exports' / relative)] = digest
     assert len(restore)==len(answer)==234
     fig,axs=four_panels(4.65)
     for i,(model,name,color,n) in enumerate(zip(MODELS,NAMES,COLORS,[36,42])):
@@ -365,10 +374,10 @@ def patching():
         ax.set(xlim=(-.5,n-.5),xticks=list(range(0,n,10)),ylim=(-.055,.7),yticks=[0,.2,.4,.6])
         legend(ax,loc="upper right")
         ax=axs[1,i]
-        panel(ax,f"{'CD'[i]}. {name}: answer-state controls","Signed count transfer","Intervention layer",True)
+        panel(ax,f"{'CD'[i]}. {name}: answer state controls","Source-count match rate","Intervention layer",True)
         for arm,ls,c in [("Different count","-",color),("Self patch",":",GRAY),("Same count","--",color)]:
             curve(ax,match(answer,model=model,arm=arm),c,ls,arm)
-        ax.set(xlim=(-.5,n-.5),xticks=list(range(0,n,10)),ylim=(-.075,.94),yticks=[0,.4,.8])
+        ax.set(xlim=(-.5,n-.5),xticks=list(range(0,n,10)),ylim=(-.04,1.08),yticks=[0,.5,1])
         legend(ax,loc="upper left")
     save(fig,"nonthinking_patching_controls")
 
