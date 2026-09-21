@@ -30,7 +30,7 @@ def render(style):
             group = [r for r in records if r['model'] == model and r['direction'] == direction]
             layer, = {r['layer'] for r in group}
             label = 'ABCD'[row * 2 + col]
-            style.panel(ax, f'{label}. {short} L{layer}: {direction}', 'Target-successor adoption')
+            style.panel(ax, f'{label}. {short} L{layer}: {direction}', 'Source-successor adoption')
             for x, scope in enumerate(scopes):
                 r, = [r for r in group if r['scope'] == scope]
                 assert r['n'] == 30
@@ -58,7 +58,7 @@ def render(style):
             ax.yaxis.set_major_formatter(PercentFormatter(1, decimals=0))
     fig.legend([Line2D([], [], marker='o', color=style.INK, ls='None'),
                 Line2D([], [], marker='o', color=style.INK, mfc='white', ls='None')],
-               ['Target patch', 'Self patch'], loc='upper center', bbox_to_anchor=(.535, 1),
+               ['Source patch', 'Self patch'], loc='upper center', bbox_to_anchor=(.535, 1),
                ncol=2, columnspacing=2)
     style.save(fig, 'cot_progress_controls', records,
                extra={'layer_choice': 'no-index discovery NCC; Gemma candidates L1--L22',
