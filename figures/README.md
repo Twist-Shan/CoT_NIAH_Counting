@@ -36,6 +36,8 @@ cohort, duplicate, request-count and scoring-consistency checks remain mandatory
 
 ## Source map
 
+The [answer state patching workflow](answer_state_source_count_20260921/README.md) defines source-count matching, pair eligibility, control scoring and seed-bootstrap intervals shared by the answer-state figures.
+
 The [Non-thinking readout workflow](nonthinking_pca16_only_20260921/README.md) uses PCA16 and produces the readout, cue/domain and relative-noise figures. The input contract specifies the classifier states and relative-noise states separately.
 
 Other rows below are recovered sources, not claims of independently rerun results. Some builders run code at import time, so inspect their input contract before importing them. Keep the frozen cohort, parser, discovery selection and control definitions. A dated output directory is a required preceding-stage artifact, not a bundled dataset.
@@ -69,7 +71,7 @@ Other rows below are recovered sources, not claims of independently rerun result
 | `figures/nonthinking_appendix/nonthinking_count_readouts.pdf` | [nonthinking_pca16_only_20260921/build.py](nonthinking_pca16_only_20260921/build.py) |
 | `figures/nonthinking_appendix/nonthinking_cue_domain_pca.pdf` | [nonthinking_pca16_only_20260921/build.py](nonthinking_pca16_only_20260921/build.py) |
 | `figures/nonthinking_appendix/nonthinking_head_ablation.pdf` | [nonthinking_appendix_effects_20260913/build_figures.py](nonthinking_appendix_effects_20260913/build_figures.py) |
-| `figures/nonthinking_appendix/nonthinking_answer_patching.pdf` | [nonthinking_appendix_layout_20260913/build_figures.py](nonthinking_appendix_layout_20260913/build_figures.py) |
+| `figures/nonthinking_appendix/nonthinking_answer_patching.pdf` | [answer_state_source_count_20260921/build_controls.py](answer_state_source_count_20260921/build_controls.py) |
 | `figures/nonthinking_appendix/nonthinking_answer_function.pdf` | [nonthinking_appendix_effects_20260913/build_figures.py](nonthinking_appendix_effects_20260913/build_figures.py) |
 | `figures/nonthinking_appendix/nonthinking_serial_mediation.pdf` | [nonthinking_appendix_effects_20260913/build_figures.py](nonthinking_appendix_effects_20260913/build_figures.py) |
 | `figures/nonthinking_appendix/nonthinking_qwen_routing.pdf` | [nonthinking_appendix_effects_20260913/build_figures.py](nonthinking_appendix_effects_20260913/build_figures.py) |

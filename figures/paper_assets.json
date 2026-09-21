@@ -28,13 +28,13 @@
     },
     {
       "manuscript_asset": "figures/nonthinking_form_retrieve_consolidate.pdf",
-      "reference_asset_sha256": "88041362b305f64fb32e35ab5a7bae3a36375ac012c29a08d45857961d972df0",
+      "reference_asset_sha256": "fcd35278ed5117b169fea78fd494061c707d6fa655f62e17a842613b4f8fa4d9",
       "builder": "figures/one_based_layer_head_indices_20260911/build_main_figures.py",
       "arguments": [
         "nonthinking_main"
       ],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "Source-count matching display rendered from archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/native_targeted_retrieval.pdf",
@@ -46,11 +46,11 @@
     },
     {
       "manuscript_asset": "figures/native_retrieve_encode_count_loop.pdf",
-      "reference_asset_sha256": "42510dc4756fc9166755bbd92d1c1a2d2581bfbae6adac3f718b6154ab1248ea",
+      "reference_asset_sha256": "b2b4b405cfbf0d59365937506cec6a2cdada93f5b8abd1c75ff1863ffeaa2d68",
       "builder": "figures/cot-reasoning/build_figure.py",
       "arguments": [],
       "source_evidence": "manuscript name and builder inspection; final PDF byte match not established",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "Source-count matching display rendered from archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/synthetic_section.pdf",
@@ -253,11 +253,16 @@
     },
     {
       "manuscript_asset": "figures/nonthinking_appendix/nonthinking_answer_patching.pdf",
-      "reference_asset_sha256": "5e0c3a14ed31e393e801dab8b1f99c56b73b544efe85fe0f727e59e9ad7f3e06",
-      "builder": "figures/nonthinking_appendix_layout_20260913/build_figures.py",
-      "arguments": [],
-      "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "reference_asset_sha256": "8fa30293e21bb6ab6bd5ddf1a230f26fb1772d3c8f37928720cec81c057bb3fc",
+      "builder": "figures/answer_state_source_count_20260921/build_controls.py",
+      "arguments": [
+        "--data",
+        "runs/answer_source_count/data",
+        "--output",
+        "runs/answer_source_count/figures"
+      ],
+      "source_evidence": "Direct renderer consumes validated exact-match curves from analyze.py.",
+      "release_validation": "Source-count matching display rendered from archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/nonthinking_appendix/nonthinking_answer_function.pdf",
@@ -333,11 +338,11 @@
     },
     {
       "manuscript_asset": "figures/enumeration_bullet/enumeration_readout.pdf",
-      "reference_asset_sha256": "ae8e247116c24bd9302ce4e0125b0a06be293f8750bcecea66b172b8e3d195c1",
+      "reference_asset_sha256": "38121507661e9be21988eec7c4641bb2e059797e6dee9866c563bfdbab3b0884",
       "builder": "figures/enumeration_default_seed_20260918/build_figures.py",
       "arguments": [],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "Source-count matching display rendered from archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/synthetic_appendix/01_training_and_behavior.pdf",
