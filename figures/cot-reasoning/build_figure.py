@@ -233,7 +233,7 @@ for yi,(outcome,label) in enumerate([('next_city_failure','Next item'),('final_c
             b_labels.append(b.text(x,-.39,rf'$K={k}$',transform=b.get_xaxis_transform(),
                                   ha='center',va='top',fontsize=main_font('axis')))
 
-# C. A concrete Target -> Receiver transplant, with both model outcomes.
+# C. A concrete source -> target transplant, with both model outcomes.
 # Translate the whole panel to equalize the measured B-C and C-D gutters.
 art=fig.add_axes([-.0055,0,1,1]);art.set(xlim=(0,1),ylim=(0,1));art.axis('off')
 c_before=set(art.get_children())
@@ -244,7 +244,7 @@ text(.289,.414,'Original',size=main_font('axis'),bold=True,ha='left')
 box(.44,.414,.145,.082,'... Mumbai',fill='#F7F6F3',size=main_font('axis'))
 arrow((.518,.414),(.542,.414),color='#64665F')
 box(.63,.414,.163,.082,'Islamabad',size=main_font('axis'))
-box(.44,.324,.263,.050,'Target state after Islamabad',fill=WARM,size=main_font('axis'))
+box(.44,.324,.263,.050,'Source state after Islamabad',fill=WARM,size=main_font('axis'))
 arrow((.44,.295),(.44,.279))
 text(.289,.233,'Patched',size=main_font('axis'),bold=True,ha='left')
 box(.44,.233,.145,.082,'... Mumbai',fill='#F7F6F3',size=main_font('axis'))
@@ -263,7 +263,7 @@ for y,r,c in zip([.067,.027],e.progress,[Q,G]):
         text(x,y,(f"{v['successes']}/{v['eligible']}" if v['eligible'] else "—"),size=main_font('axis'),color=c,bold=True)
 c_items=[a for a in art.get_children() if a not in c_before]
 
-# D. Actual greedy adoption of the Target's count after answer-state patching.
+# D. Actual greedy adoption of the source's count after answer-state patching.
 art=fig.add_axes([0,0,1,1]);art.set(xlim=(0,1),ylim=(0,1));art.axis('off')
 d_titles=panel_title(.744,.562,'D','Answer state patching')
 af=axis([.807,.145,.18,.30],labelsize=main_font('axis'),ticksize=main_font('tick'))
@@ -313,7 +313,7 @@ manifest={'status':'PASS','main_figure':str(FINAL.relative_to(d.ROOT)),'main_pan
     'supplement_figure':str(CONTROL.relative_to(d.ROOT)),'supplement_panels':list('ABC'),
     'reference_thread_id':'01a05071-c0ac-71c0-9efe-14c3ea1963cd','source_sha256':d.SOURCES,
     'pdf_sha256':hashlib.sha256(FINAL.read_bytes()).hexdigest(),'supplement_sha256':hashlib.sha256(CONTROL.read_bytes()).hexdigest(),
-    'terminology':{'Target':'state source for patching','Receiver':'run receiving the transplanted state'},
+    'terminology':{'source':'run supplying the transplanted state','target':'run receiving the transplanted state'},
     'style':{'font':'Times New Roman','model_colors':dict(zip(d.MODELS,[Q,G])),'mechanism_arrow':BROWN,'main_size_inches':[11.7,6.6]},
     'font_alignment':FONT_PROFILE,
     'mechanism_evidence':'figures/cot-reasoning/mechanism_evidence.md',
