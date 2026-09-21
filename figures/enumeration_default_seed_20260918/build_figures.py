@@ -144,7 +144,7 @@ def readout():
     axes[0].set(xlim=(1,42),xticks=[1,10,20,30,40],ylim=(-.04,1.06),yticks=[0,.5,1])
     axes[1].set(xticks=[0,1,2],xticklabels=['Original','Prompt\nblank','Trace\nblank'],xlim=(-.4,2.4),ylim=(-.04,1.06),yticks=[0,.5,1])
     for ax in axes:ax.yaxis.set_major_formatter(PercentFormatter(1,decimals=0))
-    style.panel(axes[0],'A. Answer-state transfer','Target-count adoption','Layer');style.panel(axes[1],'B. Trace blanking','Exact-count accuracy')
+    style.panel(axes[0],'A. Answer-state transfer','Source-count match rate','Layer');style.panel(axes[1],'B. Trace blanking','Exact-count accuracy')
     model_legend(fig);fig.legend([Line2D([],[],color=style.INK,ls=ls) for ls in ['-','--']],['Target patch','Self patch'],loc='center',bbox_to_anchor=(.5,.025),ncol=2)
     save(fig,'enumeration_readout',rows,dict(statistics_recomputed=True))
 
