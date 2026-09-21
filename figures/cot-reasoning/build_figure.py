@@ -265,7 +265,7 @@ c_items=[a for a in art.get_children() if a not in c_before]
 
 # D. Actual greedy adoption of the Target's count after answer-state patching.
 art=fig.add_axes([0,0,1,1]);art.set(xlim=(0,1),ylim=(0,1));art.axis('off')
-d_titles=panel_title(.744,.562,'D','Answer-state patching')
+d_titles=panel_title(.744,.562,'D','Answer state patching')
 af=axis([.807,.145,.18,.30],labelsize=main_font('axis'),ticksize=main_font('tick'))
 # Match Non-thinking D: plain solid lines, a light confidence band, and line
 # samples in the legend. Exact endpoints are stated in the caption.
@@ -278,7 +278,7 @@ for m,c in zip(d.MODELS,[Q,G]):
     af.plot(x+1,y,color=c,lw=2.4,zorder=3)
     af.fill_between(x+1,lo,hi,color=c,alpha=.16,lw=0)
 af.axhline(0,color=AXIS,lw=.6)
-af.set(xlim=(.5,42.5),ylim=(-.04,1.12),yticks=[0,.2,.4,.6,.8,1],xticks=[1,11,21,31,41],xlabel='Intervention layer',ylabel='Target-count adoption')
+af.set(xlim=(.5,42.5),ylim=(-.04,1.12),yticks=[0,.2,.4,.6,.8,1],xticks=[1,11,21,31,41],xlabel='Intervention layer',ylabel='Source-count match rate')
 af.yaxis.set_major_formatter(PercentFormatter(1,decimals=0))
 main_audit=check_and_save(FINAL,'cot_reasoning_main','CoT reasoning: targeted retrieval and counter-state routing')
 
