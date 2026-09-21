@@ -102,8 +102,8 @@
         "--output",
         "<OUTPUT>"
       ],
-      "source_evidence": "PCA16 dimension-only update; original classifier inputs and three-domain renderer preserved",
-      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript update exactly; no model inference"
+      "source_evidence": "PCA16 count readouts and three-domain geometry",
+      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript results exactly; no model inference"
     },
     {
       "manuscript_asset": "figures/empirical_appendix/empirical_median_fits.pdf",
@@ -223,8 +223,8 @@
         "--output",
         "<OUTPUT>"
       ],
-      "source_evidence": "PCA16 dimension-only update; original classifier inputs and three-domain renderer preserved",
-      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript update exactly; no model inference"
+      "source_evidence": "PCA16 count readouts and three-domain geometry",
+      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript results exactly; no model inference"
     },
     {
       "manuscript_asset": "figures/nonthinking_appendix/nonthinking_cue_domain_pca.pdf",
@@ -240,8 +240,8 @@
         "--output",
         "<OUTPUT>"
       ],
-      "source_evidence": "PCA16 dimension-only update; original classifier inputs and three-domain renderer preserved",
-      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript update exactly; no model inference"
+      "source_evidence": "PCA16 count readouts and three-domain geometry",
+      "release_validation": "Executed on archived inputs; numerical CSV exports match the manuscript results exactly; no model inference"
     },
     {
       "manuscript_asset": "figures/nonthinking_appendix/nonthinking_head_ablation.pdf",

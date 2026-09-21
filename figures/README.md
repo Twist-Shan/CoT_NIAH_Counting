@@ -36,7 +36,7 @@ cohort, duplicate, request-count and scoring-consistency checks remain mandatory
 
 ## Source map
 
-The current Non-thinking readout update is [nonthinking_pca16_only_20260921](nonthinking_pca16_only_20260921/README.md). It changes only readout PCA32 to PCA16 and regenerates the dependent readout, cue/domain and relative-noise figures. Its input contract distinguishes the original packed classifier states from the later relative-noise capture.
+The [Non-thinking readout workflow](nonthinking_pca16_only_20260921/README.md) uses PCA16 and produces the readout, cue/domain and relative-noise figures. The input contract specifies the classifier states and relative-noise states separately.
 
 Other rows below are recovered sources, not claims of independently rerun results. Some builders run code at import time, so inspect their input contract before importing them. Keep the frozen cohort, parser, discovery selection and control definitions. A dated output directory is a required preceding-stage artifact, not a bundled dataset.
 
