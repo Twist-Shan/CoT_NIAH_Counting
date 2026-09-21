@@ -6,15 +6,30 @@ import torch
 from realistic_niah_v4.prompt_ridge_steering import fit_direction, additive_span_hook
 
 
-def test_backprojected_probe_and_random_direction():
+@pytest.mark.parametrize('pca_components', [16, 32])
+def test_backprojected_probe_and_random_direction(pca_components):
     rng=np.random.default_rng(1)
     x=rng.normal(size=(100,40)).astype(np.float32)
     y=3*x[:,0]-2*x[:,1]+5
-    probe,audit=fit_direction(x,y,x)
+    probe,audit=fit_direction(x,y,x,pca_components=pca_components)
+    assert audit['pca_components'] == pca_components
     assert audit['projection_max_error']<1e-3
     assert abs(probe['unit']@probe['random_unit'])<1e-6
     assert np.isclose(np.linalg.norm(probe['unit']),1.)
     assert np.isfinite(x@probe['weight']+probe['intercept']).all()
+
+
+@pytest.mark.parametrize('pca_components', [0, 41, 1.5, True])
+def test_invalid_pca_dimension(pca_components):
+    x=np.zeros((100,40),dtype=np.float32)
+    with pytest.raises(ValueError,match='Invalid PCA'):
+        fit_direction(x,x[:,0],x,pca_components=pca_components)
+
+
+def test_insufficient_rows_for_requested_dimension():
+    x=np.zeros((16,40),dtype=np.float32)
+    with pytest.raises(ValueError,match='Insufficient'):
+        fit_direction(x,x[:,0],x,pca_components=16)
 
 
 @pytest.mark.parametrize('condition,beta',[('noop',0),('ridge',1),('random',-1)])

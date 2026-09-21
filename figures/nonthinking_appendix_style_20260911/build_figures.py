@@ -242,8 +242,8 @@ def representation():
     save(fig, "nonthinking_representation_diagnostics")
 
 
-def steering():
-    rows = read_csv(REPO / "outputs/prompt_steering_n3_full_20260910_v2/analysis/layer_summary.csv")
+def steering(source=None):
+    rows = read_csv(Path(source) if source is not None else REPO / "outputs/prompt_steering_n3_full_20260910_v2/analysis/layer_summary.csv")
     assert len(rows) == 312
     fig = plt.figure(figsize=(6.5, 2.65))
     axes = [fig.add_axes([x, .30, .365, .54]) for x in [.10, .61]]
@@ -257,6 +257,8 @@ def steering():
         panel(ax, f"{letter}. {name}", "Expected-count change", "Intervention layer")
         ax.set_xticks([0, 10, 20, 30] if n==36 else [0, 10, 20, 30, 40])
         ax.axhline(0, color=GRAY, lw=.7, zorder=0)
+        low, high = ax.get_ylim()
+        ax.set_yticks([tick for tick in ax.get_yticks() if low <= tick <= high])
     handles = [Line2D([], [], color=INK, alpha=a, ls=ls, label=f"{c}, $\\beta={b:+d}$")
                for c,a in [("Ridge",1),("Random",.4)] for b,ls in [(-1,"--"),(1,"-")]]
     fig.legend(handles=handles, loc="lower center", bbox_to_anchor=(.535,.015),

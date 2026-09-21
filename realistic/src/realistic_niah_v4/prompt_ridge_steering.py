@@ -13,15 +13,17 @@ from sklearn.preprocessing import StandardScaler
 from .modeling import _tensor_from_output, _replace_output_tensor
 
 
-def fit_direction(endpoints, counts, span_states, *, random_seed=20260910):
+def fit_direction(endpoints, counts, span_states, *, random_seed=20260910, pca_components=32):
     x = np.asarray(endpoints, dtype=np.float32)
     y = np.asarray(counts, dtype=np.float32)
     spans = np.asarray(span_states, dtype=np.float32)
     if x.ndim != 2 or y.shape != (len(x),) or spans.ndim != 2 or spans.shape[1] != x.shape[1]:
         raise ValueError('Invalid training shapes')
-    if len(x) < 33 or not all(np.isfinite(a).all() for a in (x,y,spans)):
+    if isinstance(pca_components, bool) or not isinstance(pca_components, (int, np.integer)) or not 1 <= pca_components <= x.shape[1]:
+        raise ValueError('Invalid PCA component count')
+    if len(x) <= pca_components or len(spans) == 0 or not all(np.isfinite(a).all() for a in (x,y,spans)):
         raise ValueError('Insufficient or nonfinite training data')
-    pca = PCA(n_components=min(32,x.shape[1]), svd_solver='randomized', random_state=20260806)
+    pca = PCA(n_components=pca_components, svd_solver='randomized', random_state=20260806)
     z = pca.fit_transform(x)
     scaler = StandardScaler().fit(z)
     ridge = Ridge(alpha=1.0).fit(scaler.transform(z), y)

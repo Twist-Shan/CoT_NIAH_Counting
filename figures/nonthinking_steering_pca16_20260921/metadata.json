@@ -1,0 +1,13 @@
+{
+  "pca_components": 16,
+  "total_rows": 3920,
+  "noop_checks": 780,
+  "layer_summary_sha256": "1aa1a9c7978a845b23e11cdb29103abe71e30371462026d265ea823f0abce4cd",
+  "figure_pdf_sha256": "4655c44c94e36d9fe14a8de96f792efa7a72c77f5f04d9b9933e874e8c2a4f9d",
+  "display_layers": "one-based",
+  "model_revisions": {
+    "Qwen3-8B": "b968826d9c46dd6066d109eabc6255188de91218",
+    "Gemma": "ee0ef6023621cff504d758262d4e04895a5af4a2"
+  },
+  "layout_audit": "PASS"
+}

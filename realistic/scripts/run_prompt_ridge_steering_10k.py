@@ -72,6 +72,7 @@ def main():
     for name in ('model','stimuli','config','cache-dir','output'):
         p.add_argument('--'+name,required=True)
     p.add_argument('--layers',required=True)
+    p.add_argument('--pca-components',type=int,choices=(16,32),default=32)
     p.add_argument('--mode',choices=('benchmark','formal','n3_full'),default='benchmark')
     p.add_argument('--supplementary-stimuli')
     p.add_argument('--seeds',default='1254,1255,1256,1257,1258,1259,1260,1261,1262,1263')
@@ -98,7 +99,7 @@ def main():
     if args.mode=='formal' and not set(seeds)<=set(range(1254,1264)):
         raise ValueError('Formal evaluation uses only held-out confirmation seeds')
     contract=dict(model=args.model,model_id=spec.model_id,revision=spec.revision,
-        layers=layers,seeds=seeds,counts=counts,betas=betas,mode=args.mode,
+        layers=layers,seeds=seeds,counts=counts,betas=betas,mode=args.mode,pca_components=args.pca_components,
         dtype='bfloat16',backend=args.backend,stimuli_sha256=STIMULUS_SHA,config_sha256=sha(args.config),
         runner_sha256=sha(__file__),module_sha256=sha(Path(__file__).parents[1]/'src/realistic_niah_v4/prompt_ridge_steering.py'),
         torch=torch.__version__,transformers=transformers.__version__,python=platform.python_version(),
@@ -192,6 +193,9 @@ def main():
     for layer in layers:
         file=out/'probes'/f'L{layer:02d}.npz'
         if file.exists():
+            audit_path=file.with_suffix('.json')
+            if not audit_path.exists() or json.loads(audit_path.read_text())['pca_components'] != args.pca_components:
+                raise RuntimeError('Cached probe PCA dimension mismatch; use a new output directory')
             with np.load(file,allow_pickle=False) as data: probes[layer]={k:data[k] for k in data.files}
         else: missing.append(layer)
     if missing:
@@ -214,6 +218,7 @@ def main():
                 elapsed_seconds=time.perf_counter()-train_started)),flush=True)
         for layer in missing:
             probes[layer],audit=fit_direction(np.concatenate(xs[layer]),ys,np.concatenate(spans[layer]),
+                pca_components=args.pca_components,
                 random_seed=20260910+layer+(0 if args.model=='Qwen3-8B' else 1000))
             file=out/'probes'/f'L{layer:02d}.npz'; file.parent.mkdir(parents=True,exist_ok=True)
             temporary=file.with_name(file.name+'.tmp.npz')

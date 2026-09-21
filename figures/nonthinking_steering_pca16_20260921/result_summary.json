@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "rows": 3920,
+  "pca_components": 16,
+  "layers": {
+    "Qwen": 36,
+    "Gemma": 42
+  },
+  "noop_checks": 780,
+  "Qwen_ridge_changes": {
+    "positive": {
+      "total": 7,
+      "layers_one_based": [
+        19,
+        21
+      ],
+      "3_to_2": 6,
+      "3_to_4": 1
+    },
+    "negative": {
+      "total": 1,
+      "layers_one_based": [
+        18
+      ],
+      "3_to_2": 1
+    }
+  },
+  "Gemma_ridge_changes": 0,
+  "cohorts_match_historical": true,
+  "model_revisions_verified": true,
+  "compiled": "main_ICLR, exit 0; no undefined references or overfull boxes"
+}
