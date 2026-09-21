@@ -46,11 +46,11 @@
     },
     {
       "manuscript_asset": "figures/native_retrieve_encode_count_loop.pdf",
-      "reference_asset_sha256": "b2b4b405cfbf0d59365937506cec6a2cdada93f5b8abd1c75ff1863ffeaa2d68",
+      "reference_asset_sha256": "207f110af03961ef8aae547ad2ea225429d97b62b8c60fc021a14ac31cd24cee",
       "builder": "figures/cot-reasoning/build_figure.py",
       "arguments": [],
       "source_evidence": "manuscript name and builder inspection; final PDF byte match not established",
-      "release_validation": "Source-count matching display rendered from archived measurements; no model inference rerun."
+      "release_validation": "Source/target role labels re-exported from unchanged archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/synthetic_section.pdf",
@@ -187,11 +187,11 @@
     },
     {
       "manuscript_asset": "figures/cot_appendix/cot_progress_controls.pdf",
-      "reference_asset_sha256": "b967ba85ba10295d8455318a8504fe7807b0a1aa0e3d72031d164ea5db8ab7b2",
+      "reference_asset_sha256": "8a7a5b3cd5fcc011ac120f0a70c2f1b0681498b8e571d208a1257734297a450a",
       "builder": "figures/thinking_update_concision_20260915/build_scope_figure.py",
       "arguments": [],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "Source/target role labels re-exported from unchanged archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/cot_appendix/cot_answer_readout_controls.pdf",
@@ -330,19 +330,19 @@
     },
     {
       "manuscript_asset": "figures/enumeration_bullet/enumeration_update.pdf",
-      "reference_asset_sha256": "79a60814bc92c02597989651a3f903266628722beed781f00b3acb65bdec15d4",
+      "reference_asset_sha256": "45dd9f86cadf84d46f0cd92855cb87068d10bafa0f384041799680ddece9008a",
       "builder": "figures/enumeration_default_seed_20260918/build_figures.py",
       "arguments": [],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "source recovered; not rerun during release review"
+      "release_validation": "Source/target role labels re-exported from unchanged archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/enumeration_bullet/enumeration_readout.pdf",
-      "reference_asset_sha256": "38121507661e9be21988eec7c4641bb2e059797e6dee9866c563bfdbab3b0884",
+      "reference_asset_sha256": "b5687611f86a6c3c0d988407f145001ebd4bd1b44bd59bc4e35f94f06068710b",
       "builder": "figures/enumeration_default_seed_20260918/build_figures.py",
       "arguments": [],
       "source_evidence": "local output byte match plus builder inspection",
-      "release_validation": "Source-count matching display rendered from archived measurements; no model inference rerun."
+      "release_validation": "Source/target role labels re-exported from unchanged archived measurements; no model inference rerun."
     },
     {
       "manuscript_asset": "figures/synthetic_appendix/01_training_and_behavior.pdf",
