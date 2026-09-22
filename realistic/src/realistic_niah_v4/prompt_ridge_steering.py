@@ -13,7 +13,7 @@ from sklearn.preprocessing import StandardScaler
 from .modeling import _tensor_from_output, _replace_output_tensor
 
 
-def fit_direction(endpoints, counts, span_states, *, random_seed=20260910, pca_components=32):
+def fit_direction(endpoints, counts, span_states, *, random_seed=20260910, pca_components=16):
     x = np.asarray(endpoints, dtype=np.float32)
     y = np.asarray(counts, dtype=np.float32)
     spans = np.asarray(span_states, dtype=np.float32)

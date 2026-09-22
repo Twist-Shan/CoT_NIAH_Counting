@@ -708,7 +708,7 @@
       "figures/synthetic_appendix_label_revision_20260908/build_retrieval_head_scores.py",
       "manifest.json",
       "nonthinking_head_scores.csv",
-      "outputs/prompt_steering_n3_full_20260910_v2/analysis/layer_summary.csv",
+      "nonthinking_steering_pca16_20260921/layer_summary.csv",
       "v4_4_causal_v2/correct_patching_aggregate.csv",
       "v4_4_causal_v2/full_span_topk/full_span_topk_membership.csv",
       "v4_4_extension/geometry/count_regression_summary.csv",
@@ -1198,6 +1198,10 @@
     ],
     "figures/nonthinking_pca16_only_20260921/verify.py": [
       "--results"
+    ],
+    "figures/nonthinking_steering_pca16_20260921/build_figure.py": [
+      "layer_summary.csv",
+      "nonthinking_appendix_style_20260911/build_figures.py"
     ]
   }
 }

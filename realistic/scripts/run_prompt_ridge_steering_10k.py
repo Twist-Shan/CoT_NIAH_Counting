@@ -72,7 +72,7 @@ def main():
     for name in ('model','stimuli','config','cache-dir','output'):
         p.add_argument('--'+name,required=True)
     p.add_argument('--layers',required=True)
-    p.add_argument('--pca-components',type=int,choices=(16,32),default=32)
+    p.add_argument('--pca-components',type=int,choices=(16,32),default=16)
     p.add_argument('--mode',choices=('benchmark','formal','n3_full'),default='benchmark')
     p.add_argument('--supplementary-stimuli')
     p.add_argument('--seeds',default='1254,1255,1256,1257,1258,1259,1260,1261,1262,1263')

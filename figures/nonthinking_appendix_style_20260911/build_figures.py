@@ -243,7 +243,7 @@ def representation():
 
 
 def steering(source=None):
-    rows = read_csv(Path(source) if source is not None else REPO / "outputs/prompt_steering_n3_full_20260910_v2/analysis/layer_summary.csv")
+    rows = read_csv(Path(source) if source is not None else Path(__file__).resolve().parent.parent / "nonthinking_steering_pca16_20260921/layer_summary.csv")
     assert len(rows) == 312
     fig = plt.figure(figsize=(6.5, 2.65))
     axes = [fig.add_axes([x, .30, .365, .54]) for x in [.10, .61]]
