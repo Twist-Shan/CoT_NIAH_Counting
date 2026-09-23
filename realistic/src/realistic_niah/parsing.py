@@ -8,7 +8,8 @@ from .spec import ENUMERATION_PROMPT_MODES, THINKING_PROMPT_MODES
 
 OPTIONAL_END_TOKEN = (
     r"(?:<\|im_end\|>|<turn\|>|<\|endoftext\|>|"
-    r"<｜end▁of▁sentence｜>)?"
+    # Preserve the model token's Unicode delimiters using ASCII source.
+    f"<{chr(0xFF5C)}end\u2581of\u2581sentence{chr(0xFF5C)}>)?"
 )
 TOTAL_RE = re.compile(
     rf"(?im)^\s*Total\s*:\s*(-?\d+)\s*{OPTIONAL_END_TOKEN}\s*$"

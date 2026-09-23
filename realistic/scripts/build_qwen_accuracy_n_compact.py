@@ -38,7 +38,7 @@ def parse_args() -> argparse.Namespace:
     tables = (
         root
         / "outputs"
-        / "anvil_realistic_niah_v3_1_20260819_formal"
+        / "realistic_niah_v3_1_20260819_formal"
         / "analysis"
         / "v3_2_inverse_n_candidate_extension"
         / "tables"

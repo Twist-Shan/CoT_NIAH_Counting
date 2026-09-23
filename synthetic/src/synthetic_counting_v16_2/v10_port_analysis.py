@@ -1485,10 +1485,10 @@ def analysis_crosswalk() -> pd.DataFrame:
         ("v10 §7", "global and position-local head ablation", "Ranked and matched random paths for all three roles", "count bins changed to 1-3/4-7/8-10"),
         ("v10 §8.2", "retrieval head patching", "Within-set character replacement preserving prompt count and token positions", "stronger character-aware corruption"),
         ("v10 §8.3-8.5", "successor/stop and MLP conversion", "Future-occurrence deletion forms position-matched continue/close pairs; includes logit-lens and component evidence", "task-native adaptation"),
-        ("v10 §8.6-8.10", "count transport and final bridge", "length-preserving prompt/trace conflicts；attention/MLP/residual clean recovery", "fixed-15 replaced by fixed-length conflict"),
+        ("v10 §8.6-8.10", "count transport and final bridge", "length-preserving prompt/trace conflicts;attention/MLP/residual clean recovery", "fixed-15 replaced by fixed-length conflict"),
         ("v10 §9", "geometry steering", "Independent training centroids; +/-1 held-out receivers; alpha=0.5/1", "count range restricted to 1..10"),
         ("v10 §10", "hidden-state patching", "Final-answer transport and same-k final-to-interior early-close patch", "RoPE position-matched where possible"),
-        ("v10 §11", "head↔state bidirectionality", "progress-state transplant before L3；attention routing shift", "same total count=10 control"),
+        ("v10 §11", "head↔state bidirectionality", "progress-state transplant before L3;attention routing shift", "same total count=10 control"),
     ]
     return pd.DataFrame(rows, columns=["v10_section", "v10_analysis", "v16_2_implementation", "adaptation_status"])
 

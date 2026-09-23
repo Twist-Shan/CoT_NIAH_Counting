@@ -26,7 +26,7 @@ from scripts.analyze_realistic_niah_v3_2_empirical_laws import (
     fit_glm, condition_fold, HEADLINE_ACCURACY, clip_probability,
 )
 
-LONG = ROOT/'outputs/anvil_realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan'
+LONG = ROOT/'outputs/realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan'
 OUT = LONG.parent/'v3_3_all_n_linear_length_20260909'
 ASSETS = ROOT/'reports/assets/niah_empirical_all_n_length'
 MODELS = ('Gemma4-31B','Qwen3-32B')

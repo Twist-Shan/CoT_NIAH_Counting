@@ -5,7 +5,7 @@ import pandas as pd
 from scripts.analyze_realistic_niah_v3_3_regression_scan import n_fixed_design
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / 'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_n_fixed_shared_length_20260909'
+OUT = ROOT / 'outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_n_fixed_shared_length_20260909'
 
 
 def test_shared_slope_recovers_arbitrary_n_intercepts():

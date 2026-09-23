@@ -13,7 +13,7 @@ from scripts.analyze_realistic_niah_v3_3_regression_scan import (
     fit_n_fixed_accuracy_cv, fit_n_fixed_continuous_cv,
 )
 
-ANALYSIS = ROOT / 'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis'
+ANALYSIS = ROOT / 'outputs/realistic_niah_v3_1_20260819_formal/analysis'
 OUT = ANALYSIS / 'v3_2_n_fixed_shared_length_20260909'
 SCHEME = 'v3_2_5fold_held_condition_cv'
 

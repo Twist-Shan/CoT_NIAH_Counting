@@ -35,8 +35,13 @@ GRAMMAR_POLICY_VERSION = "transition_anchor_surface_grammar_v3"
 COHORT_POLICY_VERSION = "rank_structural_partial_and_evidence_secondary_v2"
 
 RECORD_CLAUSE = "In the 2024 city score audit"
-OPENING_DELIMITERS = frozenset("([{（［｛")
-CLOSING_TO_OPENING = {")": "(", "]": "[", "}": "{", "）": "（", "］": "［", "｝": "｛"}
+CLOSING_TO_OPENING = {")": "(", "]": "[", "}": "{"}
+# Fullwidth punctuation has the same pairing with a fixed Unicode offset.
+CLOSING_TO_OPENING.update({
+    chr(ord(closing) + 0xFEE0): chr(ord(opening) + 0xFEE0)
+    for closing, opening in CLOSING_TO_OPENING.items()
+})
+OPENING_DELIMITERS = frozenset(CLOSING_TO_OPENING.values())
 BULLET_DELIMITERS = frozenset({"-", "*", "•", "–", "—", "·"})
 
 # Lower values win only when two semantic roles resolve to the same model token.

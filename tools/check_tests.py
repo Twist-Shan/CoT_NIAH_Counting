@@ -10,9 +10,14 @@ import time
 ROOT = Path(__file__).resolve().parents[1]
 SUITES = {
     "realistic": [
+        "tests/test_realistic_niah.py",
         "tests/test_realistic_niah_v3_1.py",
+        "tests/test_realistic_niah_v3_1_runtime_reliability.py",
+        "tests/test_realistic_niah_v3_2_analysis_spec.py",
+        "tests/test_realistic_niah_v3_3_long_context.py",
         "tests/test_realistic_niah_v4_4_2.py",
         "tests/test_realistic_niah_v5_parser_v2.py",
+        "tests/test_realistic_niah_v5_causal_sites.py",
         "tests/test_realistic_niah_v6.py",
         "tests/test_enumeration_fresh_behavior_audit.py",
         "tests/test_enumeration_fresh_read_audit.py",

@@ -38,7 +38,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_1_behavior_empirical_law"
     / "tables"
@@ -47,7 +47,7 @@ DEFAULT_INPUT = (
 DEFAULT_OUTPUT = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_empirical_law"
 )

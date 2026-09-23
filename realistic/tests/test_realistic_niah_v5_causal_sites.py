@@ -228,10 +228,13 @@ def test_rank_after_city_does_not_invent_pre_or_post_marker_anchors() -> None:
     )
 
 
-def test_parenthesis_and_record_clause_anchors_are_surface_grounded() -> None:
+@pytest.mark.parametrize("unicode_offset", [0, 0xFEE0])
+def test_parenthesis_and_record_clause_anchors_are_surface_grounded(unicode_offset) -> None:
+    opening = chr(ord("(") + unicode_offset)
+    closing = chr(ord(")") + unicode_offset)
     parenthesized = (
-        "<think>\n(Record 1: Chicago, 61)\n"
-        "(Record 2: Baku, 62)\n</think>\nTotal: 2"
+        f"<think>\n{opening}Record 1: Chicago, 61{closing}\n"
+        f"{opening}Record 2: Baku, 62{closing}\n</think>\nTotal: 2"
     )
     paren_plan = compile_causal_site_plan(
         _row(parenthesized, cities=["Chicago", "Baku"]),
@@ -243,7 +246,7 @@ def test_parenthesis_and_record_clause_anchors_are_surface_grounded() -> None:
     ]
     assert any("post_open_delimiter" in aliases for aliases in paren_aliases)
     delimiter = paren_plan["events"][1]["sites"]["opening_delimiter_span"]
-    assert delimiter["char_text"] == "("
+    assert delimiter["char_text"] == opening
 
     clause = (
         "<think>\nIn the 2024 city score audit, Chicago received a score of 61. "

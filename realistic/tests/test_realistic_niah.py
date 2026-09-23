@@ -200,7 +200,7 @@ def test_deepseek_and_glm_end_tokens_are_accepted_after_total() -> None:
         {"city": "Milwaukee", "score": 83},
     ]
     for raw_text in (
-        "Total: 2<｜end▁of▁sentence｜>",
+        f"Total: 2<{chr(0xFF5C)}end\u2581of\u2581sentence{chr(0xFF5C)}>",
         "Total: 2<|endoftext|>",
     ):
         result = evaluate_generation(

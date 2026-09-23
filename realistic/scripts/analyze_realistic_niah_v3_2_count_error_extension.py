@@ -59,14 +59,14 @@ from scripts.analyze_realistic_niah_v3_2_empirical_laws import (
 DEFAULT_OUTPUT = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_trimmed_count_error_extension"
 )
 DEFAULT_FORMAL_ANALYSIS = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_empirical_law"
 )

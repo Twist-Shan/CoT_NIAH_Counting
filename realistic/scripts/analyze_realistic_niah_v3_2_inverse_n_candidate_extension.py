@@ -68,21 +68,21 @@ DEFAULT_EXTENSION_CONFIG = (
 DEFAULT_FORMAL_ANALYSIS = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_empirical_law"
 )
 DEFAULT_COUNT_ERROR_ANALYSIS = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_count_error_extension"
 )
 DEFAULT_OUTPUT = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_inverse_n_candidate_extension"
 )

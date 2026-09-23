@@ -25,7 +25,7 @@ import analyze_realistic_niah_v3_2_empirical_laws as core
 import analyze_realistic_niah_v3_2_count_error_extension as ext
 
 ROOT = Path(__file__).resolve().parents[1]
-ANALYSIS = ROOT / 'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis'
+ANALYSIS = ROOT / 'outputs/realistic_niah_v3_1_20260819_formal/analysis'
 FAMILIES = (ext.MAE_FAMILY, core.BIAS_FAMILY)
 
 

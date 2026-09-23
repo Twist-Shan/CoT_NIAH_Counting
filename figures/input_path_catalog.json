@@ -415,7 +415,7 @@
       "candidate_counts_diagnostics.json",
       "candidate_n_audit_requests.csv",
       "plotted_cells.csv",
-      "realistic/outputs/anvil_realistic_niah_v3_1_20260819_formal/20260819_formal",
+      "realistic/outputs/realistic_niah_v3_1_20260819_formal/20260819_formal",
       "| Model | N | L | Mode | Unparseable / 30 | Truncated / 30 |"
     ],
     "figures/empirical_law_12models/build_figure.py": [
@@ -431,7 +431,7 @@
       "full_fit_parameters.json",
       "layout_audit.json",
       "plotted_cells.csv",
-      "realistic/outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables",
+      "realistic/outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables",
       "runs/paper_figures/figures/empirical_appendix/empirical_accuracy_12models.pdf"
     ],
     "figures/empirical_law_12models_4x3_20260919/build_figure.py": [
@@ -447,7 +447,7 @@
       "full_fit_parameters.json",
       "layout_audit.json",
       "plotted_cells.csv",
-      "realistic/outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables",
+      "realistic/outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables",
       "runs/paper_figures/figures/empirical_appendix/empirical_accuracy_12models.pdf"
     ],
     "figures/empirical_law_1x4/build_figure.py": [
@@ -472,9 +472,9 @@
       "observed_count_panel_quantiles.csv",
       "observed_length_means_all_counts.csv",
       "observed_selected_count_curves.csv",
-      "outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables",
-      "outputs/anvil_realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan/input",
-      "outputs/qwen3_32b_yarn_off_anvil_20260913/final_results",
+      "outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables",
+      "outputs/realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan/input",
+      "outputs/qwen3_32b_yarn_off_20260913/final_results",
       "reports/assets/niah_empirical_paper",
       "requests.jsonl",
       "runs/paper_figures/figures/empirical_accuracy_1x4.pdf",
@@ -500,8 +500,8 @@
       "observed_count_panel_quantiles.csv",
       "original_group_accuracy.csv",
       "predictions.csv",
-      "realistic/outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables/cell_outcomes.csv.gz",
-      "realistic/outputs/qwen3_32b_yarn_off_anvil_20260913/final_results/cell_summary.csv"
+      "realistic/outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables/cell_outcomes.csv.gz",
+      "realistic/outputs/qwen3_32b_yarn_off_20260913/final_results/cell_summary.csv"
     ],
     "figures/enumeration/appendix_style.py": [
       "Shared typography measured from the manuscript's appendix figures.\n\nAll role sizes are FINAL PRINT sizes at a 6.5 inch manuscript linewidth.\nFor a larger construction canvas, scale by canvas_width / 6.5. Do not shrink\nfont sizes to make a crowded panel fit; enlarge/rearrange the panel instead.\n",

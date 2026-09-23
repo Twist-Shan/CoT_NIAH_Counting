@@ -8,11 +8,22 @@ author-identifying manuscript files, private paths, credentials and generated
 logs/caches are excluded.
 
 `tools/validate_repo.py` checks syntax, JSON, entry points, document links,
-common credential/private-path patterns and Han characters, including escaped
-string values. The release preparation also scans known project identities
+common credential/private-path patterns, development-commit metadata,
+geographic timezones, and CJK/fullwidth characters, including Unicode escapes.
+Required model-token delimiters and punctuation are constructed from Unicode
+code points in ASCII source so that parsing behavior is preserved.
+The release preparation also scans known project identities
 and embedded artwork metadata; the identifying search terms stay outside
 this repository. Public model IDs, corpus references and required third-party
 attribution remain. Third-party authorship is not project authorship.
+
+Site-specific output-directory labels are replaced by neutral names, and
+tests for deployment scripts outside this release are omitted. Historical
+local dates remain unchanged; the source timezone and development commit
+are explicitly redacted. Original freeze hashes are kept as historical
+records, with separate checksums for the released configuration. Scientific
+settings, model revisions and input data hashes are unchanged. Public corpus
+text is retained byte-for-byte, including ordinary English words.
 
 `tools/package_release.py` exports the validated source with a checksum manifest
 and fixed ZIP timestamps, excluding `.git`, bytecode and run artifacts. It

@@ -32,10 +32,10 @@ FONT_FAMILY = paper_font()
 TITLE_PT = 10.5 if FONT_FAMILY == 'Times New Roman' else 9.5
 OUT = Path(__file__).resolve().parent
 RESEARCH = ROOT / 'realistic'
-SHORT = RESEARCH / 'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
+SHORT = RESEARCH / 'outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
 SAVED = RESEARCH / 'reports/assets/niah_empirical_paper'
-REQUESTS = RESEARCH / 'outputs/anvil_realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan/input'
-QWEN_RERUN = RESEARCH / 'outputs/qwen3_32b_yarn_off_anvil_20260913/final_results'
+REQUESTS = RESEARCH / 'outputs/realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan/input'
+QWEN_RERUN = RESEARCH / 'outputs/qwen3_32b_yarn_off_20260913/final_results'
 LONG_CONFIG = RESEARCH / 'configs/realistic_niah_v3_3_long_context.json'
 MODES = ('direct', 'native_thinking')
 MODELS = ('Qwen3-32B', 'Gemma4-31B')

@@ -30,14 +30,14 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_untrimmed_bias_sensitivity"
 )
 DEFAULT_TRIMMED_TABLES = (
     ROOT
     / "outputs"
-    / "anvil_realistic_niah_v3_1_20260819_formal"
+    / "realistic_niah_v3_1_20260819_formal"
     / "analysis"
     / "v3_2_empirical_law"
     / "tables"

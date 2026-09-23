@@ -13,8 +13,8 @@ from analyze_realistic_niah_v3_3_regression_scan import normalize_requests, add_
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSETS = ROOT / 'reports/assets/niah_empirical_front'
-ANALYSIS = ROOT / 'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis'
-LONG = ROOT / 'outputs/anvil_realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan'
+ANALYSIS = ROOT / 'outputs/realistic_niah_v3_1_20260819_formal/analysis'
+LONG = ROOT / 'outputs/realistic_niah_v3_3_long_context_20260906_holdout/analysis/v3_3_regression_scan'
 
 
 def main():

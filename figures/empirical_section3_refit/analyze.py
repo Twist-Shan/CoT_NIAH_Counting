@@ -19,10 +19,10 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(__file__).resolve().parent
 FIG = ROOT / 'figures/empirical_law_1x4'
 SHORT = ROOT / ('realistic/outputs/'
-    'anvil_realistic_niah_v3_1_20260819_formal/analysis/'
+    'realistic_niah_v3_1_20260819_formal/analysis/'
     'v3_2_inverse_n_candidate_extension/tables/cell_outcomes.csv.gz')
 RERUN = ROOT / ('realistic/outputs/'
-    'qwen3_32b_yarn_off_anvil_20260913/final_results/cell_summary.csv')
+    'qwen3_32b_yarn_off_20260913/final_results/cell_summary.csv')
 NT_FORMS = ('gaussian_sqrt', 'gaussian_linear', 'gaussian_power')
 T_FORMS = ('interaction_linear', 'interaction_log', 'additive_linear',
            'additive_log', 'interaction_free_length')

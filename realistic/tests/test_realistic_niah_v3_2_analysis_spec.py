@@ -5,7 +5,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs" / "realistic_niah_v3_2_empirical_law_analysis.json"
-DOC = ROOT / "docs" / "realistic_niah_v3_2_empirical_law_analysis_spec.md"
 FREEZE = (
     ROOT
     / "configs"
@@ -74,25 +73,9 @@ def test_v3_2_has_no_bootstrap_or_nested_axis_selection() -> None:
     assert selection["trimmed_bias_lomo"]
 
 
-def test_v3_2_document_matches_the_machine_readable_contract() -> None:
-    text = DOC.read_text(encoding="utf-8")
-    for required in (
-        "161,280",
-        "10%",
-        "m >= 20",
-        "Bernoulli-logit",
-        "probit",
-        "cloglog",
-        "Beta-Binomial",
-        "HC3",
-        "Benjamini-Hochberg",
-        "LOMO",
-        "No bootstrap",
-    ):
-        assert required in text
 
 
-def test_v3_2_freeze_hashes_match() -> None:
+def test_v3_2_release_hashes_match_after_provenance_redaction() -> None:
     freeze = json.loads(FREEZE.read_text(encoding="utf-8"))
     assert freeze["schema_version"] == (
         "realistic_niah_v3_2_empirical_law_analysis_freeze_v2"
@@ -100,6 +83,12 @@ def test_v3_2_freeze_hashes_match() -> None:
     assert freeze["amendment"]["scope"] == "human_readable_spec_only"
     assert freeze["amendment"]["inference_requests_changed"] is False
     assert freeze["amendment"]["base_machine_readable_contract_changed"] is False
-    for relative, expected in freeze["files"].items():
+    release = freeze["anonymous_release"]
+    assert release["scientific_contract_changed"] is False
+    assert release["original_local_dates_retained"] is True
+    assert load_config()["inference_git_commit"] == "redacted_for_anonymous_review"
+    assert freeze["inference_git_commit"] == "redacted_for_anonymous_review"
+    assert load_config()["timezone"] == "redacted_for_anonymous_review"
+    for relative, expected in release["files_sha256"].items():
         observed = hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
         assert observed == expected

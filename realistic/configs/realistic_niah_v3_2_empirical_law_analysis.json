@@ -3,10 +3,11 @@
   "analysis_version": "V3.2",
   "status": "frozen_post_generation_analysis_amendment",
   "frozen_date_local": "2026-08-26",
-  "timezone": "America/Chicago",
+  "timezone": "redacted_for_anonymous_review",
+  "anonymous_release_note": "Original local dates are retained; source timezone and development commit are withheld. Scientific settings and input data hashes are unchanged.",
   "timing_disclosure": "Frozen after V3.1 response generation and after an ordinary-mean exploratory analysis, but before V3.2 accuracy and trimmed-bias candidate fitting.",
   "inference_protocol": "realistic_niah_v3_1",
-  "inference_git_commit": "939410edde9885fea5c791e90fdb632254bd327c",
+  "inference_git_commit": "redacted_for_anonymous_review",
   "immutable_input": {
     "request_level_sha256": "c72db941c112b3bacb3295b304931e0dbbe2c16af87e8fa4af3bfd0ab172c819",
     "requests": 161280,

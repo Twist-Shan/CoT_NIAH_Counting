@@ -8,6 +8,7 @@ import json
 import os
 from pathlib import Path
 import re
+import unicodedata
 
 ROOT = Path(__file__).resolve().parents[1]
 SKIP_DIRS = {".git", "__pycache__", ".pytest_cache", ".ruff_cache", "runs", "work", "outputs", "output", "tmp",
@@ -18,21 +19,41 @@ PATTERNS = {
     "token": re.compile(r"\b(?:hf_|ghp_|github_pat_|sk-)[A-Za-z0-9_-]{24,}\b"),
     "user-home": re.compile(r"(?i)(?:[A-Z]:[/\\]+Users[/\\]+[^/\\\s]+|/(?:home|Users)/[^/\s\"']+/)"),
     "remote-login": re.compile(r"\b[\w.-]+@(?:\d{1,3}\.){3}\d{1,3}\b"),
+    "development-commit": re.compile(r'"inference_git_commit"\s*:\s*"[0-9a-fA-F]{40}"'),
+    "geographic-timezone": re.compile(r'"timezone"\s*:\s*"[A-Za-z_]+/[A-Za-z_/]+"'),
+    "site-install-path": re.compile(r"/apps/[A-Za-z0-9_-]+/"),
 }
 
 # Basic/extension/compatibility Han blocks, including supplementary planes.
 HAN_RANGES = ((0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xF900, 0xFAFF),
               (0x20000, 0x2EE5F), (0x2F800, 0x2FA1F), (0x30000, 0x3347F))
-UNICODE_ESCAPE = re.compile(r"\\(?:u([0-9a-fA-F]{4})|U([0-9a-fA-F]{8}))")
+OTHER_CJK_RANGES = ((0x1100, 0x11FF), (0x2E80, 0x33FF), (0xA960, 0xA97F),
+                    (0xAC00, 0xD7FF), (0xFE10, 0xFE1F), (0xFE30, 0xFE4F),
+                    (0xFF00, 0xFFEF), (0x1B000, 0x1B2FF))
+UNICODE_ESCAPE = re.compile(r"\\(?:u([0-9a-fA-F]{4})|U([0-9a-fA-F]{8})|N\{([^}]+)\})")
 
 
-def has_han(text: str) -> bool:
+def _has_characters(text: str, ranges: tuple[tuple[int, int], ...]) -> bool:
     def decode(match):
+        if match.group(3):
+            try:
+                return unicodedata.lookup(match.group(3))
+            except KeyError:
+                return match.group(0)
         value = int(match.group(1) or match.group(2), 16)
         return chr(value) if value <= 0x10FFFF else match.group(0)
     text = UNICODE_ESCAPE.sub(decode, text)
-    return any(any(low <= ord(char) <= high for low, high in HAN_RANGES)
+    return any(any(low <= ord(char) <= high for low, high in ranges)
                for char in text if ord(char) > 127)
+
+
+def has_han(text: str) -> bool:
+    return _has_characters(text, HAN_RANGES)
+
+
+def has_cjk_or_fullwidth(text: str) -> bool:
+    """Check source text and escapes; runtime token code points remain supported."""
+    return _has_characters(text, HAN_RANGES + OTHER_CJK_RANGES)
 
 
 def source_files():
@@ -60,8 +81,8 @@ def validate() -> dict:
         except UnicodeDecodeError:
             errors.append(f"Unexpected binary file: {rel}")
             continue
-        if has_han(rel) or has_han(text):
-            errors.append(f"Han characters in source, path or escaped text: {rel}")
+        if has_cjk_or_fullwidth(rel) or has_cjk_or_fullwidth(text):
+            errors.append(f"CJK/fullwidth characters in source, path or escaped text: {rel}")
         try:
             if p.suffix == ".py":
                 ast.parse(text, filename=rel)

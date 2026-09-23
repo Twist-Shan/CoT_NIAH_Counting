@@ -18,7 +18,7 @@ import pandas as pd
 
 OUT = Path(__file__).resolve().parent
 ROOT = OUT.parents[1]
-TABLES = ROOT / 'realistic/outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
+TABLES = ROOT / 'realistic/outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
 SUMMARY = ROOT / 'figures/empirical_law_1x4/observed_count_panel_quantiles.csv'
 ANALYSIS = ROOT / 'figures/empirical_section3_refit'
 ORDER = [

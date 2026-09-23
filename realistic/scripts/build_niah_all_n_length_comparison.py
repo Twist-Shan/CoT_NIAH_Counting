@@ -20,14 +20,14 @@ sys.path.insert(0, str(ROOT))
 from scripts.analyze_realistic_niah_v3_2_empirical_laws import (
     clip_probability, condition_fold, HEADLINE_ACCURACY,
 )
-ANALYSIS=ROOT/'outputs/anvil_realistic_niah_v3_3_long_context_20260906_holdout/analysis'
+ANALYSIS=ROOT/'outputs/realistic_niah_v3_3_long_context_20260906_holdout/analysis'
 ASSETS=ROOT/'reports/assets/niah_empirical_all_n_length'
 FOLDERS={'L_k':ANALYSIS/'v3_3_all_n_linear_length_20260909','logL':ANALYSIS/'v3_3_all_n_log_length_20260909'}
 MODELS=('Gemma4-31B','Qwen3-32B')
 MODES=('direct','native_thinking')
 MODE_RULE={'direct':'L_k','native_thinking':'logL'}
 HOLDOUT=ANALYSIS/'v3_3_regression_scan/tables/n_fixed_shared_length_metrics.csv'
-SHORT_RANGE=ROOT/'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_n_fixed_shared_length_20260909/tables/metrics.csv'
+SHORT_RANGE=ROOT/'outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_n_fixed_shared_length_20260909/tables/metrics.csv'
 
 
 def add_input_arguments(parser):

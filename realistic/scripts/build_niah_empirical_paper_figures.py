@@ -21,7 +21,7 @@ from build_niah_all_n_length_comparison import load_results, MODE_RULE, MODELS, 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'reports/assets/niah_empirical_paper'
 LONG=ROOT/'reports/assets/niah_empirical_all_n_length'
-SHORT=ROOT/'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
+SHORT=ROOT/'outputs/realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
 
 
 def save(fig,stem):

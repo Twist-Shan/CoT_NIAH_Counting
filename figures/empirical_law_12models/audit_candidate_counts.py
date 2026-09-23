@@ -6,7 +6,7 @@ import pandas as pd
 
 OUT = Path(__file__).resolve().parent
 ROOT = OUT.parents[1]
-BASE = ROOT / 'realistic/outputs/anvil_realistic_niah_v3_1_20260819_formal/20260819_formal'
+BASE = ROOT / 'realistic/outputs/realistic_niah_v3_1_20260819_formal/20260819_formal'
 COUNTS = [5, 8, 9, 12, 15]
 MODES = ['direct', 'native_thinking']
 KEYS = ['comparison_slot', 'L', 'N', 'prompt_mode']

@@ -19,5 +19,18 @@
     "configs/realistic_niah_v3_2_empirical_law_analysis.json": "0ca903e962f181c8ac2a7df7544c3f3ae6a5e0650f05a9dddb5febbd32f2dece"
   },
   "immutable_request_level_sha256": "c72db941c112b3bacb3295b304931e0dbbe2c16af87e8fa4af3bfd0ab172c819",
-  "inference_git_commit": "939410edde9885fea5c791e90fdb632254bd327c"
+  "inference_git_commit": "redacted_for_anonymous_review",
+  "anonymous_release": {
+    "scope": "provenance_redaction_only",
+    "redacted_fields": [
+      "timezone",
+      "inference_git_commit"
+    ],
+    "original_local_dates_retained": true,
+    "scientific_contract_changed": false,
+    "historical_file_hashes": "The original freeze records above are retained; current released files use the checksums below.",
+    "files_sha256": {
+      "configs/realistic_niah_v3_2_empirical_law_analysis.json": "27d45f27bc01db5c5db4bf00ab1c0158d959d630520d554a898886ad8a907631"
+    }
+  }
 }

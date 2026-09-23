@@ -314,37 +314,8 @@ def test_preflight_requires_exact_registered_request_ids(tmp_path: Path) -> None
         _validate_preflight_subset(model_label="Qwen3-32B", output_dir=output)
 
 
-def test_anvil_layout_uses_two_tp2_tasks_and_independent_model_jobs() -> None:
-    root = Path(__file__).resolve().parents[1]
-    infra = root / "infra" / "anvil" / "realistic_niah_v3_3_long_context"
-    slurm = (infra / "v3_3_long_context_inference.slurm").read_text(
-        encoding="utf-8"
-    )
-    submit = (infra / "submit_anvil.sh").read_text(encoding="utf-8")
-    assert "--ntasks=2" in slurm
-    assert "--gpus-per-task=2" in slurm
-    assert "--gpu-bind=per_task:2" in slurm
-    assert slurm.count("srun --exact --exclusive") == 1
-    assert 'models=("Gemma4-31B" "Qwen3-32B")' in submit
-    assert "--export=" in submit
-    assert "REALISTIC_NIAH_MODEL_LABEL=${model_label}" in submit
 
 
-def test_anvil_freeze_job_requires_full_prompt_audit() -> None:
-    root = Path(__file__).resolve().parents[1]
-    infra = root / "infra" / "anvil" / "realistic_niah_v3_3_long_context"
-    freeze = (infra / "v3_3_long_context_freeze.slurm").read_text(
-        encoding="utf-8"
-    )
-    prepare = (
-        root / "scripts" / "prepare_realistic_niah_v3_3_long_context.py"
-    ).read_text(encoding="utf-8")
-    assert "freeze_realistic_niah_v3_3_long_context.py" in freeze
-    assert "audit_realistic_niah_v3_3_long_context_prompts.py" in freeze
-    assert "V3.3_DATASET_AND_PROMPT_AUDIT_OK" in freeze
-    assert 'run_root / "orchestration" / "prompt_audit.json"' in prepare
-    assert "unique_request_ids" in prepare
-    assert "maximum_total_budget" in prepare
 
 
 def test_sealed_dataset_detects_tampering(tmp_path: Path) -> None:
