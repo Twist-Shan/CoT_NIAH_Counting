@@ -119,9 +119,6 @@ def test_finalizer_accepts_all_four_terminal_failures(tmp_path: Path) -> None:
     assert len(integrated["branch_outcomes"]) == 4
     assert discovery["seed_count"] == 20
     assert confirmation is None
-    assert "unsupported bridge" in REPORT._chain(
-        "Qwen3-8B", integrated, _target_meta("Qwen3-8B")
-    )
 
 
 def test_finalizer_accepts_confirmed_final_branch(tmp_path: Path) -> None:
@@ -160,99 +157,8 @@ def test_report_contract_accepts_audited_exhaustion(tmp_path: Path) -> None:
     REPORT._assert_contract(evidence)
 
 
-def test_report_renders_broken_chain_for_exhausted_models(tmp_path: Path) -> None:
-    integrated, discovery, _confirmation = LEDGER.finalize(
-        _make_spec(tmp_path), base=tmp_path
-    )
-    targeted_gates = {
-        "clean_endpoint_adequacy": _metric(1.0),
-        "targeted_bank_changes_final_count": _metric(0.4),
-        "retrieval_failure_propagates_to_count": _metric(0.6),
-    }
-    qwen_readout = {
-        "storage_main_effect": _metric(4.0),
-        "residual_relay_contribution": _metric(2.0),
-        "direct_reread_contribution_after_relay": _metric(1.0),
-        "joint_cut_residual_equivalence": _metric(0.05),
-    }
-    gemma_readout = {
-        "storage_main_effect": _metric(3.0),
-        "trace_source_specific_occlusion": _metric(-2.0),
-        "trace_mask_residual_equivalence": _metric(0.04),
-    }
-    evidence = {}
-    for model, readout_gates in (
-        ("Qwen3-8B", qwen_readout),
-        ("Gemma4-E4B", gemma_readout),
-    ):
-        model_integrated = dict(integrated)
-        model_integrated["model_label"] = model
-        evidence[f"{model}:targeted"] = {
-            "status": "PASS",
-            "confirmation": {"gates": targeted_gates},
-        }
-        evidence[f"{model}:targeted_plan_meta"] = _target_meta(model)
-        evidence[f"{model}:readout"] = {
-            "status": "PASS",
-            "confirmation_claim_gates": {"gates": readout_gates},
-        }
-        evidence[f"{model}:integrated"] = model_integrated
-        evidence[f"{model}:integrated_discovery_audit"] = discovery
-    REPORT._assert_contract(evidence)
-    document = REPORT.build(evidence, {})
-    assert document.count("unsupported bridge") == 2
-    assert "不支持完整串行中介链" in document
 
 
-def test_report_renders_model_specific_mixed_outcome(tmp_path: Path) -> None:
-    q_integrated, q_discovery, q_confirmation = LEDGER.finalize(
-        _make_spec(tmp_path / "qwen", pass_final=True), base=tmp_path / "qwen"
-    )
-    g_integrated, g_discovery, _ = LEDGER.finalize(
-        _make_spec(tmp_path / "gemma"), base=tmp_path / "gemma"
-    )
-    targeted_gates = {
-        "clean_endpoint_adequacy": _metric(1.0),
-        "targeted_bank_changes_final_count": _metric(0.4),
-        "retrieval_failure_propagates_to_count": _metric(0.6),
-    }
-    evidence = {
-        "Qwen3-8B:targeted": {"status": "PASS", "confirmation": {"gates": targeted_gates}},
-        "Gemma4-E4B:targeted": {"status": "PASS", "confirmation": {"gates": targeted_gates}},
-        "Qwen3-8B:targeted_plan_meta": _target_meta("Qwen3-8B"),
-        "Gemma4-E4B:targeted_plan_meta": _target_meta("Gemma4-E4B"),
-        "Qwen3-8B:readout": {
-            "status": "PASS",
-            "confirmation_claim_gates": {
-                "gates": {
-                    "storage_main_effect": _metric(4.0),
-                    "residual_relay_contribution": _metric(2.0),
-                    "direct_reread_contribution_after_relay": _metric(1.0),
-                    "joint_cut_residual_equivalence": _metric(0.05),
-                }
-            },
-        },
-        "Gemma4-E4B:readout": {
-            "status": "PASS",
-            "confirmation_claim_gates": {
-                "gates": {
-                    "storage_main_effect": _metric(3.0),
-                    "trace_source_specific_occlusion": _metric(-2.0),
-                    "trace_mask_residual_equivalence": _metric(0.04),
-                }
-            },
-        },
-        "Qwen3-8B:integrated": q_integrated,
-        "Gemma4-E4B:integrated": {**g_integrated, "model_label": "Gemma4-E4B"},
-        "Qwen3-8B:integrated_discovery_audit": q_discovery,
-        "Qwen3-8B:integrated_confirmation_audit": q_confirmation,
-        "Gemma4-E4B:integrated_discovery_audit": g_discovery,
-    }
-    REPORT._assert_contract(evidence)
-    document = REPORT.build(evidence, {})
-    assert document.count("unsupported bridge") == 1
-    assert "Qwen3-8B 获得完整 confirmation 链" in document
-    assert "Gemma4-E4B 只确认了链条两端" in document
 
 
 def test_evidence_assembler_audits_all_components_and_branches(tmp_path: Path) -> None:

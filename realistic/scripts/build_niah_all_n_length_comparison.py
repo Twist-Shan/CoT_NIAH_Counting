@@ -196,41 +196,6 @@ def draw_mode_rule(model,data):
     return plotted
 
 
-def mode_rule_section(data,audit):
-    schemes=audit['schemes'];chosen=schemes.loc[schemes.is_requested].iloc[0]
-    rows=[]
-    for _,r in audit['groups'].iterrows():
-        rows.append({'模型':r.model,'模式':'Non-thinking' if r['mode']=='direct' else 'Native-thinking',
-            '统一形式':'线性 L' if r.rule_form=='L_k' else '对数 ln L','R²':f'{r.rule_cell_R2:.3f}',
-            '预测误差':f'{r.rule_CV_log_loss:.4f}','比本组最优形式多出的误差':f'{100*r.relative_cost:.2f}%'})
-    def table(rows):
-        return pd.DataFrame(rows).to_html(index=False,classes='data-table',border=0)
-    figures=''
-    for number,model in enumerate(MODELS,3):
-        figures+=f'<figure><img src="{image_uri(ASSETS/f"{model}_mode_length_rule.png")}" alt="{model} 采用 Non-thinking 线性和 Native-thinking 对数的统一形式"><figcaption><strong>图 P{number}</strong><span>{model}。左图指定 Non-thinking 使用线性 L，右图指定 Native-thinking 使用对数 ln L；每个 N 各有一个截距，每种模式共用一个长度系数。横轴是原文长度，采用对数刻度；纵轴是正确率；颜色表示 N，空心点为观测正确率，实线/虚线为两种模式的完整数据拟合。包含全部 14 个 N、1k–100k 和每个条件 30 次请求，未绘制误差条。竖直点线表示 20k。R² 越大表示观测点整体贴合越好，CV log loss 越小表示留出预测误差越低。Qwen 左图采用便于统一描述的线性形式，其最优形式仍是对数。</span></figcaption></figure>'
-    scheme_rows=[]
-    for _,r in schemes.iterrows():
-        scheme_rows.append({'Non-thinking':'线性 L' if r.non_thinking_form=='L_k' else '对数 ln L',
-            'Native-thinking':'线性 L' if r.native_thinking_form=='L_k' else '对数 ln L','平均预测误差':f'{r.mean_CV_log_loss:.4f}'})
-    holdout=[]
-    for _,r in audit['frozen_holdout'].iterrows():
-        holdout.append({'模型':r.model,'模式':'Non-thinking' if r['mode']=='direct' else 'Native-thinking',
-            '线性：长程预测误差':f'{r.linear_holdout_log_loss:.4f}','对数：长程预测误差':f'{r.log_holdout_log_loss:.4f}'})
-    q=audit['groups'].loc[audit['groups'].model.eq('Qwen3-32B')&audit['groups']['mode'].eq('direct')].iloc[0]
-    return f'''<div id="mode-length-rule"><h4>两种模式能否各用一种统一形式？</h4>
-<p><strong>在这两个模型、1k–100k 的整体拟合中，可以将“Non-thinking 用线性、Native-thinking 用对数”作为统一近似。</strong>两模型等权平均后，这一组合在四种统一方案中预测误差最低。平均误差为 {chosen.mean_CV_log_loss:.4f}；每组分别选最优形式时为 {chosen.group_best_CV_log_loss:.4f}，统一后增加 {100*chosen.relative_cost_vs_group_best:.2f}%。</p>
-<p>这里的预测误差是交叉验证 log loss，越小越好。例如从 0.30 降到 0.27 表示该误差降低 10%，不表示准确率提高 10 个百分点（这是说明性示例）。</p>
-<div class="table-wrap">{table(rows)}</div>
-<p><strong>Qwen Non-thinking 仍是例外。</strong>它在线性形式下的误差是 {q.linear_CV_log_loss:.4f}，对数形式是 {q.log_CV_log_loss:.4f}。选择线性会比本组最优形式多出 {100*q.relative_cost:.2f}% 的误差；对数在五个验证折中都更好。因此，目前可以保留一个简洁的统一描述，但“Non-thinking 每个模型都更适合线性”还没有得到支持。</p>
-<p>下面每个模型一张图，按统一方案展示。原来的两种形式比较和逐个 N 的详细图保留在后面的折叠区。</p>
-{figures}
-<p><strong>适用范围：</strong>上述结论来自两模型在整个 1k–100k 范围内重新拟合。用 1k–20k 拟合后直接预测 25k–100k 时，Qwen Non-thinking 的线性误差为 0.9930，对数为 0.5641，差距明显增大。原 V3.2 的 12 个比较槽中，Non-thinking 有 8 个更适合对数。因此，统一近似的适用范围需要保留，尚不能作为所有模型或长程外推的共同规律。</p>
-<details><summary>统一方案比较、短程拟合后的长程预测与验证细节</summary>
-<p>所有方案复用同一批数据、同一组 N 截距、同一五折条件切分和已经保存的八组拟合。两个模型与两种模式仍分别估计系数，每组 15 个系数，总计 60 个；统一的是长度形式。四组请求数相同，合并请求误差等于四组等权平均。这里是看到候选结果后的探索性比较，尚未进行独立数据确认。</p>
-<div class="table-wrap">{table(scheme_rows)}</div>
-<p>以下为原有冻结短程系数的外推结果，仅用于说明适用范围；每组在 25k–100k 评价 3,780 次请求。两种形式使用相同数据，误差越小越好。</p>
-<div class="table-wrap">{table(holdout)}</div>
-<p>逐个 N、逐个 L 和五个验证折的配对误差保存在 mode_rule_per_N.csv、mode_rule_per_L.csv 和 mode_rule_folds.csv。五折训练集相互重叠，这里的方向一致性不作五次独立实验或显著性检验解释。统一主图来自完整数据拟合，不能替代外推验证。</p></details></div>'''
 
 
 def draw_model(model,data):
@@ -272,39 +237,6 @@ def draw_model(model,data):
     return plotted
 
 
-def build_section():
-    data,_=load_results();compare=comparison_rows(data['metrics'])
-    audit=evaluate_mode_rule(data)
-    rows=[]
-    for _,r in compare.iterrows():
-        rows.append({'模型':r.model,'模式':'Non-thinking' if r['mode']=='direct' else 'Native-thinking',
-            '线性 L：R²':f'{r.linear_cell_R2:.3f}','对数 ln L：R²':f'{r.log_cell_R2:.3f}',
-            '留出预测更好的形式':'对数 ln L' if r.preferred=='logL' else '线性 L'})
-    table=pd.DataFrame(rows).to_html(index=False,classes='data-table',border=0)
-    figures=''
-    details=''
-    for number,model in enumerate(MODELS,3):
-        figures+=f'<figure><img src="{image_uri(ASSETS/f"{model}_length_comparison.png")}" alt="{model} 的线性与对数长度回归，包含全部 N 和两种模式"><figcaption><strong>图 P{number} 补充比较</strong><span>{model}，每个模型一张图。左列为 Non-thinking，右列为 Native-thinking；上行为线性 L，下行为对数 ln L。颜色表示 N，空心点是观测正确率，线是完整数据拟合。四个面板都用相同的对数横轴，范围为 1k–100k。竖直点线标出 20k。R² 衡量图中观测点的整体贴合，CV D² 衡量留出条件上的预测。</span></figcaption></figure>'
-        for term,suffix in [('L_k',''),('logL','_logL')]:
-            label='线性 L' if term=='L_k' else '对数 ln L'
-            details+=f'<figure><img src="{image_uri(ASSETS/f"{model}_all_N{suffix}.png")}" alt="{model} {label} 各个 N 的详细曲线"><figcaption>{model} · {label}。每个小图固定 N，橙色实线/圆点为 Non-thinking，紫色虚线/三角为 Native-thinking；原文长度使用线性刻度，纵轴是正确率，点为观测、线为拟合。</figcaption></figure>'
-    numeric=data['per_N_metrics'].to_html(index=False,classes='data-table',border=0,float_format=lambda x:f'{x:.4f}',na_rep='未定义')
-    coeff=data['coefficients'][['model','mode','length_term','term','estimate','ci95_low','ci95_high']].to_html(index=False,classes='data-table',border=0,float_format=lambda x:f'{x:.5f}',na_rep='不可用')
-    return r'''<div id="all-n-linear-length"><h3>全部 N：比较线性 L 和对数 ln L</h3>
-<p>保留全部 14 个 N，每个 N 有自己的起点。我们分别尝试一个共同的线性长度系数，和一个共同的对数长度系数。两个模型、两种模式分别拟合，没有交叉项。每组、每种形式均为 14 个截距加 1 个长度系数。</p>
-<p>数据范围是 1k–100k，共 28,560 次请求。这里使用全部 N；前面的 N=10 图是单独检验，结果需要分别理解。</p>
-<div class="table-wrap">@@TABLE@@</div>
-<p><strong>Native-thinking：</strong>两个模型都更适合对数长度；Gemma 的 R² 从 0.907 提高到 0.949，Qwen 从 0.646 提高到 0.794。留出条件上的预测也支持这一方向。<strong>Non-thinking：</strong>Gemma 更适合线性长度，Qwen 略偏向对数长度，仍没有统一形式。</p>
-@@MODE_RULE@@
-<details><summary>每个模型的线性与对数对比图</summary>@@FIGURES@@</details>
-<p>整体 R² 同时包含 N 和 L 的解释能力。即使整体分数较高，也可能有个别 N 拟合较差。例如 Qwen Non-thinking 的 N=10 在长端回升，两种共同负斜率都无法完整解释。</p>
-<details><summary>逐个 N 的详细图</summary>@@DETAILS@@</details>
-<details><summary>系数、各 N 指标与计算方式</summary>
-<div class="math-block">\[\operatorname{logit}p(N,L)=\alpha_N+\beta f(L),\qquad f(L)\in\{L/1000,\ln(L/1000)\}.\]</div>
-<p>共享的是 logit 概率上的长度系数，概率图中的曲线不必平行。两种形式采用同一 Bernoulli GLM、同一五折留条件规则、同一批样本；全部 N 保留。用较低的 CV log loss 比较两种形式，不进行新的多候选筛选。曲线使用全数据拟合；当前比较不代表 100k 以外的外推。</p>
-<p>整体 R² 使用每组全部 238 个条件；各 N 的 R² 使用该 N 的 17 个长度。负值表示不如该组观测均值；零方差时标为未定义。系数区间使用 HC3 95% 区间，未校正多重比较。</p>
-<div class="table-wrap">@@NUMERIC@@</div><div class="table-wrap">@@COEFF@@</div>
-<p>复现：python -s scripts/analyze_niah_all_n_linear_length.py --length-term logL；python -s scripts/build_niah_all_n_length_comparison.py；python -s scripts/build_niah_empirical_n_fixed_addendum.py。线性版本不带 --length-term 参数。比较数据、图片与清单在 reports/assets/niah_empirical_all_n_length。</p></details></div>'''.replace('@@TABLE@@',table).replace('@@MODE_RULE@@',mode_rule_section(data,audit)).replace('@@FIGURES@@',figures).replace('@@DETAILS@@',details).replace('@@NUMERIC@@',numeric).replace('@@COEFF@@',coeff)
 
 
 def main():

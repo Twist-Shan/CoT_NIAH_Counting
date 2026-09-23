@@ -1,105 +1,53 @@
-# Validation
+# Validation after source cleanup
 
-These checks establish software behavior and the explicitly stated report
-regeneration results. They are not a full GPU rerun or an independent
-confirmation of the paper's measurements.
+The 2026-09-23 checks below cover the cleaned source and CPU behavior. They do
+not establish a complete GPU rerun or independent confirmation of the paper's
+measurements. Generated experiment inputs and results are not bundled.
 
 | Check | Observed result |
 |---|---|
-| Clean CPU installation | Passed in a newly created Windows AMD64 / Python 3.12.7 virtual environment without system packages; CPU PyTorch followed by `requirements/cpu.txt`; `pip check` reported no broken requirements |
-| CPU smoke | Passed: parser/corpus hashes, saved/main-preset agreement, trace serialization, SDPA/explicit-attention agreement, causal mask, forward/backward and optimizer step in both synthetic modes |
-| Selected realistic tests | **196 passed, 2 skipped** |
-| Selected synthetic tests | **39 passed** |
-| Retained V4.4 report tests | **5 passed** after removing assertions for the excluded integrated report |
-| Registered interfaces | Original 20 entries checked; the two new Appendix H preparation/figure interfaces also pass help checks |
-| Final Figure 2 | Rebuilt PDF/SVG/PNG and seven CSVs from explicit external input paths; all seven numerical exports match the original exports with relative/absolute tolerance 1e-12; built-in layout checks passed and PNG inspected |
-| Fresh-result Figure 2 | A changed-outcome fixture with negative Thinking gains renders using DejaVu Serif; explicit reference verification rejects it; inconsistent accuracy/count fields are still rejected |
-| Appendix H figures | Three paper figures rendered from archived inputs with explicit paths; all three plot CSVs match the original exports at 1e-12; built-in layout checks pass |
-| Appendix H fresh preparation | CPU character-tokenizer fixture: 2,400 trajectories produce four 600-row plans, natural tables and a portable hashed package; all 2,400 anchor plans match the original preparation algorithm on that fixture; no model inference |
-| Figure dependencies | Static inventory: 46 mapped assets, 104 figure Python files, 12 explicit helper/artwork/config files and available imported packages; not a complete dynamic dependency graph |
-| Recovered helpers / PDF tools | Three consuming synthetic builders really import and their PCA helpers render a fixture; pypdf composes two PDF pages; restored overview XML parses |
-| Earlier empirical report figures | Both length-comparison and fitted-law figure builders executed successfully using relocated CSV/JSON inputs |
-| Synthetic integrated report | Rebuilt successfully using an external `--run-root`, output and asset directory |
-| Local Enumeration Bash orchestration | Eight scripts passed `bash -n`; no GPU execution |
-| Source checks | Python/JSON parsing, registered entry files, reader-facing links and credential/private-path scans |
+| Selected realistic tests | 309 passed, 4 skipped |
+| Selected synthetic tests | 38 passed |
+| All test modules collect | 1,296 realistic tests and 47 synthetic tests load without collection errors |
+| CPU smoke | Passed: frozen parser/corpus hashes, saved/main preset agreement, trace serialization, attention implementation agreement, causal mask, forward/backward and optimizer step |
+| Figure source inventory | 46 mapped manuscript assets, 109 figure Python modules and 12 explicitly declared helper/artwork/config files; no missing sources or imported packages |
+| Changed command interfaces | Geometry export, evidence export, answer/trace summary, empirical figure builder, Non-thinking PCA16 builder and root entry-point list all load |
+| Numeric preservation | Eight retained geometry, empirical prediction and evidence-validation function definitions match their pre-cleanup ASTs exactly |
+| JSON figure-data bridge | CPU fixture verifies PCA coordinates survive serialization, the input/output hash ledger agrees, and the appendix extractor reads JSON without an HTML file |
+| Source audit | Python/JSON parsing, entry points, reader-facing links, common credential/private-path patterns, direct and escaped Han characters |
+| Metadata audit | Four editable diagram files and the STIX notice remain byte-identical to the inspected versions; embedded font attribution is retained |
 
-The two skips remain explicit: a CUDA-only test and the check requiring the
-original frozen realistic stimulus JSONL. Neither is counted as passing.
-The restored Qwen layer-diagnostic tests are included, together with provenance
-guards for fresh V3.1 preparation and the retained additional-task checks.
-The latter mock the expensive grid auditor to test routing/rejection behavior;
-they do not constitute a newly generated full realistic dataset validation.
-The current total is 240 passing tests and two skips, including the five
-retained report tests. Six pilot-only tests from the previous selection were
-removed with their corresponding workflow.
-
-The 20 added selected tests exercise task-local discovery/control rules,
-original-token alignment and the fresh input bridge. The new complete-package
-fixture uses synthetic text and a character tokenizer. It tests construction
-and provenance, not registered model-tokenizer compatibility or GPU attention.
-The fresh runner's Broad score follows Appendix H's declared epsilon convention;
-the historical aligned-transfer normalization variant remains explicit in
-[WORKFLOWS.md](WORKFLOWS.md).
+There are 347 passing tests and four explicit skips in `tools/check_tests.py`.
+The skips require CUDA, the original frozen stimulus JSONL, or either of two
+historical machine-specific deployment queues that were already excluded from
+the release. A skipped test is not a passing test. Artifact-dependent tests
+outside the selected set were collected, not all executed.
 
 ```bash
 python tools/smoke_test.py
 python tools/check_tests.py
 python tools/check_figure_dependencies.py
-python -m pytest -q -p no:cacheprovider realistic/tests/test_realistic_niah_v4_4_report.py
 python tools/validate_repo.py --check-manifest
 ```
 
-`tools/check_tests.py` lists the exact selected test files and runs the two
-components in separate processes. Artifact-dependent and old infrastructure
-tests elsewhere are not included in the stated pass counts.
+Tests ran in the existing dedicated Windows/Python 3.12.7 CPU environment:
+NumPy 1.26.4, SciPy 1.17.1, PyTorch 2.14.0+cpu and Transformers 5.17.0.
+The previously recorded package sets are in
+[`cpu-windows-py312.lock.txt`](../requirements/cpu-windows-py312.lock.txt) and
+[`figures-windows-py312.lock.txt`](../requirements/figures-windows-py312.lock.txt).
+They are CPU environment records, not Linux/CUDA lockfiles. The first attempt
+using the system Python encountered a NumPy/SciPy binary incompatibility;
+the isolated environment above was used for the reported results.
 
-## Observed clean CPU environment
+Narrative-only report generators and rendering assertions were removed.
+Shared numerical helpers retain their existing import names. HTML dependencies
+in the affected final-figure path were replaced by direct measurement or JSON
+inputs; archived HTML remains supported where stated in
+[WORKFLOWS.md](WORKFLOWS.md). The original figure asset hashes in
+`figures/paper_assets.json` identify reference figures; they are not claims that
+every figure was regenerated during this cleanup.
 
-| Component | Version |
-|---|---|
-| Python | 3.12.7 |
-| PyTorch | 2.14.0+cpu |
-| NumPy | 1.26.4 |
-| pandas | 3.0.6 |
-| SciPy | 1.17.1 |
-| scikit-learn | 1.9.1 |
-| statsmodels | 0.15.0 |
-| Matplotlib | 3.11.2 |
-| Transformers | 5.17.0 |
-| Plotly | 7.1.0 |
-| pytest | 9.1.1 |
-
-The full observed package set is in
-[`cpu-windows-py312.lock.txt`](../requirements/cpu-windows-py312.lock.txt).
-The dependency installation used the declared ranges, then exported this
-resolved lock. It is a tested CPU environment record, not a Linux/CUDA lockfile
-or a claim about GPU model-loading compatibility. The registered inference
-and mechanistic requirement files remain separate.
-
-## Scope of changes and limits
-
-Recovered sources include two Enumeration launchers, the Qwen YaRN-off
-experiment, three technical protocols required by package construction,
-104 figure/analysis/capture/helper modules, editable overview artwork/settings,
-and the Non-thinking diagram template.
-Paths and provenance labels were sanitized; paper measurements, selection
-rules and registered model/experiment settings were not replaced with new
-results. Portable CLI options were added for the affected input contracts.
-
-Figure 2, Appendix H figures and report checks consumed local archived inputs solely for validation;
-those inputs and generated exports are not distributed. Other restored figure
-families were not all executed. Model downloads, real GPU inference, training,
-all interventions and full end-to-end paper reproduction remain unverified
-in this packaging environment. The two excluded auxiliary workflows and the
-retained paper evidence are documented in [COMPLETENESS.md](COMPLETENESS.md).
-
-The anonymous preparation includes a separate scan for known manuscript-author
-and account identifiers, credentials and private paths in the release and its
-Git objects. Legitimate third-party attribution is retained. The checksum
-manifest and deterministic ZIP describe the final delivered source snapshot;
-future result uploads and hosting-service metadata require their own review.
-## Non-thinking PCA16 validation
-
-The current source is `figures/nonthinking_pca16_only_20260921/`. Its selected-layer verification reproduced running-index CV/held-out scores and packed final-count CV scores. The released builder executed on the archived inputs: five numerical CSV exports and the relative-noise summary matched the manuscript results exactly. All three registry entries passed `--help` in the verified numerical environment.
-
-Source syntax, input links and release-content checks passed. A broader figure dependency inventory in this numerical environment reports missing optional packages for unrelated GPU/historical PDF scripts (`torch`, `tokenizers`, `pypdf`, `reportlab`, `pypdfium2`); it is not a full-repository execution pass. The PCA16 pipeline itself ran successfully. Use an isolated environment with `requirements/nonthinking-pca16.txt`; the machine's unrelated user-site NumPy 2 installation is incompatible with the verified NumPy 1 environment.
+Full model downloads, GPU inference, synthetic training, all interventions and
+end-to-end regeneration of the paper remain outside this validation. Future
+result uploads and review-hosting metadata need their own anonymity inspection;
+see [ANONYMITY.md](ANONYMITY.md).

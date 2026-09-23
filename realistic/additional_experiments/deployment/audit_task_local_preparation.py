@@ -5,7 +5,8 @@ import json
 from pathlib import Path
 import time
 
-from build_task_local_html import B, VERSION
+B = Path(__file__).resolve().parents[1]
+VERSION = "task_local_disjoint_first_20260908_v3"
 
 started=time.perf_counter(); root=B/'runs'/VERSION/'package'
 read=lambda p:json.loads(p.read_text(encoding='utf-8'))

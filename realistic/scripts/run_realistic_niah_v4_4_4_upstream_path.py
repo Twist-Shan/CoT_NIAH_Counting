@@ -14,7 +14,6 @@ from realistic_niah_v4_4_3.io import atomic_json
 from realistic_niah_v4_4_4.spec import V444Config
 from realistic_niah_v4_4_4.upstream_path_analysis import analyze_campaign, audit_campaign
 from realistic_niah_v4_4_4.upstream_path_pipeline import run_model_stage
-from realistic_niah_v4_4_4.upstream_path_report import build_html_report
 from realistic_niah_v4_4_4.upstream_path_spec import V444UpstreamPathConfig
 
 
@@ -29,7 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--stage",
         required=True,
-        choices=("model-base", "model-expanded", "analyze", "audit", "report", "campaign"),
+        choices=("model-base", "model-expanded", "analyze", "audit", "campaign"),
     )
     parser.add_argument("--run-root", required=True)
     parser.add_argument(
@@ -162,10 +161,6 @@ def main() -> int:
         _register_or_verify_snapshot(run_root, config.model_label)
         print(json.dumps(audit, ensure_ascii=False, indent=2))
         return 0 if audit["all_checks_pass"] else 1
-    if args.stage == "report":
-        report = build_html_report(run_root=run_root, config=config)
-        print(json.dumps({"report": str(report)}, ensure_ascii=False))
-        return 0
     if args.stage == "campaign":
         model(False)
         analysis = analyze_campaign(run_root, config=config)
@@ -178,7 +173,6 @@ def main() -> int:
             )
             model(True)
             analysis = analyze_campaign(run_root, config=config)
-        report = build_html_report(run_root=run_root, config=config)
         _register_or_verify_snapshot(run_root, config.model_label)
         audit = analysis["audit"]
         state = "COMPLETE" if audit["all_checks_pass"] else "AUDIT_FAILED"
@@ -187,7 +181,6 @@ def main() -> int:
             state,
             decision=analysis["decision"],
             audit=audit,
-            report=str(report),
         )
         if not audit["all_checks_pass"]:
             raise RuntimeError("V4.4.4 upstream-path audit failed")

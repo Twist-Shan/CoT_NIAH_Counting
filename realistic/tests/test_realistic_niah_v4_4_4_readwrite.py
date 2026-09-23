@@ -12,8 +12,6 @@ import torch
 from realistic_niah_v4.prompts import PromptEncoding, TokenSpan
 from realistic_niah_v4_4_3.interventions import QueryBundle
 from realistic_niah_v4_4_4.readwrite_analysis import (
-    _json_records,
-    _markdown_report,
     build_seed_metrics,
     primary_decision,
     summarize_seed_metrics,
@@ -405,13 +403,3 @@ def test_synthetic_analysis_recovers_value_dominant_read_and_write() -> None:
     assert decision["read_mode"]["classification"] == "value_dominant"
     assert decision["write_propagation"]["supported"] is True
     assert decision["serial_read_write_supported"] is True
-    report = _markdown_report(
-        {
-            "primary_decision": decision,
-            "summary": _json_records(summary),
-            "audit": {"all_checks_pass": True, "check_count": 7},
-        },
-        config=config,
-    )
-    assert "读取模式为 **value_dominant**" in report
-    assert "| L29 |" in report

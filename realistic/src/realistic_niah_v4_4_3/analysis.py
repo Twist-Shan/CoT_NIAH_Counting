@@ -776,114 +776,13 @@ def analyze_campaign(
         )
         for model, payload in analyses.items()
     }
-    if any(statistically_specific.values()):
-        conclusion = (
-            "至少一个单头同时通过冻结方向规则、matched-head 特异性与全部 head-specific exact p≤0.05。"
-        )
-    elif any(supported.values()):
-        conclusion = (
-            "冻结方向规则出现联合通过候选，但没有单头同时通过全部 matched-head 特异性 exact p≤0.05；"
-            "结果是部分/提示性支持，尚不能确认单头 OV circuit。"
-        )
-    else:
-        conclusion = (
-            "当前候选中没有单头同时通过冻结方向规则；应优先考虑分布式 multi-head/MLP/跨层重编码。"
-        )
-    lines = [
-        "# Realistic NIAH V4.4.3：OV vertical geometry 因果检验",
-        "",
-        f"**结论：** {conclusion}",
-        "",
-        "## 设计边界",
-        "",
-        "- 输入仅来自冻结的 numeric V4.4；原始 V4.4 filestream 只读。",
-        "- head 排序只使用 discovery seeds 与 fit counts；even held-out counts 不参与排序。",
-        "- staged patch 使用 5 个 screen seeds；定向 removal/injection 使用另外 5 个 confirmation seeds。",
-        "- `z_h` 与 `o_h=W_O z_h` patch 在同一线性头内理论上等价；报告把它们的数值一致性作为实现审计，而不是两份独立因果证据。",
-        "- signed injection 在 layer post-O residual 上直接加入 answer direction；同层 selected/matched 条件相同，因此它只证明层级可控性，不定位 head。",
-        "- non-count next-token KL 只控制 answer-query 局部分布，不等同于完整通用语言能力评测。",
-        "",
-        "## 模型结果",
-        "",
-    ]
-    for model, payload in analyses.items():
-        lines.extend([f"### {model}", ""])
-        for item in payload["candidate_decisions"]:
-            lines.append(
-                "- {head}: mapping={mapping}, z-control={z}, alpha-scramble={alpha}, "
-                "injection(layer-level)={injection}, removal={removal}, joint={joint}, "
-                "selected>matched(head-specific directional)={specificity}, "
-                "all head-specific exact p<=.05={specific_p}.".format(
-                    head=item["parent_candidate"],
-                    mapping=item["mapping_pass"],
-                    z=item["z_transport_vs_norm_control_pass"],
-                    alpha=item["alpha_vs_scramble_pass"],
-                    injection=item["signed_injection_pass"],
-                    removal=item["direction_removal_vs_orthogonal_pass"],
-                    joint=item["joint_ov_head_support"],
-                    specificity=item["matched_head_specificity_support"],
-                    specific_p=item["head_specific_exact_p_le_0_05"],
-                )
-            )
-        lines.extend(
-            [
-                "",
-                f"Z/O 数值等价审计最大 count-logit 差：{payload['z_o_equivalence_max_candidate_logit_delta']:.6g}",
-                "",
-                "Value-path estimand: "
-                + "; ".join(
-                    "L{layer} uses V source L{source} ({kind})".format(
-                        layer=int(row["layer"]),
-                        source=int(row["value_source_layer"]),
-                        kind=row["value_path_estimand"],
-                    )
-                    for row in payload["mapping_estimands"]
-                ),
-                "",
-                "Attention-cache audit: raw max={raw:.6g}; centered max={centered}; "
-                "centered tolerance={tolerance:.6g}; scope={scope}.".format(
-                    raw=payload["attention_cache_audit"][
-                        "raw_candidate_logit_max_abs_delta"
-                    ],
-                    centered=(
-                        "not recorded"
-                        if payload["attention_cache_audit"][
-                            "centered_candidate_logit_max_abs_delta"
-                        ]
-                        is None
-                        else f"{payload['attention_cache_audit']['centered_candidate_logit_max_abs_delta']:.6g}"
-                    ),
-                    tolerance=payload["attention_cache_audit"][
-                        "centered_tolerance"
-                    ],
-                    scope=payload["attention_cache_audit"]["scope"],
-                ),
-                "",
-            ]
-        )
-    lines.extend(
-        [
-            "## 判定规则",
-            "",
-            "单头 OV 支持要求：fit/held-out-count 映射方向同为正；donor-Z transport 优于等范数输出控制；signed injection 对 expected count 呈正斜率且 Spearman > 0.5；answer-direction removal 比等范数正交 removal 更损害 count margin/误差。Alpha-vs-scramble 单独作为 QK 定位证据，不计入 OV 必要条件。",
-            "",
-            "Matched-head specificity 是额外二级审计，不改写冻结的联合方向规则；若 selected head 未超过同层 matched head，则不能把通过方向规则写成该 head 的特异定位。",
-            "",
-            "如果严格单头特异性证据不足，本实验不能据此断言 OV 不参与；它只说明当前预注册层与单头候选尚不足以解释该几何，下一步应检验小头集合、MLP 与跨层路径。",
-            "",
-        ]
-    )
     analysis_root = Path(run_root) / "analysis"
     analysis_root.mkdir(parents=True, exist_ok=True)
-    report_path = analysis_root / "realistic_niah_v4_4_3_ov_causal_report.md"
-    atomic_text(report_path, "\n".join(lines))
     payload = {
         "schema_version": "realistic_niah_v4_4_3_campaign_analysis_v2",
         "model_support": supported,
         "statistically_specific_model_support": statistically_specific,
-        "conclusion": conclusion,
         "model_analyses": analyses,
-        "report_path": str(report_path),
     }
     atomic_json(analysis_root / "analysis.json", payload)
     return payload

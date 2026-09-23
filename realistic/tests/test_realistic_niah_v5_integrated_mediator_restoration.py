@@ -151,13 +151,6 @@ def test_mediator_restoration_rejects_selection_rank() -> None:
         raise AssertionError("selection_rank must be rejected")
 
 
-def test_report_uses_confirmed_mediator_geometry() -> None:
-    assert REPORT._mediator_label(
-        "Qwen3-8B", {"mediator_geometry": "suffix8"}
-    ) == "terminal suffix8 full state · L19–25"
-    assert REPORT._mediator_label(
-        "Gemma4-E4B", {"mediator_geometry": "full_span"}
-    ) == "terminal full-trace-item hidden state · L16–41"
 
 
 def test_integrated_geometry_marks_noncausal_span_not_applicable() -> None:

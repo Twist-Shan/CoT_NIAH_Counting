@@ -2,7 +2,7 @@
 
 Code repository for the paper **Targeted Retrieval, Compact Representations: How CoT Reasoning Improves Long-Context Counting**.
 
-This repository brings together the synthetic training experiments and realistic language-model experiments for studying counting in long contexts. It includes paired Thinking/Non-thinking evaluations, retrieval-head analysis, count-representation analysis, causal interventions, frozen experimental configurations, tests, and code for generating figures and reports. Tiny Shakespeare and small input specifications are included; pretrained weights and generated results are not tracked.
+This repository brings together the synthetic training experiments and realistic language-model experiments for studying counting in long contexts. It includes paired Thinking/Non-thinking evaluations, retrieval-head analysis, count-representation analysis, causal interventions, frozen experimental configurations, tests, and code for generating numerical results and paper figures. Tiny Shakespeare and small input specifications are included; pretrained weights and generated results are not tracked.
 
 **Start here:** [Installation and quick start](#installation-and-quick-start) · [Execution workflows](docs/WORKFLOWS.md) · [Paper figure sources](figures/README.md) · [Dataset specification](docs/DATA.md) · [Validation record](docs/VALIDATION.md)
 
@@ -36,13 +36,13 @@ CoT_NIAH_Counting/
 │   ├── src/synthetic_counting_v20/   Shared data, model, training, analysis
 │   ├── src/                         Earlier packages used by supporting code
 │   ├── configs/                     Saved paper-run configuration
-│   ├── scripts/                     Aligned analyses and report generation
+│   ├── scripts/                     Aligned analyses and numerical exports
 │   ├── tests/                       Synthetic and intervention tests
 │   └── requirements.txt
 └── realistic/
     ├── src/                         Data, models, parsers, geometry, interventions
     ├── configs/                     Frozen designs and protocol amendments
-    ├── scripts/                     Experiment stages and report generation
+    ├── scripts/                     Experiment stages and numerical exports
     ├── additional_experiments/      kth retrieval and category counting
     ├── data/                        Entity lists, prompt templates, corpus URLs
     ├── tests/                       Data, parser, analysis, and protocol tests
@@ -143,12 +143,12 @@ The independent unit for many realistic comparisons is the seed. Preserve source
 
 The repository contains source, configurations, tests, documentation, a public corpus URL list, entity/template inputs, and Tiny Shakespeare with its source checksum. Pretrained weights, essay bodies, raw generations, checkpoints, activation caches, analysis tables, result figures, reports, virtual environments, and run logs are excluded.
 
-Run the supplied stages to generate results locally; see [REPRODUCING.md](docs/REPRODUCING.md). Historical report builders require completed-run artifacts and cannot reconstruct missing measurements from the manuscript. Some model providers require access approval and local authentication before weight downloads.
+Run the supplied stages to generate results locally; see [REPRODUCING.md](docs/REPRODUCING.md). Figure builders require completed-run measurements; narrative-only report builders are omitted. Some model providers require access approval and local authentication before weight downloads.
 
-The supplied manuscript is excluded from this anonymous snapshot because it contains identifying information. Git history is newly initialized with an anonymous identity and no remote. The ZIP omits Git metadata; see [ANONYMITY.md](docs/ANONYMITY.md) for the checked scope.
+The supplied manuscript is excluded because it contains identifying information. The source ZIP omits Git metadata. A separate anonymous Git copy must start from the clean source files, without copying the development history or its remote; see [ANONYMITY.md](docs/ANONYMITY.md) for the checked scope.
 
 ## Citation and licensing
 
 If you use this code, please cite the accompanying paper, **Targeted Retrieval, Compact Representations: How CoT Reasoning Improves Long-Context Counting**, and identify the repository snapshot used. Author-identifying citation metadata is omitted during anonymous review.
 
-No project-wide software license was present in the source directories, and this preparation does not introduce a new license grant. The bundled Plotly asset retains its original notice; corpus, model, and library use remains subject to the respective terms. See [LICENSE_STATUS.md](LICENSE_STATUS.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+No project-wide software license was present in the source directories, and this preparation does not introduce a new license grant. Corpus, font, model, and library use remains subject to the respective terms; required third-party notices are retained. See [LICENSE_STATUS.md](LICENSE_STATUS.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

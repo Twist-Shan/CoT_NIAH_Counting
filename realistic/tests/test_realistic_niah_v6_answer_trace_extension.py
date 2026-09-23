@@ -328,6 +328,8 @@ def test_answer_trace_pool_amendment_validator_checks_hashes(tmp_path: Path) -> 
 
 
 def test_answer_trace_recovery_is_scoped_to_gemma_bullet() -> None:
+    if not (ROOT / "scripts/queue_realistic_niah_v6_answer_trace_extension.sh").is_file():
+        pytest.skip("Historical machine-specific deployment queue is excluded from the source release")
     queue = (
         ROOT / "scripts" / "queue_realistic_niah_v6_answer_trace_extension.sh"
     ).read_text(encoding="utf-8")
@@ -341,6 +343,8 @@ def test_answer_trace_recovery_is_scoped_to_gemma_bullet() -> None:
 
 
 def test_suffix4_relay_queue_applies_one_amendment_to_both_bullet_models() -> None:
+    if not (ROOT / "scripts/queue_realistic_niah_v6_bullet_terminal_relay_suffix4.sh").is_file():
+        pytest.skip("Historical machine-specific deployment queue is excluded from the source release")
     queue = (
         ROOT
         / "scripts"

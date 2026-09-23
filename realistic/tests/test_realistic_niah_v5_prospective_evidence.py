@@ -354,13 +354,10 @@ def test_prospective_evidence_overlays_confirmed_same_bank_chains(
     }
     evidence, hashes = REPORT._read_evidence(output)
     REPORT._assert_contract(evidence)
-    document = REPORT.build(evidence, hashes)
-    assert "K128" in document
-    assert "K6" in document
-    assert "Qwen 与 Gemma 均支持" in document
-    assert "Result-independent provenance fix" in document
-    assert document.count("prospective_same_bank_fullspan_restoration") == 0
-    report = tmp_path / "report.html"
+    snapshot = json.loads(REPORT.build(evidence, hashes))
+    assert snapshot["evidence"] == evidence
+    assert snapshot["evidence_sha256"] == hashes
+    report = tmp_path / "evidence.json"
     _build_report(output, report)
     completion = COMPLETION.audit(output, report)
     assert completion["status"] == "PASS"
@@ -442,11 +439,10 @@ def test_prospective_evidence_preserves_model_specific_exhaustion(
     REPORT._assert_contract(evidence)
     assert evidence["Qwen3-8B:targeted_plan_meta"]["bank_size"] == 128
     assert evidence["Gemma4-E4B:targeted_plan_meta"]["bank_size"] == 8
-    document = REPORT.build(evidence, hashes)
-    assert "Qwen3-8B 获得完整 confirmation 链" in document
-    assert "Gemma4-E4B 只确认了链条两端" in document
-    assert "PROTOCOL_EXHAUSTED" in document
-    report = tmp_path / "report.html"
+    snapshot = json.loads(REPORT.build(evidence, hashes))
+    assert snapshot["evidence"] == evidence
+    assert snapshot["evidence_sha256"] == hashes
+    report = tmp_path / "evidence.json"
     _build_report(output, report)
     completion = COMPLETION.audit(output, report)
     assert completion["cross_model_full_chain_confirmed"] is False

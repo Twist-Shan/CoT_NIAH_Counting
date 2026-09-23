@@ -27,11 +27,6 @@ from realistic_niah_v6.parsing import (
     parse_and_align_record,
     parse_trace_record,
 )
-from realistic_niah_v6.reporting import (
-    RESULT_SOURCES,
-    interesting_scalars,
-    validate_report_html,
-)
 from realistic_niah_v6.pipeline import (
     EXPECTED_SOURCE_STIMULI_SHA256,
     audit_stimulus_panel,
@@ -2750,69 +2745,8 @@ def test_completion_accepts_only_resolved_foundation_supersession(tmp_path: Path
         )
 
 
-def test_report_result_registry_and_scalar_projection_cover_twenty_frames() -> None:
-    assert set(RESULT_SOURCES) == {
-        experiment.experiment_id for experiment in EXPERIMENTS
-    }
-    targeted_confirmation = (
-        "causal/specialized/confirmation_analysis/targeted_counter_write/"
-        "confirmation/claim_gates.json"
-    )
-    assert RESULT_SOURCES["targeted_query_to_carrier"] == (targeted_confirmation,)
-    assert RESULT_SOURCES["carrier_to_commit_restore"] == (targeted_confirmation,)
-    values = interesting_scalars(
-        {
-            "status": "PASS",
-            "nested": {
-                "effect_estimate": 0.125,
-                "confirmation_used_for_selection": False,
-                "artifact_path": "/must/not/appear",
-            },
-        }
-    )
-    assert ("status", "PASS") in values
-    assert ("nested.effect_estimate", "0.125") in values
-    assert (
-        "nested.confirmation_used_for_selection",
-        "false",
-    ) in values
-    assert not any("artifact_path" in key for key, _ in values)
 
 
-def test_report_validator_requires_exact_twenty_by_four_structure(
-    tmp_path: Path,
-) -> None:
-    sections = "".join(
-        f'<section class="experiment-frame" id="frame-{frame}" data-frame="{frame}">'
-        + "".join(
-            f'<article class="cell" id="cell-{frame}-{cell}"></article>'
-            for cell in range(4)
-        )
-        + "</section>"
-        for frame in range(1, 21)
-    )
-    report = tmp_path / "report.html"
-    report.write_text(
-        "<!doctype html><html><body>"
-        + sections
-        + '<script type="application/json" id="v6-report-summary">{}</script>'
-        + "</body></html>",
-        encoding="utf-8",
-    )
-    result = validate_report_html(report)
-    assert result["status"] == "PASS"
-    assert result["report_frame_count"] == 20
-    assert result["model_mode_frame_cell_count"] == 80
-
-    report.write_text(
-        report.read_text(encoding="utf-8").replace(
-            'id="cell-20-3"', 'id="cell-20-2"'
-        ),
-        encoding="utf-8",
-    )
-    failed = validate_report_html(report)
-    assert failed["status"] == "FAIL"
-    assert any("duplicate ids" in error for error in failed["errors"])
 
 
 def test_failed_reserve_audit_accepts_canonical_and_legacy_labels() -> None:

@@ -12,7 +12,6 @@ from realistic_niah_v4_4_4.relay_analysis import (
     audit_relay_campaign,
 )
 from realistic_niah_v4_4_4.relay_pipeline import run_relay_model_campaign
-from realistic_niah_v4_4_4.relay_report import build_relay_html_report
 from realistic_niah_v4_4_4.relay_spec import V444RelayConfig
 from realistic_niah_v4_4_4.spec import V444Config
 
@@ -24,7 +23,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--stage",
         required=True,
-        choices=("model", "analyze", "audit", "report", "campaign"),
+        choices=("model", "analyze", "audit", "campaign"),
     )
     parser.add_argument("--run-root", required=True)
     parser.add_argument(
@@ -93,14 +92,10 @@ def main() -> int:
             base_config=base_config,
             relay_config=relay_config,
         )
-        report = build_relay_html_report(
-            run_root=run_root, relay_config=relay_config
-        )
         _write_state(
             run_root,
             "COMPLETE" if analysis["audit"]["all_checks_pass"] else "AUDIT_FAILED",
             primary_decision=analysis["primary_decision"],
-            report=str(report),
             audit=analysis["audit"],
         )
         if not analysis["audit"]["all_checks_pass"]:
@@ -115,12 +110,6 @@ def main() -> int:
         )
         print(json.dumps(audit, ensure_ascii=False, indent=2))
         return 0 if audit["all_checks_pass"] else 1
-    if args.stage == "report":
-        report = build_relay_html_report(
-            run_root=run_root, relay_config=relay_config
-        )
-        print(json.dumps({"report": str(report)}, ensure_ascii=False))
-        return 0
     raise AssertionError(args.stage)
 
 

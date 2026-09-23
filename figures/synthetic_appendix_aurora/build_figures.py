@@ -497,53 +497,6 @@ def attention_roles(pdf):
          '100 gold-prefix inputs per checkpoint. Fixed physical heads and absolute scores. Broad panels share a color scale.', pdf)
 
 
-def gallery():
-    entries = []
-    for f in FIGURES:
-        entries.append(f'<section id="{f["stem"]}"><h2>{html.escape(f["title"])}</h2><a href="{f["stem"]}.pdf">PDF</a> · <a href="{f["stem"]}.png">PNG</a> · <a href="{f["stem"]}.svg">SVG</a><img src="{f["stem"]}.png" alt="{html.escape(f["title"])}"><p>{html.escape(f["caption"])}</p></section>')
-    doc = '<!doctype html><meta charset="utf-8"><title>Synthetic appendix — Aurora</title><style>body{max-width:1200px;margin:40px auto;padding:0 24px;font:16px/1.6 system-ui;color:#161923;background:white}h1{font-size:28px}h2{font-size:21px}section{margin:45px 0;border-top:1px solid #ddd;padding-top:20px}img{display:block;width:100%;height:auto;margin-top:15px}a{color:#007EAB}p{max-width:1050px}</style><h1>Synthetic appendix: direct results in Aurora colors</h1><p>Frozen v58 results. One training run per mode. No new model runs, significance tests, or SNR/silhouette panels.</p><p><a href="'+COLLECTION+'">All figures (PDF, 2026-09-08)</a></p>'+''.join(entries)
-    (OUT/'index.html').write_text(doc, encoding='utf-8')
-    md = '# Synthetic appendix figures — Aurora\n\n'
-    md += '[新版图合集]('+COLLECTION+') · [论文尺寸预览（含图注）](synthetic_appendix_compact_paper_review_20260908.pdf)\n\n'
-    md += '正文同款模式颜色：Non-thinking `#B52F6B`，Thinking `#007EAB`。热图使用正文相同暖色渐变；PCA 使用已有 Aurora count 渐变。原始结果和正文文件未改动。\n\n'
-    md += '2026-09-08 更新：按插入论文后 5.5 英寸宽度核算，坐标标签 9 pt、图例通常 8.5 pt、最小字号 8 pt；子图统一使用 A. B. C.。图 01、03、07 保持紧凑横向三栏，图 06 改为并排双栏；四宫格统一子图高度和间距。自动收紧外边距，图注统一留出 6 pt 间距。完整说明放在独立图注中。图 10 为与图 05 同数据、同层、同 PCA 基底的 3D 对照。\n\n'
-    md += 'PDF 为独立矢量图（密集散点/热图栅格化）；PNG 为 300 dpi；另提供 SVG、合集 PDF 和 HTML 图册。独立 PDF 同步到 `runs/paper_figures/figures/synthetic_appendix/`。旧版本保存在 `archive/20260907/` 和 `archive/20260908_before_aspect/`。\n\n'
-    tex = '% Standalone candidate figures; not automatically included in main.tex.\n'
-    for f in FIGURES:
-        md += f'## {f["stem"]}: {f["title"]}\n\n[PDF]({f["stem"]}.pdf) · [PNG]({f["stem"]}.png) · [SVG]({f["stem"]}.svg)\n\n{f["caption"]}\n\n'
-        caption = f['caption'].replace('%', r'\%').replace('_', r'\_')
-        tex += '\n\\GPT{\n\\begin{figure}[p]\n\\centering\n\\includegraphics[width=\\linewidth]{figures/synthetic_appendix/'+f['stem']+'.pdf}\n\\caption{'+caption+'}\n\\label{fig:'+f['stem'].replace('_', '-')+'}\n\\end{figure}\n}\n'
-    md += '## Reproduce\n\nRun from the counting workspace:\n\n```powershell\n& "python" "figures/synthetic_appendix_aurora/build_figures.py"\n```\n\n`plot_data/` 保存全部绘图汇总；`manifest.json` 保存源数据哈希、配色和校验。图 06 的误差条直接读取已有区间；其他图为固定面板的描述性汇总。\n'
-    (OUT/'README.md').write_text(md, encoding='utf-8')
-    (OUT/'captions.tex').write_text(tex, encoding='utf-8')
-    shutil.copy2(OUT/'captions.tex', PAPER/'captions.tex')
-    # Review at the actual 5.5-inch inclusion width, with captions kept outside images.
-    proof = r'''\documentclass[10pt]{article}
-\usepackage[paperwidth=7.5in,paperheight=11in,textwidth=5.5in,textheight=9in]{geometry}
-\usepackage{graphicx,times,caption}
-\captionsetup{font=small,labelfont=bf,skip=6pt}
-\pagestyle{empty}
-\setlength{\parindent}{0pt}
-\begin{document}
-'''
-    for f in FIGURES:
-        cap = f['caption'].replace('%',r'\%').replace('_',r'\_')
-        proof += '\\begin{minipage}{\\linewidth}\n\\includegraphics[width=5.5in]{'+f['stem']+'.pdf}\n'
-        proof += '\\captionof{figure}{\\textbf{'+f['title']+'.} '+cap+'}\n\\end{minipage}\n\\par\\vspace{16pt}\n'
-    proof += '\\end{document}\n'
-    (OUT/'compact_paper_review.tex').write_text(proof,encoding='utf-8')
-    # Compact contact sheet for quickly checking completeness and palette consistency.
-    width, cell_h = 1500, 530
-    sheet = Image.new('RGB', (width, cell_h*((len(FIGURES)+2)//3)), 'white')
-    draw = ImageDraw.Draw(sheet)
-    font = preview_font(17)
-    for i, f in enumerate(FIGURES):
-        im = Image.open(OUT/(f['stem']+'.png')).convert('RGB')
-        im.thumbnail((width//3-20, cell_h-55))
-        x, y = (i%3)*(width//3), (i//3)*cell_h
-        draw.text((x+10, y+10), textwrap.fill(f'{i+1:02d}  {f["title"]}', width=48), fill=INK, font=font)
-        sheet.paste(im, (x+(width//3-im.width)//2, y+50))
-    sheet.save(OUT/'overview.png')
 
 
 def main():
@@ -576,7 +529,6 @@ def main():
             common_points[layer]=geometry(selected,pdf,shared_layer=layer,stem=stem)
         for layer,stem in [(2,'13_pca_common_l2_3d'),(4,'14_pca_common_l4_3d')]:
             geometry_3d(common_points[layer],pdf,shared_layer=layer,stem=stem)
-    gallery()
     for path, before in protected.items():
         assert hashlib.sha256(path.read_bytes()).hexdigest() == before, path
     for rel, before in SOURCES.items():

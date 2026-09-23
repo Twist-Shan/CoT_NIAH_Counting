@@ -18,7 +18,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--results',type=Path,required=True,help='Final update_answer.py output')
     p.add_argument('--legacy-figures',type=Path,required=True,help='Parent of nonthinking_ncc_selection_20260913 containing frozen selection/coordinates/domain payload')
-    p.add_argument('--cue-report',type=Path,required=True,help='Original all-layer cue report containing PROMPT_GEOM')
+    p.add_argument('--cue-data','--cue-report',dest='cue_report',type=Path,required=True,help='Original prompt_counter_geometry_data.json, or archived HTML containing PROMPT_GEOM')
     p.add_argument('--output',type=Path,required=True)
     args=p.parse_args();OUT=args.output.resolve();OUT.mkdir(parents=True,exist_ok=True)
     RESULTS=args.results.resolve();LEGACY=args.legacy_figures.resolve()
@@ -54,9 +54,13 @@ def main():
     with (prior/'pca_plot_data.csv').open(newline='') as f: rows=list(csv.DictReader(f))
     rows=[r for r in rows if r['analysis']=='domain']
     metadata=json.loads((prior/'geometry_manifest.json').read_text(encoding='utf-8'))
-    html=args.cue_report.read_text(encoding='utf-8')
-    marker='const PROMPT_GEOM='
-    cue,_=json.JSONDecoder().raw_decode(html[html.index(marker)+len(marker):])
+    text=args.cue_report.read_text(encoding='utf-8')
+    if args.cue_report.suffix.lower() == '.json':
+        cue=json.loads(text)
+        cue=cue.get('PROMPT_GEOM',cue)
+    else:
+        marker='const PROMPT_GEOM='
+        cue,_=json.JSONDecoder().raw_decode(text[text.index(marker)+len(marker):])
     stats=[]
     for model,letter in [('Qwen3-8B','A'),('Gemma4-E4B','B')]:
         layer=selection[model]['running_index']['layer']; key=f'{model}|prompt_counter|{layer}'

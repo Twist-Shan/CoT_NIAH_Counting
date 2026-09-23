@@ -175,77 +175,8 @@ def main():
             validrows.append({'Mode':mode,'K':k,'Selected count parsed (%)':100*q.selected,'Control count parsed (%)':100*q.control_mean})
     eq=json.loads((out/'cached_equivalence.json').read_text())
     clean=summary.loc[summary.arm.eq('clean')&summary.support.eq('primary'),['mode','inputs','ar_accuracy','next_marker_correct','ar_answered']]
-    report=f'''# Top-1 到 Top-8 消融：固定最后检索 query（2026-09-08）
-
-状态：已完成。v58 单训练种子，step 10000；全部 {observed:,} 条输出均保留。没有依据干预结果筛选头、control 或样本，没有新增显著性检验。
-
-## 设置与评分
-
-Selected 取 200 个 discovery 输入上冻结的全局 ranking 前 K 个 heads，K=1..8。Control 匹配每层头数，优先排除 selected，结构上不足时采用最少必要重叠；穷举全部可行组合。共 602 组 controls（NT 488、T 114），每种模式各 8 个 selected 条件。不同 K 的 control pool 不同，K>=5 开始存在必要重叠。
-
-NT 在原始 Ans query 开始干预，100 个输入（每个 count 十个）。T 在 clean 自然轨迹的第 N 个 Sep，即最后一个 marker 的 query 开始干预；干预后不提供 gold token。100 个原输入中两条 clean 轨迹未到达该 query，事先固定为 anchor 不可用。98 个可用输入中，count>=2 的 88 个构成主结果，count=1 的十个单独保存，所有条件共用同一集合。先前 marker 内容是否正确不作为筛选条件。
-
-两种模式主要结果均保持干预到 EOS 或 64-token 上限。完整前缀计算始终保留早先位置的干预；缓存实现保留干预后的实际 KV states。额外运行 NT 初始 answer-query-only 版本作为正文 broad 实验时程参考。主实验 targeted 是最后一次检索起点；此前 synthetic 从第一次 Sep 开始的结果继续保留，两者不可混称。
-
-全词表 greedy，不强制合法 marker 或数字。T 的 next-marker 分数使用 query 后、trace close/Ans/EOS 前的第一个 character token；允许先出现非 character 的格式 token，但绝不跳过错误 character 去寻找后续正确答案。立即下一 token 的合法率与正确率另外保存。目标 marker 正确之后，其他输出错误不扣 marker 分数。Count 仍用原严格解析器：第一个 Ans 后紧邻的 atomic number，缺失或无法解析计 count 错误；EOS 不影响已解析 count 正确率。
-
-Broad 的 |ablated count - clean count|/N 仅在两者可解析时有定义，缺失保持 NaN，另记录有效样本数。它不能代替全样本 count 准确率或把无效输出当作零变化。
-
-## Clean 基线
-
-{table(clean)}
-
-## 全部 K 的主要准确率
-
-表内 selected 与 control 使用相同输入；control 为所有可行组合的等权平均。
-
-{table(main_table)}
-
-Targeted 的 next-marker 指标显示，Top-4 selected 准确率为 {100*t4.selected:.2f}%，control 为 {100*t4.control_mean:.2f}%；Top-8 分别为 {100*t8.selected:.2f}% 和 {100*t8.control_mean:.2f}%。在这些输入和冻结控制集合下，selected 对 next-marker 选择造成更大损伤。最终 count 上，control 损伤仍更大，不能将 next-marker 的作用解释为整个计数过程的统一重要性排序。
-
-Broad 的 count 指标没有支持 selected 更具因果针对性：Top-4 selected 为 {100*nt4.selected:.2f}%，control 为 {100*nt4.control_mean:.2f}%；Top-8 分别为 {100*nt8.selected:.2f}% 和 {100*nt8.control_mean:.2f}%。Selected 相对 clean 的下降说明这些 heads 参与当前任务，但 control 损伤更大，不能据此声称 broad-score 选头优于同层 control。解析失败的影响需结合下表判断。
-
-![Sustained ablation](top1to8_sustained_ablation.png)
-
-图中 A 为 NT count 准确率（100 输入），B/C 分别为 T next-marker/count 准确率（同一 88 输入）；彩色为 selected，灰色线为 control 均值，浅灰区间为 control 最小至最大值，虚线为 clean。A 与 B/C 的纵轴范围不同。区间表示 head-set 差异，不是置信区间。
-
-## Control 数与必要重叠
-
-{table(pd.DataFrame(control_rows))}
-
-## 答案可解析率
-
-{table(pd.DataFrame(validrows))}
-
-## Broad 干预时程参考
-
-![Broad timing](broad_timing_reference.png)
-
-两图均为 100 个输入上的 count 准确率。初始 query-only 对应正文原 broad 时程；sustained 对应用户要求的延长干预。
-
-## 验证
-
-11 项控制组合、query 位置、评分与真实切片 CPU 检查通过；8 项缓存 RoPE、单层／跨层干预、不同长度前缀与完整前缀轨迹对照检查通过。
-
-GPU 上 clean 前缀续写与原始 clean 轨迹逐 token 一致；batch=1 与不同长度 batch 的轨迹一致。Top-4 selected 和 Top-8 control 的真实 pre-O slices 检查通过，其他切片不变且无 hook 泄漏。
-
-缓存与完整前缀等价核查：{json.dumps(eq,ensure_ascii=False)}。
-
-## 可复现文件
-
-- `protocol.json`：运行前冻结的 ranking、602 组 controls、输入、checkpoint 与代码哈希。
-- `anchor_registry.csv`、`prefixes.jsonl`：所有原始输入的 query 可用性和固定 clean 前缀。
-- 两模式 `arms/*.csv`：每个条件完整输出；没有覆盖旧实验。
-- `all_condition_summary.csv`：所有条件的全部指标，含 primary、all-available、count1。
-- `selected_vs_all_controls.csv`：每个 K 的均值、范围、差值和数值位移有效样本数。
-- `per_count_summary.csv`：逐 count 结果。
-- `validation.json`、`cached_equivalence.json`、`cache_execution.json`、`manifest.json`：实现检查与来源校验。
-
-所有图为新增结果图，使用正文 Aurora 模式颜色和 A. B. C. 标注。正文、appendix 和既有图未改动。本轮只有一个训练种子；不能将遍历 control 组合当作独立训练重复。
-'''
-    (out/'RESULTS.md').write_text(report,encoding='utf-8')
     print(main_table.to_string(index=False))
-    print('Rows:',observed,'Report:',out/'RESULTS.md')
+    print('Rows:', observed, 'Output:', out)
 
 
 if __name__=='__main__':main()

@@ -11,7 +11,6 @@ from realistic_niah_v4_4_3.io import atomic_json
 from realistic_niah_v4_4_4.spec import V444Config
 from realistic_niah_v4_4_4.readwrite_analysis import analyze_campaign, audit_campaign
 from realistic_niah_v4_4_4.readwrite_pipeline import run_model_campaign
-from realistic_niah_v4_4_4.readwrite_report import build_html_report
 from realistic_niah_v4_4_4.readwrite_spec import V444ReadWriteConfig
 
 
@@ -22,7 +21,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--stage",
         required=True,
-        choices=("model", "analyze", "audit", "report", "campaign"),
+        choices=("model", "analyze", "audit", "campaign"),
     )
     parser.add_argument("--run-root", required=True)
     parser.add_argument(
@@ -121,14 +120,12 @@ def main() -> int:
             return 0
     if args.stage in {"analyze", "campaign"}:
         analysis = analyze_campaign(run_root, config=config)
-        report = build_html_report(run_root=run_root, config=config)
         state = "COMPLETE" if analysis["audit"]["all_checks_pass"] else "AUDIT_FAILED"
         _write_state(
             run_root,
             state,
             primary_decision=analysis["primary_decision"],
             audit=analysis["audit"],
-            report=str(report),
         )
         if not analysis["audit"]["all_checks_pass"]:
             raise RuntimeError("V4.4.4 read/write supplement final audit failed")
@@ -138,10 +135,6 @@ def main() -> int:
         audit = audit_campaign(run_root, config=config)
         print(json.dumps(audit, ensure_ascii=False, indent=2))
         return 0 if audit["all_checks_pass"] else 1
-    if args.stage == "report":
-        report = build_html_report(run_root=run_root, config=config)
-        print(json.dumps({"report": str(report)}, ensure_ascii=False))
-        return 0
     raise AssertionError(args.stage)
 
 

@@ -50,6 +50,9 @@ def read_csv(path: Path) -> list[dict]:
 
 
 def embedded(path: Path, name: str):
+    data_path = path.with_suffix(".json")
+    if data_path.is_file():
+        return read_json(data_path)[name]
     text = source(path).read_text(encoding="utf-8")
     matches = list(re.finditer(r"\bconst\s+" + re.escape(name) + r"\s*=", text))
     assert len(matches) == 1, (path, name, len(matches))
@@ -226,7 +229,8 @@ def export_domain(canonical: dict) -> dict:
 
 def export_cue() -> dict:
     path = R / "reports/v4_non-thinking_causal/v4_4_2/realistic_niah_v4_4_2_mode_geometry_attention_report.html"
-    payload = embedded(path, "NATIVE_GEOM")
+    data_path = R / "outputs/v4_4_2_counter_geometry/counter_geometry_data.json"
+    payload = read_json(data_path) if data_path.is_file() else embedded(path, "NATIVE_GEOM")
     meta = {"source_constant": "NATIVE_GEOM", "source_site": "answer_query",
             "state_definition": "Last captured token whose query role is answer_query (the registered answer-query interval before numeric answer); not trace_last, trace_mean, or an item-end running state.",
             "label_semantics": "Gold final N=1..10", "seeds": list(range(1234, 1244)),

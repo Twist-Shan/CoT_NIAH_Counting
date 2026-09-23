@@ -592,302 +592,12 @@ def _write_csvs(
     return head_path, ordinal_path, attention_path
 
 
-def _model_section(model: str, bundle: dict[str, Any], assets: Path) -> str:
-    rankings = bundle["rankings"]
-    default_grammar = "all"
-    shared_vmax = max(
-        float(row["score"])
-        for value in rankings.values()
-        for row in value["rows"]
-    )
-    maps: list[str] = []
-    options: list[str] = []
-    for grammar, value in rankings.items():
-        n_seeds = int(value["n_seeds"])
-        exploratory = n_seeds < ROBUST_SEED_THRESHOLD
-        status = " · exploratory" if exploratory else ""
-        options.append(
-            f'<option value="{_escape(grammar)}"{' selected' if grammar == default_grammar else ''}>'
-            f'{_escape(_scope_label(grammar))} · {n_seeds} seeds{status}</option>'
-        )
-        svg = _head_map_svg(model, grammar, value, shared_vmax=shared_vmax)
-        asset_name = f"{model}_{grammar}_p0_head_map.svg"
-        (assets / asset_name).write_text(svg, encoding="utf-8")
-        maps.append(
-            f'<div class="map-panel" data-grammar="{_escape(grammar)}" '
-            f'style="display:{"block" if grammar == default_grammar else "none"}">'
-            f'<div class="map-meta"><code>{_escape(grammar)}</code><span>{n_seeds} discovery seeds</span>'
-            f'<span>{"descriptive global Top-K" if grammar == "all" else "frozen grammar bank"}</span>'
-            f'<span class="status {"exploratory" if exploratory else "claim-grade"}">'
-            f'{"exploratory" if exploratory else "claim-grade"}</span></div>{svg}</div>'
-        )
-    return f"""
-    <section class="model-block" id="map-{_escape(model)}">
-      <div class="section-kicker">{_escape(model)} · all + grammar-specific P0</div>
-      <div class="model-heading">
-        <div>
-          <h3>{_escape(model)} head map</h3>
-          <p>共享色标范围 0–{shared_vmax:.3f}；grammar 视图的白色细框为冻结 Top-{MODEL_K[model]} bank，<code>all</code> 视图的白框仅表示按全体 discovery 聚合得到的描述性 global Top-{MODEL_K[model]}。格内数字标出 Top-8 rank。</p>
-        </div>
-        <label class="selector">trace scope
-          <select data-map-selector="{_escape(model)}">{''.join(options)}</select>
-        </label>
-      </div>
-      <div data-map-container="{_escape(model)}">{''.join(maps)}</div>
-      <details>
-        <summary>查看各 grammar 的 Top-5 heads</summary>
-        <div class="table-wrap"><table><thead><tr><th>Grammar</th><th>Discovery seeds</th><th>Status</th><th>Top-5 (score)</th></tr></thead>
-        <tbody>{_top_head_rows(rankings)}</tbody></table></div>
-      </details>
-    </section>
-    """
 
 
-def _ordinal_model_section(model: str, bundle: dict[str, Any], assets: Path) -> str:
-    scopes = bundle["ordinal"]["scopes"]
-    default_scope = "all"
-    shared_vmax = max(
-        float(row["value"])
-        for scope_bundle in scopes.values()
-        for row in scope_bundle["ordinal_rows"]
-        if row.get("value") is not None
-    )
-    panels: list[str] = []
-    options: list[str] = []
-    for scope, scope_bundle in scopes.items():
-        n_seeds = int(scope_bundle["n_seeds"])
-        exploratory = n_seeds < ROBUST_SEED_THRESHOLD
-        status = " · exploratory" if exploratory else ""
-        options.append(
-            f'<option value="{_escape(scope)}"{' selected' if scope == default_scope else ''}>'
-            f'{_escape(_scope_label(scope))} · {n_seeds} seeds{status}</option>'
-        )
-        svg = _ordinal_head_svg(
-            model,
-            scope,
-            scope_bundle,
-            shared_vmax=shared_vmax,
-        )
-        asset_name = f"{model}_{scope}_p0_needle_ordinal_by_head.svg"
-        (assets / asset_name).write_text(svg, encoding="utf-8")
-        panels.append(
-            f'<div class="ordinal-panel" data-scope="{_escape(scope)}" '
-            f'style="display:{"block" if scope == default_scope else "none"}">'
-            f'<div class="map-meta"><code>{_escape(scope)}</code>'
-            f'<span>{n_seeds} discovery seeds</span>'
-            f'<span>Top-{MODEL_K[model]} heads ranked within this scope</span>'
-            f'{"<span>横向滚动查看全部 128 heads</span>" if model == "Qwen3-8B" else ""}'
-            f'<span class="status {"exploratory" if exploratory else "claim-grade"}">'
-            f'{"exploratory" if exploratory else "claim-grade"}</span></div>'
-            f'<div class="ordinal-scroll">{svg}</div></div>'
-        )
-    return f"""
-    <section class="model-block" id="ordinal-{_escape(model)}">
-      <div class="section-kicker">{_escape(model)} · retrieval progression</div>
-      <div class="model-heading">
-        <div>
-          <h3>{_escape(model)} needle ordinal × head</h3>
-          <p>横轴按当前 scope 的 P0 targeted-retrieval score 从高到低排列 heads；纵轴是正在检索的下一条 needle 序号 #2–#10。模型内所有 scope 共享色标 0–{shared_vmax:.3f}。</p>
-        </div>
-        <label class="selector">trace scope
-          <select data-ordinal-selector="{_escape(model)}">{''.join(options)}</select>
-        </label>
-      </div>
-      <div data-ordinal-container="{_escape(model)}">{''.join(panels)}</div>
-    </section>
-    """
 
 
-def _example_cards(bundles: dict[str, dict[str, Any]], assets: Path) -> str:
-    cards: list[str] = []
-    for model in MODEL_ORDER:
-        ranking = bundles[model]["rankings"]
-        for example in bundles[model]["examples"]:
-            svg = _attention_svg({"model_label": model, **example})
-            name = f"{model}_{example['grammar']}_L{example['layer']}H{example['head']}_p0_attention.svg"
-            (assets / name).write_text(svg, encoding="utf-8")
-            rank_row = next(
-                row
-                for row in ranking[example["grammar"]]["rows"]
-                if int(row["layer"]) == int(example["layer"])
-                and int(row["head"]) == int(example["head"])
-            )
-            metrics = _attention_metrics(example)
-            cards.append(
-                f"""
-                <article class="attention-card">
-                  <div class="attention-title">
-                    <div><span class="model-pill">{_escape(model)}</span>
-                    <h3>L{example['layer']}H{example['head']} · rank {rank_row['rank']}</h3></div>
-                    <div class="score-chip">P0 score <strong>{float(rank_row['score']):.3f}</strong></div>
-                  </div>
-                  <p class="mono-line"><code>{_escape(example['grammar'])}</code> · seed {example['seed']} · N={example['gold_count']} · {len(example['events'])} P0 queries</p>
-                  {svg}
-                  <div class="metric-row">
-                    <span>mean target mass <strong>{metrics['mean_target_mass']:.3f}</strong></span>
-                    <span>target / all-needle <strong>{metrics['mean_target_share']:.1%}</strong></span>
-                    <span>target top-1 <strong>{metrics['target_top1_rate']:.1%}</strong></span>
-                  </div>
-                </article>
-                """.strip()
-            )
-        for example in bundles[model].get("bank_examples", []):
-            svg = _attention_svg({"model_label": model, **example})
-            name = (
-                f"{model}_{example['grammar']}_Top{example['bank_size']}"
-                "_p0_attention_sum.svg"
-            )
-            (assets / name).write_text(svg, encoding="utf-8")
-            metrics = _attention_metrics(example)
-            cards.append(
-                f"""
-                <article class="attention-card">
-                  <div class="attention-title">
-                    <div><span class="model-pill">{_escape(model)}</span>
-                    <h3>Top-{example['bank_size']} · bank-summed city map</h3></div>
-                    <div class="score-chip">Frozen bank <strong>K={example['bank_size']}</strong></div>
-                  </div>
-                  <p class="mono-line"><code>{_escape(example['grammar'])}</code> · seed {example['seed']} · N={example['gold_count']} · {len(example['events'])} exact-P0 queries</p>
-                  {svg}
-                  <div class="metric-row">
-                    <span>mean Σ target mass <strong>{metrics['mean_target_mass']:.3f}</strong></span>
-                    <span>target / all-needle <strong>{metrics['mean_target_share']:.1%}</strong></span>
-                    <span>target top-1 <strong>{metrics['target_top1_rate']:.1%}</strong></span>
-                  </div>
-                </article>
-                """.strip()
-            )
-    return "".join(cards)
 
 
-def _build_html(bundles: dict[str, dict[str, Any]], assets: Path) -> str:
-    model_sections = "".join(
-        _model_section(model, bundles[model], assets) for model in MODEL_ORDER
-    )
-    ordinal_sections = "".join(
-        _ordinal_model_section(model, bundles[model], assets) for model in MODEL_ORDER
-    )
-    example_cards = _example_cards(bundles, assets)
-    return f"""<!doctype html>
-<html lang="zh-CN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Native-thinking P0 Targeted Retrieval Atlas</title>
-<style>
-:root{{--ink:#162235;--muted:#607087;--paper:#f6f2ea;--card:#fffdf9;--line:#d8d0c3;--navy:#132238;--teal:#0f8b8d;--amber:#c56f12;--coral:#e35d4f;}}
-*{{box-sizing:border-box}} body{{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,"Segoe UI","Noto Sans SC",Arial,sans-serif;line-height:1.62}}
-.hero{{background:linear-gradient(135deg,#101b2b,#17384a 68%,#0f7b78);color:#fff;padding:64px max(28px,calc((100vw - 1180px)/2)) 54px}}
-.eyebrow,.section-kicker{{text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:850;color:#8bd4cf}} .hero h1{{font-size:clamp(32px,5vw,58px);line-height:1.05;margin:12px 0 18px;max-width:980px}}
-.hero p{{max-width:930px;margin:0;color:#d6e4eb;font-size:18px}} .hero-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:30px}}
-.hero-stat{{border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);border-radius:14px;padding:14px}} .hero-stat strong{{display:block;font-size:24px}}
-main{{max-width:1180px;margin:0 auto;padding:34px 24px 72px}} section{{margin:0 0 30px}} .card,.model-block,.attention-card{{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 30px rgba(31,41,55,.055);padding:24px}}
-h2{{font-size:30px;margin:4px 0 12px}} h3{{margin:4px 0 8px;font-size:22px}} p{{margin:8px 0 14px}} code{{background:#eef2f1;border:1px solid #d8e2df;border-radius:5px;padding:1px 5px;font-family:"SFMono-Regular",Consolas,monospace;font-size:.92em}}
-.formula{{background:#122034;color:#e9f2f6;border-radius:14px;padding:19px 22px;font-family:Georgia,serif;font-size:18px;overflow:auto}} .formula small{{display:block;color:#9eb3c6;font-family:Inter,"Segoe UI",sans-serif;font-size:13px;margin-top:8px}}
-.callout{{border-left:5px solid var(--teal);background:#e9f4f1;border-radius:0 12px 12px 0;padding:14px 17px;margin:18px 0}} .conclusion{{border-left-color:var(--amber);background:#fff0d8}}
-.model-block{{padding:26px;margin-top:20px}} .model-heading,.attention-title{{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}} .model-heading p{{color:var(--muted);margin:0;max-width:760px}}
-.selector{{font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:var(--muted);min-width:300px}} select{{display:block;width:100%;margin-top:6px;border:1px solid #bac5d0;border-radius:9px;background:#fff;padding:9px 11px;color:var(--ink)}}
-.map-panel,.ordinal-panel{{margin-top:20px}} .map-meta{{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;color:var(--muted);font-size:13px}} svg{{display:block;width:100%;height:auto}} .head-map{{max-height:690px}} .ordinal-scroll{{overflow-x:auto;overflow-y:hidden;padding-bottom:8px}} .ordinal-map{{height:auto}}
-.status{{display:inline-flex;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:850;text-transform:uppercase;letter-spacing:.04em}} .status.claim-grade{{background:#dff2e8;color:#17633a}} .status.exploratory{{background:#fff0d8;color:#9a5212}}
-details{{margin-top:16px;border-top:1px solid var(--line);padding-top:13px}} summary{{cursor:pointer;font-weight:800}} .table-wrap{{overflow:auto;margin-top:12px}} table{{width:100%;border-collapse:collapse;font-size:13px}} th,td{{padding:9px 10px;border-bottom:1px solid #e3ddd3;text-align:left;vertical-align:top}} th{{background:#f0ece4}}
-.example-grid{{display:grid;grid-template-columns:1fr;gap:20px}} .attention-card{{padding:24px}} .model-pill{{color:var(--teal);font-weight:900;font-size:12px;letter-spacing:.08em;text-transform:uppercase}} .score-chip{{background:#fff0d8;border:1px solid #e8c99f;border-radius:10px;padding:8px 12px;color:#7d480e}} .score-chip strong{{font-size:22px;margin-left:6px}} .mono-line{{color:var(--muted);font-size:13px}}
-.metric-row{{display:flex;gap:12px;flex-wrap:wrap;margin-top:13px}} .metric-row span{{background:#eef3f5;border-radius:9px;padding:7px 10px;font-size:13px}} .metric-row strong{{margin-left:4px}}
-.downloads{{display:flex;gap:12px;flex-wrap:wrap}} .downloads a{{display:inline-flex;padding:9px 13px;border-radius:9px;background:#132238;color:#fff;text-decoration:none;font-weight:750;font-size:13px}}
-.footnote{{font-size:13px;color:var(--muted)}}
-@media(max-width:800px){{.hero-grid{{grid-template-columns:1fr 1fr}} .model-heading,.attention-title{{display:block}} .selector{{min-width:0;margin-top:14px}} .model-block,.attention-card,.card{{padding:17px}} main{{padding-left:14px;padding-right:14px}}}}
-</style>
-</head>
-<body>
-<header class="hero">
-  <div class="eyebrow">Native-thinking · descriptive attention atlas</div>
-  <h1>P0 Targeted Retrieval<br>Head Map & Attention Distributions</h1>
-  <p>严格使用当前 grammar-specific P0 discovery ranking：同一个精确 <code>p0_item_end</code> token 同时用于 attention ranking 与后续 ablation。这里先回答“哪些 heads 在 P0 对正确 needle 有高 attention mass，以及单头具体看向哪里”。</p>
-  <div class="hero-grid">
-    <div class="hero-stat"><strong>2</strong><span>models</span></div>
-    <div class="hero-stat"><strong>14</strong><span>all + grammar map scopes</span></div>
-    <div class="hero-stat"><strong>14</strong><span>ordinal × head maps</span></div>
-    <div class="hero-stat"><strong>4</strong><span>single-head examples</span></div>
-  </div>
-</header>
-<main>
-  <section class="card">
-    <div class="section-kicker">Definition</div>
-    <h2>图 1：Targeted retrieval score 的 layer × head 地图</h2>
-    <p>对 grammar <em>g</em>，先在每个 discovery seed 内对该 grammar 的所有 P0 transition events 求均值，再对 seed 等权平均。每个 event 的基础量是该 head 从 P0 query 指向“下一条正确 city 所在 prompt record span”的 raw attention mass。<code>all</code> 使用完全相同的两级聚合，只是 seed 内纳入该 seed 的全部 eligible grammar events；它不是各 grammar 均值的再平均。</p>
-    <div class="formula">S<sub>g</sub><sup>P0</sup>(ℓ,h) = (1 / |D<sub>g</sub>|) Σ<sub>s∈Dg</sub> (1 / |E<sub>s,g</sub>|) Σ<sub>e∈Es,g</sub> Σ<sub>t∈R(target(e))</sub> A<sub>ℓ,h</sub>(q<sub>e</sub><sup>P0</sup>, t)
-      <small>q<sup>P0</sup>: 完整 item k 的 endpoint token；R(target(e)): needle k+1 在 prompt 中的完整 record token span。</small>
-    </div>
-    <div class="formula">S<sub>all</sub><sup>P0</sup>(ℓ,h) = (1 / |D|) Σ<sub>s∈D</sub> (1 / |E<sub>s,all</sub>|) Σ<sub>e∈Es,all</sub> Σ<sub>t∈R(target(e))</sub> A<sub>ℓ,h</sub>(q<sub>e</sub><sup>P0</sup>, t)
-      <small>这保证每个 discovery seed 的总权重相同；event 较多的 grammar 不会跨 seed 重复加权。</small>
-    </div>
-    <div class="callout"><strong>读图规则。</strong> 横轴是 head，纵轴是 decoder layer；颜色越亮表示 discovery P0 targeted-retrieval score 越大。每个模型内 <code>all</code> 与所有 grammar 共享同一色标，因此可以比较绝对强度。grammar 视图的白框是实际冻结的 selected bank；<code>all</code> 视图的白框只是描述性的 global Top-K，不对应新增 intervention。数字仅标出 Top-8。</div>
-  </section>
-
-  {model_sections}
-
-  <section class="card">
-    <div class="section-kicker">Ordinal decomposition</div>
-    <h2>图 2：Needle 序号 × ranked head</h2>
-    <p>这一图把同一个 P0 targeted-retrieval quantity 按“下一条 needle 是第几个”拆开。对固定 scope 和 ordinal <em>j</em>，仍然先在每个 seed 内平均所有检索 needle #<em>j</em> 的 eligible events，再对 seed 等权平均；head 的横向次序则由该 scope 的整体 P0 score 决定。</p>
-    <div class="callout"><strong>坐标与色标。</strong> 横轴的每一列是一个完整 layer–head identity（<code>LxHy</code>），不是只看 head index；纵轴是 transition k→k+1 中被读取的 target needle ordinal #2–#10。颜色是该精确 P0 query 指向正确 target record span 的 raw attention mass。Qwen 展示每个 scope 的 Top-128，Gemma 展示 Top-8；灰色表示该 scope 在该 ordinal 没有 eligible event。</div>
-  </section>
-
-  {ordinal_sections}
-
-  <section class="card">
-    <div class="section-kicker">Single-head routing</div>
-    <h2>图 3：显著 retrieval heads 的逐 needle attention 分布</h2>
-    <p>为避免低样本 grammar 的视觉偶然性，四个例子都来自两模型 seed 覆盖最完整的 <code>adjacent_rank_after_city</code>。每个模型选其稳定 Top heads，并在一个确定性代表 trace 上重算 exact P0 attention：优先含最多 eligible events、再优先更大 N、最后取更小 seed；没有按图形“好看程度”挑样本。</p>
-    <div class="callout"><strong>坐标与标记。</strong> 横轴是 transition k→k+1 的 P0 query；纵轴按 prompt token 位置排列 needle record spans，最后一行合并所有非-needle key（instruction、filler 与已经生成的 trace）。颜色是 raw attention mass，红框标出该列真正应该读取的 target needle。</div>
-  </section>
-  <section class="example-grid">{example_cards}</section>
-
-  <section class="card">
-    <div class="section-kicker">Interpretation</div>
-    <h2>目前能得到的结论</h2>
-    <ol>
-      <li><strong>P0 retrieval 不是均匀分散在所有层。</strong> Qwen 的高分 heads 明显集中在中后段（尤其 L20–L24），Gemma 则集中在少数离散层（尤其 L17、L23、L29）。</li>
-      <li><strong>grammar-specific ranking 仍共享核心 heads。</strong> 切换 grammar 后强度和次序会变化，但 Qwen 的 L20H30/L24H29 一组与 Gemma 的 L29H4/L17H2 一组反复出现在前列；这解释了为什么统一 bank 有一定可迁移性，同时又不等同于每类的最优 bank。</li>
-      <li><strong><code>all</code> 视图给出不依赖单一 surface grammar 的共同排序。</strong> 它严格按 discovery seed 等权，因此可以作为全体 trace 的描述性总览；但因果实验仍以各 grammar 的冻结 bank 为准。</li>
-      <li><strong>ordinal 图检验 retrieval 是否随 count 进程换头。</strong> 同一列跨 #2–#10 的颜色变化表示同一 head 在不同检索步的强度变化；跨列的亮带则显示不同 heads 对 ordinal 的分工或稳定复用。</li>
-      <li><strong>单头图直接显示“在 P0 看向哪个 prompt record”。</strong> 红框单元格对应下一条正确 needle；target mass、target/all-needle share 与 target top-1 是三个互补描述量。</li>
-    </ol>
-    <div class="callout conclusion"><strong>结论边界。</strong> 这些图证明的是 attention routing / localization，不单独证明某一个 head 对输出具有因果必要性。因果结论仍由同位点、持续关闭的 selected-vs-random ablation 给出。</div>
-  </section>
-
-  <section class="card">
-    <div class="section-kicker">Artifacts</div>
-    <h2>可复核数据</h2>
-    <div class="downloads">
-      <a href="v5_native_p0_head_atlas/p0_targeted_retrieval_head_scores.csv">Head scores CSV</a>
-      <a href="v5_native_p0_head_atlas/p0_needle_ordinal_by_head.csv">Ordinal × head CSV</a>
-      <a href="v5_native_p0_head_atlas/p0_significant_head_attention_masses.csv">Attention masses CSV</a>
-      <a href="v5_native_p0_head_atlas/p0_head_atlas_manifest.json">Manifest</a>
-    </div>
-    <p class="footnote">所有数值均来自 discovery split；confirmation 没有参与 head ranking 或示例选择。n&lt;10 discovery seeds 的 grammar 在页面中统一标为 exploratory。</p>
-  </section>
-</main>
-<script>
-document.querySelectorAll('[data-map-selector]').forEach(select => {{
-  select.addEventListener('change', () => {{
-    const model = select.dataset.mapSelector;
-    document.querySelectorAll(`[data-map-container="${{model}}"] .map-panel`).forEach(panel => {{
-      panel.style.display = panel.dataset.grammar === select.value ? 'block' : 'none';
-    }});
-  }});
-}});
-document.querySelectorAll('[data-ordinal-selector]').forEach(select => {{
-  select.addEventListener('change', () => {{
-    const model = select.dataset.ordinalSelector;
-    document.querySelectorAll(`[data-ordinal-container="${{model}}"] .ordinal-panel`).forEach(panel => {{
-      panel.style.display = panel.dataset.scope === select.value ? 'block' : 'none';
-    }});
-  }});
-}});
-</script>
-</body>
-</html>
-"""
 
 
 def main() -> None:
@@ -954,11 +664,8 @@ def main() -> None:
         bundles[model]["ordinal"] = ordinals[model]
     args.assets.mkdir(parents=True, exist_ok=True)
     head_csv, ordinal_csv, attention_csv = _write_csvs(bundles, args.assets)
-    document = _build_html(bundles, args.assets)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(document, encoding="utf-8")
     manifest = {
-        "schema_version": "realistic_niah_v5_p0_head_atlas_report_v2",
+        "schema_version": "realistic_niah_v5_p0_head_atlas_exports_v1",
         "query_site": "p0_item_end",
         "selection_split": "discovery",
         "selection_metric": "seed_event_mean_target_source_attention_mass",
@@ -974,7 +681,6 @@ def main() -> None:
             for model in MODEL_ORDER
         },
         "outputs": {
-            "html": str(args.output),
             "head_scores_csv": str(head_csv),
             "needle_ordinal_by_head_csv": str(ordinal_csv),
             "attention_masses_csv": str(attention_csv),
@@ -984,7 +690,7 @@ def main() -> None:
     manifest_path.write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
-    print(args.output)
+    print(manifest_path)
 
 
 if __name__ == "__main__":

@@ -193,68 +193,9 @@ def analyze(bundle: Path, runs: Path, out: Path) -> dict:
         "audits": audits, "source_sha256": sources,
     }
     write_json(out / "summary.json", summary)
-    render_report(out, summary, layer_export)
     return summary
 
 
-def render_report(out: Path, summary: dict, layers: list[dict]) -> None:
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    from matplotlib.ticker import PercentFormatter
-
-    plt.rcParams.update({"font.family": "Times New Roman", "font.size": 11,
-                         "pdf.fonttype": 42, "svg.fonttype": "none"})
-    fig, ax = plt.subplots(figsize=(7.0, 3.8), layout="constrained")
-    for model, label, color in zip(MODELS, ("Qwen", "Gemma"), ("#168DCA", "#E87824")):
-        rows = [r for r in layers if r["model"] == model]
-        x = [r["layer_one_based"] for r in rows]
-        ax.plot(x, [r["adoption_rate"] for r in rows], color=color, label=label, linewidth=1.8)
-        ax.fill_between(x, [r["ci95_low"] for r in rows], [r["ci95_high"] for r in rows], color=color, alpha=.16, linewidth=0)
-    ax.set(xlabel="Intervention layer (one-based)", ylabel="Target-count adoption",
-           xlim=(.5, 42.5), ylim=(-.025, 1.04), xticks=[1, 11, 21, 31, 41])
-    ax.yaxis.set_major_formatter(PercentFormatter(1, decimals=0))
-    ax.spines[["top", "right"]].set_visible(False)
-    ax.legend(frameon=False)
-    for extension in ("png", "pdf", "svg"):
-        fig.savefig(out / f"answer_all_layers.{extension}", dpi=180, metadata={"Creator": "Native supplement audited analysis"} if extension == "pdf" else None)
-    plt.close(fig)
-
-    b = summary["gemma_backward"]
-    self_row, patch = [r for r in b["conditions"] if r["target_k"] == "all"]
-    pct = lambda v: f"{100*v:.1f}%"
-    lines = ["# Native-thinking 补充实验（2026-09-11）", "",
-        "两模型全层 answer-state 扫描与 Gemma 提示条件下的 backward 干预已完成。历史复测、完整性审计及本地重新统计均通过。", "",
-        "本轮在已观察过的 cohort 上补齐测量范围；所有结果属于既有样本扩展。新增层和 backward 设置在运行前冻结。", "",
-        "## 1. 全层 answer-state 干预", "",
-        "目的：测量完整 answer-query 残差状态在不同层使 Receiver 采用 Target 计数的比例。Target 为状态来源，Receiver 接收该状态。", "",
-        "每模型使用同一组 40 对有向样本：seeds 1254–1263，每 seed 四对，两个原始答案均正确。每层分别进行 self-patch 和 Target-state patch，greedy 生成上限为 16 tokens。统计单位为 seed；先在 seed 内平均，再等权平均 10 个 seed，计算 10,000 次 seed-cluster bootstrap 的逐点 95% 区间。", "",
-        "说明性示例：某 seed 的四个 patch 中两个采用 Target 计数，该 seed 的采用率为 2/4；不会把同一 seed 的四对样本当作四个独立 seed。无法解析或不在 1–10 内的答案保留为失败。", "",
-        "| 模型 | 全部层数 | 新运行记录 | 历史复测差异 | 末层 Target adoption（95% CI） |", "| --- | ---: | ---: | ---: | --- |"]
-    for model in MODELS:
-        d = summary["dense"][model]
-        e = d["endpoint"]
-        lines.append(f"| {model} | {d['layers']} | {d['records']} | 0/640 | {e['target_adoptions']}/40 = {pct(e['adoption_rate'])} [{pct(e['ci95_low'])}, {pct(e['ci95_high'])}] |")
-    lines += ["", "![全层计数采用率](answer_all_layers.png)", "",
-        "横轴为从 1 开始的 decoder 层号，纵轴为 Target 计数采用率；蓝色为 Qwen，橙色为 Gemma，阴影为逐点 95% seed-cluster 区间。每个整数层均有实测值。图中样本均要求原始 Target 与 Receiver 答案正确。", "",
-        "全部 3,120 条 self-patch 记录均重新生成 Receiver 的正确计数。6,240 条全层记录全部来自本次运行，其中 1,280 条为历史层复测、4,960 条为此前未测层的记录。", "",
-        "结果支持完整残差状态在所测位置对答案输出的局部因果作用。当前实验未匹配绝对 query position，且状态包含内容信息；纯计数分量、必要性和唯一性尚未验证。", "",
-        "## 2. Gemma 提示条件下的 backward 干预", "",
-        "目的：检验已记录的内容相关进度状态能否将后续输出引向较早的 Target 后继项。使用 N=10、seeds 1276–1285、L17（代码索引 16）的 FOUND no-index 语法；将 Target k=4/6/8 的 item-span 状态移植到 Receiver k+1，共 30 个比较、90 条条件记录。native Target 为 teacher-forced 参照；self 和 patch 最多生成 96 tokens。原 forward k=6 的 30 条记录先行复测，逐条比较通过后执行 backward。", "",
-        "说明性示例：Target 已列出第 4 项，Receiver 已列出第 5 项；干预成功的首个新 city 为第 5 项，自然 Receiver 的后继项为第 6 项。该例只说明指标定义。", "",
-        f"首 city 的 Target 后继项采用：patch 为 **{patch['target_successor_adoptions']}/30**，self 为 **{self_row['target_successor_adoptions']}/30**。按 seed 等权的 patch−self 差值为 **{100*b['adoption_gain_patch_minus_self']:.1f} 个百分点**，95% CI 为 **[{100*b['adoption_gain_ci95'][0]:.1f}, {100*b['adoption_gain_ci95'][1]:.1f}]**。", "",
-        "| 续接步数 | 成功 / 符合条件的样本 | 结构上仍有该项的样本 |", "| --- | ---: | ---: |"]
-    for row in b["stepwise"]:
-        lines.append(f"| k+{row['hop']} | {row['successes']}/{row['eligible']} | {row['structurally_available']} |")
-    lines += ["", f"patch 中 {patch['truncated_generations']}/30 条生成触及上限；self 中 {self_row['truncated_generations']}/30 条触及上限。未输出预期 city 的样本计为失败。只有 k+h>N 属于结构上无后继项；其他样本须此前各步全部正确，才能进入下一步分母。逐条 eligibility、失败和截断记录均保留。", "",
-        "Gemma 的结果适用于提示条件下的 no-index 语法及既定 cohort。自然 no-index 机制、纯算术状态与完整自由生成闭环的充分性仍待独立检验。多步成功率的分母经过前序成功筛选，不能解释为全部样本的无条件成功率。", "",
-        "## 复现与审计", "",
-        f"- 冻结 plan SHA-256：`{summary['plan_sha256']}`。",
-        "- Qwen、Gemma D 各 640 条历史复测及 Gemma forward 30 条复测均为零差异。",
-        "- 已核对模型 revision、SDPA、bfloat16、层数、输入/输出 hash、完整 pair-layer-condition 网格，以及 backward 的对齐位置和未改动 prompt records 条件。",
-        "- 本地重新计算两模型四份 CSV 和 backward 汇总，与远端输出一致；summary.json 记录全部来源文件 SHA-256。",
-        "- answer_all_layers.csv 保存 78 个层的采用率、区间及失败数；gemma_backward_conditions.csv 保存分 k/condition 的结果；gemma_backward_stepwise_trials.csv 保存逐条多步分母。", ""]
-    (out / "summary.md").write_text("\n".join(lines), encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -1479,15 +1479,15 @@ def run_head_to_state(
 
 def analysis_crosswalk() -> pd.DataFrame:
     rows = [
-        ("v10 §4", "learning dynamics by count", "现有 21 个 checkpoint；1–10 exact-count 曲线与机制 milestone", "direct adaptation"),
-        ("v10 §5", "broad vs targeted attention", "真实字符集合上的 broad coverage、correct-k mass、diagonal dominance", "marker semantics adapted"),
-        ("v10 §6", "2D/3D residual manifolds", "mean-first centroid PCA、样本云、trace index/marker joint trajectory", "direct adaptation"),
-        ("v10 §7", "global and position-local head ablation", "三种 role 均含 ranked 与 matched random paths", "count bins changed to 1-3/4-7/8-10"),
-        ("v10 §8.2", "retrieval head patching", "集合内字符替换；prompt count 与 token position 均不变", "stronger character-aware corruption"),
-        ("v10 §8.3-8.5", "successor/stop and MLP conversion", "未来 occurrence 删除形成同位置 continue/close pair；含 logit lens 与 component evidence", "task-native adaptation"),
+        ("v10 §4", "learning dynamics by count", "21 checkpoints; exact-count curves for 1-10 and mechanism milestones", "direct adaptation"),
+        ("v10 §5", "broad vs targeted attention", "Broad coverage, correct-k mass, and diagonal dominance on the actual character sets", "marker semantics adapted"),
+        ("v10 §6", "2D/3D residual manifolds", "Mean-first centroid PCA, sample clouds, and joint trace index/marker trajectories", "direct adaptation"),
+        ("v10 §7", "global and position-local head ablation", "Ranked and matched random paths for all three roles", "count bins changed to 1-3/4-7/8-10"),
+        ("v10 §8.2", "retrieval head patching", "Within-set character replacement preserving prompt count and token positions", "stronger character-aware corruption"),
+        ("v10 §8.3-8.5", "successor/stop and MLP conversion", "Future-occurrence deletion forms position-matched continue/close pairs; includes logit-lens and component evidence", "task-native adaptation"),
         ("v10 §8.6-8.10", "count transport and final bridge", "length-preserving prompt/trace conflicts；attention/MLP/residual clean recovery", "fixed-15 replaced by fixed-length conflict"),
-        ("v10 §9", "geometry steering", "独立 train centroids；±1 held-out receivers；alpha=0.5/1", "count range restricted to 1..10"),
-        ("v10 §10", "hidden-state patching", "final-answer transport 与同-k final→interior early-close patch", "RoPE position-matched where possible"),
+        ("v10 §9", "geometry steering", "Independent training centroids; +/-1 held-out receivers; alpha=0.5/1", "count range restricted to 1..10"),
+        ("v10 §10", "hidden-state patching", "Final-answer transport and same-k final-to-interior early-close patch", "RoPE position-matched where possible"),
         ("v10 §11", "head↔state bidirectionality", "progress-state transplant before L3；attention routing shift", "same total count=10 control"),
     ]
     return pd.DataFrame(rows, columns=["v10_section", "v10_analysis", "v16_2_implementation", "adaptation_status"])

@@ -36,7 +36,7 @@ REPORT = REPO / "reports" / "NiaH_Geometry_Comparison.html"
 NATIVE_ROWS = (
     REPO
     / "work"
-    / "remote_native_traces_68_209_74_38"
+    / "remote_native_traces_snapshot"
     / "Qwen3-8B"
     / "generations.jsonl"
 )

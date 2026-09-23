@@ -20,6 +20,20 @@ PATTERNS = {
     "remote-login": re.compile(r"\b[\w.-]+@(?:\d{1,3}\.){3}\d{1,3}\b"),
 }
 
+# Basic/extension/compatibility Han blocks, including supplementary planes.
+HAN_RANGES = ((0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xF900, 0xFAFF),
+              (0x20000, 0x2EE5F), (0x2F800, 0x2FA1F), (0x30000, 0x3347F))
+UNICODE_ESCAPE = re.compile(r"\\(?:u([0-9a-fA-F]{4})|U([0-9a-fA-F]{8}))")
+
+
+def has_han(text: str) -> bool:
+    def decode(match):
+        value = int(match.group(1) or match.group(2), 16)
+        return chr(value) if value <= 0x10FFFF else match.group(0)
+    text = UNICODE_ESCAPE.sub(decode, text)
+    return any(any(low <= ord(char) <= high for low, high in HAN_RANGES)
+               for char in text if ord(char) > 127)
+
 
 def source_files():
     for directory, dirs, files in os.walk(ROOT):
@@ -46,6 +60,8 @@ def validate() -> dict:
         except UnicodeDecodeError:
             errors.append(f"Unexpected binary file: {rel}")
             continue
+        if has_han(rel) or has_han(text):
+            errors.append(f"Han characters in source, path or escaped text: {rel}")
         try:
             if p.suffix == ".py":
                 ast.parse(text, filename=rel)

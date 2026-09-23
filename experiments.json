@@ -2,14 +2,14 @@
   "haystack": {
     "family": "realistic",
     "script": "scripts/sync_paul_graham_full_corpus.py",
-    "paper": "Sections 2–4, Appendix C",
+    "paper": "Sections 2\u20134, Appendix C",
     "description": "Download and audit the registered essay corpus"
   },
   "behavior-freeze": {
     "family": "realistic",
     "script": "scripts/freeze_realistic_niah_v3_1.py",
     "paper": "Section 2, Appendix C",
-    "description": "Construct the paired 1k–20k counting grid"
+    "description": "Construct the paired 1k\u201320k counting grid"
   },
   "behavior": {
     "family": "realistic",
@@ -74,7 +74,7 @@
   "synthetic-alignment": {
     "family": "synthetic",
     "script": "scripts/run_v58_alignment_supplement.py",
-    "paper": "Appendix G.2–G.4",
+    "paper": "Appendix G.2\u2013G.4",
     "description": "Aligned retrieval and representation analyses"
   },
   "synthetic-continuation": {
@@ -100,12 +100,6 @@
     "script": "empirical_law_1x4/build_figure.py",
     "paper": "Figure 2",
     "description": "Regenerate the observed-accuracy panels from explicit measurement paths"
-  },
-  "synthetic-report": {
-    "family": "synthetic",
-    "script": "scripts/build_v58_synthetic_report.py",
-    "paper": "Section 5, Appendix G",
-    "description": "Build the historical report from an explicit completed run root"
   },
   "additional-kth": {
     "family": "realistic",
@@ -134,19 +128,19 @@
   "nonthinking-pca16": {
     "family": "figures",
     "script": "nonthinking_pca16_only_20260921/analyze.py",
-    "paper": "Section 3, Appendices C–D",
+    "paper": "Section 3, Appendices C\u2013D",
     "description": "Analyze running-index PCA16 readouts with seed-grouped cross-validation"
   },
   "nonthinking-pca16-answer": {
     "family": "figures",
     "script": "nonthinking_pca16_only_20260921/update_answer.py",
-    "paper": "Section 3, Appendices C–D",
+    "paper": "Section 3, Appendices C\u2013D",
     "description": "Scan PCA16 final-count readouts using packed inputs"
   },
   "nonthinking-pca16-figures": {
     "family": "figures",
     "script": "nonthinking_pca16_only_20260921/build.py",
-    "paper": "Section 3, Appendices C–D",
+    "paper": "Section 3, Appendices C\u2013D",
     "description": "Render readouts, cue/domain geometry and relative noise"
   }
 }

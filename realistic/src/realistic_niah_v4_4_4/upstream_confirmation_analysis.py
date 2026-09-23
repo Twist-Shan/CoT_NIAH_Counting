@@ -222,123 +222,6 @@ def _fmt(value: float, digits: int = 4) -> str:
     return f"{float(value):.{digits}f}"
 
 
-def _write_reports(run_root: Path, payload: dict[str, Any]) -> tuple[Path, Path]:
-    output = stage_root(
-        run_root, payload["config"]["model_label"], ANALYSIS_STAGE
-    )
-    primary = payload["primary_decision"]
-    rows = payload["leave_one_out"]
-    audit = payload["audit"]
-    status = "CONFIRMED" if primary["serial_chain_confirmed"] else "NOT CONFIRMED"
-    lines = [
-        "# V4.4.4 independent upstream-path confirmation",
-        "",
-        f"**Primary result: {status}.**",
-        "",
-        "## Frozen hypothesis and design",
-        "",
-        "The frozen early broad-retrieval top-4 is patched only at registered slot-query positions. "
-        "The primary L28 mediator is H16--H19. Exact restoration of the induced pre-O Z change is "
-        "compared with an equal-post-O-norm, same-W_O-span orthogonal control. Seeds 1294--1313 "
-        "were not used for head selection or the exploratory upstream-path analysis.",
-        "",
-        "Primary endpoint: donor-vs-receiver candidate-sequence log-odds gain, averaged over six "
-        "directed donor pairs within each seed. The serial-chain claim uses an intersection-union "
-        "test: both the early intervention and L28 mediation specificity must be positive with "
-        "two-sided exact sign-flip p < 0.05.",
-        "",
-        "## Primary result",
-        "",
-        f"- Early slot-state donor log-odds gain: {_fmt(primary['early_effect']['mean'])} "
-        f"(95% bootstrap CI [{_fmt(primary['early_effect']['ci_low'])}, "
-        f"{_fmt(primary['early_effect']['ci_high'])}], exact p={_fmt(primary['early_effect']['exact_two_sided_p'], 6)}).",
-        f"- L28 H16--H19 mediation specificity (orthogonal control minus exact natural block): "
-        f"{_fmt(primary['mediation']['mean'])} "
-        f"(95% CI [{_fmt(primary['mediation']['ci_low'])}, "
-        f"{_fmt(primary['mediation']['ci_high'])}], exact p={_fmt(primary['mediation']['exact_two_sided_p'], 6)}).",
-        f"- Intersection-union p: {_fmt(primary['intersection_union_p'], 6)}.",
-        "",
-        "Conclusion for this section: "
-        + (
-            "the previously exploratory early top-4 slot-state → L28 H16--H19 → answer chain replicated on independent seeds."
-            if primary["serial_chain_confirmed"]
-            else "the frozen serial chain did not meet the preregistered independent-confirmation rule."
-        ),
-        "",
-        "## Leave-one-out member analysis",
-        "",
-        "`full − leave-one-out` is the paired loss of mediation specificity after removing one L28 head. "
-        "Positive values indicate an incremental contribution by that head. Holm correction is across the four heads.",
-        "",
-        "| Removed head | LOO mediation | Full−LOO decrement | 95% CI | exact p | Holm p | Interpretation |",
-        "|---|---:|---:|---:|---:|---:|---|",
-    ]
-    for row in rows:
-        lines.append(
-            "| {head} | {loo} | {dec} | [{lo}, {hi}] | {p} | {holm} | {role} |".format(
-                head=row["removed_head"],
-                loo=_fmt(row["loo_mediation"]["mean"]),
-                dec=_fmt(row["decrement"]["mean"]),
-                lo=_fmt(row["decrement"]["ci_low"]),
-                hi=_fmt(row["decrement"]["ci_high"]),
-                p=_fmt(row["decrement"]["exact_two_sided_p"], 6),
-                holm=_fmt(row["decrement_holm_p"], 6),
-                role=row["interpretation"],
-            )
-        )
-    lines.extend(
-        [
-            "",
-            "Conclusion for this section: leave-one-out identifies incremental membership within the tested "
-            "H16--H19 set; it does not claim that any single head implements counting alone.",
-            "",
-            "## Audit",
-            "",
-            f"All audit checks passed: **{audit['all_checks_pass']}**.",
-            "",
-        ]
-    )
-    for check in audit["checks"]:
-        lines.append(f"- {check['name']}: {check['passed']} — `{check['detail']}`")
-    markdown = output / "realistic_niah_v4_4_4_upstream_confirmation_report.md"
-    markdown.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-    table_rows = "".join(
-        "<tr><td>{head}</td><td>{loo}</td><td>{dec}</td><td>[{lo}, {hi}]</td>"
-        "<td>{p}</td><td>{holm}</td><td>{role}</td></tr>".format(
-            head=html.escape(str(row["removed_head"])),
-            loo=_fmt(row["loo_mediation"]["mean"]),
-            dec=_fmt(row["decrement"]["mean"]),
-            lo=_fmt(row["decrement"]["ci_low"]),
-            hi=_fmt(row["decrement"]["ci_high"]),
-            p=_fmt(row["decrement"]["exact_two_sided_p"], 6),
-            holm=_fmt(row["decrement_holm_p"], 6),
-            role=html.escape(row["interpretation"]),
-        )
-        for row in rows
-    )
-    audit_rows = "".join(
-        f"<li><b>{html.escape(check['name'])}</b>: {check['passed']} — "
-        f"<code>{html.escape(str(check['detail']))}</code></li>"
-        for check in audit["checks"]
-    )
-    document = f"""<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><title>V4.4.4 upstream confirmation</title>
-<style>body{{font-family:Inter,Segoe UI,sans-serif;max-width:1050px;margin:40px auto;padding:0 24px;color:#172033;background:#f6f3ed;line-height:1.6}}.hero,.card{{background:#fff;border:1px solid #d9d3c7;border-radius:14px;padding:24px;margin:18px 0}}.ok{{color:#087f5b}}.bad{{color:#c92a2a}}table{{border-collapse:collapse;width:100%;font-size:14px}}th,td{{padding:9px;border-bottom:1px solid #ddd;text-align:left}}code{{font-size:12px}}small{{color:#697386}}</style></head>
-<body><section class="hero"><small>Realistic NIAH · Qwen3-8B · independent seeds 1294–1313</small>
-<h1>Early slot-state → L28 OV → answer confirmation</h1>
-<h2 class="{'ok' if primary['serial_chain_confirmed'] else 'bad'}">{status}</h2>
-<p>冻结 early broad-retrieval top-4、slot-state route、L28 H16–H19 与 donor log-odds endpoint；未在新 seeds 上重新选择 heads。</p></section>
-<section class="card"><h2>Primary serial-chain test</h2>
-<p>Early donor log-odds gain: <b>{_fmt(primary['early_effect']['mean'])}</b>, 95% CI [{_fmt(primary['early_effect']['ci_low'])}, {_fmt(primary['early_effect']['ci_high'])}], exact p={_fmt(primary['early_effect']['exact_two_sided_p'],6)}.</p>
-<p>L28 mediation specificity: <b>{_fmt(primary['mediation']['mean'])}</b>, 95% CI [{_fmt(primary['mediation']['ci_low'])}, {_fmt(primary['mediation']['ci_high'])}], exact p={_fmt(primary['mediation']['exact_two_sided_p'],6)}.</p>
-<p>Intersection-union p: <b>{_fmt(primary['intersection_union_p'],6)}</b>.</p></section>
-<section class="card"><h2>Leave-one-out</h2><p>正的 full−LOO 表示移除该 head 后，中介 specificity 减弱。</p>
-<table><thead><tr><th>Removed</th><th>LOO mediation</th><th>Full−LOO</th><th>95% CI</th><th>p</th><th>Holm p</th><th>Interpretation</th></tr></thead><tbody>{table_rows}</tbody></table></section>
-<section class="card"><h2>Audit</h2><p>All checks passed: <b>{audit['all_checks_pass']}</b></p><ul>{audit_rows}</ul></section></body></html>"""
-    html_path = output / "realistic_niah_v4_4_4_upstream_confirmation_report.html"
-    html_path.write_text(document, encoding="utf-8")
-    return markdown, html_path
 
 
 def analyze_campaign(
@@ -456,15 +339,12 @@ def analyze_campaign(
         output / "realistic_niah_v4_4_4_upstream_confirmation_analysis.json",
         payload,
     )
-    markdown, html_path = _write_reports(root, payload)
     atomic_json(
         output / "complete.json",
         {
             "schema_version": "realistic_niah_v4_4_4_upstream_confirmation_complete_v1",
             "primary_decision": payload["primary_decision"],
             "audit": audit,
-            "report_markdown": str(markdown),
-            "report_html": str(html_path),
         },
     )
     return payload

@@ -13,7 +13,6 @@ from realistic_niah_v4_4_4.pipeline import (
     initialize_campaign,
     run_model_campaign,
 )
-from realistic_niah_v4_4_4.report import build_html_report
 from realistic_niah_v4_4_4.spec import V444Config
 
 
@@ -39,7 +38,6 @@ def parse_args() -> argparse.Namespace:
             "model",
             "analyze",
             "audit",
-            "report",
             "campaign",
         ),
     )
@@ -125,7 +123,6 @@ def main() -> int:
             return 0
     if args.stage in {"analyze", "campaign"}:
         analysis = analyze_campaign(run_root=run_root, config=config)
-        build_html_report(run_root=run_root, config=config)
         audit = analysis["audit"]
         _write_state(
             run_root,
@@ -141,10 +138,6 @@ def main() -> int:
         audit = audit_campaign(run_root, config)
         print(json.dumps(audit, ensure_ascii=False, indent=2))
         return 0 if audit["all_checks_pass"] else 1
-    if args.stage == "report":
-        report_path = build_html_report(run_root=run_root, config=config)
-        print(json.dumps({"report": str(report_path)}, ensure_ascii=False))
-        return 0
     raise AssertionError(args.stage)
 
 

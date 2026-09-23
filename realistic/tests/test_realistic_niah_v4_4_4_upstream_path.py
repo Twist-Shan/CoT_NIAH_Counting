@@ -20,7 +20,6 @@ from realistic_niah_v4_4_4.upstream_path_analysis import (
     exact_sign_flip_p,
     holm_adjust,
 )
-from realistic_niah_v4_4_4.upstream_path_report import _interval_svg
 from realistic_niah_v4_4_4.upstream_path_spec import V444UpstreamPathConfig
 
 
@@ -178,37 +177,3 @@ def test_decision_promotes_supported_expanded_l28_set() -> None:
     assert decision["classification"] == (
         "upstream_read_to_expanded_l28_write_supported_exploratory"
     )
-
-
-def test_interval_svg_can_label_l28_sets() -> None:
-    frame = pd.DataFrame(
-        [
-            {
-                "late_set": "base_h16_h19",
-                "early_set": "top4",
-                "route": "slot_state",
-                "score_mean": 0.1,
-                "score_ci_low": 0.05,
-                "score_ci_high": 0.15,
-            },
-            {
-                "late_set": "gqa_h16_h19",
-                "early_set": "top4",
-                "route": "slot_state",
-                "score_mean": 0.2,
-                "score_ci_low": 0.12,
-                "score_ci_high": 0.28,
-            },
-        ]
-    )
-
-    rendered = _interval_svg(
-        frame,
-        metric="score",
-        title="test",
-        x_label="x",
-        label_column="late_set",
-    )
-
-    assert "base_h16_h19" in rendered
-    assert "gqa_h16_h19" in rendered

@@ -24,12 +24,3 @@ def test_saved_results_use_complete_v3_2_scope():
     assert metrics.comparison_slot.nunique() == 12 and metrics.prompt_mode.nunique() == 4
     assert set(metrics.evaluation_scheme) == {'v3_2_5fold_held_condition_cv'}
     assert set(metrics.n_parameters) == {14, 15}
-
-
-def test_report_separates_v3_2_fixed_effects_from_long_range():
-    report = (ROOT / 'reports/NiaH_Empirical-law_report.html').read_text(encoding='utf-8')
-    assert report.count('id="v3-2-n-fixed-effects"') == 1
-    long_range = report.split('<section id="v3-3-long-context"')[1].split('</section>')[0]
-    assert 'V3.2 固定效应补充' in long_range
-    assert 'N-fixed metric rows:' not in long_range
-    assert '@@' not in long_range

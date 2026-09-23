@@ -24,14 +24,7 @@ import torch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_RESULTS_ROOT = (
-    Path(r"\\?\H:/")
-    / "\u6211\u7684\u4e91\u7aef\u786c\u76d8"
-    / "Colab_Notebooks"
-    / "CoT_Counting"
-    / "Synthetic_CoT_NiaH_Count"
-    / "colab_results"
-)
+DEFAULT_RESULTS_ROOT = ROOT / "colab_results"
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 

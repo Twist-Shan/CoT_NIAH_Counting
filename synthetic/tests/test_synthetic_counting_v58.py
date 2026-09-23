@@ -7,7 +7,6 @@ import pytest
 
 from synthetic_counting_v20.config import config_from_dict
 from synthetic_counting_v20.data import V20Example, V20Vocab, character_token, render_v20
-from synthetic_counting_v20.extended_analysis import write_attention_dynamics_html
 from synthetic_counting_v20.model import build_model
 from synthetic_counting_v57.config import preset_config as preset_v57
 from synthetic_counting_v58.config import preset_config as preset_v58
@@ -159,33 +158,3 @@ def test_v58_confirmation_summary_applies_revised_gate() -> None:
     assert gate["metrics"]["thinking_min_count_accuracy"] == pytest.approx(0.8)
     assert gate["metrics"]["thinking_count_spread"] == pytest.approx(0.1)
     assert gate["metrics"]["thinking_minus_nonthinking_gap"] == pytest.approx(0.61)
-
-
-def test_attention_dynamics_html_uses_configured_head_inventory(tmp_path) -> None:
-    roles = (
-        "nonthinking_broad",
-        "thinking_broad",
-        "targeted_retrieval",
-        "marker_successor",
-    )
-    rows = [
-        {
-            "step": step,
-            "role": role,
-            "layer": layer,
-            "head": head,
-            "score": (layer + head + step / 10_000) / 20,
-        }
-        for step in (0, 10_000)
-        for role in roles
-        for layer in range(1, 5)
-        for head in range(8)
-    ]
-    fixed = {role: {"layer": 4, "head": 7} for role in roles}
-    output = tmp_path / "attention.html"
-    write_attention_dynamics_html(pd.DataFrame(rows), fixed, output)
-    document = output.read_text(encoding="utf-8")
-    assert '"n_layer":4' in document
-    assert '"n_head":8' in document
-    assert "4 layers × 8 heads" in document
-    assert "repeat(8,minmax(46px,1fr))" in document

@@ -984,103 +984,8 @@ def analyze_set_campaign(
         model: bool(payload["any_triangulated_set_support_raw"])
         for model, payload in analyses.items()
     }
-    if any(supported.values()):
-        conclusion = (
-            "至少一个预冻结 head set 在 held-out mapping 与三类不同干预家族中的至少两类上获得 "
-            "BH-FDR 校正后的 matched-set 特异支持；"
-            "这支持小型 set 的因果充分性，但不自动证明每个成员不可替代。"
-        )
-    elif any(raw_supported.values()):
-        conclusion = (
-            "至少一个 nested head set 通过未校正的 2-of-3 exact-p 筛选，但在模型内、证据族内跨全部 "
-            "layer×K 做 BH 校正后没有集合保留 2-of-3 支持；因此目前只能把这些 set 视为后续确认候选，"
-            "不能宣称已确认小型 circuit。"
-        )
-    else:
-        conclusion = (
-            "当前预冻结的 nested 层内 head sets 即使在未校正筛选下，也未形成跨至少两类因果检验的 "
-            "matched-set 特异支持；"
-            "这不排除跨层 set、MLP 或更大分布式 circuit。"
-        )
-    lines = [
-        "# Realistic NIAH V4.4.3-Set：OV vertical geometry 因果检验",
-        "",
-        "## 1. 猜想",
-        "",
-        "prompt running-index 与 answer-count 表示同一计数变量，但使用近似正交的 residual 载体方向；一个小型 attention-head set 通过 QK 定位和 OV 写回共同完成重编码。",
-        "",
-        "可证伪预测包括：held-out OV mapping 保持同号；Z transport 超过等范数输出 control；donor-α 超过位置打乱 α；set-output span 内的 signed injection 产生正 dose response；answer-direction removal 比等范数正交 removal 更损害计数。",
-        "",
-        "**本节结论：** 单头失败不能否定该猜想；合适的下一检验单位是预先冻结、并和同规模 matched set 比较的小型 head set。",
-        "",
-        "## 2. 实验设计与定义",
-        "",
-        "- discovery seeds 1234--1253；fit counts 1/3/5/7/9 选择 nested sets（Qwen K=1/2/3/4/6/8；Gemma K=1/2/3/4）；held-out counts 2/4/6/8/10 只评估。K=1 复用旧单头 run。",
-        "- screen seeds 1254--1258 做 alpha/Z/O 分阶段 patch；confirmation seeds 1259--1263 做 removal 与 set-reachable injection。",
-        "- set mapping：`m_S = sum_h M_OV^h u_prompt`，`r_S = cos(m_S, u_answer)`。",
-        "- transport：`T = (E[N|patch] - E[N|base]) / (donor_count - receiver_count)`。",
-        "- injection direction：`u_answer,S = normalize(P_col([W_O^h]_{h in S}) u_answer)`；斜率 `b = sum beta*DeltaE[N] / sum beta^2`。",
-        "- removal：error contrast 的正值与 correct-margin contrast 的负值共同支持方向性损伤。",
-        "- 每个 candidate set 配一个同层、同 K、成员不重叠且 OV 输出范数匹配的 control set。",
-        "- 因果统计以 seed 为单位做单侧 exact sign-flip；扩大 K 后，在每个模型、每类 causal family 内跨全部 layer×K 做 Benjamini-Hochberg 校正。",
-        "",
-        "**本节结论：** set 选择、held-out 几何、screen 与 confirmation 完全分离；注入已限制到 set 输出子空间；主结论采用 BH q<=0.05，而不是从多个 K 中挑 raw p<=0.05。",
-        "",
-        "## 3. 具体结果",
-        "",
-    ]
-    for model, payload in analyses.items():
-        lines.extend(
-            [
-                f"### {model}",
-                "",
-                "| set | heads | fit map | held-out map | raw families (Z/I/R) | BH q (Z/I/R) | raw 2/3 | FDR 2/3 |",
-                "|---|---|---:|---:|---|---|---|---|",
-            ]
-        )
-        for item in payload["candidate_set_decisions"]:
-            raw = item["causal_family_passes"]
-            q = item["causal_family_q_values_bh"]
-            lines.append(
-                "| {set_id} | {heads} | {fit:.4g} | {held:.4g} | {z}/{inj}/{rem} | "
-                "{zq:.5f}/{iq:.5f}/{rq:.5f} | {raw_joint} | {fdr_joint} |".format(
-                    set_id=item["set_id"],
-                    heads=item["heads"],
-                    fit=item["fit_mapping_cosine"],
-                    held=item["heldout_count_mapping_cosine"],
-                    z=raw["z_transport"],
-                    inj=raw["set_reachable_injection"],
-                    rem=raw["answer_direction_removal"],
-                    zq=q["z_transport"],
-                    iq=q["set_reachable_injection"],
-                    rq=q["answer_direction_removal"],
-                    raw_joint=item["triangulated_set_support_raw"],
-                    fdr_joint=item["triangulated_set_support_fdr"],
-                )
-            )
-        lines.extend(
-            [
-                "",
-                f"**本节结论：** {model} 的未校正 2-of-3 support={payload['any_triangulated_set_support_raw']}；BH-FDR 2-of-3 support={payload['any_triangulated_set_support']}。",
-                "",
-            ]
-        )
-    lines.extend(
-        [
-            "## 4. 综合分析",
-            "",
-            conclusion,
-            "",
-            "set sufficiency、set specificity 与 member irreducibility 是三个不同命题。本实验用 candidate-vs-matched 检验前两者，但没有做 leave-one-head-out，因此不检验成员不可替代性。另有四个边界：预选层来自既有 geometry；每个 causal split 只有 5 seeds；只搜索同层 sets；更大的 K 可能只增加可干预子空间维数，因此必须结合 matched specificity 与边际增益解释。",
-            "",
-            "**本节结论：** 只有 held-out mapping 与至少两类 BH-FDR matched-set 因果证据汇合，才支持小型 set 的因果充分性；raw 显著或单一 family 只作为确认线索。",
-            "",
-        ]
-    )
     analysis_root = Path(run_root) / "analysis"
     analysis_root.mkdir(parents=True, exist_ok=True)
-    report_path = analysis_root / "realistic_niah_v4_4_3_ov_set_causal_report.md"
-    atomic_text(report_path, "\n".join(lines))
     payload = {
         "schema_version": "realistic_niah_v4_4_3_set_campaign_analysis_v1",
         "model_support": supported,
@@ -1088,9 +993,7 @@ def analyze_set_campaign(
         "multiple_testing": (
             "Benjamini-Hochberg within each model and causal family across layer-by-K sets"
         ),
-        "conclusion": conclusion,
         "model_analyses": analyses,
-        "report_path": str(report_path),
     }
     atomic_json(analysis_root / "analysis.json", payload)
     return payload

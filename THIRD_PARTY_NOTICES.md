@@ -10,8 +10,6 @@
   the public URLs registered in the supplied RULER URL list. Essay bodies and
   model-generated traces are not bundled. The essays retain their original
   ownership; this snapshot does not relicense them.
-- **Plotly.js** is vendored at `realistic/scripts/vendor/plotly-3.6.0.min.js`.
-  Its original copyright and MIT license notice remain in the file header.
 - **Models and libraries** (including Qwen, Gemma, other benchmark checkpoints,
   PyTorch, Transformers, and vLLM) are external dependencies. Model identifiers
   and registered checkpoint revisions are preserved in the experiment code.

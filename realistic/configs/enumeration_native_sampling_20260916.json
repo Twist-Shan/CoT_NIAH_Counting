@@ -1,9 +1,15 @@
 {
   "schema": "enumeration_native_sampling_alignment_v1",
-  "user_instruction": "Native thinking 如何处理的我们就如何处理",
+  "user_instruction": "Use the same sampling and eligibility procedure as the Native-thinking protocol.",
   "scope": "Correct Enumeration sample selection to the corresponding Native assay; preserve prior shared-cohort experiments as supplementary results.",
-  "models": ["Qwen3-8B", "Gemma4-E4B"],
-  "modes": ["enumeration_index", "enumeration_bullet"],
+  "models": [
+    "Qwen3-8B",
+    "Gemma4-E4B"
+  ],
+  "modes": [
+    "enumeration_index",
+    "enumeration_bullet"
+  ],
   "update": {
     "confirmation_quota_per_model_mode": 10,
     "selection": "First ten baseline format-and-geometry eligible confirmation seeds in ascending registered order, independently in each model and mode.",

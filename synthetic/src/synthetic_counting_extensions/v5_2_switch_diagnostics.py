@@ -310,7 +310,6 @@ def run_switch_and_retrieval_diagnostics(
     for name, df in outputs.items():
         df.to_csv(table_dir / f"{name}.csv", index=False)
     make_plots(outputs, out_dir)
-    make_report(outputs, out_dir, cfg)
     return outputs
 
 
@@ -379,31 +378,6 @@ def _img(name: str) -> str:
     return f"<img src='../figures/{name}' style='max-width:100%;border:1px solid #ddd;border-radius:8px'>"
 
 
-def make_report(outputs: dict[str, pd.DataFrame], out_dir: Path, cfg: dict[str, Any]) -> None:
-    report_dir = out_dir / "report"
-    report_dir.mkdir(parents=True, exist_ok=True)
-    pred = outputs["prediction_query_head_summary"].sort_values(["correct_top1", "correct_prompt_needle_mass"], ascending=False)
-    post = outputs["post_marker_head_summary"].sort_values(["correct_top1", "correct_prompt_needle_mass"], ascending=False)
-    best_pred = pred.iloc[0].to_dict() if not pred.empty else {}
-    html = f"""<!doctype html><html><head><meta charset="utf-8"><title>v5.2 switch diagnostics</title>
-<style>body{{font-family:Segoe UI,Arial,sans-serif;line-height:1.55;max-width:1100px;margin:32px auto;padding:0 20px;color:#172033}}table{{border-collapse:collapse;width:100%;font-size:14px}}td,th{{border:1px solid #ddd;padding:8px}}th{{background:#f4f7fb}}.grid{{display:grid;grid-template-columns:1fr 1fr;gap:18px}}code{{background:#eef2f7;padding:2px 5px;border-radius:5px}}</style>
-</head><body>
-<h1>v5.2 switch / retrieval diagnostics</h1>
-<p>问题：同一个 mixed-transformer 中，开关 token 学好了是否应该自动产生显著 retrieval？本诊断区分两件事：switch logits 是否分离模式，以及 retrieval metric 是否测在正确的 prediction query 上。</p>
-<h2>Setting</h2>
-<table><tr><th>trace_indices</th><td>{cfg.get('trace_indices')}</td></tr><tr><th>thinking_fraction</th><td>{cfg['train'].get('thinking_fraction')}</td></tr><tr><th>seq_len</th><td>{cfg['train'].get('seq_len')}</td></tr></table>
-<h2>Main interpretation</h2>
-<p>如果 switch 概率已经分离，但 <code>prediction_query_correct_top1</code> 仍低，说明问题不是“不会开关”，而是 marker-only trace 缺少显式 <code>index_token_k</code> query，模型未必需要形成 v2 那种 k-to-k targeted retrieval head。</p>
-<p>Best prediction-query retrieval head: layer={best_pred.get('layer','NA')}, head={best_pred.get('head','NA')}, correct_top1={best_pred.get('correct_top1','NA')}, correct_mass={best_pred.get('correct_prompt_needle_mass','NA')}.</p>
-<div class="grid"><div>{_img('switch_probability_summary.png')}</div><div>{_img('prediction_query_correct_top1.png')}</div><div>{_img('prediction_query_correct_mass.png')}</div><div>{_img('post_marker_correct_top1.png')}</div></div>
-<h2>Switch summary</h2>
-{outputs['switch_summary'].to_html(index=False)}
-<h2>Prediction-query head summary, top 12</h2>
-{pred.head(12).to_html(index=False)}
-<h2>Post-marker head summary, top 12</h2>
-{post.head(12).to_html(index=False)}
-</body></html>"""
-    (report_dir / "report.html").write_text(html, encoding="utf-8")
 
 
 def build_parser() -> argparse.ArgumentParser:

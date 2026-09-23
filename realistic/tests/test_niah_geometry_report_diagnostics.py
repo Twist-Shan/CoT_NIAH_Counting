@@ -13,19 +13,13 @@ from scripts.analyze_native_geometry_bands import (
     two_band_fit,
 )
 from scripts.augment_niah_geometry_comparison_report import (
-    END,
-    BEGIN,
     TRACE_CATEGORIES,
+    normalized_mutual_information_labels as _normalized_mutual_information,
     fisher_exact_two_sided,
     legacy_compatible_marker_summary,
     qwen_band_marker_analysis,
-    remove_block,
     trace_category_summary,
     unresolved_trace_examples,
-)
-from scripts.build_niah_geometry_comparison_report_v7 import (
-    _band_verdict,
-    _normalized_mutual_information,
 )
 from realistic_niah_v5.trace_stratified_geometry import confirmation_metrics
 
@@ -78,9 +72,6 @@ def test_trace_category_summary_uses_trajectory_denominators() -> None:
     assert sum(summary["Qwen3-8B"]["all"]["counts"].values()) == 300
 
 
-def test_remove_block_also_removes_adjacent_newlines() -> None:
-    text = f"before\n\n{BEGIN}payload{END}\n\nafter"
-    assert remove_block(text, BEGIN, END) == "beforeafter"
 
 
 def test_fisher_exact_two_sided_matches_qwen_trajectory_table() -> None:
@@ -253,13 +244,6 @@ def test_unresolved_trace_examples_attaches_raw_reasoning(tmp_path: Path) -> Non
     assert examples[0]["old_candidates"] == 0
 
 
-def test_band_verdict_identifies_grammar_mixture() -> None:
-    audit = {
-        "categorical_associations": [
-            {"column": "occurrence", "nmi": 0.10},
-        ],
-    }
-    assert "多种 trace grammar" in _band_verdict(audit, 0.60, 0.61)
 
 
 def test_normalized_mutual_information_matches_simple_extremes() -> None:

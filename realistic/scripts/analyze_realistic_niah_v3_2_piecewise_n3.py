@@ -163,7 +163,6 @@ def main():
     core.write_json(out/'analysis_manifest.json',manifest)
     compare_no_interaction(out, eligible, candidates, levels, summary)
     plot_results(predictions, out)
-    write_report(out, aggregate, selected, low_summary, manifest)
     print(aggregate.loc[aggregate.domain.eq('N_ge4') & aggregate.variant.isin(['original','refit_fixed_zero','refit_selected_zero'])].to_string(index=False))
     print(f'Output: {out.resolve()}',flush=True)
 
@@ -207,21 +206,6 @@ def compare_no_interaction(out, cells, candidates, levels, summary):
     detail.to_csv(out/'tables/no_interaction_model_comparison.csv',index=False)
     table.to_csv(out/'tables/no_interaction_summary.csv',index=False)
     pd.DataFrame(coeffs).to_csv(out/'tables/no_interaction_coefficients.csv',index=False)
-    lines=['# 排除 N≤3 后，去掉交叉项是否改善回归？','',
-        '结论：对直接作答与原生思考，去掉交叉项后，MAE 和 bias 的交叉验证拟合均变差。前段设为常数后，高 N 区间仍需要检验 N 与 L 的交互。',
-        '索引与项目符号枚举的 MAE 也更支持含交叉项的候选；枚举 bias 的共享规律仍弱，不能据此推广所有模式都需要交叉项。','',
-        '后段统一使用 N≥4；前段使用每个模型、模式的训练集低 N 常数。N_L=a+bN+c(L/1000)，N_L_interaction 再加 dN(L/1000)。',
-        'selected_no_interaction 沿用原来的 R² 容忍区间、效应阈值及简单性优先规则，在 12 个无交叉项候选中选式；不等同于单纯使预测 MAE 最小的候选。','',
-        '## N≥4 的相同留出条件','',table.loc[table.domain.eq('N_ge4')].to_markdown(index=False,floatfmt='.4f'),'',
-        'R² 和预测 MAE 是模型间中位数。models_lower_mae 表示该形式相对 N_L_interaction 的预测 MAE 更低的模型数；这是配对比较，不能用两组中位数之差替代。','',
-        '## 完整分段函数的全域评估','',table.loc[table.domain.eq('all')].to_markdown(index=False,floatfmt='.4f'),'',
-        '## 解释与限制','',
-        '分段常数解决低 N 的水平段；交叉项允许高 N 区间中 N 的斜率随 L 改变。两个设定施加不同约束，因此加入前段常数并不必然使后段交叉项冗余。',
-        '无交叉项可以作为简化描述，但现有比较不支持它在直接作答与原生思考上具有更好的预测拟合。原因的机制解释尚未验证。',
-        '这是固定断点的事后敏感性分析；仍使用原有非嵌套条件交叉验证，尚无新测试集验证。无交叉项限制下未额外运行 LOMO，主分析的全候选 LOMO 结果单独保存。','',
-        '详细系数与 HC3 区间：tables/no_interaction_coefficients.csv；逐模型结果：tables/no_interaction_model_comparison.csv。',
-        f'本比较耗时 {time.perf_counter()-start:.2f} 秒；由同一脚本自动生成。']
-    (out/'no_interaction_report.md').write_text('\n'.join(lines),encoding='utf-8')
     core.write_json(out/'no_interaction_timing.json',dict(elapsed_seconds=time.perf_counter()-start))
     print(table.loc[table.domain.eq('N_ge4')].to_string(index=False),flush=True)
 
@@ -253,34 +237,6 @@ def plot_results(predictions, out):
     plt.close(fig)
 
 
-def write_report(out, aggregate, selected, low_summary, manifest):
-    lines=['# N≤3 常数段与 N≥4 回归：探索性敏感性分析','',
-        '结论：排除 N≤3 后，直接作答和原生思考仍选择 N+L_k+N×L_k，原生思考的 MAE 与 bias 后段拟合小幅改善。',
-        '索引枚举 MAE 在重选交互项后改善较明显；保持原式时未出现同等改善。枚举 bias 仍缺乏稳定的共享结构。',
-        '前段设零并非所有模式均适用，应同时参照拟合常数版本及低 N 原始准确率。','',
-        '沿用报告中的 10% 双侧截尾 conditional MAE 和 signed bias；bias = 预测数量 − N。',
-        '对每个模型、模式分别拟合：g(N,L)=c（N≤3），g(N,L)=a+Σ b_j x_j(N,L)（N≥4）。',
-        'c=0 和低 N 样本拟合常数均评估；未施加断点连续性约束。MAE 负预测不裁剪。',
-        '仅高 N 数据参与后段回归；保持原始五折条件划分。新旧方法都在相同评估域、相同 cell 上比较。',
-        '原式重拟合用于隔离排除低 N 的影响；另按原规则从 18 个候选中重选后段公式。','',
-        '## 低 N 前提核验','',low_summary.to_markdown(floatfmt='.5f'),'',
-        '## 同一 N≥4 评估域','',
-        'R² 和回归预测 MAE 均先按模型计算，再取模型间中位数（最多 12 个）；常数响应的 R² 无定义并保留为 NaN，中位数排除 NaN。回归预测 MAE 与被解释的 trimmed MAE 是不同量。',
-        aggregate.loc[aggregate.domain.eq('N_ge4') & aggregate.variant.isin(['original','refit_fixed_zero','refit_selected_zero'])].to_markdown(index=False,floatfmt='.4f'),'',
-        '## 全域评估（包含前段）','',aggregate.loc[aggregate.domain.eq('all')].to_markdown(index=False,floatfmt='.4f'),'',
-        '## 后段公式与留一模型结构稳定性','',
-        selected[['outcome_family','prompt_mode','selected_candidate','median_primary_score','lomo_formula_stability']].to_markdown(index=False,floatfmt='.4f'),'',
-        'N、L_k=L/1000、logN=ln(N)、logL=ln(L/1000)、invN=1/N；每个公式包含截距。系数和 HC3 区间见 tables/tail_candidate_coefficients.csv；低 N 常数见 tables/plateau_constants.csv。','',
-        '![分段曲线](figures/piecewise_comparison.png)','',
-        '图中点为观测 cell 指标，线为全样本拟合预测，均对模型和长度等权平均；灰色背景为 N≤3。图用于描述，评估指标来自 OOF 预测。','',
-        '## 限制与复现','',
-        '断点 3 是观察数据后指定的探索性设定。公式选择未嵌套在条件交叉验证外层，因此重选结果不等同于独立测试集性能。LOMO 衡量结构对模型集合的敏感性；不表示系数可跨模型直接迁移。',
-        '截尾指标接近零不能推出原始请求完全无误；低 N 总体均值也不能证明各个模型和长度均为平段。',
-        '全零响应导致 OLS 的 AIC/BIC 为负无穷，R² 无定义；这些情况未作为拟合失败忽略，选式仍使用原有 CV 和效应阈值。',
-        '原始分析与原始请求未修改。没有运行新推理；结论仅适用于现有模型与 N、L 网格。','',
-        '```powershell','python -s scripts/analyze_realistic_niah_v3_2_piecewise_n3.py','```','',
-        f'运行时长：{manifest["elapsed_seconds"]:.1f} 秒。输入哈希、版本和过滤规则见 analysis_manifest.json。']
-    (out/'report.md').write_text('\n'.join(lines),encoding='utf-8')
 
 
 if __name__ == '__main__':

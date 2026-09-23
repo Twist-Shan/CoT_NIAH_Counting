@@ -22,7 +22,6 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'reports/assets/niah_empirical_paper'
 LONG=ROOT/'reports/assets/niah_empirical_all_n_length'
 SHORT=ROOT/'outputs/anvil_realistic_niah_v3_1_20260819_formal/analysis/v3_2_inverse_n_candidate_extension/tables'
-PREVIEW=ROOT/'reports/NiaH_Empirical-law_paper_preview.html'
 
 
 def save(fig,stem):
@@ -115,50 +114,6 @@ def length_figure(data,curves,models=MODELS,stem='figure2_length_two_models'):
     save(fig,stem)
 
 
-def write_preview(data):
-    table=pd.read_csv(LONG/'comparison_summary.csv')
-    summary=[]
-    for _,r in table.iterrows():
-        summary.append({'Model':r.model,'Mode':'Non-thinking' if r['mode']=='direct' else 'Native-thinking',
-            'Linear: R²':f'{r.linear_cell_R2:.3f}','Log: R²':f'{r.log_cell_R2:.3f}',
-            'Linear: CV log loss':f'{r.linear_CV_log_loss:.4f}','Log: CV log loss':f'{r.log_CV_log_loss:.4f}'})
-    summary=pd.DataFrame(summary);summary.to_csv(OUT/'paper_length_comparison.csv',index=False)
-    fig1='Counting performance across 12 comparison slots. Each panel shows one prompting mode over 14 target counts and eight passage lengths (1k–20k tokens). Open markers and error bars show the median and interquartile range of observed accuracy across slots; curves and ribbons show the corresponding summaries of independently fitted slot-specific predictions. Ribbons describe variation across slots. Parsing failures count as incorrect responses. The selected predictor bases are ln N + L/1000 for Non-thinking and N + ln(L/1000) for Native-thinking; coefficients are estimated separately for each slot.'
-    fig2='Length dependence in Gemma4-31B and Qwen3-32B. Each panel overlays both prompting modes; color denotes target count N, solid lines and circles denote Non-thinking, and dashed lines and triangles denote Native-thinking. Curves use logit p = alpha_N + beta f(L), with f(L) = L/1000 for Non-thinking and ln(L/1000) for Native-thinking. Each model and mode has 14 N-specific intercepts and one shared length coefficient. All 14 N values and 17 lengths (1k–100k tokens) are included, with 30 requests per condition. These curves are full-range refits. The vertical dotted line marks 20k tokens. The displayed forms provide a common descriptive approximation; Qwen Non-thinking achieves 2.15% lower cross-validated log loss with log length. Overall R2 includes variation attributable to both N and L.'
-    notes=f'''建议正文保留两张图和一张简短比较表。
-
-图 1 回答：两种模式的正确率怎样随 N 和 L 变化？保留跨 12 槽汇总，把逐槽图放入附录。误差条和阴影都表示槽间四分位范围，不是 95% 置信区间。
-
-图 2 回答：允许各 N 有不同起点后，两种模式的长度曲线是什么形状？每个模型一个面板，同一面板叠加两种模式。保留全部 N。该图使用完整 1k–100k 数据重新拟合。
-
-正文比较表保留每组线性和对数的 CV log loss；可以同时报告样本内 cell R2。函数形式的比较使用同组的 CV log loss。
-
-建议正文结论：Native-thinking 的对数长度形式在 V3.2 的 12 个槽中均优于线性形式，并在两个长程模型中保持优势。Non-thinking 更依赖模型；线性形式可作为两模型长程结果的统一近似，Qwen 的最佳形式仍为对数。
-
-图 1 使用 N 的指定函数形式；图 2 允许每个 N 有独立截距。这是两种不同约束下的分析，图 2 不验证图 1 的完整公式，也不检验短程到长程的外推。
-
-附录保留：12 槽逐模型曲线、线性/对数全部比较、逐 N 残差与曲线、冻结短程系数的长程外推、MAE/bias、分段、无截距及交叉项敏感性。Non-thinking broad retrieval 与 Native-thinking trace 的机制解释放入 Discussion，明确其与长度函数形状的对应关系仍待验证。
-
-Figure 1 caption:
-{fig1}
-
-Figure 2 caption:
-{fig2}
-'''
-    (OUT/'paper_selection_notes.md').write_text(notes,encoding='utf-8')
-    def image(stem):
-        return 'data:image/png;base64,'+base64.b64encode((OUT/f'{stem}.png').read_bytes()).decode('ascii')
-    page=f'''<!doctype html><html lang="zh"><meta charset="utf-8"><title>Empirical law：论文图稿建议</title>
-<style>body{{max-width:1080px;margin:36px auto;padding:0 24px;font:16px/1.7 system-ui;color:#202735}}h1{{font-size:26px}}h2{{font-size:20px;margin-top:34px}}img{{width:100%}}figcaption{{font-size:14px;color:#505c6d}}figure{{margin:20px 0}}table{{border-collapse:collapse;width:100%;font-size:14px}}td,th{{padding:8px;border-bottom:1px solid #ddd;text-align:left}}details{{margin:24px 0}}</style>
-<h1>建议正文保留两张图和一张比较表</h1><p>图 1 展示跨模型的整体趋势，图 2 展示两个模型在长文本上的具体变化。MAE、bias 和完整敏感性分析放入附录。</p>
-<h2>图 1：目标数与文本长度的共同影响</h2><p>这是 12 个比较槽的中位数汇总。误差条和阴影表示槽间四分位范围。</p><figure><img src="{image('figure1_count_across_slots')}" alt="12 槽数量回归"><figcaption>{fig1}</figcaption></figure>
-<h2>图 2：每个模型叠加两种模式</h2><p>左图 Gemma，右图 Qwen；颜色表示 N，实线/圆点为 Non-thinking，虚线/三角为 Native-thinking。保留全部 N 与长度。</p><figure><img src="{image('figure2_length_two_models')}" alt="两模型叠加两种模式的长度回归"><figcaption>{fig2}</figcaption></figure>
-<h2>正文比较表</h2><p>R² 衡量完整拟合与观测条件的贴合程度；CV log loss 衡量留出条件预测，越低越好。Qwen Non-thinking 的例外在正文保留。</p>{summary.to_html(index=False,border=0)}
-<p><strong>适用范围：</strong>图 1 使用 N 的指定函数形式；图 2 为每个 N 单独估计截距。图 2 使用整个长度范围重新拟合，不能当作图 1 原公式的长程验证。</p>
-<h2>建议放入附录</h2><p>12 槽逐模型图、逐 N 拟合诊断、线性与对数的完整比较、冻结短程系数的外推结果、MAE/bias、分段、无截距和交叉项敏感性。</p>
-<p>关于 broad retrieval 和 trace 的解释放入 Discussion；目前的曲线比较尚不能确认对应的因果机制。</p></html>'''
-    PREVIEW.parent.mkdir(parents=True,exist_ok=True)
-    PREVIEW.write_text(page,encoding='utf-8')
 
 
 def main():
@@ -168,13 +123,10 @@ def main():
     parser.add_argument('--short-tables',type=Path,help='Short-context cell outcomes and selected-law coefficient tables')
     parser.add_argument('--length-comparison-dir',type=Path,help='Outputs of build_niah_all_n_length_comparison.py')
     parser.add_argument('--output-dir',type=Path,help='Directory for figure files and build manifest')
-    parser.add_argument('--preview',type=Path,help='HTML preview path; defaults inside a custom output directory')
     args=parser.parse_args()
     if args.short_tables is not None:SHORT=args.short_tables.resolve()
     if args.length_comparison_dir is not None:LONG=args.length_comparison_dir.resolve()
     if args.output_dir is not None:OUT=args.output_dir.resolve()
-    if args.preview is not None:PREVIEW=args.preview.resolve()
-    elif args.output_dir is not None:PREVIEW=OUT/'preview.html'
     length_comparison.configure_inputs(linear_dir=args.linear_dir,log_dir=args.log_dir,
         holdout_metrics=args.holdout_metrics,short_range_metrics=args.short_range_metrics)
     start=time.perf_counter();OUT.mkdir(parents=True,exist_ok=True)
@@ -192,7 +144,6 @@ def main():
     for model in MODELS:length_figure(data,curves,models=(model,),stem=f'{model}_length_overlay')
     curves.to_csv(OUT/'figure2_plotted_predictions.csv.gz',index=False,compression='gzip')
     data['cell_predictions'].loc[data['cell_predictions'].apply(lambda r:r.length_term==MODE_RULE[r['mode']],axis=1)].to_csv(OUT/'figure2_observed_cells.csv',index=False)
-    write_preview(data)
     inputs={f'short/{name}':SHORT/name for name in ('cell_outcomes.csv.gz','selected_model_coefficients.csv','selected_mode_laws.csv')}
     inputs.update({f'length-comparison/{name}':LONG/name for name in
                    ('mode_rule_plotted_predictions.csv.gz','comparison_summary.csv','comparison_manifest.json')})

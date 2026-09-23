@@ -1,35 +1,32 @@
-# Anonymous review snapshot
+# Anonymous source release
 
-The review snapshot is prepared according to the anonymous supplementary-code
-principle in the [ICLR 2027 author guidelines](https://iclr.cc/Conferences/2027/AuthorGuidelines).
-The local preparation includes these concrete measures:
+The [ICLR 2027 author guidelines](https://iclr.cc/Conferences/2027/AuthorGuidelines)
+require supplementary material and review code links to preserve anonymity.
+The checked release contains experiment code, configurations, input
+specifications, tests and paper-figure sources. Internal narrative reports,
+author-identifying manuscript files, private paths, credentials and generated
+logs/caches are excluded.
 
-- New Git repository with anonymous local identity, no remote, and no inherited
-  source commit history.
-- Project-associated author/repository locators, server login addresses, and
-  private absolute paths removed or replaced by relative artifact locations.
-- No credentials, SSH configuration, agent instructions, environment files,
-  personal notebooks, run logs, model weights, or activation dumps in the release.
-- The manuscript PDF is excluded because the supplied copy identifies its authors.
-- External model revisions, public corpus references, and third-party notices
-  are retained where needed for reproducibility and attribution.
-- The ZIP produced by `tools/package_release.py` uses fixed timestamps and omits
-  `.git/` and generated outputs. Hosting platforms may generate a different ZIP
-  with their own timestamps and checksum; audit the actual download separately.
+`tools/validate_repo.py` checks syntax, JSON, entry points, document links,
+common credential/private-path patterns and Han characters, including escaped
+string values. The release preparation also scans known project identities
+and embedded artwork metadata; the identifying search terms stay outside
+this repository. Public model IDs, corpus references and required third-party
+attribution remain. Third-party authorship is not project authorship.
 
-`tools/validate_repo.py` checks source syntax, JSON, entry points, new document
-links, common credential patterns, and private path/login patterns. A separate
-preparation-time scan also checked the author names and project-specific
-identifiers; those identifying search terms are not stored in this repository.
-The scan is a bounded check, not a guarantee that code cannot be recognized.
+`tools/package_release.py` exports the validated source with a checksum manifest
+and fixed ZIP timestamps, excluding `.git`, bytecode and run artifacts. It
+does not anonymize a development repository's commit history or remote. For a
+review Git repository, create a new repository from the exported files with
+an anonymous commit identity and no inherited history. Never upload the
+development `.git` directory or audit backups.
 
-Hosting is managed separately from this source snapshot. When using an anonymous
-review endpoint, check both its visible file tree and downloadable archive after
-each update. A source archive does not establish the identity or remote settings
-of an upstream Git repository. Personal-account URLs and original Git history
-can identify authors even when current file contents have been cleaned.
+Anonymity checks are bounded and cannot guarantee that recognizable research
+content will not suggest an identity. Verify the hosting account, visible
+repository metadata and actual downloadable archive separately before sharing
+a review URL. Local source checks do not audit a website.
 
-Run-generated manifests, reports, and logs are outside this source audit. Some
-runners record hostnames, resolved paths, and command lines for local provenance.
-Before publishing outputs, inspect them separately, remove machine-specific
-identifiers, and retain model revisions, configurations, seeds, and file hashes.
+Generated outputs require a separate audit: some experiment runners record
+resolved paths, hostnames and command lines for local provenance. Retain
+scientific settings, revisions, seeds and data hashes when removing machine
+identifiers from outputs that will be published.

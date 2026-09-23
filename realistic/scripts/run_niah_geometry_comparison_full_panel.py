@@ -24,13 +24,11 @@ from scripts.audit_realistic_niah_v5_geometry_capture import (  # noqa: E402
     audit_capture,
 )
 from scripts.build_niah_geometry_comparison_report import (  # noqa: E402
+    export_geometry_data,
     expected_trajectory_keys,
     read_csv,
     read_json,
     read_jsonl,
-)
-from scripts.build_niah_geometry_comparison_report_v7 import (  # noqa: E402
-    build_report,
 )
 
 
@@ -156,23 +154,16 @@ def run_pipeline(
             random_state=random_state,
         )
 
-    print("[geometry CPU] report build start", flush=True)
-    return build_report(
+    print("[geometry CPU] coordinate export start", flush=True)
+    return export_geometry_data(
         non_thinking_export_root=non_thinking_root,
         native_running_root=native_running_root,
         native_final_root=native_final_root,
         dual_endpoint_root=analysis_root,
-        parser_audit=parser_audit,
-        band_root=band_root,
-        grammar_registry=grammar_registry,
-        grammar_filter_root=grammar_filter_root,
-        pure_trace_n10_root=pure_trace_n10_root,
-        indexed_numeric_n10_root=indexed_numeric_n10_root,
         output=output,
         manifest_path=manifest,
-        domain_transfer_root=domain_transfer_root,
-        covariance_root=covariance_root,
     )
+
 
 
 def main() -> None:
@@ -190,7 +181,7 @@ def main() -> None:
     parser.add_argument("--indexed-numeric-n10-root", type=Path)
     parser.add_argument("--domain-transfer-root", type=Path)
     parser.add_argument("--covariance-root", type=Path)
-    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True, help="Geometry plotting data (.json)")
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--pca-dim", type=int, default=16)
     parser.add_argument("--cv-folds", type=int, default=5)
